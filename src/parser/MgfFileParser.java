@@ -30,11 +30,20 @@ public class MgfFileParser implements Parser{
 	 * Contains the total number of the spectra.
 	 */
 	private int iSpectraNumber = -1;
-
+	
+	/**
+	 * Contains the hash map of the mgf peaklists.
+	 */
 	private HashMap<Integer, MgfPeaklist> iPeaklistMap = null;
-
+	
+	/**
+	 * Contains the title2spectrum id map.
+	 */
 	private HashMap<String, Integer> iTitle2SpectrumIdMap = null;
-
+	
+	/**
+	 * Contains the peptide map.
+	 */
 	private PeptideMap iPepMap = null;
 
 	/**
@@ -47,7 +56,11 @@ public class MgfFileParser implements Parser{
 		iTitle2SpectrumIdMap = aTitle2SpectrumIdMap;
 		iPepMap = aPepMap;
 	}
-
+	
+	/**
+	 * This method retrieves a string array with all the spectra names.
+	 * @return spectra
+	 */
 	public String[] getAllSpectraNames(){
 		String spectra[] = null;
 		ArrayList<String> list = null;
@@ -85,6 +98,7 @@ public class MgfFileParser implements Parser{
 		}
         return spectra;
 	}
+	
 	/**
 	 * This method returns a mgf peak list map with the spectrum number as key
 	 * and the peaklist as value.
