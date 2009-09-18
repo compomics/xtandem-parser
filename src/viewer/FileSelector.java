@@ -1,5 +1,6 @@
 package viewer;
 
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -43,7 +44,7 @@ public class FileSelector extends JFrame{
         super(title);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
-                close();
+                cancelButtonActionPerformed();
             }
         });
        
@@ -91,15 +92,14 @@ public class FileSelector extends JFrame{
         lowerPanel = new JPanel();
         okBtn = new JButton("Ok");
         okBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                new XTandemViewer(xmlSourceField.getText(), "", false);
-            	setVisible(false);
+            public void actionPerformed(ActionEvent evt) {                
+            	okButtonActionPerformed();
             }
         });
         cancelBtn = new JButton("Cancel");
         cancelBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                close();
+                cancelButtonActionPerformed();
             }
         });
         lowerPanel.add(okBtn);
@@ -112,9 +112,19 @@ public class FileSelector extends JFrame{
 	}
 	
 	/**
+	 * This method is called when ok button is pressed. It loads the xtandemviewer.
+	 */
+    private void okButtonActionPerformed() {
+        this.setVisible(false);        
+        new XTandemViewer(xmlSourceField.getText(), "", false);  
+
+        this.dispose();
+    }
+    
+	/**
      * This method is called when the frame is closed. It shuts down the JVM.
      */	
-	private void close(){
+	private void cancelButtonActionPerformed(){
 		System.exit(0);
 	}	
 	
