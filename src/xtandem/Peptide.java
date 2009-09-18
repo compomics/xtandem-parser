@@ -81,10 +81,7 @@ public class Peptide {
      * Contains the total of missed cleavages
      */
     private int missedCleavages = 0;
-    /**
-     * Contains the protein to the peptide.
-     */
-    private Protein iProtein = null;
+
 
     /**
      * The Peptide constructor gets the peptide id the start + end position and the sequences as string.
