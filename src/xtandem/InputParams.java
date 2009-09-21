@@ -1,5 +1,6 @@
 package xtandem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 /**
  * This class holds information of the given input parameters.
@@ -43,7 +44,7 @@ public class InputParams {
 	private boolean iPointMutations = false;
 	private String iRefinePotC_termMods = "";
 	private String iRefinePotN_termMods = "";
-	private double iRefinePotModMass = 0;
+	private String iRefinePotModMass = "";
 	private String iRefinePotModMotif = "";
 	private String iRefineSequencePath = "";
 	private boolean iRefineSpectrumSynthesis = false;
@@ -51,7 +52,7 @@ public class InputParams {
 	private boolean iRefineUnanticipatedCleavage = false;
 	private boolean iRefineUsePotentialModsForFullRefinement = false;
 	private String iResidueModMass = "";
-	private double iResiduePotModMass = 0;
+	private String iResiduePotModMass = "";
 	private String iResiduePotModMotiv = "";
 	private boolean iScoring_aIons = false;
 	private boolean iScoring_bIons = false;
@@ -118,7 +119,7 @@ public class InputParams {
 		if(map.get("POINTMUTATIONS") != null) iPointMutations = convertStringToBool(map.get("POINTMUTATIONS").toString());
 		if(map.get("POTC_TERMMODS") != null) iRefinePotC_termMods = map.get("POTC_TERMMODS").toString();
 		if(map.get("POTN_TERMMODS") != null) iRefinePotN_termMods = map.get("POTN_TERMMODS").toString();
-		if(map.get("POTMODMASS")!=null) iRefinePotModMass = Double.parseDouble(map.get("POTMODMASS").toString());
+		if(map.get("POTMODMASS")!=null) iRefinePotModMass = map.get("POTMODMASS").toString();
 		if(map.get("POTMODMOTIF")!=null) iRefinePotModMotif = map.get("POTMODMOTIF").toString();
 		if(map.get("REFINESEQPATH")!=null) iRefineSequencePath = map.get("REFINESEQPATH").toString();
 		if(map.get("REFINESPECSYTNH") != null) iRefineSpectrumSynthesis = convertStringToBool(map.get("REFINESPECSYTNH").toString());
@@ -126,7 +127,7 @@ public class InputParams {
 		if(map.get("REFINEUNANTICLEAV") != null) iRefineUnanticipatedCleavage = convertStringToBool(map.get("REFINEUNANTICLEAV").toString());
 		if(map.get("POTMODSFULLREFINE") != null) iRefineUsePotentialModsForFullRefinement = convertStringToBool(map.get("POTMODSFULLREFINE").toString());
 		if(map.get("RESIDUEMODMASS") != null) iResidueModMass = map.get("RESIDUEMODMASS").toString();
-		if(map.get("RESIDUEPOTMODMASS")!=null) iResiduePotModMass = Double.parseDouble(map.get("RESIDUEPOTMODMASS").toString());
+		if(map.get("RESIDUEPOTMODMASS")!=null) iResiduePotModMass = map.get("RESIDUEPOTMODMASS").toString();
 		if(map.get("RESIDUEPOTMODMOTIV")!=null) iResiduePotModMotiv = map.get("RESIDUEPOTMODMOTIV").toString();
 		if(map.get("SCORING_AIONS")!=null) iScoring_aIons = convertStringToBool(map.get("SCORING_AIONS").toString());
 		if(map.get("SCORING_BIONS")!=null) iScoring_bIons = convertStringToBool(map.get("SCORING_BIONS").toString());
@@ -373,10 +374,10 @@ public class InputParams {
 	public void setRefinePotN_termMods(String refinePotN_termMods) {
 		iRefinePotN_termMods = refinePotN_termMods;
 	}
-	public double getRefinePotModMass() {
+	public String getRefinePotModMass() {
 		return iRefinePotModMass;
 	}
-	public void setRefinePotModMass(double refinePotModMass) {
+	public void setRefinePotModMass(String refinePotModMass) {
 		iRefinePotModMass = refinePotModMass;
 	}
 	public String getRefinePotModMotif() {
@@ -422,11 +423,11 @@ public class InputParams {
 	public void setResidueModMass(String residueModMass) {
 		iResidueModMass = residueModMass;
 	}
-	public double getResiduePotModMass() {
+	public String getResiduePotModMass() {
 		return iResiduePotModMass;
 	}
-	public void setResiduePotModMass(double residuePotModMass) {
-		iResiduePotModMass = residuePotModMass;
+	public void setResiduePotModMass(String aResiduePotModMass) {
+		iResiduePotModMass = aResiduePotModMass;
 	}
 	public String getResiduePotModMotiv() {
 		return iResiduePotModMotiv;
