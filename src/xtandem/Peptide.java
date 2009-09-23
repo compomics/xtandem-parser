@@ -65,7 +65,7 @@ public class Peptide implements Serializable{
 	/**
 	 * This list contains all the differnt sorts of ions.
 	 */
-	private ArrayList<Ion> iIons = null;
+	private ArrayList<FragmentIon> iIons = null;
 	/**
 	 * This String holds the upstream flanking sequence
 	 */
@@ -83,11 +83,14 @@ public class Peptide implements Serializable{
      */
     private int missedCleavages = 0;
 
+    private int iSpectrumNumber;
 
-    /**
+    
+
+	/**
      * The Peptide constructor gets the peptide id the start + end position and the sequences as string.
      */
-    public Peptide(String aPeptideID,int aStart, int aEnd, String aSequence){
+    public Peptide(String aPeptideID, int aStart, int aEnd, String aSequence){
     	iPeptideID = aPeptideID;
     	iStart = aStart;
     	iEnd = aEnd;
@@ -130,7 +133,17 @@ public class Peptide implements Serializable{
 		this.iEnd = aEnd;
 	}
 
-
+	/**
+	 * This method returns the corrisponding spectrum number for the peptide
+	 * @return
+	 */
+	public int getSpectrumNumber() {		
+		return iSpectrumNumber;
+	}
+	
+	public void setSpectrumNumber(int aSpectrumNumber) {		
+		iSpectrumNumber = aSpectrumNumber;
+	}
 	//TODO: API for getters and setters!
 	public String getSequence() {
 		return iSequence;
@@ -203,11 +216,11 @@ public class Peptide implements Serializable{
 		this.domainNextScore = domainNextScore;
 	}
 
-	public ArrayList<Ion> getIons(){
+	public ArrayList<FragmentIon> getIons(){
         return iIons;
     }
 
-    public void setIons(ArrayList<Ion> aIons){
+    public void setIons(ArrayList<FragmentIon> aIons){
         iIons = aIons;
     }
 
