@@ -2,12 +2,14 @@ package xtandem;
 
 import interfaces.Modification;
 
+import java.io.Serializable;
+
 /**
  * This class implements modification and represents a fixed modification object.
  *
  * @author Thilo Muth
  */
-public class FixedModification implements Modification {
+public class FixedModification implements Modification, Serializable {
 
 	 /**
      * This String holds the name of the modification.
