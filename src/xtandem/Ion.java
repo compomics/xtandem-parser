@@ -1,4 +1,7 @@
 package xtandem;
+
+import java.io.Serializable;
+
 /**
  * This class represents an Ion object. It holds the ion number, the ion score and the 6 different types of ions:
  * 1) a-c ions
@@ -7,7 +10,7 @@ package xtandem;
  * @author Thilo Muth
  *
  */
-public class Ion {
+public class Ion implements Serializable{
 
     private int iIonNumber = 0;
     private double iIonScore = 0;

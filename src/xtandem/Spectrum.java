@@ -1,5 +1,6 @@
 package xtandem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  * @author Thilo Muth
  *
  */
-public class Spectrum {
+public class Spectrum implements Serializable{
 
 	/**
 	 * This variable holds the spectrum id, which is the number associated with the mass spectrum that was identified.

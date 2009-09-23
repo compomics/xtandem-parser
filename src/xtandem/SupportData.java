@@ -1,5 +1,6 @@
 package xtandem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,7 +14,7 @@ import java.util.HashMap;
  *
  * @author Thilo Muth
  */
-public class SupportData {
+public class SupportData implements Serializable{
 
 	private String iHyperlabel = "";
 	private String iConvolLabel = "";

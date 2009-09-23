@@ -2,12 +2,14 @@ package xtandem;
 
 import interfaces.Modification;
 
+import java.io.Serializable;
+
 /**
  * This class implements modification and represents a variable modification object.
  *
  * @author Thilo Muth
  */
-public class VariableModification implements Modification {
+public class VariableModification implements Modification, Serializable {
 
 	 /**
      * This String holds the name of the modification.

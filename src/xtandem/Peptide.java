@@ -1,5 +1,6 @@
 package xtandem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  * 
  * @author Thilo Muth
  */
-public class Peptide {
+public class Peptide implements Serializable{
 
 	/**
 	 * This variable contains the peptide id (as an index).

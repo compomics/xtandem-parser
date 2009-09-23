@@ -1,14 +1,16 @@
 package xtandem;
 
 import interfaces.Peaklist;
-import parser.MgfFileParser;
-import parser.XTandemParser;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+
+import parser.MgfFileParser;
+import parser.XTandemParser;
 /**
  * This class represents the xtandem file object as the starting point which provides all the methods
  * to use the information which are parsed by the Xtandem parser.
@@ -16,7 +18,7 @@ import java.util.Iterator;
  * @author Thilo Muth
  *
  */
-public class XTandemFile {
+public class XTandemFile implements Serializable{
 
 	/**
 	 * The filename of xtandem xml file.
@@ -81,7 +83,26 @@ public class XTandemFile {
 	private int iSpectraNumber = 0;
 
 	private HashMap<Integer, Peaklist> iRawFileMap;
-
+	
+	/**
+     * Constructor of XTandemFile gets a string to an existing path and filename of the xtandem file.
+     *
+     * @param aXTandemFile 
+     */
+	public XTandemFile(String aXTandemFile) {
+        try {
+            File inputFile = new File(aXTandemFile);
+            if (!inputFile.exists()) {
+                throw new IllegalArgumentException("XTandem xml-file " + aXTandemFile + " doesn't exist.");
+            }
+            iXTParser = new XTandemParser(inputFile);
+            setFileName(aXTandemFile);            
+            iSpectraList = this.getSpectraList();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	
     /**
      * Constructor of XTandemFile gets a string to an existing path and filename of the xtandem file.
      *
@@ -96,7 +117,7 @@ public class XTandemFile {
             }
             iXTParser = new XTandemParser(inputFile);
             setFileName(new File(aXTandemFile).getName());
-            iRawFile = aRawFile;
+            iRawFile = aRawFile;            
             setRawFileType(iRawFile);
             iSpectraList = this.getSpectraList();
         } catch (IOException e) {

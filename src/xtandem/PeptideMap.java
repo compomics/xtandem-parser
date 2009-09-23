@@ -1,5 +1,6 @@
 package xtandem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 /**
@@ -7,7 +8,7 @@ import java.util.HashMap;
  * @author Thilo Muth
  *
  */
-public class PeptideMap {
+public class PeptideMap implements Serializable{
 
 	/**
 	 * This variable holds the second dimension hash map for the peptide object as value.

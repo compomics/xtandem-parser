@@ -1,5 +1,6 @@
 package xtandem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,7 +9,7 @@ import java.util.Iterator;
  * @author Thilo Muth
  *
  */
-public class ProteinMap {
+public class ProteinMap implements Serializable{
 
 	/**
 	 * This map has as key the proteinID and as value the protein.

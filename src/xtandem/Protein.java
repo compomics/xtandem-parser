@@ -1,11 +1,13 @@
 package xtandem;
 
+import java.io.Serializable;
+
 /**
  *
  * This class contains all the parsed data from a xtandem file protein.
  * @author Thilo Muth
  */
-public class Protein {
+public class Protein implements Serializable{
 
 	/**
 	 * This variable holds the log10-value of the expectation value of the protein.

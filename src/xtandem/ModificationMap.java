@@ -2,6 +2,7 @@ package xtandem;
 
 import interfaces.Modification;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,7 +12,7 @@ import java.util.HashMap;
  * @author Thilo Muth
  *
  */
-public class ModificationMap {
+public class ModificationMap implements Serializable{
 	/**
 	 * Contains a hash map for the fixed modifications.
 	 */

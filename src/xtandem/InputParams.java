@@ -1,6 +1,6 @@
 package xtandem;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.HashMap;
 /**
  * This class holds information of the given input parameters.
@@ -8,7 +8,7 @@ import java.util.HashMap;
  * @author Thilo Muth
  *
  */
-public class InputParams {
+public class InputParams implements Serializable{
 
 	// Input parameters
 	private String iDefaultParamPath = "";
