@@ -19,7 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
+ 
 public class FileSelector extends JFrame{
 	
 	private JPanel loadxmlPanel = null;
@@ -30,7 +30,7 @@ public class FileSelector extends JFrame{
 	private JButton okBtn = null;
 	private JPanel upperPanel = null;
 	private JButton cancelBtn;
-	private JPanel centerPanel;
+	//private JPanel centerPanel;
 	//private JPanel loadmgfPanel;
 	private JTextField mgfSourceField;
 	//private JButton mgffileBrow;
