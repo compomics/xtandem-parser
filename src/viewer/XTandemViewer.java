@@ -3,6 +3,7 @@ package viewer;
 import interfaces.Modification;
 import interfaces.Peaklist;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -30,8 +31,10 @@ import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.JXTableHeader;
 
 import xtandem.FixedModification;
+import xtandem.FragmentIon;
 import xtandem.MgfPeak;
 import xtandem.MgfPeaklist;
+import xtandem.Parameters;
 import xtandem.Peptide;
 import xtandem.PeptideMap;
 import xtandem.Protein;
@@ -51,7 +54,6 @@ public class XTandemViewer extends JFrame {
 	private SpectrumPanel spectrumPanel;
 	private String iXTandemFileString;
 	private String iRawFile;
-	private XTandemFile xXTFile;
     private HashMap<Integer, ArrayList<Peptide>> peptideMap;
     private HashMap<Integer, ArrayList<Double>> allMzValues;
     private HashMap<Integer, ArrayList<Double>> allIntensityValues;
@@ -59,6 +61,8 @@ public class XTandemViewer extends JFrame {
     private HashMap<Integer, ArrayList<Double>> scaledIntensityValues;
     private HashMap<Integer, ArrayList<Modification>> allFixMods;
     private HashMap<Integer, ArrayList<Modification>> allVarMods;  
+    private HashMap<String, FragmentIon[]> bIonMap;
+	private HashMap<String, FragmentIon[]> yIonMap;
     private HashMap<Integer, String> accMap;
     private Vector spectraJXTableColumnToolTips;
     private Vector spectrumJTableColumnToolTips;
@@ -110,6 +114,7 @@ public class XTandemViewer extends JFrame {
     private JCheckBox zIonsJCheckBox;
     private String iRawFileType;
     private boolean iParseAll = false;
+    private double ionCoverageErrorMargin = 0.0;
 
     
     
@@ -293,7 +298,7 @@ public class XTandemViewer extends JFrame {
         copyIdentificationsJPopupMenu.add(copyIdentificationsJMenuItem);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("X!Tandem Viewer v0.6");
+        setTitle("X!Tandem Viewer v0.7");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Spectra Files", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
 
@@ -442,10 +447,10 @@ public class XTandemViewer extends JFrame {
         bIonsJCheckBox.setPreferredSize(new java.awt.Dimension(39, 23));
         bIonsJCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //bIonsJCheckBoxActionPerformed(evt);
+                bIonsJCheckBoxActionPerformed(evt);
             }
         });
-        bIonsJCheckBox.setEnabled(false);
+        bIonsJCheckBox.setEnabled(true);
 
         cIonsJCheckBox.setSelected(true);
         cIonsJCheckBox.setText("c");
@@ -468,10 +473,10 @@ public class XTandemViewer extends JFrame {
         yIonsJCheckBox.setPreferredSize(new java.awt.Dimension(39, 23));
         yIonsJCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //yIonsJCheckBoxActionPerformed(evt);
+                yIonsJCheckBoxActionPerformed(evt);
             }
         });
-        yIonsJCheckBox.setEnabled(false);
+        yIonsJCheckBox.setEnabled(true);
 
         xIonsJCheckBox.setSelected(true);
         xIonsJCheckBox.setText("x");
@@ -794,7 +799,6 @@ public class XTandemViewer extends JFrame {
     
     public void insertFiles(String aXTandemFile) {
 
-        //setTitle("OMSSA Viewer " + ommsaViewerVersion + "  -  [" + new File(aOmxFile).getPath() + "]");
 
 
         iXTandemFileString = aXTandemFile;        
@@ -807,6 +811,7 @@ public class XTandemViewer extends JFrame {
 
             private XTandemFile iXTandemFile;
 			private HashMap<Integer, ArrayList<Protein>> proteinMap;
+			
 
 			@Override
             public void run() {
@@ -854,19 +859,22 @@ public class XTandemViewer extends JFrame {
                     System.exit(0);
                 }
                  
-
-                  // Set up the hash maps
-                  peptideMap = new HashMap<Integer, ArrayList<Peptide>>();
-                  proteinMap = new HashMap<Integer, ArrayList<Protein>>();
-                  accMap = new HashMap<Integer, String>();
-                  allMzValues = new HashMap<Integer, ArrayList<Double>>();
-                  allIntensityValues = new HashMap<Integer, ArrayList<Double>>();
-                  allFixMods = new HashMap<Integer, ArrayList<Modification>>();
-                  allVarMods = new HashMap<Integer, ArrayList<Modification>>();
-                  scaledMzValues = new HashMap<Integer, ArrayList<Double>>();
-                  scaledIntensityValues = new HashMap<Integer, ArrayList<Double>>();                  
-                  
-                  if(iParseAll){
+                ionCoverageErrorMargin = Parameters.FRAGMENTMASSERROR;
+                
+                // Set up the hash maps
+                peptideMap = new HashMap<Integer, ArrayList<Peptide>>();
+                proteinMap = new HashMap<Integer, ArrayList<Protein>>();
+                accMap = new HashMap<Integer, String>();
+                allMzValues = new HashMap<Integer, ArrayList<Double>>();
+                allIntensityValues = new HashMap<Integer, ArrayList<Double>>();
+                allFixMods = new HashMap<Integer, ArrayList<Modification>>();
+                allVarMods = new HashMap<Integer, ArrayList<Modification>>();
+                scaledMzValues = new HashMap<Integer, ArrayList<Double>>();
+                scaledIntensityValues = new HashMap<Integer, ArrayList<Double>>();                  
+                bIonMap = new HashMap<String, FragmentIon[]>();
+                yIonMap = new HashMap<String, FragmentIon[]>();
+                
+                if(iParseAll){
                 	  int specNumber = iXTandemFile.getRawFileSpectraNumber();
                 	  if(iXTandemFile.getRawFileType().equals("mgf")){
                     	  HashMap<Integer, Peaklist> mgfPeaklistMap = iXTandemFile.getRawFileMap();
@@ -939,13 +947,21 @@ public class XTandemViewer extends JFrame {
 
                           // Get the peptide hits.
                           ArrayList<Peptide> pepList = pepMap.getAllPeptides(spectrumNumber);
-                          
+                          for (Peptide peptide : pepList) {
+                        	// Get the b and y ions
+                        	  Vector IonVector= iXTandemFile.getFragmentIonsForPeptide(peptide);
+                        	  FragmentIon[] bIons = (FragmentIon[]) IonVector.get(0);
+                        	  FragmentIon[] yIons = (FragmentIon[]) IonVector.get(1);
+                        	  bIonMap.put(peptide.getDomainID(), bIons);
+                        	  yIonMap.put(peptide.getDomainID(), yIons);
+						}
                     	  // Get the support data for each spectrum.
                     	  SupportData supportData = iXTandemFile.getSupportData(spectrumNumber);
                     	  
                     	  // Fill the map: for each spectrum get the corressponding peptide list.
                     	  peptideMap.put(spectrumNumber, pepList);
-
+                    	  
+                    	  
                     	  //int spectrumID = spectrum.getSpectrumId();
                     	  String label = supportData.getFragIonSpectrumDescription();
                     	  int precursorCharge = spectrum.getPrecursorCharge();
@@ -994,6 +1010,74 @@ public class XTandemViewer extends JFrame {
 
             }
         }.start();
+    }
+    
+    /**
+     * Filters the annotations and returns the annotations matching the selected
+     * list next to the spectrum panel.
+     * 
+     * @param annotations the annotations to be filtered
+     * @return the filtered annotations
+     */
+    private Vector<DefaultSpectrumAnnotation> filterAnnotations(Vector<DefaultSpectrumAnnotation> annotations) {
+
+        Vector<DefaultSpectrumAnnotation> filteredAnnotations = new Vector();
+
+        for (int i = 0; i < annotations.size(); i++) {
+            String currentLabel = annotations.get(i).getLabel();
+
+            boolean useAnnotation = true;
+
+            // check ion type
+            if (currentLabel.lastIndexOf("a") != -1) {
+                if (!aIonsJCheckBox.isSelected()) {
+                    useAnnotation = false;
+                }
+            } else if (currentLabel.lastIndexOf("b") != -1) {
+                if (!bIonsJCheckBox.isSelected()) {
+                    useAnnotation = false;
+                }
+            } else if (currentLabel.lastIndexOf("c") != -1) {
+                if (!cIonsJCheckBox.isSelected()) {
+                    useAnnotation = false;
+                }
+            } else if (currentLabel.lastIndexOf("x") != -1) {
+                if (!xIonsJCheckBox.isSelected()) {
+                    useAnnotation = false;
+                }
+            } else if (currentLabel.lastIndexOf("y") != -1) {
+                if (!yIonsJCheckBox.isSelected()) {
+                    useAnnotation = false;
+                }
+            } else if (currentLabel.lastIndexOf("z") != -1) {
+                if (!zIonsJCheckBox.isSelected()) {
+                    useAnnotation = false;
+                }
+            }
+
+            // check ion charge
+//            if (useAnnotation) {
+//                if (currentLabel.lastIndexOf("+") == -1) {
+//                    if (!chargeOneJCheckBox.isSelected()) {
+//                        useAnnotation = false;
+//                    }
+//                } else if (currentLabel.lastIndexOf("+++") != -1) {
+//                    if (!chargeOverTwoJCheckBox.isSelected()) {
+//                        useAnnotation = false;
+//                    }
+//                } else if (currentLabel.lastIndexOf("++") != -1) {
+//                    if (!chargeTwoJCheckBox.isSelected()) {
+//                        useAnnotation = false;
+//                    }
+//                }
+//            }
+
+            if (useAnnotation) {
+                filteredAnnotations.add(annotations.get(i));
+            }
+        }
+
+        return filteredAnnotations;
     }
     
     /**
@@ -1064,6 +1148,41 @@ public class XTandemViewer extends JFrame {
         // At the end set the cursor back to default.
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
+    private void bIonsJCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yIonsJCheckBoxActionPerformed
+        aIonsJCheckBoxActionPerformed(null);
+    }
+    
+    private void yIonsJCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yIonsJCheckBoxActionPerformed
+        aIonsJCheckBoxActionPerformed(null);
+    }
+    
+    /**
+     * Updates the ion coverage annotations
+     *
+     * @param evt
+     */
+    private void aIonsJCheckBoxActionPerformed(ActionEvent evt) {//GEN-FIRST:event_aIonsJCheckBoxActionPerformed
+        if (identificationsJXTable.getRowCount() > 0) {
+
+            int selectedRow = 0;
+
+            if (identificationsJXTable.getRowCount() > 1 &&
+                    identificationsJXTable.getSelectedRow() != -1) {
+                selectedRow = identificationsJXTable.getSelectedRow();
+            }
+            System.out.println(identificationsJXTable.getValueAt(selectedRow, 1));
+            System.out.println(identificationsJXTable.getValueAt(selectedRow, 7));
+            
+            Vector<DefaultSpectrumAnnotation> currentAnnotations = allAnnotations.get(
+                    identificationsJXTable.getValueAt(selectedRow, 1) + "_" +
+                    identificationsJXTable.getValueAt(selectedRow, 7));
+
+            // update the ion coverage annotations
+            spectrumPanel.setAnnotations(filterAnnotations(currentAnnotations));
+            spectrumPanel.validate();
+            spectrumPanel.repaint();
+        }
+    }
     
     private void spectraJXTableMouseClicked(MouseEvent evt) {
     	// Set the cursor into the wait status.
@@ -1130,7 +1249,9 @@ public class XTandemViewer extends JFrame {
             while (identificationsJXTable.getRowCount() > 0) {
                 ((DefaultTableModel) identificationsJXTable.getModel()).removeRow(0);               
             }
-
+            
+            allAnnotations = new HashMap();
+            
             // clear the modification details legend
             modificationDetailsJLabel.setText("");
 
@@ -1260,6 +1381,45 @@ public class XTandemViewer extends JFrame {
                     } else {
                         cTerminal = "-" + cTerminal; // add the "-" at the beginning, i.e. "-COOH"
                     }
+                    
+                   
+                   Vector<DefaultSpectrumAnnotation> currentAnnotations = new Vector();
+                   FragmentIon[] bIons = bIonMap.get(domain.getDomainID());
+                   FragmentIon[] yIons = yIonMap.get(domain.getDomainID());
+                   int[][] ionCoverage = new int[sequence.length()][2];
+                   
+                   for (FragmentIon bIon : bIons) {                	   
+                       int ionNumber = bIon.getNumber();
+                       String ionType = bIon.getType();
+                       double mzValue = bIon.getMZ();  
+                       Color color = Color.BLUE;
+                       currentAnnotations.add(new DefaultSpectrumAnnotation(mzValue, ionCoverageErrorMargin, color, ionType + (ionNumber)));
+                       
+                       // TODO: The ion coverage!
+                       //ionCoverage[ionNumber][0]++;
+                   }   
+                   
+                   for (FragmentIon yIon : yIons) {                	   
+                       int ionNumber = yIon.getNumber();
+                       String ionType = yIon.getType();
+                       double mzValue = yIon.getMZ();  
+                       Color color = Color.BLACK;;
+                       currentAnnotations.add(new DefaultSpectrumAnnotation(mzValue, ionCoverageErrorMargin, color, ionType + (ionNumber)));
+                       
+                       // TODO: The ion coverage!
+                       //ionCoverage[ionNumber][0]++;
+                   }                       
+
+                   allAnnotations.put((sequence + "_" + domain.getDomainExpect()), currentAnnotations);
+
+                        // only add the annotations for the first identification
+                        if (allAnnotations.size() == 1) {
+                            // add the ion coverage annotations to the spectrum panel
+                            spectrumPanel.setAnnotations(filterAnnotations(currentAnnotations));
+                            spectrumPanel.validate();
+                            spectrumPanel.repaint();
+                        }
+                    
                     
                     String modifiedSequenceColorCoded = "<html>";
                     
