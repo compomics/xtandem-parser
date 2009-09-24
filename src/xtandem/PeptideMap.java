@@ -1,5 +1,7 @@
 package xtandem;
 
+import interfaces.Ion;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,55 +70,56 @@ public class PeptideMap implements Serializable{
 		    	        peptide.setDomainDeltaMh(Double.parseDouble(aRawPeptideMap.get("delta" + "_s" + i +"_p" + counter).toString()));
 		    	        peptide.setDomainHyperScore(Double.parseDouble(aRawPeptideMap.get("hyperscore" + "_s" + i +"_p" + counter).toString()));
 		    	        peptide.setDomainNextScore(Double.parseDouble(aRawPeptideMap.get("nextscore" + "_s" + i +"_p" + counter).toString()));
-                        ArrayList<FragmentIon> ionList = new ArrayList<FragmentIon>();
-
-                        if(aRawPeptideMap.get("a_score" + "_s" + i +"_p" + counter) != null ){
-                            double aScore = Double.parseDouble(aRawPeptideMap.get("a_score" + "_s" + i +"_p" + counter).toString());
-		    	            int aNumber = Integer.parseInt(aRawPeptideMap.get("a_ions" + "_s" + i +"_p" + counter).toString());
-                            FragmentIon aIon = new FragmentIon (aNumber, aScore);
-                            aIon.setType(FragmentIon.aION_TYPE);
-                            ionList.add(aIon);
-                        }
-
-                        if (aRawPeptideMap.get("b_score" + "_s" + i +"_p" + counter) != null){
-                            double bScore = Double.parseDouble(aRawPeptideMap.get("b_score" + "_s" + i +"_p" + counter).toString());
-		    	            int bNumber = Integer.parseInt(aRawPeptideMap.get("b_ions" + "_s" + i +"_p" + counter).toString());
-                            FragmentIon bIon = new FragmentIon (bNumber, bScore);
-                            bIon.setType(FragmentIon.bION_TYPE);
-                            ionList.add(bIon);
-                        }
-
-                        if(aRawPeptideMap.get("c_score" + "_s" + i +"_p" + counter) != null){
-                            double cScore = Double.parseDouble(aRawPeptideMap.get("c_score" + "_s" + i +"_p" + counter).toString());
-		    	            int cNumber = Integer.parseInt(aRawPeptideMap.get("c_ions" + "_s" + i +"_p" + counter).toString());
-                            FragmentIon cIon = new FragmentIon (cNumber, cScore);
-                            cIon.setType(FragmentIon.cION_TYPE);
-                            ionList.add(cIon);
-                        }
-
-                        if(aRawPeptideMap.get("x_score" + "_s" + i +"_p" + counter) != null){
-                            double xScore = Double.parseDouble(aRawPeptideMap.get("x_score" + "_s" + i +"_p" + counter).toString());
-		    	            int xNumber = Integer.parseInt(aRawPeptideMap.get("x_ions" + "_s" + i +"_p" + counter).toString());
-                            FragmentIon xIon = new FragmentIon (xNumber, xScore);
-                            xIon.setType(FragmentIon.xION_TYPE);
-                            ionList.add(xIon);
-                        }
-
-                        if(aRawPeptideMap.get("y_score" + "_s" + i +"_p" + counter) != null){
-                            double yScore = Double.parseDouble(aRawPeptideMap.get("y_score" + "_s" + i +"_p" + counter).toString());
-		    	            int yNumber = Integer.parseInt(aRawPeptideMap.get("y_ions" + "_s" + i +"_p" + counter).toString());
-                            FragmentIon yIon = new FragmentIon (yNumber, yScore);
-                            yIon.setType(FragmentIon.yION_TYPE);
-                            ionList.add(yIon);
-                        }
-
-                        if(aRawPeptideMap.get("z_score" + "_s" + i +"_p" + counter) != null){
-                            double zScore = Double.parseDouble(aRawPeptideMap.get("z_score" + "_s" + i +"_p" + counter).toString());
-		    	            int zNumber = Integer.parseInt(aRawPeptideMap.get("z_ions" + "_s" + i +"_p" + counter).toString());
-                            FragmentIon zIon = new FragmentIon (zNumber, zScore);
-                            zIon.setType(FragmentIon.zION_TYPE);
-                            ionList.add(zIon);
-                        }
+                        ArrayList<Ion> ionList = new ArrayList<Ion>();
+                        
+                       
+//                        if(aRawPeptideMap.get("a_score" + "_s" + i +"_p" + counter) != null ){
+//                            double aScore = Double.parseDouble(aRawPeptideMap.get("a_score" + "_s" + i +"_p" + counter).toString());
+//		    	            int aNumber = Integer.parseInt(aRawPeptideMap.get("a_ions" + "_s" + i +"_p" + counter).toString());
+//                            Ion aIon = new Ion (aNumber, aScore);
+//                            aIon.setType(interfaces.aION_TYPE);
+//                            ionList.add(aIon);
+//                        }
+//
+//                        if (aRawPeptideMap.get("b_score" + "_s" + i +"_p" + counter) != null){
+//                            double bScore = Double.parseDouble(aRawPeptideMap.get("b_score" + "_s" + i +"_p" + counter).toString());
+//		    	            int bNumber = Integer.parseInt(aRawPeptideMap.get("b_ions" + "_s" + i +"_p" + counter).toString());
+//                            Ion bIon = new Ion (bNumber, bScore);
+//                            bIon.setType(interfaces.bION_TYPE);
+//                            ionList.add(bIon);
+//                        }
+//
+//                        if(aRawPeptideMap.get("c_score" + "_s" + i +"_p" + counter) != null){
+//                            double cScore = Double.parseDouble(aRawPeptideMap.get("c_score" + "_s" + i +"_p" + counter).toString());
+//		    	            int cNumber = Integer.parseInt(aRawPeptideMap.get("c_ions" + "_s" + i +"_p" + counter).toString());
+//                            Ion cIon = new Ion (cNumber, cScore);
+//                            cIon.setType(interfaces.cION_TYPE);
+//                            ionList.add(cIon);
+//                        }
+//
+//                        if(aRawPeptideMap.get("x_score" + "_s" + i +"_p" + counter) != null){
+//                            double xScore = Double.parseDouble(aRawPeptideMap.get("x_score" + "_s" + i +"_p" + counter).toString());
+//		    	            int xNumber = Integer.parseInt(aRawPeptideMap.get("x_ions" + "_s" + i +"_p" + counter).toString());
+//                            Ion xIon = new Ion (xNumber, xScore);
+//                            xIon.setType(interfaces.xION_TYPE);
+//                            ionList.add(xIon);
+//                        }
+//
+//                        if(aRawPeptideMap.get("y_score" + "_s" + i +"_p" + counter) != null){
+//                            double yScore = Double.parseDouble(aRawPeptideMap.get("y_score" + "_s" + i +"_p" + counter).toString());
+//		    	            int yNumber = Integer.parseInt(aRawPeptideMap.get("y_ions" + "_s" + i +"_p" + counter).toString());
+//                            Ion yIon = new Ion (yNumber, yScore);
+//                            yIon.setType(interfaces.yION_TYPE);
+//                            ionList.add(yIon);
+//                        }
+//
+//                        if(aRawPeptideMap.get("z_score" + "_s" + i +"_p" + counter) != null){
+//                            double zScore = Double.parseDouble(aRawPeptideMap.get("z_score" + "_s" + i +"_p" + counter).toString());
+//		    	            int zNumber = Integer.parseInt(aRawPeptideMap.get("z_ions" + "_s" + i +"_p" + counter).toString());
+//                            Ion zIon = new Ion (zNumber, zScore);
+//                            zIon.setType(interfaces.zION_TYPE);
+//                            ionList.add(zIon);
+//                        }
 
                         peptide.setIons(ionList);
 		    	        peptide.setUpFlankSequence(aRawPeptideMap.get("pre" + "_s" + i +"_p" + counter).toString());
