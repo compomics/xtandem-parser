@@ -63,9 +63,9 @@ public class Spectrum implements Serializable{
 	/**
 	 * This variable holds the (internal) spectrum number.
 	 */
-	private int iSpectrumNumber = 0;
+	private int iSpectrumNumber = 0;	
 
-    /**
+	/**
      * Empty constructor for spectrum object.
      */
 	public Spectrum(){
@@ -96,68 +96,89 @@ public class Spectrum implements Serializable{
         iSummedScore = aSpectrumValues.get(1);
         iMaxFragIonIntensity = aSpectrumValues.get(2);
         iIntensityMultiplier = aSpectrumValues.get(3);
-        iSpectrumNumber = aSpectrumNumber;
+        iSpectrumNumber = aSpectrumNumber;        
     }
 
 	public int getSpectrumId() {
 		return iSpectrumId;
 	}
+	
 	public void setSpectrumId(int spectrumId) {
 		this.iSpectrumId = spectrumId;
 	}
+	
 	public double getPrecursorMh() {
 		return iPrecursorMh;
 	}
+	
 	public void setPrecursorMh(double precursorMh) {
 		this.iPrecursorMh = precursorMh;
 	}
+	
 	public int getPrecursorCharge() {
 		return iPrecursorCharge;
 	}
+	
 	public void setPrecursorCharge(int precursorCharge) {
 		this.iPrecursorCharge = precursorCharge;
 	}
+	
 	public double getExpectValue() {
 		return iExpectValue;
 	}
+	
 	public void setExpectValue(double expectValue) {
 		this.iExpectValue = expectValue;
 	}
+	
 	public String getLabel() {
 		return iLabel;
 	}
+	
 	public void setLabel(String label) {
 		this.iLabel = label;
 	}
+	
 	public double getSummedScore() {
 		return iSummedScore;
 	}
+	
 	public void setSummedScore(double summedScore) {
 		this.iSummedScore = summedScore;
 	}
+	
 	public double getMaxFragIonIntensity() {
 		return iMaxFragIonIntensity;
 	}
+	
 	public void setMaxFragIonIntensity(double maxFragIonIntensity) {
 		this.iMaxFragIonIntensity = maxFragIonIntensity;
 	}
+	
 	public double getIntensityMultiplier() {
 		return iIntensityMultiplier;
 	}
+	
 	public void setIntensityMultiplier(double intensityMultiplier) {
 		this.iIntensityMultiplier = intensityMultiplier;
 	}
+	
 	public ArrayList<Double> getISpectrumValues() {
 		return iSpectrumValues;
 	}
+	
 	public void setISpectrumValues(ArrayList<Double> spectrumValues) {
 		iSpectrumValues = spectrumValues;
 	}
+	
 	public int getSpectrumNumber() {
 		return iSpectrumNumber;
 	}
+	
 	public void setSpectrumNumber(int spectrumNumber) {
 		this.iSpectrumNumber = spectrumNumber;
 	}
+	
+    
 
 }
