@@ -1,5 +1,6 @@
 package xtandem;
 
+import interfaces.Ion;
 import interfaces.Peaklist;
 
 import java.io.File;
@@ -8,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Vector;
 
 import parser.MgfFileParser;
 import parser.XTandemParser;
@@ -39,7 +41,7 @@ public class XTandemFile implements Serializable{
 	 * This is an instance of the protein map object.
 	 */
 	private ProteinMap iProteinMap = null;
-
+	
 	/**
 	 * This is an instance of the modification map object.
 	 */
@@ -138,6 +140,48 @@ public class XTandemFile implements Serializable{
         }
         return iPerformParams;
     }
+    
+    /**
+     * This method returns a hash map for the masses.
+     * @return map The masses hashmap
+     */
+    public HashMap getMassesMap(){
+    	HashMap<String, Double> map = new HashMap<String, Double>();
+    	map.put("A", Masses.A);
+    	map.put("B", Masses.B);
+    	map.put("C", Masses.C);
+    	map.put("D", Masses.D);
+    	map.put("E", Masses.E);
+    	map.put("F", Masses.F);
+    	map.put("G", Masses.G);
+    	map.put("H", Masses.H);
+    	map.put("I", Masses.I);
+    	map.put("J", Masses.J);
+    	map.put("K", Masses.K);
+    	map.put("L", Masses.L);
+    	map.put("M", Masses.M);
+    	map.put("N", Masses.N);
+    	map.put("O", Masses.O);
+    	map.put("P", Masses.P);
+    	map.put("Q", Masses.Q);
+    	map.put("R", Masses.R);
+    	map.put("S", Masses.S);
+    	map.put("T", Masses.T);
+    	map.put("U", Masses.U);
+    	map.put("V", Masses.V);
+    	map.put("W", Masses.W);
+    	map.put("X", Masses.X);
+    	map.put("Y", Masses.Y);
+    	map.put("Z", Masses.Z);
+    	map.put("Hydrogen", Masses.Hydrogen);
+    	map.put("Carbon", Masses.Carbon);
+    	map.put("Nitrogen", Masses.Nitrogen);
+    	map.put("Oxygen", Masses.Oxygen);
+    	map.put("Electron", Masses.Electron);
+    	map.put("C_term", Masses.C_term);
+    	map.put("N_term", Masses.N_term);    	
+    	return map;
+    }
 
 	/**
      * This method returns the modification hash map
@@ -149,6 +193,21 @@ public class XTandemFile implements Serializable{
     		iModMap = new ModificationMap(iXTParser.getRawModMap(), this.getPeptideMap(), this.getInputParameters(), iXTParser.getNumberOfSpectra());
         }
         return iModMap;
+    }
+    
+    /**
+     * Returns a vector with two arrays of b ions and y ions respectively.
+     * @param peptide
+     * @return Vector The vector containing b ions and y ions
+     */
+    public Vector getFragmentIonsForPeptide(Peptide peptide){
+    	Vector<Ion[]> fragIons = new Vector();
+    	// Get an instance of the InSilicoDigester
+    	InSilicoDigester digester = new InSilicoDigester(peptide,this.getModificationMap(), this.getMassesMap());
+    	// The vector should contain two arrays: b ions & y ions
+    	fragIons.add(digester.getBIons());
+    	fragIons.add(digester.getYIons());    	
+    	return fragIons;
     }
 
 	/**
@@ -162,55 +221,7 @@ public class XTandemFile implements Serializable{
         }
         return iPeptideMap;
     }
-
-    // TODO: Delete this... as well as the Query class :)
-//    public ArrayList<Query> getQueries(){
-//    	ArrayList<Query> queries = new ArrayList<Query>();
-//    	HashMap<Integer, Peaklist> rawFileMap = this.getRawFileMap();
-//
-//    	int spectraNumber = this.getRawFileSpectraNumber();
-//    	if (this.getRawFileType().equals("mgf")){
-//    		for(int i = 1; i <= spectraNumber; i++){
-//    			MgfPeaklist peaks = (MgfPeaklist) rawFileMap.get(i);
-//
-//    			Query query = new Query();
-//    			query.setQueryID(i);
-//   				query.setPrecursorCharge(Integer.parseInt(peaks.getCharge().substring(7, 8)));
-//    			query.setPrecursorMz(peaks.getPepmass());
-//    			ArrayList<Double> masses = new ArrayList<Double>();
-//    			ArrayList<Double> intensities = new ArrayList<Double>();
-//
-//    			// Check if it's a identified spectrum in all spectra from the raw file
-//    			for(int j = 0; j < this.getSpectraNumber(); j++){
-//    				SupportData supportData = this.getSupportData(i);
-//    				// Get the masses/intensities from the mgf file
-//    				System.out.println("sup data: " + supportData.getFragIonSpectrumDescription());
-//    				System.out.println("peak" + peaks.getTitle());
-//        			if(supportData.getFragIonSpectrumDescription().equals(peaks.getTitle())){
-//        				query.setMasses(supportData.getXValuesFragIonMass2Charge());
-//        				System.out.println("test!");
-//            			query.setIntensities(supportData.getYValuesFragIonMass2Charge());
-//            			query.setTitle(supportData.getFragIonSpectrumDescription());
-//            			query.setIdentified(true);
-//        			}
-//    			}
-//
-//    			// Get the masses/intensities from the xtandem xml file, if not identified
-//    			if (!query.isIdentified()){
-//    				ArrayList<MgfPeak> mgfPeaks = peaks.getPeaks();
-//    				for (MgfPeak mgfPeak : mgfPeaks) {
-//    					masses.add(mgfPeak.getMZ());
-//    					intensities.add(mgfPeak.getIntensity());
-//    				}
-//        			query.setMasses(masses);
-//        			query.setIntensities(intensities);
-//        			query.setTitle(peaks.getTitle());
-//    			}
-//    			queries.add(query);
-//    		}
-//    	}
-//    	return queries;
-//    }
+   
     /**
      * This method returns a map of peaklist from the raw files. It differentiates between mgf, mzData and mzML file types.
      * @return rawFileMap
