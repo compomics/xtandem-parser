@@ -1,5 +1,7 @@
 package xtandem;
 
+import interfaces.Ion;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -65,7 +67,7 @@ public class Peptide implements Serializable{
 	/**
 	 * This list contains all the differnt sorts of ions.
 	 */
-	private ArrayList<FragmentIon> iIons = null;
+	private ArrayList<Ion> iIons = null;
 	/**
 	 * This String holds the upstream flanking sequence
 	 */
@@ -216,11 +218,11 @@ public class Peptide implements Serializable{
 		this.domainNextScore = domainNextScore;
 	}
 
-	public ArrayList<FragmentIon> getIons(){
+	public ArrayList<Ion> getIons(){
         return iIons;
     }
 
-    public void setIons(ArrayList<FragmentIon> aIons){
+    public void setIons(ArrayList<Ion> aIons){
         iIons = aIons;
     }
 
