@@ -204,9 +204,34 @@ public class XTandemFile implements Serializable{
     	Vector<Ion[]> fragIons = new Vector();
     	// Get an instance of the InSilicoDigester
     	InSilicoDigester digester = new InSilicoDigester(peptide,this.getModificationMap(), this.getMassesMap());
+    	FragmentIon[] bIons = digester.getBIons();
+    	FragmentIon[] yIons = digester.getYIons();
     	// The vector should contain two arrays: b ions & y ions
-    	fragIons.add(digester.getBIons());
-    	fragIons.add(digester.getYIons());    	
+    	SupportData supData = this.getSupportData(peptide.getSpectrumNumber());
+    	
+    	ArrayList<Double> mzList = supData.getXValuesFragIonMass2Charge();
+    	
+    	SpectrumPeak[] peaks = new SpectrumPeak[mzList.size()];
+    	for(int i = 0; i < mzList.size(); i++){
+    		peaks[i] = new SpectrumPeak();
+    		peaks[i].setMz(mzList.get(i));
+    	}
+    	
+    	// Match the b ions
+    	Vector<FragmentIon> matchedBIons = digester.getMatchedIons(bIons, peaks);
+    	FragmentIon[] matchBIons = new FragmentIon[matchedBIons.size()];
+    	for (int i = 0; i < matchedBIons.size(); i++){
+    		matchBIons[i] =  matchedBIons.get(i);
+    	}
+    	
+    	// Match the y ions
+    	Vector<FragmentIon> matchedYIons = digester.getMatchedIons(yIons, peaks);
+    	FragmentIon[] matchYIons = new FragmentIon[matchedYIons.size()];
+    	for (int i = 0; i < matchedYIons.size(); i++){
+    		matchYIons[i] =  matchedYIons.get(i);
+    	}
+    	fragIons.add(matchBIons);
+    	fragIons.add(matchYIons);    	
     	return fragIons;
     }
 
