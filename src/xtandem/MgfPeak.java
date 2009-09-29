@@ -31,21 +31,50 @@ public class MgfPeak implements Peak{
 	public MgfPeak(){
 	}
 
+	/**
+	 * Returns the m/z of the mgf peak.
+	 * @return iPeakMz
+	 */
 	public double getMZ() {
 		return iPeakMz;
 	}
+	
+	/**
+	 * Returns the intensity of the mgf peak.
+	 * @return iPeakIntensity
+	 */
 	public double getIntensity() {
 		return iPeakIntensity;
 	}
+	
+	/**
+	 * Returns the charge of the mgf peak.
+	 * @return iPeakCharge
+	 */
 	public int getCharge() {
 		return iPeakCharge;
 	}
+	
+	/**
+	 * Sets the m/z of the mgf peak.
+	 * @param aPeakMz
+	 */
 	public void setPeakMz(double aPeakMz) {
 		iPeakMz = aPeakMz;
 	}
+	
+	/**
+	 * Sets the intensity of the mgf peak.
+	 * @param aPeakIntensity
+	 */
 	public void setPeakIntensity(double aPeakIntensity) {
 		iPeakIntensity = aPeakIntensity;
 	}
+	
+	/**
+	 * Sets the charge of the mgf peak.
+	 * @param aPeakCharge
+	 */
 	public void setPeakCharge(int aPeakCharge) {
 		iPeakCharge = aPeakCharge;
 	}
