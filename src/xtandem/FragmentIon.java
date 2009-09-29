@@ -89,41 +89,73 @@ public class FragmentIon implements Ion {
             if (-aMassError <= (aPeaks[i].getMZ() - iMz) && (aPeaks[i].getMZ() - iMz) <= aMassError) {
                 iTheoreticalExperimentalMassError = aPeaks[i].getMZ() - iMz;
                 matchFlag = true;
-                iIntensity = aPeaks[i].getIntensity();
+                iIntensity = aPeaks[i].getIntensity();                
                 break;
             }
         }
         return matchFlag;
     }
 	
+	/**
+	 * Returns the m/z of the fragment ion.
+	 * @return iMz
+	 */
 	public double getMZ() {
 		return iMz;
 	}
 	
+	/**
+	 * Returns the intensity of the fragment ion.
+	 * @return iIntensity
+	 */
 	public double getIntensity() {
 		return iIntensity;
 	}
 	
+	/**
+	 * Returns the number of the fragment ion.
+	 * @return iNumber
+	 */
 	public int getNumber() {
 		return iNumber;
 	}
 	
+	/**
+	 * Returns the score of the fragment ion.
+	 * @return iScore
+	 */
 	public double getScore() {
 		return iScore;
 	}
 	
+	/**
+	 * Returns the type of the fragment ion.
+	 * @return iType
+	 */
 	public String getType() {
 		return iType;
 	}
 	
+	/**
+	 * Returns the error margin.
+	 * @return iErrorMargin
+	 */
 	public double getErrorMargin() {
 		return iErrorMargin;
 	}
 	
+	/**
+	 * Returns the id of the fragment ion.
+	 * @return iID
+	 */
 	public int getID() {
 		return iID;
 	}
 	
+	/**
+	 * Returns the theoretical experimental mass error.
+	 * @return iTheoreticalExperimentalMassError
+	 */
 	public double getTheoreticalExperimentalMassError() {
 		return iTheoreticalExperimentalMassError;
 	}
