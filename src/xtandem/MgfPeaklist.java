@@ -55,7 +55,7 @@ public class MgfPeaklist implements Peaklist{
 
 	/**
 	 * This method sets the peak array and trims the peak list.
-	 * @param aPeaks
+	 * @param aPeakList
 	 */
     public void setPeaks(ArrayList<MgfPeak> aPeakList) {
     	// Trim to save some space + time

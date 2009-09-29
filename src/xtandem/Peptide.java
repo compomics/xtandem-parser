@@ -137,7 +137,7 @@ public class Peptide implements Serializable{
 
 	/**
 	 * This method returns the corrisponding spectrum number for the peptide
-	 * @return
+	 * @return iSpectrumNumber
 	 */
 	public int getSpectrumNumber() {		
 		return iSpectrumNumber;

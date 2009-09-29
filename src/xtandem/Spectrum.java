@@ -125,7 +125,7 @@ public class Spectrum implements Serializable{
 	
 	/**
 	 * Sets the precursor mass.
-	 * @param precursorMh
+	 * @param aPrecursorMh
 	 */
 	public void setPrecursorMh(double aPrecursorMh) {
 		this.iPrecursorMh = aPrecursorMh;
@@ -141,7 +141,7 @@ public class Spectrum implements Serializable{
 	
 	/**
 	 * Sets the precursor charge.
-	 * @param precursorCharge
+	 * @param aPrecursorCharge
 	 */
 	public void setPrecursorCharge(int aPrecursorCharge) {
 		this.iPrecursorCharge = aPrecursorCharge;
@@ -157,7 +157,7 @@ public class Spectrum implements Serializable{
 	
 	/**
 	 * Sets the expect value
-	 * @param expectValue
+	 * @param aExpectValue
 	 */
 	public void setExpectValue(double aExpectValue) {
 		this.iExpectValue = aExpectValue;

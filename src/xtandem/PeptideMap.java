@@ -187,7 +187,7 @@ public class PeptideMap implements Serializable{
 	/**
 	 * Returns the number of peptides for a given spectrum
 	 * @param aSpectrumNumber
-	 * @return
+	 * @return The total number of peptides
 	 */
 	public int getNumberOfPeptides(int aSpectrumNumber){
 		return this.getAllPeptides(aSpectrumNumber).size();
