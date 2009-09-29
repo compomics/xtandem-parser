@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * This class contains all the parsed data from a xtandem file peptide
+ * The peptide object contains all the information about itself and its identification, which is called in xtandem domain.
  * 
  * @author Thilo Muth
  */
@@ -51,19 +51,19 @@ public class Peptide implements Serializable{
 	/**
 	 * This double holds the calculated peptide mass + a proton
 	 */
-	private double domainMh = 0;
+	private double iDomainMz = 0;
 	/**
 	 * This double holds the spectrum mh minus the calculated mh
 	 */
-	private double domainDeltaMh = 0;
+	private double iDomainDeltaMz = 0;
 	/**
 	 * This double hold Tandem's score for the identification
 	 */
-	private double domainHyperScore = 0;
+	private double iDomainHyperScore = 0;
 	/**
 	 * This double holds the next score of the domain
 	 */
-	private double domainNextScore = 0;
+	private double iDomainNextScore = 0;
 	/**
 	 * This list contains all the differnt sorts of ions.
 	 */
@@ -71,23 +71,23 @@ public class Peptide implements Serializable{
 	/**
 	 * This String holds the upstream flanking sequence
 	 */
-	private String upFlankSequence = null;
+	private String iUpFlankSequence = null;
 	/**
 	 * This String holds the downstream flanking sequence
 	 */
-	private String downFlankSequence = null;
+	private String iDownFlankSequence = null;
 	/**
 	 * This String presents the sequence of the domain
 	 */
-	private String domainSequence = null;
+	private String iDomainSequence = null;
     /**
      * Contains the total of missed cleavages
      */
-    private int missedCleavages = 0;
-
-    private int iSpectrumNumber;
-
-    
+    private int iMissedCleavages = 0;    
+    /**
+     * Contains the spectrum number.
+     */
+    private int iSpectrumNumber;    
 
 	/**
      * The Peptide constructor gets the peptide id the start + end position and the sequences as string.
@@ -142,130 +142,259 @@ public class Peptide implements Serializable{
 	public int getSpectrumNumber() {		
 		return iSpectrumNumber;
 	}
-	
+	/**
+	 * Sets the spectrum number for the peptide.
+	 * @param aSpectrumNumber
+	 */
 	public void setSpectrumNumber(int aSpectrumNumber) {		
 		iSpectrumNumber = aSpectrumNumber;
 	}
-	//TODO: API for getters and setters!
+	
+	/**
+	 * Returns the protein sequence of the peptide.
+	 * @return iSequence
+	 */
 	public String getSequence() {
 		return iSequence;
 	}
+	
+	/**
+	 * Sets the protein sequence of the peptide.
+	 * @param aSequence
+	 */
 	public void setSequence(String aSequence) {
 		this.iSequence = aSequence;
 	}
-
+	
+	/**
+	 * Returns the domain id of the peptide.
+	 * @return iDomainID
+	 */
 	public String getDomainID() {
 		return iDomainID;
 	}
 
+	/**
+	 * Sets the domain id of the peptide.
+	 * @param domainID
+	 */
 	public void setDomainID(String domainID) {
 		iDomainID = domainID;
 	}
 
+	/**
+	 * Returns the domains start location.
+	 * @return iDomainStart
+	 */
 	public int getDomainStart() {
 		return iDomainStart;
 	}
-
+	
+	/**
+	 * Sets the domain start location.
+	 * @param domainStart
+	 */
 	public void setDomainStart(int domainStart) {
 		iDomainStart = domainStart;
 	}
-
+	
+	/**
+	 * Returns the domain end location.
+	 * @return iDomainEnd
+	 */
 	public int getDomainEnd() {
 		return iDomainEnd;
 	}
-
+	
+	/**
+	 * Sets the domain end location.
+	 * @param domainEnd
+	 */
 	public void setDomainEnd(int domainEnd) {
 		iDomainEnd = domainEnd;
 	}
-
+	
+	/**
+	 * Returns the domain expect value.
+	 * @return iDomainExpect
+	 */
 	public double getDomainExpect() {
 		return iDomainExpect;
 	}
-
+	
+	/**
+	 * Sets the domain expect value
+	 * @param domainExpect
+	 */
+	
 	public void setDomainExpect(double domainExpect) {
 		iDomainExpect = domainExpect;
 	}
-
+	
+	/**
+	 * Returns the domain mh/mz of the peptide.
+	 * @return iDomainMz
+	 */
 	public double getDomainMh() {
-		return domainMh;
+		return iDomainMz;
 	}
-
+	
+	/**
+	 * Sets the domain mh/mz for the peptide.
+	 * @param domainMh
+	 */
 	public void setDomainMh(double domainMh) {
-		this.domainMh = domainMh;
+		this.iDomainMz = domainMh;
 	}
 
+	/**
+	 * Returns the domain delta mh/mz.
+	 * @return iDomainDeltaMz
+	 */
 	public double getDomainDeltaMh() {
-		return domainDeltaMh;
+		return iDomainDeltaMz;
 	}
-
+	
+	/**
+	 * Sets the domain delta mh/mz.
+	 * @param domainDeltaMh
+	 */
 	public void setDomainDeltaMh(double domainDeltaMh) {
-		this.domainDeltaMh = domainDeltaMh;
+		this.iDomainDeltaMz = domainDeltaMh;
 	}
-
+	
+	/**
+	 * Returns the domain hyperscore.
+	 * @return iDomainHyperScore
+	 */
 	public double getDomainHyperScore() {
-		return domainHyperScore;
+		return iDomainHyperScore;
 	}
-
+	
+	/**
+	 * Sets the domain hyperscore
+	 * @param domainHyperScore
+	 */
 	public void setDomainHyperScore(double domainHyperScore) {
-		this.domainHyperScore = domainHyperScore;
+		this.iDomainHyperScore = domainHyperScore;
 	}
-
+	
+	/**
+	 * Returns the domain nextscore.
+	 * @return iDomainNextScore
+	 */
 	public double getDomainNextScore() {
-		return domainNextScore;
+		return iDomainNextScore;
 	}
-
+	
+	/**
+	 * Sets the domain nextscore.
+	 * @param domainNextScore
+	 */
 	public void setDomainNextScore(double domainNextScore) {
-		this.domainNextScore = domainNextScore;
+		this.iDomainNextScore = domainNextScore;
 	}
-
+	
+	/**
+	 * Returns a list of ions for the peptide.
+	 * @return iIons
+	 */
 	public ArrayList<Ion> getIons(){
         return iIons;
     }
-
+	
+	/**
+	 * Sets the ions for peptide.
+	 * @param aIons
+	 */
     public void setIons(ArrayList<Ion> aIons){
         iIons = aIons;
     }
-
+    
+    /**
+     * Returns the upstream flanking sequence of the peptide.
+     * @return iUpFlankSequence
+     */
 	public String getUpFlankSequence() {
-		return upFlankSequence;
+		return iUpFlankSequence;
 	}
 
+	/**
+     * Sets the upstream flanking sequence of the peptide.
+     * @param aUpFlankSequence
+     */
 	public void setUpFlankSequence(String aUpFlankSequence) {
-		this.upFlankSequence = aUpFlankSequence;
+		this.iUpFlankSequence = aUpFlankSequence;
 	}
-
+	
+	/**
+     * Returns the downstream flanking sequence of the peptide.
+     * @return iDownFlankSequence
+     */
 	public String getDownFlankSequence() {
-		return downFlankSequence;
+		return iDownFlankSequence;
 	}
-
+	
+	/**
+     * Sets the downstream flanking sequence of the peptide.
+     * @param aDownFlankSequence
+     */
 	public void setDownFlankSequence(String aDownFlankSequence) {
-		this.downFlankSequence = aDownFlankSequence;
+		this.iDownFlankSequence = aDownFlankSequence;
 	}
-
+	
+	/**
+	 * Returns the domain sequence as a string.
+	 * @return iDomainSequence
+	 */
 	public String getDomainSequence() {
-		return domainSequence;
+		return iDomainSequence;
 	}
-
+	
+	/**
+	 * Sets the domain sequence of the peptide.
+	 * @param aDomainSequence
+	 */
 	public void setDomainSequence(String aDomainSequence) {
-		this.domainSequence = aDomainSequence;
+		this.iDomainSequence = aDomainSequence;
 	}
-
+	
+	/**
+	 * Returns the number of missed cleavages.
+	 * @return iMissedCleavages
+	 */
 	public int getMissedCleavages() {
-		return missedCleavages;
+		return iMissedCleavages;
 	}
-
+	
+	/**
+	 * Sets the number of missed cleavages.
+	 * @param aMissedCleavages
+	 */
 	public void setMissedCleavages(int aMissedCleavages) {
-		this.missedCleavages = aMissedCleavages;
+		this.iMissedCleavages = aMissedCleavages;
 	}
-
+	
+	/**
+	 * Returns the fasta file path.
+	 * @return iFastaFilePath
+	 */
 	public String getFastaFilePath() {
 		return iFastaFilePath;
 	}
-
+	
+	/**
+	 * Sets the fasta file path.
+	 * @param aFastaFilePath
+	 */
 	public void setFastaFilePath(String aFastaFilePath) {
 		iFastaFilePath = aFastaFilePath;
 	}
-
+	
+	/**
+	 * Returns the peptide id as string.
+	 * @return iPeptideID
+	 */
 	public String getPeptideID() {
 		return iPeptideID;
 	}
