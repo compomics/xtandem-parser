@@ -210,11 +210,12 @@ public class XTandemFile implements Serializable{
     	SupportData supData = this.getSupportData(peptide.getSpectrumNumber());
     	
     	ArrayList<Double> mzList = supData.getXValuesFragIonMass2Charge();
-    	
+    	ArrayList<Double> intList = supData.getYValuesFragIonMass2Charge();
     	SpectrumPeak[] peaks = new SpectrumPeak[mzList.size()];
     	for(int i = 0; i < mzList.size(); i++){
     		peaks[i] = new SpectrumPeak();
     		peaks[i].setMz(mzList.get(i));
+    		peaks[i].setIntensity(intList.get(i));
     	}
     	
     	// Match the b ions
@@ -256,7 +257,6 @@ public class XTandemFile implements Serializable{
     	if (this.getRawFileType().equals("mgf")){
     		iRawFileMap = new MgfFileParser(iRawFile, iXTParser.getTitle2SpectrumIDMap(), this.getPeptideMap()).getPeakListMap();
     	}
-    	//TODO: Implement the other two parsers!
 
     	return iRawFileMap;
     }
@@ -274,7 +274,6 @@ public class XTandemFile implements Serializable{
     		if (this.getRawFileType().equals("mgf")){
         		number = new MgfFileParser(iRawFile, iXTParser.getTitle2SpectrumIDMap(), this.getPeptideMap()).getSpectraNumber();
         	}
-            //TODO: Implement the other two parsers! 
     	}
 
     	return number;
@@ -426,7 +425,11 @@ public class XTandemFile implements Serializable{
 	public XTandemParser getXTandemParser() {
 		return iXTParser;
 	}
-
+	
+	/**
+	 * Returns the total number of spectra.
+	 * @return iSpectraNumber
+	 */
 	public int getSpectraNumber() {
 		return iSpectraNumber;
 	}
