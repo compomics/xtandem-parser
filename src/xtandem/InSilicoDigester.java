@@ -143,7 +143,7 @@ public class InSilicoDigester {
 	
 	/**
 	 * This method tries to match the theoretical masses of the ions with the masses of the experimental peaks.
-	 * @param theoFrags The theoretical fragment ions.
+	 * @param theoFragIons The theoretical fragment ions.
 	 * @param aPeaks The experimental peaks.
 	 * @return matchedIons A Vector containing all the matched fragment ions.
 	 */
