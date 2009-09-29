@@ -355,9 +355,7 @@ public class MgfFileParser implements Parser{
 						} break;
 				    }
 				}
-			}
-			// Add the peaks to the list.
-			//mgfPeaklist.setPeaks(list.toArray(new Peak[0]));
+			}			
 			return mgfPeaklist;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
