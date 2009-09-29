@@ -18,11 +18,8 @@ import java.util.Vector;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.table.DefaultTableModel;
@@ -37,7 +34,6 @@ import xtandem.MgfPeaklist;
 import xtandem.Parameters;
 import xtandem.Peptide;
 import xtandem.PeptideMap;
-import xtandem.Protein;
 import xtandem.Spectrum;
 import xtandem.SupportData;
 import xtandem.VariableModification;
@@ -64,37 +60,19 @@ public class XTandemViewer extends JFrame {
     private HashMap<String, FragmentIon[]> bIonMap;
 	private HashMap<String, FragmentIon[]> yIonMap;
     private HashMap<Integer, String> accMap;
-    private Vector spectraJXTableColumnToolTips;
-    private Vector spectrumJTableColumnToolTips;
-    private Vector spectrumJXTableColumnToolTips;
+    private Vector spectraTableColToolTips;
+    private Vector spectrumTableColToolTips;
+    private Vector spectrumJXTableColToolTips;
     private Vector identificationsJXTableColumnToolTips;
     private HashMap<String, Vector<DefaultSpectrumAnnotation>> allAnnotations;
     private JCheckBox aIonsJCheckBox;
-    private JMenuItem aboutJMenuItem;
     private JCheckBox bIonsJCheckBox;
     private JCheckBox cIonsJCheckBox;
     private JCheckBox chargeOneJCheckBox;
     private JCheckBox scalingJCheckBox;
     private JCheckBox chargeTwoJCheckBox;
-    private JMenuItem copyIdentificationsJMenuItem;
-    private JPopupMenu copyIdentificationsJPopupMenu;
-    private JMenuItem copySpectraJMenuItem;
-    private JPopupMenu copySpectraJPopupMenu;
-    private JMenuItem copySpectrumJMenuItem;
-    private JPopupMenu copySpectrumJPopupMenu;
-    private JMenuItem exitJMenuItem;
-    private JMenuItem exportAllIdentificationsJMenuItem;
-    private JMenuItem exportAllSpectraJMenuItem;
-    private JMenuItem exportBestIdentificationsJMenuItem;
-    private JMenu exportJMenu;
-    private JMenuItem exportSelectedSpectrumJMenuItem;
-    private JMenuItem exportSpectraFilesTableJMenuItem;
-    private JMenu fileJMenu;
-    private JMenu helpJMenu;
-    private JMenuItem helpJMenuItem;
-    private org.jdesktop.swingx.JXTable identificationsJXTable;
+    private JXTable identificationsJXTable;
     private JLabel jLabel1;
-    //private JMenuBar jMenuBar1;
     private JPanel jPanel1;
     private JPanel jPanel2;
     private JPanel jPanel3;
@@ -104,22 +82,18 @@ public class XTandemViewer extends JFrame {
     private JScrollPane jScrollPane4;
     private JSeparator jSeparator1;
     private JSeparator jSeparator2;
-    private JLabel modificationDetailsJLabel;
-    private JMenuItem openJMenuItem;
-    private org.jdesktop.swingx.JXTable spectraJXTable;
+    private JLabel modificationDetailsJLabel;   
+    private JXTable spectraJXTable;
     private JPanel spectrumJPanel;
-    private org.jdesktop.swingx.JXTable spectrumJXTable;
+    private JXTable spectrumJXTable;
     private JCheckBox xIonsJCheckBox;
     private JCheckBox yIonsJCheckBox;
-    private JCheckBox zIonsJCheckBox;
-    private String iRawFileType;
+    private JCheckBox zIonsJCheckBox;    
     private boolean iParseAll = false;
     private double ionCoverageErrorMargin = 0.0;
-
-    
     
 	/**
-     * Constructor get
+     * Constructor gets the xml output file the raw file and boolean for parsing.
      */
     public XTandemViewer(String aXTandemXmlFile, String aRawFile, boolean aParseAll) {
     	iRawFile = aRawFile;    	
@@ -154,20 +128,20 @@ public class XTandemViewer extends JFrame {
         spectraJXTable.getTableHeader().setReorderingAllowed(false);
         spectrumJXTable.getTableHeader().setReorderingAllowed(false);
         identificationsJXTable.getTableHeader().setReorderingAllowed(false);
-        spectraJXTableColumnToolTips = new Vector();
-        spectraJXTableColumnToolTips.add("Spectrum Number");
-        spectraJXTableColumnToolTips.add("Spectrum File Name");
-        spectraJXTableColumnToolTips.add("Precursor Mass Over Charge Ratio");
-        spectraJXTableColumnToolTips.add("Precursor Charge");
-        spectraJXTableColumnToolTips.add("Spectrum Identified");
-        spectrumJTableColumnToolTips = new Vector();
-        spectrumJTableColumnToolTips.add(null);
-        spectrumJTableColumnToolTips.add("Mass Over Charge Ratio");
-        spectrumJTableColumnToolTips.add("Intensity");
-        spectrumJXTableColumnToolTips = new Vector();
-        spectrumJXTableColumnToolTips.add(null);
-        spectrumJXTableColumnToolTips.add("Mass Over Charge Ratio");
-        spectrumJXTableColumnToolTips.add("Intensity");
+        spectraTableColToolTips = new Vector();
+        spectraTableColToolTips.add("Spectrum Number");
+        spectraTableColToolTips.add("Spectrum File Name");
+        spectraTableColToolTips.add("Precursor Mass Over Charge Ratio");
+        spectraTableColToolTips.add("Precursor Charge");
+        spectraTableColToolTips.add("Spectrum Identified");
+        spectrumTableColToolTips = new Vector();
+        spectrumTableColToolTips.add(null);
+        spectrumTableColToolTips.add("Mass Over Charge Ratio");
+        spectrumTableColToolTips.add("Intensity");
+        spectrumJXTableColToolTips = new Vector();
+        spectrumJXTableColToolTips.add(null);
+        spectrumJXTableColToolTips.add("Mass Over Charge Ratio");
+        spectrumJXTableColToolTips.add("Intensity");
         identificationsJXTableColumnToolTips = new Vector();
         identificationsJXTableColumnToolTips.add("Spectrum Number");
         identificationsJXTableColumnToolTips.add("Peptide Sequence");
@@ -185,14 +159,11 @@ public class XTandemViewer extends JFrame {
         
     }
 	
+    /**
+     * This method initializes all the gui components.
+     */
     private void initComponents() {
-
-        copySpectraJPopupMenu = new javax.swing.JPopupMenu();
-        copySpectraJMenuItem = new javax.swing.JMenuItem();
-        copySpectrumJPopupMenu = new javax.swing.JPopupMenu();
-        copySpectrumJMenuItem = new javax.swing.JMenuItem();
-        copyIdentificationsJPopupMenu = new javax.swing.JPopupMenu();
-        copyIdentificationsJMenuItem = new javax.swing.JMenuItem();
+        
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         spectraJXTable = new JXTable() {
@@ -203,7 +174,7 @@ public class XTandemViewer extends JFrame {
                         java.awt.Point p = e.getPoint();
                         int index = columnModel.getColumnIndexAtX(p.x);
                         int realIndex = columnModel.getColumn(index).getModelIndex();
-                        tip = (String) spectraJXTableColumnToolTips.get(realIndex);
+                        tip = (String) spectraTableColToolTips.get(realIndex);
                         return tip;
                     }
                 };
@@ -250,52 +221,13 @@ public class XTandemViewer extends JFrame {
                         java.awt.Point p = e.getPoint();
                         int index = columnModel.getColumnIndexAtX(p.x);
                         int realIndex = columnModel.getColumn(index).getModelIndex();
-                        tip = (String) spectrumJXTableColumnToolTips.get(realIndex);
+                        tip = (String) spectrumJXTableColToolTips.get(realIndex);
                         return tip;
                     }
                 };
             }
-        };
-        //jMenuBar1 = new javax.swing.JMenuBar();
-        fileJMenu = new javax.swing.JMenu();
-        openJMenuItem = new javax.swing.JMenuItem();
-        exitJMenuItem = new javax.swing.JMenuItem();
-        exportJMenu = new javax.swing.JMenu();
-        exportSpectraFilesTableJMenuItem = new javax.swing.JMenuItem();
-        exportAllIdentificationsJMenuItem = new javax.swing.JMenuItem();
-        exportBestIdentificationsJMenuItem = new javax.swing.JMenuItem();
-        exportSelectedSpectrumJMenuItem = new javax.swing.JMenuItem();
-        exportAllSpectraJMenuItem = new javax.swing.JMenuItem();
-        helpJMenu = new javax.swing.JMenu();
-        helpJMenuItem = new javax.swing.JMenuItem();
-        aboutJMenuItem = new javax.swing.JMenuItem();
-
-        copySpectraJMenuItem.setMnemonic('C');
-        copySpectraJMenuItem.setText("Copy");
-        copySpectraJMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //copySpectraJMenuItemActionPerformed(evt);
-            }
-        });
-        copySpectraJPopupMenu.add(copySpectraJMenuItem);
-
-        copySpectrumJMenuItem.setMnemonic('C');
-        copySpectrumJMenuItem.setText("Copy");
-        copySpectrumJMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //copySpectrumJMenuItemActionPerformed(evt);
-            }
-        });
-        copySpectrumJPopupMenu.add(copySpectrumJMenuItem);
-
-        copyIdentificationsJMenuItem.setMnemonic('C');
-        copyIdentificationsJMenuItem.setText("Copy");
-        copyIdentificationsJMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //copyIdentificationsJMenuItemActionPerformed(evt);
-            }
-        });
-        copyIdentificationsJPopupMenu.add(copyIdentificationsJMenuItem);
+        };       
+        
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("X!Tandem Viewer v0.7");
@@ -660,113 +592,7 @@ public class XTandemViewer extends JFrame {
                 .addContainerGap())
         );
 
-        fileJMenu.setMnemonic('F');
-        fileJMenu.setText("File");
 
-        openJMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        openJMenuItem.setMnemonic('O');
-        openJMenuItem.setText("Open");
-        openJMenuItem.setToolTipText("Open a New OMX File");
-        openJMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //openJMenuItemActionPerformed(evt);
-            }
-        });
-        fileJMenu.add(openJMenuItem);
-
-        exitJMenuItem.setMnemonic('x');
-        exitJMenuItem.setText("Exit");
-        exitJMenuItem.setToolTipText("Exit OMSSA Viewer");
-        exitJMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //exitJMenuItemActionPerformed(evt);
-            }
-        });
-        fileJMenu.add(exitJMenuItem);
-
-        //jMenuBar1.add(fileJMenu);
-
-        exportJMenu.setMnemonic('E');
-        exportJMenu.setText("Export");
-
-        exportSpectraFilesTableJMenuItem.setMnemonic('P');
-        exportSpectraFilesTableJMenuItem.setText("Spectra Files Table");
-        exportSpectraFilesTableJMenuItem.setToolTipText("Export the Spectra Files Table as Tab Delimited Text File");
-        exportSpectraFilesTableJMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //exportSpectraFilesTableJMenuItemActionPerformed(evt);
-            }
-        });
-        exportJMenu.add(exportSpectraFilesTableJMenuItem);
-
-        exportAllIdentificationsJMenuItem.setMnemonic('I');
-        exportAllIdentificationsJMenuItem.setText("All Identifications (all hits)");
-        exportAllIdentificationsJMenuItem.setToolTipText("Export All Identifications (all hits) as Tab Delimited Text File");
-        exportAllIdentificationsJMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //exportAllIdentificationsJMenuItemActionPerformed(evt);
-            }
-        });
-        exportJMenu.add(exportAllIdentificationsJMenuItem);
-
-        exportBestIdentificationsJMenuItem.setMnemonic('I');
-        exportBestIdentificationsJMenuItem.setText("All Identifications (best hits only)");
-        exportBestIdentificationsJMenuItem.setToolTipText("Export All Identifications (best hits only) as Tab Delimited Text File");
-        exportBestIdentificationsJMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //exportBestIdentificationsJMenuItemActionPerformed(evt);
-            }
-        });
-        exportJMenu.add(exportBestIdentificationsJMenuItem);
-
-        exportSelectedSpectrumJMenuItem.setMnemonic('S');
-        exportSelectedSpectrumJMenuItem.setText("Selected Spectrum");
-        exportSelectedSpectrumJMenuItem.setToolTipText("Export the Selected Spectrum as Tab Delimited Text File");
-        exportSelectedSpectrumJMenuItem.setEnabled(false);
-        exportSelectedSpectrumJMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //exportSelectedSpectrumJMenuItemActionPerformed(evt);
-            }
-        });
-        exportJMenu.add(exportSelectedSpectrumJMenuItem);
-
-        exportAllSpectraJMenuItem.setMnemonic('S');
-        exportAllSpectraJMenuItem.setText("All Spectra");
-        exportAllSpectraJMenuItem.setToolTipText("Export all the Spectra as DTA Files");
-        exportAllSpectraJMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //exportAllSpectraJMenuItemActionPerformed(evt);
-            }
-        });
-        exportJMenu.add(exportAllSpectraJMenuItem);
-
-        //jMenuBar1.add(exportJMenu);
-
-        helpJMenu.setMnemonic('H');
-        helpJMenu.setText("Help");
-
-        helpJMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        helpJMenuItem.setMnemonic('H');
-        helpJMenuItem.setText("Help");
-        helpJMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //helpJMenuItemActionPerformed(evt);
-            }
-        });
-        helpJMenu.add(helpJMenuItem);
-
-        aboutJMenuItem.setMnemonic('a');
-        aboutJMenuItem.setText("About");
-        aboutJMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //aboutJMenuItemActionPerformed(evt);
-            }
-        });
-        helpJMenu.add(aboutJMenuItem);
-
-        //jMenuBar1.add(helpJMenu);
-
-        //setJMenuBar(jMenuBar1);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -803,26 +629,17 @@ public class XTandemViewer extends JFrame {
 
         iXTandemFileString = aXTandemFile;        
 
-        exportSelectedSpectrumJMenuItem.setEnabled(false);
 
 
 
         new Thread("ParserThread") {
 
             private XTandemFile iXTandemFile;
-			private HashMap<Integer, ArrayList<Protein>> proteinMap;
-			
 
-			@Override
             public void run() {
 
-                // turn off the auto row sorting
                 spectraJXTable.setSortable(false);
-//                spectraJTable.setRowSorter(null);
-//                spectrumJTable.setRowSorter(null);
-//                identificationsJTable.setRowSorter(null);
 
-                // empty the tables and clear the spectrum panel
                 while (((DefaultTableModel) spectraJXTable.getModel()).getRowCount() > 0) {
                     ((DefaultTableModel) spectraJXTable.getModel()).removeRow(0);
                 }
@@ -863,7 +680,6 @@ public class XTandemViewer extends JFrame {
                 
                 // Set up the hash maps
                 peptideMap = new HashMap<Integer, ArrayList<Peptide>>();
-                proteinMap = new HashMap<Integer, ArrayList<Protein>>();
                 accMap = new HashMap<Integer, String>();
                 allMzValues = new HashMap<Integer, ArrayList<Double>>();
                 allIntensityValues = new HashMap<Integer, ArrayList<Double>>();
@@ -1197,7 +1013,6 @@ public class XTandemViewer extends JFrame {
             } else {
             	scalingJCheckBox.setEnabled(false);
             }
-            int value = (Integer) spectraJXTable.getValueAt(row, 0);
             List<Double> intensityValues = allIntensityValues.get((Integer) spectraJXTable.getValueAt(row, 0));
 
             // Empty the spectrum table.
@@ -1280,8 +1095,7 @@ public class XTandemViewer extends JFrame {
                     ArrayList<Modification> fixedModList = allFixMods.get((Integer) spectraJXTable.getValueAt(row, 0));
                     ArrayList<Modification> varModList = allVarMods.get((Integer) spectraJXTable.getValueAt(row, 0));
                     // Handle fixed modifications
-                    if (true){
-    	                if (fixedModList != null) {
+    	            if (fixedModList != null) {
     						for (int i = 0; i < fixedModList.size(); i++) {
     							FixedModification fixMod = (FixedModification) fixedModList.get(i);
     							Vector<String> modifiedResidues = new Vector<String>();
@@ -1362,11 +1176,7 @@ public class XTandemViewer extends JFrame {
     						}
     					}
                         
-    				} else {
-                        modificationDetailsJLabel.setText("Modifications: (Files with modification details were not provided. " +
-                                "No modifications are shown.)");
-                        modifiedSequence = sequence;
-                    }
+    				
                     
                     // set the n-terminal
                     if (nTerminal.length() == 0) {
@@ -1386,7 +1196,6 @@ public class XTandemViewer extends JFrame {
                    Vector<DefaultSpectrumAnnotation> currentAnnotations = new Vector();
                    FragmentIon[] bIons = bIonMap.get(domain.getDomainID());
                    FragmentIon[] yIons = yIonMap.get(domain.getDomainID());
-                   int[][] ionCoverage = new int[sequence.length()][2];
                    
                    for (FragmentIon bIon : bIons) {                	   
                        int ionNumber = bIon.getNumber();
@@ -1395,7 +1204,7 @@ public class XTandemViewer extends JFrame {
                        Color color = Color.BLUE;
                        currentAnnotations.add(new DefaultSpectrumAnnotation(mzValue, ionCoverageErrorMargin, color, ionType + (ionNumber)));
                        
-                       // TODO: The ion coverage!
+                       // The ion coverage!
                        //ionCoverage[ionNumber][0]++;
                    }   
                    
@@ -1406,7 +1215,7 @@ public class XTandemViewer extends JFrame {
                        Color color = Color.BLACK;;
                        currentAnnotations.add(new DefaultSpectrumAnnotation(mzValue, ionCoverageErrorMargin, color, ionType + (ionNumber)));
                        
-                       // TODO: The ion coverage!
+                       // The ion coverage!
                        //ionCoverage[ionNumber][0]++;
                    }                       
 
