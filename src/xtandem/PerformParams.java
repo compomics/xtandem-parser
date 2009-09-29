@@ -41,27 +41,111 @@ public class PerformParams {
 	 * Holds the number of estimated false positives.
 	 */
 	private int iEstFalsePositives = 0;
+	
+	/**
+	 * This double holds the spectrum noise suppression ratio.
+	 */
 	private double iSpectrumNoiseSuppressionRatio = 0;
+	
+	/**
+	 * This Integer holds the number of total peptides used.
+	 */
 	private int iTotalPeptidesUsed = 0;
+	
+	/**
+	 * This Integer holds the number of total proteins used.
+	 */
 	private int iTotalProteinsUsed = 0;
+	
+	/**
+	 * This Integer holds the number of total spectra assigned.
+	 */
 	private int iTotalSpectraAssigned = 0;
+	
+	/**
+	 * This Integer holds the total number of spectra used.
+	 */
 	private int iTotalSpectraUsed = 0;
+	
+	/**
+	 * This Integer holds the number of total uniques assigned.
+	 */
 	private int iTotalUniqueAssigned = 0;
+	
+	/**
+	 * This String holds the process start time.
+	 */
 	private String iProcStartTime = "";
+	
+	/**
+	 * This String holds the process version.
+	 */
 	private String iProcVersion = "";
+	
+	/**
+	 * This String holds the quality values.
+	 */
 	private String iQualityValues = "";
+	
+	/**
+	 * This Integer holds the input model number.
+	 */
 	private int iInputModelNumber = 0;
+	
+	/**
+	 * This Integer holds the input spectra number.
+	 */
 	private int iInputSpectraNumber = 0;
+	
+	/**
+	 * This Integer holds the partial cleavage number.
+	 */
 	private int iPartialCleavageNumber = 0;
+	
+	/**
+	 * This Integer holds the point mutations number.
+	 */
 	private int iPointMutationsNumber = 0;
+	
+	/**
+	 * This Integer holds the potential c-terminal number.
+	 */
 	private int iPotentialC_termNumber = 0;
+	
+	/**
+	 * This Integer holds the potential n-terminal number.
+	 */
 	private int iPotentialN_termNumber = 0;
+	
+	/**
+	 * This Integer holds the unanticipated cleavage number.
+	 */
 	private int iUnanticipatedCleavageNumber = 0;
+	
+	/**
+	 * This double holds the initial model total timing.
+	 */
 	private double iInitModelTotalTiming = 0;
+	
+	/**
+	 * This double holds the initial model spectrum timing.
+	 */
 	private double iInitModelSpecTiming = 0;
+	
+	/**
+	 * This double holds the load sequence models timing.
+	 */
 	private double iLoadSeqModelsTiming = 0;
+	
+	/**
+	 * This double holds the refinement timing.
+	 */
 	private double iRefinementTiming = 0;
 
+	/**
+	 * The constructor gets a hash map containing all the performance parameters.
+	 * @param map
+	 */
 	public PerformParams(HashMap map){
 		if(map.get("SEQSRC1") != null) iSequenceSource_1 = map.get("SEQSRC1").toString();
 		if(map.get("SEQSRC2") != null) iSequenceSource_2 = map.get("SEQSRC2").toString();
