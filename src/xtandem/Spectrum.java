@@ -99,86 +99,163 @@ public class Spectrum implements Serializable{
         iSpectrumNumber = aSpectrumNumber;        
     }
 
+	/**
+	 * Returns the spectrum id.
+	 * @return iSpectrumId
+	 */
 	public int getSpectrumId() {
 		return iSpectrumId;
 	}
 	
-	public void setSpectrumId(int spectrumId) {
-		this.iSpectrumId = spectrumId;
+	/**
+	 * Sets the spectrum id.
+	 * @param aSpectrumId
+	 */
+	public void setSpectrumId(int aSpectrumId) {
+		this.iSpectrumId = aSpectrumId;
 	}
 	
+	/**
+	 * Returns the precursor mass.
+	 * @return iPrecursorMh
+	 */
 	public double getPrecursorMh() {
 		return iPrecursorMh;
 	}
 	
-	public void setPrecursorMh(double precursorMh) {
-		this.iPrecursorMh = precursorMh;
+	/**
+	 * Sets the precursor mass.
+	 * @param precursorMh
+	 */
+	public void setPrecursorMh(double aPrecursorMh) {
+		this.iPrecursorMh = aPrecursorMh;
 	}
 	
+	/**
+	 * Returns the precursor charge.
+	 * @return iPrecursorCharge
+	 */
 	public int getPrecursorCharge() {
 		return iPrecursorCharge;
 	}
 	
-	public void setPrecursorCharge(int precursorCharge) {
-		this.iPrecursorCharge = precursorCharge;
+	/**
+	 * Sets the precursor charge.
+	 * @param precursorCharge
+	 */
+	public void setPrecursorCharge(int aPrecursorCharge) {
+		this.iPrecursorCharge = aPrecursorCharge;
 	}
 	
+	/**
+	 * Returns the expect value.
+	 * @return iExpectValue
+	 */
 	public double getExpectValue() {
 		return iExpectValue;
 	}
 	
-	public void setExpectValue(double expectValue) {
-		this.iExpectValue = expectValue;
+	/**
+	 * Sets the expect value
+	 * @param expectValue
+	 */
+	public void setExpectValue(double aExpectValue) {
+		this.iExpectValue = aExpectValue;
 	}
 	
+	/**
+	 * Returns the label of the spectrum.
+	 * @return iLabel
+	 */
 	public String getLabel() {
 		return iLabel;
 	}
 	
-	public void setLabel(String label) {
-		this.iLabel = label;
+	/**
+	 * Sets the label of the spectrum.
+	 * @param aLabel
+	 */
+	public void setLabel(String aLabel) {
+		this.iLabel = aLabel;
 	}
 	
+	/**
+	 * Returns the summed score of the spectrum.
+	 * @return iSummedScore
+	 */
 	public double getSummedScore() {
 		return iSummedScore;
 	}
 	
-	public void setSummedScore(double summedScore) {
-		this.iSummedScore = summedScore;
+	/**
+	 * Sets the summed score of the spectrum.
+	 * @param aSummedScore
+	 */
+	public void setSummedScore(double aSummedScore) {
+		this.iSummedScore = aSummedScore;
 	}
 	
+	/**
+	 * Returns the maximum fragment ion intensity.
+	 * @return iMaxFragIonIntensity
+	 */
 	public double getMaxFragIonIntensity() {
 		return iMaxFragIonIntensity;
 	}
 	
-	public void setMaxFragIonIntensity(double maxFragIonIntensity) {
-		this.iMaxFragIonIntensity = maxFragIonIntensity;
+	/**
+	 * Sets the maximum fragment ion intensity.
+	 * @param aMaxFragIonIntensity
+	 */
+	public void setMaxFragIonIntensity(double aMaxFragIonIntensity) {
+		this.iMaxFragIonIntensity = aMaxFragIonIntensity;
 	}
 	
+	/**
+	 * Returns the intensity multiplier.
+	 * @return iIntensityMultiplier
+	 */
 	public double getIntensityMultiplier() {
 		return iIntensityMultiplier;
 	}
 	
-	public void setIntensityMultiplier(double intensityMultiplier) {
-		this.iIntensityMultiplier = intensityMultiplier;
+	/**
+	 * Sets he intensity multiplier.
+	 * @param aIntensityMultiplier
+	 */
+	public void setIntensityMultiplier(double aIntensityMultiplier) {
+		this.iIntensityMultiplier = aIntensityMultiplier;
 	}
 	
+	/**
+	 * Returns a double list of the spectrum values.
+	 * @return iSpectrumValues
+	 */
 	public ArrayList<Double> getISpectrumValues() {
 		return iSpectrumValues;
 	}
 	
-	public void setISpectrumValues(ArrayList<Double> spectrumValues) {
-		iSpectrumValues = spectrumValues;
+	/**
+	 * Sets a double list of the spectrum values.
+	 * @param aSpectrumValues
+	 */
+	public void setISpectrumValues(ArrayList<Double> aSpectrumValues) {
+		iSpectrumValues = aSpectrumValues;
 	}
 	
+	/**
+	 * Returns the number of the spectrum.
+	 * @return iSpectrumNumber
+	 */
 	public int getSpectrumNumber() {
 		return iSpectrumNumber;
 	}
 	
-	public void setSpectrumNumber(int spectrumNumber) {
-		this.iSpectrumNumber = spectrumNumber;
+	/**
+	 * Sets the number of the spectrum.
+	 * @param aSpectrumNumber
+	 */
+	public void setSpectrumNumber(int aSpectrumNumber) {
+		this.iSpectrumNumber = aSpectrumNumber;
 	}
-	
-    
-
 }
