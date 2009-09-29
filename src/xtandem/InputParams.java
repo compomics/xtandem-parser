@@ -85,7 +85,6 @@ public class InputParams implements Serializable{
 	private boolean iSpectrumUseNoiseCompression = false;
 
 	public InputParams(HashMap map){
-		// TODO: Do all the ifs...
 		if (map.get("DEFAULTPARAMPATH")!= null) iDefaultParamPath = map.get("DEFAULTPARAMPATH").toString();
 		if (map.get("TAXONOMYINFOPATH")!= null) iTaxonomyInfoPath = map.get("TAXONOMYINFOPATH").toString();
 		if (map.get("HISTOCOLWIDTH")!= null) iHistogramColWidth = map.get("HISTOCOLWIDTH").toString();
