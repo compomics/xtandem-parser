@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 /**
@@ -17,7 +18,7 @@ import java.util.HashMap;
  * @author Thilo Muth
  *
  */
-public class XTandemParser {
+public class XTandemParser implements Serializable{
 	/**
 	 * This variable holds the total number of spectra in the xtandem file
 	 */
@@ -325,7 +326,7 @@ public class XTandemParser {
 				                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refine, spectrum synthesis\"")) {
 				                    	if(!parameterNodes.item(m).getTextContent().equals("")){
 				                    		iInputParamMap.put("REFINESPECSYTNH", parameterNodes.item(m).getTextContent());
-				                    	}
+				                    	} 
 				                    }
 				                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refine, tic percent\"")) {
 				                    	if(!parameterNodes.item(m).getTextContent().equals("")){
