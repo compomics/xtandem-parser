@@ -19,7 +19,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
- 
+/**
+ * This class represents the file selection frame.
+ * The user can load the xtandem output xml file here.
+ * @author Thilo Muth
+ *
+ */
 public class FileSelector extends JFrame{
 	
 	private JPanel loadxmlPanel = null;
@@ -30,10 +35,7 @@ public class FileSelector extends JFrame{
 	private JButton okBtn = null;
 	private JPanel upperPanel = null;
 	private JButton cancelBtn;
-	//private JPanel centerPanel;
-	//private JPanel loadmgfPanel;
 	private JTextField mgfSourceField;
-	//private JButton mgffileBrow;
 	
 	/**
 	 * Constructor gets a title string
@@ -52,6 +54,9 @@ public class FileSelector extends JFrame{
         this.constructScreen();
 	}
 	
+	/**
+	 * This method constructs the screen.
+	 */
 	private void constructScreen(){
 		// Initialize frame
    	 
@@ -135,14 +140,6 @@ public class FileSelector extends JFrame{
 		    Action openAction = new OpenFileAction(loadFrame, fc);	    
 		    return openAction;	    
 	}
-	
-	private Action openMgfFileAction(){
-    	filename = System.getProperty("user.dir") + File.separator;//File.separator+"tmp";
-	    JFileChooser fc = new JFileChooser(new File(filename));
-	    JFrame loadFrame = new JFrame();
-	    Action openMgfAction = new OpenMgfFileAction(loadFrame, fc);	    
-	    return openMgfAction;	    
-}
 	
 	public static void main(String[] args) {
 	    new FileSelector("XTandem-Parser");
