@@ -16,12 +16,33 @@ public class MgfPeaklist implements Peaklist{
 	  * This list holds the peak objects.
 	  */
     private ArrayList<MgfPeak> iPeakList = new ArrayList();
+    /**
+     * This string holds the ms type.
+     */
     private String iMSType = null;
+    /**
+     * This double holds the peptide precursor mass.
+     */
     private double iPepmass = 0;
+    /**
+     * This variable holds the charge string.
+     */
     private String iCharge = null;
+    /**
+     * This variable holds the title.
+     */
     private String iTitle = null;
+    /**
+     * This boolean defines identified peaks.
+     */
     private boolean iIdentfied = false;
+    /**
+     * This int holds the spectrum number.
+     */
     private int iSpecNumber = 0;
+    /**
+     * This list holds the identified peptides.
+     */
     private ArrayList<Peptide> iIdentifiedPeptides = null;
 
     /**
