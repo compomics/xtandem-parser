@@ -1,18 +1,22 @@
 package parser;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.NodeList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 /**
  * This class extracts information from the xtandem output xml.
  * @author Thilo Muth
@@ -63,8 +67,9 @@ public class XTandemParser implements Serializable{
      *
      * @param   aFile
      * @exception   IOException
+     * @exception SAXParseException
      */
-    public XTandemParser(File aFile) throws IOException {
+    public XTandemParser(File aFile) throws IOException, SAXException {
     	this.parseXTandemFile(aFile);
     }
 
@@ -72,7 +77,7 @@ public class XTandemParser implements Serializable{
 	 * In this method the X!Tandem file gets parsed.
 	 * @param aInputFile
 	 */
-	private void parseXTandemFile(File aInputFile){
+	private void parseXTandemFile(File aInputFile) throws IOException, SAXException{
 
 		NodeList idNodes, proteinNodes, peptideNodes, nodes, parameterNodes, supportDataNodes, xDataNodes, yDataNodes;
 		NodeList hyperNodes, convolNodes, aIonNodes, bIonNodes, cIonNodes, xIonNodes, yIonNodes, zIonNodes, fragIonNodes;
@@ -1214,9 +1219,9 @@ public class XTandemParser implements Serializable{
 			}
 		} catch (FileNotFoundException ex) {
 			ex.printStackTrace();
-		} catch (Exception e) {
+		} catch (ParserConfigurationException e){
 			e.printStackTrace();
-		}
+		} 
 
 	}
 
