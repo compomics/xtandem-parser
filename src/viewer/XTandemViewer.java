@@ -48,6 +48,7 @@ import be.proteomics.util.gui.spectrum.SpectrumPanel;
  *
  */
 public class XTandemViewer extends JFrame {
+	private final static String VERSION = "v. 0.8";
 	private SpectrumPanel spectrumPanel;
 	private String iXTandemFileString;
 	private String iRawFile;
@@ -228,7 +229,7 @@ public class XTandemViewer extends JFrame {
         
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("X!Tandem Viewer v0.7");
+        setTitle("X!Tandem Viewer " + VERSION);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Spectra Files", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
 
