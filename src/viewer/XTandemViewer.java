@@ -71,7 +71,7 @@ public class XTandemViewer extends JFrame {
     private JCheckBox chargeOneJCheckBox;
     private JCheckBox scalingJCheckBox;
     private JCheckBox chargeTwoJCheckBox;
-    private JXTable identificationsJXTable;
+    private JXTable identificationsTable;
     private JLabel jLabel1;
     private JPanel jPanel1;
     private JPanel jPanel2;
@@ -83,7 +83,7 @@ public class XTandemViewer extends JFrame {
     private JSeparator jSeparator1;
     private JSeparator jSeparator2;
     private JLabel modificationDetailsJLabel;   
-    private JXTable spectraJXTable;
+    private JXTable spectraTable;
     private JPanel spectrumJPanel;
     private JXTable spectrumJXTable;
     private JCheckBox xIonsJCheckBox;
@@ -99,35 +99,32 @@ public class XTandemViewer extends JFrame {
     	iRawFile = aRawFile;    	
     	iParseAll = aParseAll;
         initComponents();
-        setMinimumSize(new Dimension(900, 600));
-        
-        // sets the column sizes
-        spectraJXTable.getColumn(" ").setMaxWidth(35);
-        spectraJXTable.getColumn(" ").setMinWidth(35);
-        spectraJXTable.getColumn("m/z").setMaxWidth(65);
-        spectraJXTable.getColumn("m/z").setMinWidth(65);
-        spectraJXTable.getColumn("Charge").setMaxWidth(65);
-        spectraJXTable.getColumn("Charge").setMinWidth(65);
-        spectraJXTable.getColumn("Identified").setMaxWidth(80);
-        spectraJXTable.getColumn("Identified").setMinWidth(80);
+        spectraTable.getColumn(" ").setMaxWidth(35);
+        spectraTable.getColumn(" ").setMinWidth(35);
+        spectraTable.getColumn("m/z").setMaxWidth(65);
+        spectraTable.getColumn("m/z").setMinWidth(65);
+        spectraTable.getColumn("Charge").setMaxWidth(65);
+        spectraTable.getColumn("Charge").setMinWidth(65);
+        spectraTable.getColumn("Identified").setMaxWidth(80);
+        spectraTable.getColumn("Identified").setMinWidth(80);
         spectrumJXTable.getColumn(" ").setMaxWidth(35);
         spectrumJXTable.getColumn(" ").setMinWidth(35);
-        identificationsJXTable.getColumn(" ").setMaxWidth(35);
-        identificationsJXTable.getColumn(" ").setMinWidth(35);
-        identificationsJXTable.getColumn("Start").setMaxWidth(45);
-        identificationsJXTable.getColumn("Start").setMinWidth(45);
-        identificationsJXTable.getColumn("End").setMaxWidth(45);
-        identificationsJXTable.getColumn("End").setMinWidth(45);
-        identificationsJXTable.getColumn("Exp. Mass").setMaxWidth(75);
-        identificationsJXTable.getColumn("Exp. Mass").setMinWidth(75);
-        identificationsJXTable.getColumn("Theo. Mass").setMaxWidth(75);
-        identificationsJXTable.getColumn("Theo. Mass").setMinWidth(75);
-        identificationsJXTable.getColumn("E-value").setMinWidth(75);
-        identificationsJXTable.getColumn("E-value").setMaxWidth(75);
-        identificationsJXTable.getColumn("Accession").setPreferredWidth(10);
-        spectraJXTable.getTableHeader().setReorderingAllowed(false);
+        identificationsTable.getColumn(" ").setMaxWidth(35);
+        identificationsTable.getColumn(" ").setMinWidth(35);
+        identificationsTable.getColumn("Start").setMaxWidth(45);
+        identificationsTable.getColumn("Start").setMinWidth(45);
+        identificationsTable.getColumn("End").setMaxWidth(45);
+        identificationsTable.getColumn("End").setMinWidth(45);
+        identificationsTable.getColumn("Exp. Mass").setMaxWidth(75);
+        identificationsTable.getColumn("Exp. Mass").setMinWidth(75);
+        identificationsTable.getColumn("Theo. Mass").setMaxWidth(75);
+        identificationsTable.getColumn("Theo. Mass").setMinWidth(75);
+        identificationsTable.getColumn("E-value").setMinWidth(75);
+        identificationsTable.getColumn("E-value").setMaxWidth(75);
+        identificationsTable.getColumn("Accession").setPreferredWidth(10);
+        spectraTable.getTableHeader().setReorderingAllowed(false);
         spectrumJXTable.getTableHeader().setReorderingAllowed(false);
-        identificationsJXTable.getTableHeader().setReorderingAllowed(false);
+        identificationsTable.getTableHeader().setReorderingAllowed(false);
         spectraTableColToolTips = new Vector();
         spectraTableColToolTips.add("Spectrum Number");
         spectraTableColToolTips.add("Spectrum File Name");
@@ -152,7 +149,7 @@ public class XTandemViewer extends JFrame {
         identificationsJXTableColumnToolTips.add("Theoretical Mass");
         identificationsJXTableColumnToolTips.add("E-value");
         identificationsJXTableColumnToolTips.add("Protein Accession Number");
-
+        setMinimumSize(new Dimension(900, 600));    
         setLocationRelativeTo(null);
         setVisible(true);
         insertFiles(aXTandemXmlFile);
@@ -166,7 +163,7 @@ public class XTandemViewer extends JFrame {
         
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        spectraJXTable = new JXTable() {
+        spectraTable = new JXTable() {
             protected JXTableHeader createDefaultTableHeader() {
                 return new JXTableHeader(columnModel) {
                     public String getToolTipText(MouseEvent e) {
@@ -184,7 +181,7 @@ public class XTandemViewer extends JFrame {
         modificationDetailsJLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        identificationsJXTable = new JXTable() {
+        identificationsTable = new JXTable() {
             protected JXTableHeader createDefaultTableHeader() {
                 return new JXTableHeader(columnModel) {
                     public String getToolTipText(MouseEvent e) {
@@ -234,16 +231,12 @@ public class XTandemViewer extends JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Spectra Files", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
 
-        spectraJXTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                " ", "Filename", "m/z", "Charge", "Identified"
-            }
-        ) {
+        spectraTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {" ", "Filename", "m/z", "Charge", "Identified"}
+        ) { 
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Boolean.class
+                Integer.class, String.class, Double.class, Integer.class, Boolean.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -257,18 +250,14 @@ public class XTandemViewer extends JFrame {
                 return canEdit [columnIndex];
             }
         });
-        spectraJXTable.setOpaque(false);
-        spectraJXTable.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                //spectraJXTableKeyReleased(evt);
-            }
-        });
-        spectraJXTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        spectraTable.setOpaque(false);
+        
+        spectraTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 spectraJXTableMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(spectraJXTable);
+        jScrollPane3.setViewportView(spectraTable);
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -293,16 +282,14 @@ public class XTandemViewer extends JFrame {
         jLabel1.setFont(jLabel1.getFont().deriveFont((jLabel1.getFont().getStyle() | java.awt.Font.ITALIC)));
         jLabel1.setText("Legend:   ");
 
-        identificationsJXTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
+        identificationsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
             new String [] {
                 " ", "Sequence", "Modified Sequence", "Start", "End", "Exp. Mass", "Theo. Mass", "E-value", "Accession"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class
+                Integer.class, String.class, String.class, Integer.class, Integer.class, Double.class, Double.class, Float.class, Float.class, String.class, String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false
@@ -316,18 +303,9 @@ public class XTandemViewer extends JFrame {
                 return canEdit [columnIndex];
             }
         });
-        identificationsJXTable.setOpaque(false);
-        identificationsJXTable.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                //identificationsJXTableKeyReleased(evt);
-            }
-        });
-        identificationsJXTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                //identificationsJXTableMouseClicked(evt);
-            }
-        });
-        jScrollPane4.setViewportView(identificationsJXTable);
+        identificationsTable.setOpaque(false);        
+        
+        jScrollPane4.setViewportView(identificationsTable);
 
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -560,11 +538,7 @@ public class XTandemViewer extends JFrame {
             }
         });
         spectrumJXTable.setOpaque(false);
-        spectrumJXTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-            	//spectrumJXTableMouseClicked(evt);
-            }
-        });
+       
         jScrollPane1.setViewportView(spectrumJXTable);
 
         org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
@@ -638,18 +612,18 @@ public class XTandemViewer extends JFrame {
 
             public void run() {
 
-                spectraJXTable.setSortable(false);
+                spectraTable.setSortable(false);
 
-                while (((DefaultTableModel) spectraJXTable.getModel()).getRowCount() > 0) {
-                    ((DefaultTableModel) spectraJXTable.getModel()).removeRow(0);
+                while (((DefaultTableModel) spectraTable.getModel()).getRowCount() > 0) {
+                    ((DefaultTableModel) spectraTable.getModel()).removeRow(0);
                 }
 
                 while (((DefaultTableModel) spectrumJXTable.getModel()).getRowCount() > 0) {
                     ((DefaultTableModel) spectrumJXTable.getModel()).removeRow(0);
                 }
 
-                while (((DefaultTableModel) identificationsJXTable.getModel()).getRowCount() > 0) {
-                    ((DefaultTableModel) identificationsJXTable.getModel()).removeRow(0);
+                while (((DefaultTableModel) identificationsTable.getModel()).getRowCount() > 0) {
+                    ((DefaultTableModel) identificationsTable.getModel()).removeRow(0);
                 }
 
                 modificationDetailsJLabel.setText("");
@@ -671,7 +645,6 @@ public class XTandemViewer extends JFrame {
                             "Memory boundaries are set in ../Properties/JavaOptions.txt.",
                             "Out of Memory Error",
                             JOptionPane.ERROR_MESSAGE);
-                    //Util.writeToErrorLog("OMSSA Viewer: Ran out of memory!");
                     error.printStackTrace();
                     System.exit(0);
                 }
@@ -709,7 +682,7 @@ public class XTandemViewer extends JFrame {
                         	  double precursorMh = mgfPeaklist.getPepmass();
                     		  boolean identified = mgfPeaklist.isIdentfied();
                         	  // Add the values to the table (model).
-                        	  ((DefaultTableModel) spectraJXTable.getModel()).addRow(new Object[]{
+                        	  ((DefaultTableModel) spectraTable.getModel()).addRow(new Object[]{
                         			i,
                         			label,
                         			precursorMh,
@@ -785,7 +758,7 @@ public class XTandemViewer extends JFrame {
                     	  String accession = spectrum.getLabel();
                     	  accMap.put(spectrumNumber, accession);
                     	  // Add the values to the table (model).
-                    	  ((DefaultTableModel) spectraJXTable.getModel()).addRow(new Object[]{
+                    	  ((DefaultTableModel) spectraTable.getModel()).addRow(new Object[]{
                     			spectrumNumber,
                     			label,
                     			precursorMh,
@@ -818,19 +791,15 @@ public class XTandemViewer extends JFrame {
                  
                 }
    
-                // switch the auto row sorting back on
-                spectraJXTable.setSortable(true);
-//                spectraJTable.setAutoCreateRowSorter(true);
-//                spectrumJTable.setAutoCreateRowSorter(true);
-//                identificationsJTable.setAutoCreateRowSorter(true);
+                spectraTable.setSortable(true);
+//              
 
             }
         }.start();
     }
     
     /**
-     * Filters the annotations and returns the annotations matching the selected
-     * list next to the spectrum panel.
+     * This method filters the annotations.
      * 
      * @param annotations the annotations to be filtered
      * @return the filtered annotations
@@ -903,18 +872,18 @@ public class XTandemViewer extends JFrame {
     	// Set the cursor into the wait status.
     	this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 
-        int row = spectraJXTable.getSelectedRow();   
+        int row = spectraTable.getSelectedRow();   
         List<Double> mzValues = null;
         List<Double> intensityValues = null;
         // Condition if one row is selected.
         if (row != -1) {
         	if(selected){      		
-        		mzValues = scaledMzValues.get((Integer) spectraJXTable.getValueAt(row, 0));
-        		 intensityValues = scaledIntensityValues.get((Integer) spectraJXTable.getValueAt(row, 0));
+        		mzValues = scaledMzValues.get((Integer) spectraTable.getValueAt(row, 0));
+        		 intensityValues = scaledIntensityValues.get((Integer) spectraTable.getValueAt(row, 0));
         	}
         	if(!selected){
-        		mzValues = allMzValues.get((Integer) spectraJXTable.getValueAt(row, 0));
-        		intensityValues = allIntensityValues.get((Integer) spectraJXTable.getValueAt(row, 0));
+        		mzValues = allMzValues.get((Integer) spectraTable.getValueAt(row, 0));
+        		intensityValues = allIntensityValues.get((Integer) spectraTable.getValueAt(row, 0));
         	}
             // Empty the spectrum table.
             while (spectrumJXTable.getRowCount() > 0) {
@@ -946,15 +915,13 @@ public class XTandemViewer extends JFrame {
                 intensityValuesAsDouble[i] = intensityValues.get(i);
             }
 
-            //exportSelectedSpectrumJMenuItem.setEnabled(true);
-
-            // updates the spectrum panel
+            // Do the spectrum panel
             spectrumPanel = new SpectrumPanel(
                     mzValuesAsDouble,
                     intensityValuesAsDouble,
-                    ((Double) spectraJXTable.getValueAt(row, 2)),
-                    "" + spectraJXTable.getValueAt(row, 3),
-                    ((String) spectraJXTable.getValueAt(row, 1)),
+                    ((Double) spectraTable.getValueAt(row, 2)),
+                    "" + spectraTable.getValueAt(row, 3),
+                    ((String) spectraTable.getValueAt(row, 1)),
                     60, true, false);
 
             spectrumJPanel.add(spectrumPanel);
@@ -964,11 +931,11 @@ public class XTandemViewer extends JFrame {
         // At the end set the cursor back to default.
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
-    private void bIonsJCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yIonsJCheckBoxActionPerformed
+    private void bIonsJCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {
         aIonsJCheckBoxActionPerformed(null);
     }
     
-    private void yIonsJCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yIonsJCheckBoxActionPerformed
+    private void yIonsJCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {
         aIonsJCheckBoxActionPerformed(null);
     }
     
@@ -977,23 +944,20 @@ public class XTandemViewer extends JFrame {
      *
      * @param evt
      */
-    private void aIonsJCheckBoxActionPerformed(ActionEvent evt) {//GEN-FIRST:event_aIonsJCheckBoxActionPerformed
-        if (identificationsJXTable.getRowCount() > 0) {
+    private void aIonsJCheckBoxActionPerformed(ActionEvent evt) {
+        if (identificationsTable.getRowCount() > 0) {
 
             int selectedRow = 0;
 
-            if (identificationsJXTable.getRowCount() > 1 &&
-                    identificationsJXTable.getSelectedRow() != -1) {
-                selectedRow = identificationsJXTable.getSelectedRow();
+            if (identificationsTable.getRowCount() > 1 &&
+                    identificationsTable.getSelectedRow() != -1) {
+                selectedRow = identificationsTable.getSelectedRow();
             }
-            System.out.println(identificationsJXTable.getValueAt(selectedRow, 1));
-            System.out.println(identificationsJXTable.getValueAt(selectedRow, 7));
             
             Vector<DefaultSpectrumAnnotation> currentAnnotations = allAnnotations.get(
-                    identificationsJXTable.getValueAt(selectedRow, 1) + "_" +
-                    identificationsJXTable.getValueAt(selectedRow, 7));
+                    identificationsTable.getValueAt(selectedRow, 1) + "_" +
+                    identificationsTable.getValueAt(selectedRow, 7));
 
-            // update the ion coverage annotations
             spectrumPanel.setAnnotations(filterAnnotations(currentAnnotations));
             spectrumPanel.validate();
             spectrumPanel.repaint();
@@ -1004,16 +968,16 @@ public class XTandemViewer extends JFrame {
     	// Set the cursor into the wait status.
     	this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 
-        int row = spectraJXTable.getSelectedRow();        
+        int row = spectraTable.getSelectedRow();        
         // Condition if one row is selected.
         if (row != -1) {
-            List<Double> mzValues = allMzValues.get((Integer) spectraJXTable.getValueAt(row, 0));
-            if (Boolean.valueOf(spectraJXTable.getValueAt(row, 4).toString())){
+            List<Double> mzValues = allMzValues.get((Integer) spectraTable.getValueAt(row, 0));
+            if (Boolean.valueOf(spectraTable.getValueAt(row, 4).toString())){
             	scalingJCheckBox.setEnabled(true);
             } else {
             	scalingJCheckBox.setEnabled(false);
             }
-            List<Double> intensityValues = allIntensityValues.get((Integer) spectraJXTable.getValueAt(row, 0));
+            List<Double> intensityValues = allIntensityValues.get((Integer) spectraTable.getValueAt(row, 0));
 
             // Empty the spectrum table.
             while (spectrumJXTable.getRowCount() > 0) {
@@ -1028,11 +992,10 @@ public class XTandemViewer extends JFrame {
                 spectrumJPanel.remove(0);
             }
 
-            // needed as input to the spectrum panel
             double[] mzValuesAsDouble = new double[mzValues.size()];
             double[] intensityValuesAsDouble = new double[mzValues.size()];
 
-            // insert the spectrum details in the spectrum table
+            // Insert the spectrum details into the table
             for (int i = 0; i < mzValues.size(); i++) {
 
                 ((DefaultTableModel) spectrumJXTable.getModel()).addRow(new Object[]{
@@ -1045,34 +1008,32 @@ public class XTandemViewer extends JFrame {
                 intensityValuesAsDouble[i] = intensityValues.get(i);
             }
 
-            //exportSelectedSpectrumJMenuItem.setEnabled(true);
-
-            // updates the spectrum panel
+            // Updating the spectrum panel
             spectrumPanel = new SpectrumPanel(
                     mzValuesAsDouble,
                     intensityValuesAsDouble,
-                    ((Double) spectraJXTable.getValueAt(row, 2)),
-                    "" + spectraJXTable.getValueAt(row, 3),
-                    ((String) spectraJXTable.getValueAt(row, 1)),
+                    ((Double) spectraTable.getValueAt(row, 2)),
+                    "" + spectraTable.getValueAt(row, 3),
+                    ((String) spectraTable.getValueAt(row, 1)),
                     60, true, false);
 
             spectrumJPanel.add(spectrumPanel);
             spectrumJPanel.validate();
             spectrumJPanel.repaint();
 
-            // empty the identification table
-            while (identificationsJXTable.getRowCount() > 0) {
-                ((DefaultTableModel) identificationsJXTable.getModel()).removeRow(0);               
+            // Empty the identifications tables
+            while (identificationsTable.getRowCount() > 0) {
+                ((DefaultTableModel) identificationsTable.getModel()).removeRow(0);               
             }
             
             allAnnotations = new HashMap();
             
-            // clear the modification details legend
+            // Clear the modifications details legend
             modificationDetailsJLabel.setText("");
 
             // Iterate over all the peptides as identifications (domains)
-            if(peptideMap.get((Integer) spectraJXTable.getValueAt(row, 0)) != null){
-            	ArrayList<Peptide> domainList = peptideMap.get((Integer) spectraJXTable.getValueAt(row, 0));
+            if(peptideMap.get((Integer) spectraTable.getValueAt(row, 0)) != null){
+            	ArrayList<Peptide> domainList = peptideMap.get((Integer) spectraTable.getValueAt(row, 0));
                 Iterator domainIter = domainList.iterator();
                 
                 String modificationDetails = "";
@@ -1090,10 +1051,9 @@ public class XTandemViewer extends JFrame {
                     String nTerminal = "";
                     String cTerminal = "";
 
+                    ArrayList<Modification> fixedModList = allFixMods.get((Integer) spectraTable.getValueAt(row, 0));
+                    ArrayList<Modification> varModList = allVarMods.get((Integer) spectraTable.getValueAt(row, 0));
                     
-                    
-                    ArrayList<Modification> fixedModList = allFixMods.get((Integer) spectraJXTable.getValueAt(row, 0));
-                    ArrayList<Modification> varModList = allVarMods.get((Integer) spectraJXTable.getValueAt(row, 0));
                     // Handle fixed modifications
     	            if (fixedModList != null) {
     						for (int i = 0; i < fixedModList.size(); i++) {
@@ -1131,68 +1091,45 @@ public class XTandemViewer extends JFrame {
     							}					}
     	                }
     						
-    	                // cycle through all the modifications and extract the modification type if possible
+    	                // Cycle through all the modifications and extract the modification type if possible
     					for (int i = 0; i < modifications.length; i++) {
-    						// add the amino acid itself to the sequence
+    						// Add the amino acid itself to the sequence
     						modifiedSequence += sequence.substring(i, i + 1);
 
     						if (!modifications[i].equalsIgnoreCase("")) {
-    							// have to check for multiple modifications on one
-    							// residue
-    							String[] residueMods = modifications[i].split(">");
+    							String[] residues = modifications[i].split(">");
+    							for (int j = 0; j < residues.length; j++) {
 
-    							for (int j = 0; j < residueMods.length; j++) {
-
-    								String currentMod = residueMods[j] + ">";
-
-    								// check if we've already mapped the modification
+    								String currentMod = residues[j] + ">";
     								if (modificationDetails.lastIndexOf(currentMod) == -1) {
     									if (fixedModList.size() > 0){
     										modificationDetails += currentMod + " "	+ fixedModList.get(j).getName()	+ ", ";
     									} else if (varModList.size() > 0) {
     										modificationDetails += currentMod + " "	+ varModList.get(j).getName()	+ ", ";
-    									}
-    									
+    									}    									
 
-    									// OmssaModification tempOmssaModification = omssaOmxFile.getModifications().get(new Integer(residueMods[j].substring(1)));
-    									// if (tempOmssaModification != null) {
-    									// modificationDetails += currentMod + " " + tempOmssaModification.getModName() + " (" +
-    									// tempOmssaModification.getModMonoMass() + "), ";
-    									// if (tempOmssaModification.getModType() ==
-    									// OmssaModification.MODAA) {
-    									//
-    									// "normal" modification
     									modifiedSequence += currentMod;
-    									// }
-    									// } else {
-    									// modifiedSequence += currentMod;
-    									// modificationDetails += currentMod + "
-    									// unknown, ";
-    									// }
     								} else {
     									modifiedSequence += currentMod;
     								}
     							}
     						}
     					}
-                        
-    				
                     
-                    // set the n-terminal
+                    // N-Terminal
                     if (nTerminal.length() == 0) {
-                        nTerminal = "NH2-"; // no terminal (or terminal modification) given
+                        nTerminal = "NH2-";
                     } else {
-                        nTerminal += "-"; // add the "-" at the end, i.e. "NH2-"
+                        nTerminal += "-";
                     }
 
-                    // set the c-terminal
+                    // C-Terminal
                     if (cTerminal.length() == 0) {
-                        cTerminal = "-COOH"; // no terminal (or terminal modification) given
+                        cTerminal = "-COOH";
                     } else {
-                        cTerminal = "-" + cTerminal; // add the "-" at the beginning, i.e. "-COOH"
+                        cTerminal = "-" + cTerminal; 
                     }
                     
-                   
                    Vector<DefaultSpectrumAnnotation> currentAnnotations = new Vector();
                    FragmentIon[] bIons = bIonMap.get(domain.getDomainID());
                    FragmentIon[] yIons = yIonMap.get(domain.getDomainID());
@@ -1229,7 +1166,6 @@ public class XTandemViewer extends JFrame {
                             spectrumPanel.repaint();
                         }
                     
-                    
                     String modifiedSequenceColorCoded = "<html>";
                     
                     for (int i = 0; i < modifiedSequence.length(); i++) {
@@ -1247,17 +1183,14 @@ public class XTandemViewer extends JFrame {
                             modifiedSequenceColorCoded += modifiedSequence.charAt(i);
                         }
                     }
-                    
                     modifiedSequenceColorCoded += "</html>";
                      
                     // Calculate the theoretical mass of the domain
                     double theoMass = (domain.getDomainMh() + domain.getDomainDeltaMh());
+                    String accession = accMap.get((Integer) spectraTable.getValueAt(row, 0));
 
-                             
-                    String accession = accMap.get((Integer) spectraJXTable.getValueAt(row, 0));
-
-                     ((DefaultTableModel) identificationsJXTable.getModel()).addRow(new Object[]{
-                                    (Integer) spectraJXTable.getValueAt(row, 0),
+                     ((DefaultTableModel) identificationsTable.getModel()).addRow(new Object[]{
+                                    (Integer) spectraTable.getValueAt(row, 0),
                                     sequence,
                                     modifiedSequenceColorCoded,
                                     domain.getDomainStart(),
@@ -1267,7 +1200,6 @@ public class XTandemViewer extends JFrame {
                                     new Float(domain.getDomainExpect()),                                    
                                     accession,                                    
                                 });
-
                 }
                 if (modificationDetails.endsWith(", ")) {
                     modificationDetails = modificationDetails.substring(0, modificationDetails.length() - 2);
@@ -1277,8 +1209,8 @@ public class XTandemViewer extends JFrame {
                     modificationDetailsJLabel.setText("Modifications: " + modificationDetails);
                 }
                 
-                if (identificationsJXTable.getRowCount() > 1) {
-                     identificationsJXTable.setRowSelectionInterval(0, 0);
+                if (identificationsTable.getRowCount() > 1) {
+                     identificationsTable.setRowSelectionInterval(0, 0);
                  }
             }
             // At the end set the cursor back to default.
