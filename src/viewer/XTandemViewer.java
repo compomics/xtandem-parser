@@ -890,7 +890,6 @@ public class XTandemViewer extends JFrame {
                 ((DefaultTableModel) spectrumJXTable.getModel()).removeRow(0);
             }
 
-            // scrolls the scrollbar to the top of the spectrum table
             spectrumJXTable.scrollRectToVisible(spectrumJXTable.getCellRect(0, 0, false));
 
             // Empty the spectrum panel.
@@ -902,7 +901,7 @@ public class XTandemViewer extends JFrame {
             double[] mzValuesAsDouble = new double[mzValues.size()];
             double[] intensityValuesAsDouble = new double[mzValues.size()];
 
-            // insert the spectrum details in the spectrum table
+            // Insert the spectrum details
             for (int i = 0; i < mzValues.size(); i++) {
 
                 ((DefaultTableModel) spectrumJXTable.getModel()).addRow(new Object[]{
@@ -984,7 +983,6 @@ public class XTandemViewer extends JFrame {
                 ((DefaultTableModel) spectrumJXTable.getModel()).removeRow(0);
             }
 
-            // scrolls the scrollbar to the top of the spectrum table
             spectrumJXTable.scrollRectToVisible(spectrumJXTable.getCellRect(0, 0, false));
 
             // Empty the spectrum panel.
