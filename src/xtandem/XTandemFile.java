@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
 import parser.MgfFileParser;
 import parser.XTandemParser;
 /**
@@ -91,7 +94,7 @@ public class XTandemFile implements Serializable{
      *
      * @param aXTandemFile 
      */
-	public XTandemFile(String aXTandemFile) {
+	public XTandemFile(String aXTandemFile) throws SAXException {
         try {
             File inputFile = new File(aXTandemFile);
             if (!inputFile.exists()) {
@@ -111,7 +114,7 @@ public class XTandemFile implements Serializable{
      * @param aXTandemFile
      * @param aRawFile
      */
-	public XTandemFile(String aXTandemFile, String aRawFile) {
+	public XTandemFile(String aXTandemFile, String aRawFile) throws SAXException{
         try {
             File inputFile = new File(aXTandemFile);
             if (!inputFile.exists()) {
