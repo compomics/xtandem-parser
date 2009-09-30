@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.JXTableHeader;
+import org.xml.sax.SAXException;
 
 import xtandem.FixedModification;
 import xtandem.FragmentIon;
@@ -599,21 +600,14 @@ public class XTandemViewer extends JFrame {
     
     public void insertFiles(String aXTandemFile) {
 
-
-
         iXTandemFileString = aXTandemFile;        
 
-
-
-
         new Thread("ParserThread") {
-
             private XTandemFile iXTandemFile;
 
             public void run() {
 
                 spectraTable.setSortable(false);
-
                 while (((DefaultTableModel) spectraTable.getModel()).getRowCount() > 0) {
                     ((DefaultTableModel) spectraTable.getModel()).removeRow(0);
                 }
@@ -638,6 +632,7 @@ public class XTandemViewer extends JFrame {
                 // Parse the X!Tandem file.
                 try {
                 	iXTandemFile = new XTandemFile(iXTandemFileString, iRawFile);
+                	
                 } catch (OutOfMemoryError error) {
                     Runtime.getRuntime().gc();
                     JOptionPane.showMessageDialog(null,
@@ -647,7 +642,16 @@ public class XTandemViewer extends JFrame {
                             JOptionPane.ERROR_MESSAGE);
                     error.printStackTrace();
                     System.exit(0);
-                }
+                } catch (SAXException saxException){
+                	saxException.getMessage();
+                	JOptionPane.showMessageDialog(null,                			
+                            "Error during parsing the xml file!\n" +
+                            saxException.getMessage()+"\n" +
+                            "Please load xml file in correct format...",
+                            "Parser error",
+                            JOptionPane.ERROR_MESSAGE);
+                	System.exit(0);                	
+                } 
                  
                 ionCoverageErrorMargin = Parameters.FRAGMENTMASSERROR;
                 
