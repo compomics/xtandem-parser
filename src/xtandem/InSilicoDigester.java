@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Vector;
 
 /**
- * This class is used to do a calculation for the theoretical masses of b and y ions 
+ * This class is used to do a calculation for the theoretical masses of a, b, c, x, y and z ions (plus double charged ones)
  * and do the matching of experimental and theoretical masses. 
  * @author Thilo Muth
  *
@@ -26,18 +26,72 @@ public class InSilicoDigester {
 	 * Contains the peptide object which should be digested.
 	 */
 	private Peptide iPeptide;
+	
 	/**
 	 * The masses map for knowledge of amino acid masses etc.
 	 */
 	private HashMap<String, Double> iMasses;
+	
+	/**
+	 * The a ions.
+	 */
+	private FragmentIon[] iAIons;
+	
 	/**
 	 * The b ions.
 	 */
 	private FragmentIon[] iBIons;
+	
+	/**
+	 * The c ions.
+	 */
+	private FragmentIon[] iCIons;
+	
+	/**
+	 * The x ions.
+	 */
+	private FragmentIon[] iXIons;
+	
 	/**
 	 * The y ions.
 	 */
 	private FragmentIon[] iYIons;
+	
+	/**
+	 * The z ions.
+	 */
+	private FragmentIon[] iZIons;
+	
+	/**
+	 * The a++ ions.
+	 */
+	private FragmentIon[] iADoubleIons;
+	
+	/**
+	 * The b++ ions.
+	 */
+	private FragmentIon[] iBDoubleIons;
+	
+	/**
+	 * The c++ ions.
+	 */
+	private FragmentIon[] iCDoubleIons;
+	
+	/**
+	 * The x++ ions.
+	 */
+	private FragmentIon[] iXDoubleIons;
+	
+	/**
+	 * The y++ ions.
+	 */
+	private FragmentIon[] iYDoubleIons;
+	
+	/**
+	 * The z++ ions.
+	 */
+	private FragmentIon[] iZDoubleIons;
+	
 	/**
 	 * The fragment mass error tolerance.
 	 */
@@ -166,10 +220,141 @@ public class InSilicoDigester {
 	}
 	
 	/**
+     * Returns an array of the b++ ions: b ions plus H divided by 2
+     *
+     * @return iBDoubleIons 
+     */
+    public FragmentIon[] getBDoubleIons() {
+    	iBDoubleIons = new FragmentIon[iBIons.length];
+        for (int i = 0; i < iBIons.length; i++) {            
+        	iBDoubleIons[i] = new FragmentIon(((iBIons[i].getMZ() + 1.007825) / 2), FragmentIon.B_DOUBLE_ION, (i + 1), "b++", iFragmentMassError);
+        }
+        return iBDoubleIons;
+    }
+	
+	/**
+     * Returns an array of the a ions: b ions minus CO and plus H2.
+     *
+     * @return iAIons 
+     */
+    public FragmentIon[] getAIons() {
+        iAIons = new FragmentIon[iBIons.length];
+        for (int i = 0; i < iBIons.length; i++) {            
+        	iAIons[i] = new FragmentIon((iBIons[i].getMZ() - 27.994915), FragmentIon.A_ION, (i + 1), "a", iFragmentMassError);
+        }
+        return iAIons;
+    }
+    
+    /**
+     * Returns an array of the a++ ions: a ions plus H divided by 2
+     *
+     * @return iADoubleIons 
+     */
+    public FragmentIon[] getADoubleIons() {
+    	iADoubleIons = new FragmentIon[iAIons.length];
+        for (int i = 0; i < iAIons.length; i++) {            
+        	iADoubleIons[i] = new FragmentIon(((iAIons[i].getMZ() + 1.007825) / 2), FragmentIon.A_DOUBLE_ION, (i + 1), "a++", iFragmentMassError);
+        }
+        return iADoubleIons;
+    }
+    	
+    /**
+     * Returns an array of the c ions: b ions plus NH3
+     *
+     * @return iCIons 
+     */
+    public FragmentIon[] getCIons() {
+    	iCIons = new FragmentIon[iBIons.length];
+        for (int i = 0; i < iBIons.length; i++) {            
+        	iCIons[i] = new FragmentIon((iBIons[i].getMZ() + 17.026549), FragmentIon.C_ION, (i + 1), "c", iFragmentMassError);
+        }
+        return iCIons;
+    }
+    
+    /**
+     * Returns an array of the c++ ions: c ions plus H divided by 2
+     *
+     * @return iCDoubleIons 
+     */
+    public FragmentIon[] getCDoubleIons() {
+    	iCDoubleIons = new FragmentIon[iCIons.length];
+        for (int i = 0; i < iCIons.length; i++) {            
+        	iCDoubleIons[i] = new FragmentIon(((iCIons[i].getMZ() + 1.007825) / 2), FragmentIon.C_DOUBLE_ION, (i + 1), "c++", iFragmentMassError);
+        }
+        return iCDoubleIons;
+    }
+    
+	/**
 	 * Returns an array of the (successfully matched) y ions.
 	 * @return iYIons
 	 */
 	public FragmentIon[] getYIons() {
 		return iYIons;
 	}
+	
+	/**
+     * Returns an array of the y++ ions: y ions plus H divided by 2
+     *
+     * @return iYDoubleIons 
+     */
+    public FragmentIon[] getYDoubleIons() {
+    	iYDoubleIons = new FragmentIon[iYIons.length];
+        for (int i = 0; i < iYIons.length; i++) {            
+        	iYDoubleIons[i] = new FragmentIon(((iYIons[i].getMZ() + 1.007825) / 2), FragmentIon.Y_DOUBLE_ION, (i + 1), "y++", iFragmentMassError);
+        }
+        return iYDoubleIons;
+    }
+    
+	
+	/**
+     * Returns an array of the x ions: y ions plus CO and minus H2
+     *
+     * @return iXIons 
+     */
+    public FragmentIon[] getXIons() {
+    	iXIons = new FragmentIon[iYIons.length];
+        for (int i = 0; i < iYIons.length; i++) {            
+        	iXIons[i] = new FragmentIon((iYIons[i].getMZ() + 25.979265), FragmentIon.X_ION, (i + 1), "x", iFragmentMassError);
+        }
+        return iXIons;
+    }
+    
+    /**
+     * Returns an array of the x++ ions: x ions plus H divided by 2
+     *
+     * @return iXDoubleIons 
+     */
+    public FragmentIon[] getXDoubleIons() {
+    	iXDoubleIons = new FragmentIon[iXIons.length];
+        for (int i = 0; i < iXIons.length; i++) {            
+        	iXDoubleIons[i] = new FragmentIon(((iXIons[i].getMZ() + 1.007825) / 2), FragmentIon.X_DOUBLE_ION, (i + 1), "x++", iFragmentMassError);
+        }
+        return iXDoubleIons;
+    }
+    
+    /**
+     * Returns an array of the z ions: y ions minus NH3
+     *
+     * @return iZIons 
+     */
+    public FragmentIon[] getZIons() {
+    	iZIons = new FragmentIon[iYIons.length];
+        for (int i = 0; i < iYIons.length; i++) {            
+        	iZIons[i] = new FragmentIon((iYIons[i].getMZ() - 17.026549), FragmentIon.Z_ION, (i + 1), "z", iFragmentMassError);
+        }
+        return iZIons;
+    }
+    
+    /**
+     * Returns an array of the z++ ions: z ions plus H divided by 2
+     *
+     * @return iZDoubleIons 
+     */
+    public FragmentIon[] getZDoubleIons() {
+    	iZDoubleIons = new FragmentIon[iZIons.length];
+        for (int i = 0; i < iZIons.length; i++) {            
+        	iZDoubleIons[i] = new FragmentIon(((iZIons[i].getMZ() + 1.007825) / 2), FragmentIon.Z_DOUBLE_ION, (i + 1), "z++", iFragmentMassError);
+        }
+        return iZDoubleIons;
+    }
 }
