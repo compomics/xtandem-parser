@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<HTML>
+    <HEAD>
+        <TITLE><H2><a name="#top"><font face="VERDANA,ARIAL,HELVETICA">X!Tandem Viewer</font></a></H2></TITLE>
+    </HEAD>
+    <BODY>
+        <font face="VERDANA,ARIAL,HELVETICA">
+            X!Tandem Viewer is a graphical user interface for displaying and
+            analysing MS/MS xml result files from <a href="http://www.thegpm.org/TANDEM/">X!Tandem Software</a>.
+            <br><br>
+            The viewer uses the XTandem Parser library to extract information
+            from the xml file. The data are stored into an object model for
+            further analysis. X!Tandem Viewer has three different view panels:
+            <ol>
+            <li><u>The Spectra Files panel:</u> <br>In this view the spectra are listed with spectrum number,
+            filename, precursor m/z, charge and the boolean value, if there was an identification
+            found in the spectrum. When a a row is selected, the other two panels are updated.
+            Sorting the table can be done by clicking on the column headers.</li>
+            <li><u>The Spectrum panel:</u><br> The spectrum is displayed with ion annotations.
+            On the x-axis stands the m/z and on the y-axis the intensity. The precursor m/z is
+            depicted below the spectrum. There are checkboxes available for the different
+            types of ions (b and y ions for example). When these checkboxes are selected,
+            each ion type and number can be seen above a certain peak in the spectrum.
+            Below the spectrum each peak is listed in detail  with number, m/z and intensity.</li>
+            <li><u>The Identification panel:</u><br> Each identification is listed with number,
+            sequence, modified sequence, start position, end position, experimental mass, theoretical mass,
+            E-value and accession number. In the legend modifications can be found with mass shift at a
+            certain amino acid as referenced in the X!Tandem output xml file. Both fixed and variable modifications
+            are supported and are listed together in the viewer.</li>
+            </ol>
+            Exporting spectra data is possible via the Export menu. By doing this the data are stored
+            in tab delimited text files.
+            <br><br>
+            For any further questions, feel free to contact the author:
+            <a href="mailto:thilo.muth@uni-jena.de">Thilo.Muth@uni-jena.de</a></font>
+            <br><br>
+        <a href="#top"><font face="VERDANA,ARIAL,HELVETICA">Go to top of page</font></a><br>
+
+    </BODY>
+</HTML>
