@@ -12,7 +12,6 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 import parser.MgfFileParser;
 import parser.XTandemParser;
@@ -207,8 +206,19 @@ public class XTandemFile implements Serializable{
     	Vector<Ion[]> fragIons = new Vector();
     	// Get an instance of the InSilicoDigester
     	InSilicoDigester digester = new InSilicoDigester(peptide,this.getModificationMap(), this.getMassesMap());
+    	FragmentIon[] aIons = digester.getAIons();
+    	FragmentIon[] aDoubleIons = digester.getADoubleIons();
     	FragmentIon[] bIons = digester.getBIons();
+    	FragmentIon[] bDoubleIons = digester.getBDoubleIons();
+    	FragmentIon[] cIons = digester.getCIons();
+    	FragmentIon[] cDoubleIons = digester.getCDoubleIons();
+    	FragmentIon[] xIons = digester.getXIons();
+    	FragmentIon[] xDoubleIons = digester.getXDoubleIons();
     	FragmentIon[] yIons = digester.getYIons();
+    	FragmentIon[] yDoubleIons = digester.getYDoubleIons();
+    	FragmentIon[] zIons = digester.getZIons();
+    	FragmentIon[] zDoubleIons = digester.getZDoubleIons();
+    	
     	// The vector should contain two arrays: b ions & y ions
     	SupportData supData = this.getSupportData(peptide.getSpectrumNumber());
     	
@@ -228,14 +238,96 @@ public class XTandemFile implements Serializable{
     		matchBIons[i] =  matchedBIons.get(i);
     	}
     	
+    	// Match the a ions
+    	Vector<FragmentIon> matchedAIons = digester.getMatchedIons(aIons, peaks);
+    	FragmentIon[] matchAIons = new FragmentIon[matchedAIons.size()];
+    	for (int i = 0; i < matchedAIons.size(); i++){
+    		matchAIons[i] =  matchedAIons.get(i);
+    	}
+    	
+    	// Match the c ions
+    	Vector<FragmentIon> matchedCIons = digester.getMatchedIons(cIons, peaks);
+    	FragmentIon[] matchCIons = new FragmentIon[matchedCIons.size()];
+    	for (int i = 0; i < matchedCIons.size(); i++){
+    		matchCIons[i] =  matchedCIons.get(i);
+    	}        	
+    	
     	// Match the y ions
     	Vector<FragmentIon> matchedYIons = digester.getMatchedIons(yIons, peaks);
     	FragmentIon[] matchYIons = new FragmentIon[matchedYIons.size()];
     	for (int i = 0; i < matchedYIons.size(); i++){
     		matchYIons[i] =  matchedYIons.get(i);
     	}
+    	
+    	// Match the x ions
+    	Vector<FragmentIon> matchedXIons = digester.getMatchedIons(xIons, peaks);
+    	FragmentIon[] matchXIons = new FragmentIon[matchedXIons.size()];
+    	for (int i = 0; i < matchedXIons.size(); i++){
+    		matchXIons[i] =  matchedXIons.get(i);
+    	}
+    	
+    	// Match the z ions
+    	Vector<FragmentIon> matchedZIons = digester.getMatchedIons(zIons, peaks);
+    	FragmentIon[] matchZIons = new FragmentIon[matchedZIons.size()];
+    	for (int i = 0; i < matchedZIons.size(); i++){
+    		matchZIons[i] =  matchedZIons.get(i);
+    	}
+    	
+    	// Match the b++ ions
+    	Vector<FragmentIon> matchedBDoubleIons = digester.getMatchedIons(bDoubleIons, peaks);
+    	FragmentIon[] matchDoubleBIons = new FragmentIon[matchedBDoubleIons.size()];
+    	for (int i = 0; i < matchedBDoubleIons.size(); i++){
+    		matchDoubleBIons[i] =  matchedBDoubleIons.get(i);
+    	}
+    	
+    	// Match the a++ ions
+    	Vector<FragmentIon> matchedADoubleIons = digester.getMatchedIons(aDoubleIons, peaks);
+    	FragmentIon[] matchDoubleAIons = new FragmentIon[matchedADoubleIons.size()];
+    	for (int i = 0; i < matchedADoubleIons.size(); i++){
+    		matchDoubleAIons[i] =  matchedADoubleIons.get(i);
+    	}
+    	
+    	// Match the c++ ions
+    	Vector<FragmentIon> matchedCDoubleIons = digester.getMatchedIons(cDoubleIons, peaks);
+    	FragmentIon[] matchDoubleCIons = new FragmentIon[matchedCDoubleIons.size()];
+    	for (int i = 0; i < matchedCDoubleIons.size(); i++){
+    		matchDoubleCIons[i] =  matchedCDoubleIons.get(i);
+    	}      	
+    	
+    	// Match the y++ ions
+    	Vector<FragmentIon> matchedYDoubleIons = digester.getMatchedIons(yDoubleIons, peaks);
+    	FragmentIon[] matchDoubleYIons = new FragmentIon[matchedYDoubleIons.size()];
+    	for (int i = 0; i < matchedYDoubleIons.size(); i++){
+    		matchDoubleYIons[i] =  matchedYDoubleIons.get(i);
+    	}   
+    	
+    	// Match the x++ ions
+    	Vector<FragmentIon> matchedXDoubleIons = digester.getMatchedIons(xDoubleIons, peaks);
+    	FragmentIon[] matchDoubleXIons = new FragmentIon[matchedXDoubleIons.size()];
+    	for (int i = 0; i < matchedXDoubleIons.size(); i++){
+    		matchDoubleXIons[i] =  matchedXDoubleIons.get(i);
+    	}   
+    	
+    	// Match the z++ ions
+    	Vector<FragmentIon> matchedZDoubleIons = digester.getMatchedIons(zDoubleIons, peaks);
+    	FragmentIon[] matchDoubleZIons = new FragmentIon[matchedZDoubleIons.size()];
+    	for (int i = 0; i < matchedZDoubleIons.size(); i++){
+    		matchDoubleZIons[i] =  matchedZDoubleIons.get(i);
+    	}  
+    	
+    	// Add the matched ions to the vector
     	fragIons.add(matchBIons);
-    	fragIons.add(matchYIons);    	
+    	fragIons.add(matchYIons);
+    	fragIons.add(matchAIons);    	
+    	fragIons.add(matchXIons);
+    	fragIons.add(matchCIons);
+    	fragIons.add(matchZIons);
+    	fragIons.add(matchDoubleBIons);
+    	fragIons.add(matchDoubleYIons);
+    	fragIons.add(matchDoubleAIons);
+    	fragIons.add(matchDoubleXIons);
+    	fragIons.add(matchDoubleCIons);    	
+    	fragIons.add(matchDoubleZIons);
     	return fragIons;
     }
 
