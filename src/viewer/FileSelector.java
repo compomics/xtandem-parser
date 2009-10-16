@@ -1,9 +1,12 @@
 package viewer;
 
 
+
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -18,10 +21,17 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+
+import com.jgoodies.looks.Options;
+import com.jgoodies.looks.plastic.PlasticLookAndFeel;
+import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
+import com.jgoodies.looks.plastic.theme.SkyKrupp;
 
 /**
  * This class represents the file selection frame.
- * The user can load the xtandem output xml file here.
+ * The user can load the X!Tandem Output XML file here.
  * @author Thilo Muth
  *
  */
@@ -34,14 +44,14 @@ public class FileSelector extends JFrame{
 	private JPanel lowerPanel = null;
 	private JButton okBtn = null;
 	private JPanel upperPanel = null;
-	private JButton cancelBtn;
-	private JTextField mgfSourceField;
-	
+	private JButton cancelBtn = null;
+	private JPanel centerPanel = null;
+	private JFrame iParent = null;
 	/**
 	 * Constructor gets a title string
 	 * @param title
 	 */
-	public FileSelector(String title) {
+	public FileSelector(JFrame aParent, String title) {
         // Initialize frame.
         super(title);
         addWindowListener(new WindowAdapter() {
@@ -49,59 +59,81 @@ public class FileSelector extends JFrame{
                 cancelButtonActionPerformed();
             }
         });
-       
+        iParent = aParent;
         // GUI construction
         this.constructScreen();
+	}
+	
+	/**
+	 * Entry point of the application:
+	 * Main method constructs a FileSelector frame.
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				new FileSelector(null, "XTandem-Parser");
+			}
+		});
 	}
 	
 	/**
 	 * This method constructs the screen.
 	 */
 	private void constructScreen(){
-		// Initialize frame
-   	 
+		// Initialize frame   	 
         int frameWidth = 350;
         int frameHeight = 130;
         this.setSize(frameWidth, frameHeight);
-        this.setTitle("XTandem-Parser");        
-        this.setLocation(300, 180);         
+        this.setTitle(XTandemViewer.APPTITLE);        
+        this.setLocationRelativeTo(null);
+        
+        // Set JGoodies Look&Feel
+		configureUI();
+		
         Container cp = this.getContentPane();
-        cp.setLayout(new BorderLayout());
+        // The main panel
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        
+        
+		
+		 // Sets icon image
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().
+                getResource("/xtandemviewer.gif")));
         
         // Xml load panel  
         loadxmlPanel = new JPanel(new FlowLayout());
-        xmlSourceField = new JTextField(12);
+        
+        xmlSourceField = new JTextField(15);
         xmlSourceField.setEditable(false);
         xmlSourceField.setEnabled(false);
         loadxmlPanel.add(xmlSourceField);
         xmlfileBrow = new JButton(openFileAction()); 
-        loadxmlPanel.add(xmlfileBrow);
-        
-        // Mgf load panel  
-        //loadmgfPanel = new JPanel(new FlowLayout());
-//        mgfSourceField = new JTextField(12);
-//        mgfSourceField.setEditable(false);
-//        mgfSourceField.setEnabled(false);
-//        loadmgfPanel.add(mgfSourceField);
-//        mgffileBrow = new JButton(openMgfFileAction()); 
-//        loadmgfPanel.add(mgffileBrow);
-        
-        upperPanel = new JPanel(new BorderLayout());
-        upperPanel.setBorder(BorderFactory.createTitledBorder("Load xtandem output"));
+        loadxmlPanel.add(xmlfileBrow); 
+        upperPanel = new JPanel(new BorderLayout());        
+        upperPanel.setBorder(BorderFactory.createTitledBorder("Load X!Tandem Output"));
         upperPanel.add(loadxmlPanel, BorderLayout.CENTER);
-//        centerPanel = new JPanel(new BorderLayout());
-//        centerPanel.setBorder(BorderFactory.createTitledBorder("Load mgf file"));
-//        centerPanel.add(loadmgfPanel, BorderLayout.CENTER);
        
         // Down panel with ok and cancel button
         lowerPanel = new JPanel();
-        okBtn = new JButton("Ok");
+        
+        okBtn = new JButton("OK");
+        Dimension size = new Dimension(48, okBtn.getPreferredSize().height );
+        okBtn.setPreferredSize(size);
+        okBtn.setMinimumSize(size);
+        okBtn.setMaximumSize(size);
+        okBtn.setEnabled(false);
         okBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {                
             	okButtonActionPerformed();
             }
         });
         cancelBtn = new JButton("Cancel");
+        cancelBtn.setPreferredSize(size);
+        cancelBtn.setMinimumSize(size);
+        cancelBtn.setMaximumSize(size);
         cancelBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 cancelButtonActionPerformed();
@@ -109,20 +141,41 @@ public class FileSelector extends JFrame{
         });
         lowerPanel.add(okBtn);
         lowerPanel.add(cancelBtn);
-        cp.add(upperPanel, BorderLayout.NORTH);
-        //cp.add(centerPanel, BorderLayout.CENTER);
-        cp.add(lowerPanel, BorderLayout.SOUTH);
+        mainPanel.add(upperPanel, BorderLayout.NORTH);
+        
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        centerPanel = new JPanel();
+        mainPanel.add(centerPanel, BorderLayout.CENTER);
+        mainPanel.add(lowerPanel, BorderLayout.SOUTH);   
+        cp.add(mainPanel);
         this.setResizable(false);
         this.setVisible(true);
 	}
 	
 	/**
+	 * Configure the user interface + Look&Feel
+	 */
+	private void configureUI() {
+		try {
+			UIManager.put(Options.USE_SYSTEM_FONTS_APP_KEY, Boolean.TRUE);
+	        Options.setDefaultIconSize(new Dimension(30, 30));
+
+			PlasticLookAndFeel.setPlasticTheme(new SkyKrupp());
+			UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
+		} catch (Exception e) {
+			System.err.println("Can't set look & feel:" + e.getMessage());
+		}		
+	}	
+	
+	/**
 	 * This method is called when ok button is pressed. It loads the xtandemviewer.
 	 */
     private void okButtonActionPerformed() {
-        this.setVisible(false);        
-        new XTandemViewer(xmlSourceField.getText(), "", false);  
-
+        this.setVisible(false); 
+        new XTandemViewer(xmlSourceField.getText(), "", false);
+        if(iParent != null){
+        	iParent.dispose();
+        }
         this.dispose();
     }
     
@@ -130,20 +183,26 @@ public class FileSelector extends JFrame{
      * This method is called when the frame is closed. It shuts down the JVM.
      */	
 	private void cancelButtonActionPerformed(){
-		System.exit(0);
+		if (iParent == null) {
+            System.exit(0);
+        } else {
+            if(!iParent.isVisible()){
+                System.exit(0);
+            } else{
+                this.setVisible(false);
+                this.dispose();
+            }
+        }
 	}	
 	
 	private Action openFileAction(){
-	    	filename = System.getProperty("user.dir") + File.separator;//File.separator+"tmp";
+	    	filename = System.getProperty("user.dir") + File.separator;
 		    JFileChooser fc = new JFileChooser(new File(filename));
 		    JFrame loadFrame = new JFrame();
 		    Action openAction = new OpenFileAction(loadFrame, fc);	    
 		    return openAction;	    
 	}
 	
-	public static void main(String[] args) {
-	    new FileSelector("XTandem-Parser");
-	}
 	
 	   //  This action class creates and shows an open-file dialog.
     public class OpenFileAction extends AbstractAction {
@@ -154,7 +213,7 @@ public class FileSelector extends JFrame{
         private String name = null;
         
         OpenFileAction(JFrame frame, JFileChooser chooser) {
-            super("Open xml-File...");
+            super("Open XML-File...");
             this.chooser = chooser;
             this.frame = frame;
         }       
@@ -168,41 +227,11 @@ public class FileSelector extends JFrame{
             if (file != null) { 
             	name = file.getAbsolutePath();
                 xmlSourceField.setText(name);                
-                xmlSourceField.setEnabled(true);                            	 
+                xmlSourceField.setEnabled(true);  
+                okBtn.setEnabled(true);
             }
         }        
     }   
-    
-	/**
-	 * This action class creates and shows an open mgf-file dialog.	 
-	 *
-	 */
-    public class OpenMgfFileAction extends AbstractAction {
-        private JFrame frame;
-        private JFileChooser chooser;
-        private InnerMgfFileFilter filter = new InnerMgfFileFilter();
-        private File file = null;
-        private String mgffile = null;
-        
-        OpenMgfFileAction(JFrame frame, JFileChooser chooser) {
-            super("Open mgf-File...");
-            this.chooser = chooser;
-            this.frame = frame;
-        }       
-
-        public void actionPerformed(ActionEvent evt) {
-            chooser.setFileFilter(filter);
-            chooser.showOpenDialog(frame);
-            // Get the selected file
-            file = chooser.getSelectedFile();
-            // Only get the path, if a file was selected
-            if (file != null) { 
-            	mgffile = file.getAbsolutePath();
-                mgfSourceField.setText(mgffile);                
-                mgfSourceField.setEnabled(true);                            	 
-            }
-        }        
-    }  
     
     private static class InnerXmlFileFilter extends javax.swing.filechooser.FileFilter {
         public boolean accept(File f) {
@@ -213,16 +242,4 @@ public class FileSelector extends JFrame{
             return "*.xml";
         }
     }
-    
-    private static class InnerMgfFileFilter extends javax.swing.filechooser.FileFilter {
-        public boolean accept(File f) {
-            return f.isDirectory() || f.getName().toLowerCase().endsWith(".mgf");
-        }
-
-        public String getDescription() {
-            return "*.mgf";
-        }
-    }
-    
-   
 }
