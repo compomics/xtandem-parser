@@ -2,7 +2,7 @@ package interfaces;
 
 import java.util.ArrayList;
 /**
- * Peaklist interface implemented by MgfPeaklist, MzDataPeaklist and MzMLPeaklist.
+ * This class respresents the Peaklist interface.
  * @author Thilo Muth
  *
  */
