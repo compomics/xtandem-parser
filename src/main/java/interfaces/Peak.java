@@ -1,6 +1,6 @@
 package interfaces;
 /**
- * Peak interface implemented by MgfPeak, MzDataPeak and MzMLPeak.
+ * This class represents the Peak interface.
  * @author Thilo Muth
  *
  */
