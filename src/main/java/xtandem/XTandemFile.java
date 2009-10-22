@@ -12,8 +12,6 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import org.xml.sax.SAXException;
-
-import parser.MgfFileParser;
 import parser.XTandemParser;
 /**
  * This class represents the xtandem file object as the starting point which provides all the methods
@@ -106,29 +104,7 @@ public class XTandemFile implements Serializable{
             e.printStackTrace();
         }
     }
-	
-    /**
-     * Constructor of XTandemFile gets a string to an existing path and filename of the xtandem file.
-     *
-     * @param aXTandemFile
-     * @param aRawFile
-     */
-	public XTandemFile(String aXTandemFile, String aRawFile) throws SAXException{
-        try {
-            File inputFile = new File(aXTandemFile);
-            if (!inputFile.exists()) {
-                throw new IllegalArgumentException("XTandem xml-file " + aXTandemFile + " doesn't exist.");
-            }
-            iXTParser = new XTandemParser(inputFile);
-            setFileName(new File(aXTandemFile).getName());
-            iRawFile = aRawFile;            
-            setRawFileType(iRawFile);
-            iSpectraList = this.getSpectraList();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+    
     public InputParams getInputParameters() {
         if (iInputParams == null) {
         	iInputParams = new InputParams(iXTParser.getInputParamMap());
@@ -341,53 +317,6 @@ public class XTandemFile implements Serializable{
     		iPeptideMap = new PeptideMap(iXTParser.getRawPeptideMap(), this.getProteinMap(), iXTParser.getNumberOfSpectra());
         }
         return iPeptideMap;
-    }
-   
-    /**
-     * This method returns a map of peaklist from the raw files. It differentiates between mgf, mzData and mzML file types.
-     * @return rawFileMap
-     */
-    public HashMap<Integer, Peaklist> getRawFileMap(){
-
-    	if (this.getRawFileType().equals("mgf")){
-    		iRawFileMap = new MgfFileParser(iRawFile, iXTParser.getTitle2SpectrumIDMap(), this.getPeptideMap()).getPeakListMap();
-    	}
-
-    	return iRawFileMap;
-    }
-
-    /**
-     * Returns the total number of spectra from the raw file.
-     * @return number The total number of spectra.
-     */
-    public int getRawFileSpectraNumber(){
-
-    	int number = 0;
-    	if(iRawFileMap != null){
-    		number = iRawFileMap.size();
-    	} else {
-    		if (this.getRawFileType().equals("mgf")){
-        		number = new MgfFileParser(iRawFile, iXTParser.getTitle2SpectrumIDMap(), this.getPeptideMap()).getSpectraNumber();
-        	}
-    	}
-
-    	return number;
-    }
-
-    public String getRawFileType(){
-    	return iRawFileType;
-    }
-
-    public void setRawFileType(String aRawFile){
-    		if (iRawFile.endsWith(".mgf") || iRawFile.endsWith(".MGF")){
-        		iRawFileType = "mgf";
-        	}
-        	if (iRawFile.endsWith(".mzData") || iRawFile.endsWith(".mzdata") || iRawFile.endsWith(".MZDATA")){
-        		iRawFileType = "mzdata";
-        	}
-        	if (iRawFile.endsWith(".mzML") || iRawFile.endsWith(".mzml") || iRawFile.endsWith(".MZML")){
-        		iRawFileType = "mzml";
-        	}
     }
 
     /**
