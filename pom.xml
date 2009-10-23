@@ -18,7 +18,9 @@
             <resource>
                 <directory>.</directory>
                 <includes>
-                    <include>LICENSE-2.0.txt</include> </includes>
+                    <include>LICENSE-2.0.txt</include>
+                    <include>README.txt</include>
+                </includes>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>

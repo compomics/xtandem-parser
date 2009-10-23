@@ -14,6 +14,7 @@ import xtandem.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -35,7 +36,6 @@ public class XTandemViewer extends JFrame {
     private String lastSelectedFolder = "user.home";
     private SpectrumPanel spectrumPanel;
     private String iXTandemFileString;
-    private String iRawFile;
     private HashMap<Integer, ArrayList<Peptide>> peptideMap;
     private HashMap<Integer, ArrayList<Double>> allMzValues;
     private HashMap<Integer, ArrayList<Double>> allIntensityValues;
@@ -82,10 +82,6 @@ public class XTandemViewer extends JFrame {
     private JMenuItem exportAllIdentificationsMenuItem;
     private JMenuItem exportAllSpectraMenuItem;
     private JMenuItem exportSelectedSpectrumMenuItem;
-    private JMenuItem inputParameterMenuItem;
-    private JMenuItem performanceParameterMenuItem;
-    private PerformParams performParams;
-    private InputParams inputParams;
     private XTandemFile iXTandemFile;
 
     /**
@@ -297,14 +293,7 @@ public class XTandemViewer extends JFrame {
         });
         fileMenu.add(exitMenuItem);
         setJMenuBar(menuBar);
-    }
-
-    private void inputParameterMenuItemActionPerformed(ActionEvent evt) {
-        setCursor(new Cursor(java.awt.Cursor.WAIT_CURSOR));
-        ParameterTable table = new ParameterTable(inputParams);
-        new ParameterDialog(this, "input", table);
-        setCursor(new Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-    }
+    }  
 
     /**
      * The method that builds the help frame.
@@ -326,7 +315,7 @@ public class XTandemViewer extends JFrame {
         tMsg.append("The XTandem parser is a Java project for extracting information from X!Tandem output xml files.");
         tMsg.append("\n");
         tMsg.append("\n");
-        tMsg.append("The latest version is available at http://code.google.com/p/xtandem-parser");
+        tMsg.append("The latest version is available at http://xtandem-parser.googlecode.com");
         tMsg.append("\n");
         tMsg.append("\n");
         tMsg.append("If any questions arise, contact the corresponding author: ");
@@ -529,11 +518,11 @@ public class XTandemViewer extends JFrame {
         aIonsJCheckBox.setSelected(true);
         aIonsJCheckBox.setText("a");
         aIonsJCheckBox.setToolTipText("Show a-ions");
-        aIonsJCheckBox.setMaximumSize(new java.awt.Dimension(39, 23));
-        aIonsJCheckBox.setMinimumSize(new java.awt.Dimension(39, 23));
-        aIonsJCheckBox.setPreferredSize(new java.awt.Dimension(39, 23));
-        aIonsJCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        aIonsJCheckBox.setMaximumSize(new Dimension(39, 23));
+        aIonsJCheckBox.setMinimumSize(new Dimension(39, 23));
+        aIonsJCheckBox.setPreferredSize(new Dimension(39, 23));
+        aIonsJCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 aIonsJCheckBoxActionPerformed(evt);
             }
         });
@@ -541,72 +530,72 @@ public class XTandemViewer extends JFrame {
         bIonsJCheckBox.setSelected(true);
         bIonsJCheckBox.setText("b");
         bIonsJCheckBox.setToolTipText("Show b-ions");
-        bIonsJCheckBox.setMaximumSize(new java.awt.Dimension(39, 23));
-        bIonsJCheckBox.setMinimumSize(new java.awt.Dimension(39, 23));
-        bIonsJCheckBox.setPreferredSize(new java.awt.Dimension(39, 23));
-        bIonsJCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bIonsJCheckBoxActionPerformed(evt);
+        bIonsJCheckBox.setMaximumSize(new Dimension(39, 23));
+        bIonsJCheckBox.setMinimumSize(new Dimension(39, 23));
+        bIonsJCheckBox.setPreferredSize(new Dimension(39, 23));
+        bIonsJCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                bIonsJCheckBoxActionPerformed();
             }
         });
 
         cIonsJCheckBox.setSelected(true);
         cIonsJCheckBox.setText("c");
         cIonsJCheckBox.setToolTipText("Show c-ions");
-        cIonsJCheckBox.setMaximumSize(new java.awt.Dimension(39, 23));
-        cIonsJCheckBox.setMinimumSize(new java.awt.Dimension(39, 23));
-        cIonsJCheckBox.setPreferredSize(new java.awt.Dimension(39, 23));
-        cIonsJCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cIonsJCheckBoxActionPerformed(evt);
+        cIonsJCheckBox.setMaximumSize(new Dimension(39, 23));
+        cIonsJCheckBox.setMinimumSize(new Dimension(39, 23));
+        cIonsJCheckBox.setPreferredSize(new Dimension(39, 23));
+        cIonsJCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                cIonsJCheckBoxActionPerformed();
             }
         });
 
         yIonsJCheckBox.setSelected(true);
         yIonsJCheckBox.setText("y");
         yIonsJCheckBox.setToolTipText("Show y-ions");
-        yIonsJCheckBox.setMaximumSize(new java.awt.Dimension(39, 23));
-        yIonsJCheckBox.setMinimumSize(new java.awt.Dimension(39, 23));
-        yIonsJCheckBox.setPreferredSize(new java.awt.Dimension(39, 23));
-        yIonsJCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                yIonsJCheckBoxActionPerformed(evt);
+        yIonsJCheckBox.setMaximumSize(new Dimension(39, 23));
+        yIonsJCheckBox.setMinimumSize(new Dimension(39, 23));
+        yIonsJCheckBox.setPreferredSize(new Dimension(39, 23));
+        yIonsJCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                yIonsJCheckBoxActionPerformed();
             }
         });
 
         xIonsJCheckBox.setSelected(true);
         xIonsJCheckBox.setText("x");
         xIonsJCheckBox.setToolTipText("Show x-ions");
-        xIonsJCheckBox.setMaximumSize(new java.awt.Dimension(39, 23));
-        xIonsJCheckBox.setMinimumSize(new java.awt.Dimension(39, 23));
-        xIonsJCheckBox.setPreferredSize(new java.awt.Dimension(39, 23));
-        xIonsJCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                xIonsJCheckBoxActionPerformed(evt);
+        xIonsJCheckBox.setMaximumSize(new Dimension(39, 23));
+        xIonsJCheckBox.setMinimumSize(new Dimension(39, 23));
+        xIonsJCheckBox.setPreferredSize(new Dimension(39, 23));
+        xIonsJCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                xIonsJCheckBoxActionPerformed();
             }
         });
 
         zIonsJCheckBox.setSelected(true);
         zIonsJCheckBox.setText("z");
         zIonsJCheckBox.setToolTipText("Show z-ions");
-        zIonsJCheckBox.setMaximumSize(new java.awt.Dimension(39, 23));
-        zIonsJCheckBox.setMinimumSize(new java.awt.Dimension(39, 23));
-        zIonsJCheckBox.setPreferredSize(new java.awt.Dimension(39, 23));
-        zIonsJCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zIonsJCheckBoxActionPerformed(evt);
+        zIonsJCheckBox.setMaximumSize(new Dimension(39, 23));
+        zIonsJCheckBox.setMinimumSize(new Dimension(39, 23));
+        zIonsJCheckBox.setPreferredSize(new Dimension(39, 23));
+        zIonsJCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                zIonsJCheckBoxActionPerformed();
             }
         });
 
         chargeOneJCheckBox.setSelected(true);
         chargeOneJCheckBox.setText("+");
         chargeOneJCheckBox.setToolTipText("Show ions with charge 1");
-        chargeOneJCheckBox.setMaximumSize(new java.awt.Dimension(39, 23));
-        chargeOneJCheckBox.setMinimumSize(new java.awt.Dimension(39, 23));
-        chargeOneJCheckBox.setPreferredSize(new java.awt.Dimension(39, 23));
-        chargeOneJCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chargeOneJCheckBoxActionPerformed(evt);
+        chargeOneJCheckBox.setMaximumSize(new Dimension(39, 23));
+        chargeOneJCheckBox.setMinimumSize(new Dimension(39, 23));
+        chargeOneJCheckBox.setPreferredSize(new Dimension(39, 23));
+        chargeOneJCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                chargeOneJCheckBoxActionPerformed();
             }
         });
 
@@ -617,8 +606,8 @@ public class XTandemViewer extends JFrame {
         chargeTwoJCheckBox.setMinimumSize(new java.awt.Dimension(39, 23));
         chargeTwoJCheckBox.setPreferredSize(new java.awt.Dimension(39, 23));
         chargeTwoJCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chargeTwoJCheckBoxActionPerformed(evt);
+            public void actionPerformed(ActionEvent evt) {
+                chargeTwoJCheckBoxActionPerformed();
             }
         });
 
@@ -626,8 +615,8 @@ public class XTandemViewer extends JFrame {
         chargeOverTwoJCheckBox.setText(">2");
         chargeOverTwoJCheckBox.setToolTipText("Show ions with charge >2");
         chargeOverTwoJCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chargeOverTwoJCheckBoxActionPerformed(evt);
+            public void actionPerformed(ActionEvent evt) {
+                chargeOverTwoJCheckBoxActionPerformed();
             }
         });
 
@@ -858,11 +847,7 @@ public class XTandemViewer extends JFrame {
                 Iterator<Spectrum> iter = iXTandemFile.getSpectraIterator();
 
                 // Prepare everything for the peptides.
-                PeptideMap pepMap = iXTandemFile.getPeptideMap();
-
-                // Get the performance and input parameters
-                performParams = iXTandemFile.getPerformParameters();
-                inputParams = iXTandemFile.getInputParameters();
+                PeptideMap pepMap = iXTandemFile.getPeptideMap();           
 
 
                 while (iter.hasNext()) {
@@ -1011,35 +996,35 @@ public class XTandemViewer extends JFrame {
 
     }
 
-    private void bIonsJCheckBoxActionPerformed(ActionEvent evt) {
+    private void bIonsJCheckBoxActionPerformed() {
         aIonsJCheckBoxActionPerformed(null);
     }
 
-    private void cIonsJCheckBoxActionPerformed(ActionEvent evt) {
+    private void cIonsJCheckBoxActionPerformed() {
         aIonsJCheckBoxActionPerformed(null);
     }
 
-    private void yIonsJCheckBoxActionPerformed(ActionEvent evt) {
+    private void yIonsJCheckBoxActionPerformed() {
         aIonsJCheckBoxActionPerformed(null);
     }
 
-    private void xIonsJCheckBoxActionPerformed(ActionEvent evt) {
+    private void xIonsJCheckBoxActionPerformed() {
         aIonsJCheckBoxActionPerformed(null);
     }
 
-    private void zIonsJCheckBoxActionPerformed(ActionEvent evt) {
+    private void zIonsJCheckBoxActionPerformed() {
         aIonsJCheckBoxActionPerformed(null);
     }
 
-    private void chargeOneJCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chargeOneJCheckBoxActionPerformed
+    private void chargeOneJCheckBoxActionPerformed() {
         aIonsJCheckBoxActionPerformed(null);
     }
 
-    private void chargeTwoJCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chargeTwoJCheckBoxActionPerformed
+    private void chargeTwoJCheckBoxActionPerformed() {
         aIonsJCheckBoxActionPerformed(null);
     }
 
-    private void chargeOverTwoJCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chargeOverTwoJCheckBoxActionPerformed
+    private void chargeOverTwoJCheckBoxActionPerformed() {
         aIonsJCheckBoxActionPerformed(null);
     }
 
@@ -1066,9 +1051,9 @@ public class XTandemViewer extends JFrame {
             spectrumPanel.validate();
             spectrumPanel.repaint();
         }
-    }
+    }    
 
-    private void spectraJXTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spectraJXTableKeyReleased
+    private void spectraJXTableKeyReleased(KeyEvent evt) {
         spectraJXTableMouseClicked(null);
     }
 
