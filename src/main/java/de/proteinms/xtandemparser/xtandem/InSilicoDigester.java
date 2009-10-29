@@ -1,7 +1,7 @@
 package de.proteinms.xtandemparser.xtandem;
 
-import interfaces.Modification;
-import interfaces.Peak;
+import de.proteinms.xtandemparser.interfaces.Modification;
+import de.proteinms.xtandemparser.interfaces.Peak;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;

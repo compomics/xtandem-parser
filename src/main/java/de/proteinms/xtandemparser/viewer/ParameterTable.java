@@ -1,7 +1,7 @@
 package de.proteinms.xtandemparser.viewer;
 
-import xtandem.InputParams;
-import xtandem.PerformParams;
+import de.proteinms.xtandemparser.xtandem.InputParams;
+import de.proteinms.xtandemparser.xtandem.PerformParams;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

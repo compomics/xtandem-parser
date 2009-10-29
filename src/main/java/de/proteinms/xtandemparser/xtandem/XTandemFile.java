@@ -1,7 +1,7 @@
 package de.proteinms.xtandemparser.xtandem;
 
-import interfaces.Ion;
-import interfaces.Peaklist;
+import de.proteinms.xtandemparser.interfaces.Ion;
+import de.proteinms.xtandemparser.interfaces.Peaklist;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import org.xml.sax.SAXException;
-import parser.XTandemParser;
+import de.proteinms.xtandemparser.parser.XTandemParser;
 
 /**
  * This class represents the xtandem file object as the starting point which provides all the methods

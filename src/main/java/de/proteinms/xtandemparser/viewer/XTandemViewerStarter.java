@@ -13,7 +13,7 @@ public class XTandemViewerStarter {
     /**
      * The name of the xtandem parser jar file.
      */
-    private String filename = "xtandemparser-" + XTandemViewer.VERSION.substring(3) + ".jar";
+    private String filename = "xtandem-parser-" + XTandemViewer.VERSION.substring(3) + ".jar";
 
     /**
      * Starts the launcher by calling the launch method.
@@ -45,7 +45,8 @@ public class XTandemViewerStarter {
         String javaHome = System.getProperty("java.home") + File.separator +
                 "bin" + File.separator;
 
-        cmdLine = javaHome + "java " + memoryOptions + " -cp " + new File(file, filename).getAbsolutePath() + " viewer.FileSelector";
+        cmdLine = javaHome + "java " + memoryOptions + " -cp " + new File(file, filename).getAbsolutePath()
+                + " de.proteinms.xtandemparser.viewer.FileSelector";
 
         try {
             Process p = Runtime.getRuntime().exec(cmdLine);

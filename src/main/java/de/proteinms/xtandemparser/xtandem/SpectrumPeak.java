@@ -1,6 +1,6 @@
 package de.proteinms.xtandemparser.xtandem;
 
-import interfaces.Peak;
+import de.proteinms.xtandemparser.interfaces.Peak;
 
 /**
  * This class is an implementation of Peak and is used for the fragment ion calculation.

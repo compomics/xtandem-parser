@@ -2,23 +2,51 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.google.code.xtandem-parser</groupId>
-    <artifactId>xtandemparser</artifactId>
-    <name>XTandem-Parser</name>
+    <artifactId>xtandem-parser</artifactId>
+    <name>xtandem-parser</name>
     <version>1.0</version>
+    <description>XTandem Parser is a Java based parser for extracting information from X!Tandem output xml files.</description>
+    <url>http://xtandem-parser.googlecode.com/</url>
+
+
+    <!-- License -->
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    
+    <!-- Developers -->
     <developers>
         <developer>
             <id>thilo</id>
             <name>Thilo Muth</name>
             <email>Thilo.Muth@uni-jena.de</email>
         </developer>
+        <developer>
+            <name>Harald Barsnes</name>
+            <id>harald</id>
+            <email>harald.barsnes@ii.uib.no</email>
+            <organization>Department of Informatics, University of Bergen, Norway</organization>
+        </developer>
+        <developer>
+            <name>Lennart Martens</name>
+            <id>lennart</id>
+            <email>lennart.martens@UGent.be</email>
+            <organization>Computational Omics and Systems Biology Group, VIB Department of Medical Protein Research, UGent, Belgium</organization>
+        </developer>
     </developers>
-  
+
+
+     <!-- Build -->
     <build>
 
         <!-- Resources -->
         <resources>
             <resource>
-                <directory>.</directory>
+                <directory>./</directory>
                 <includes>
                     <include>LICENSE-2.0.txt</include>
                     <include>README.txt</include>
@@ -31,6 +59,7 @@
 
         <plugins>
 
+
             <!-- Compiler plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -41,6 +70,7 @@
                     <target>1.5</target>
                 </configuration>
             </plugin>
+
 
             <!-- Dependency plugin -->
             <plugin>
@@ -54,7 +84,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/lib/</outputDirectory>
                             <overWriteReleases>true</overWriteReleases>
                             <overWriteSnapshots>true</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
@@ -63,6 +93,7 @@
                 </executions>
             </plugin>
 
+
             <!-- Jar plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -70,15 +101,45 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>viewer/XTandemViewerStarter</mainClass>
+                            <mainClass>de/proteinms/xtandemparser/viewer/XTandemViewerStarter</mainClass>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib</classpathPrefix>
                         </manifest>
                     </archive>
+                    <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/</outputDirectory>
                 </configuration>
+            </plugin>
+
+
+            <!-- Resources plugin -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>./</directory>
+                                    <includes>
+                                        <include>README.txt</include>
+                                        <include>LICENSE-2.0.txt</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
+
 
    <!-- Repositores -->
     <repositories>
@@ -94,7 +155,8 @@
             </snapshots>
         </repository>
     </repositories>
-    
+
+
   <!-- Dependencies -->
     <dependencies>
         <dependency>

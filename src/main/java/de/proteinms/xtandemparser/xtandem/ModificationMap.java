@@ -1,6 +1,6 @@
 package de.proteinms.xtandemparser.xtandem;
 
-import interfaces.Modification;
+import de.proteinms.xtandemparser.interfaces.Modification;
 
 import java.io.Serializable;
 import java.util.ArrayList;

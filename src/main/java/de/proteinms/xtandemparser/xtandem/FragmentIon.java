@@ -1,7 +1,7 @@
 package de.proteinms.xtandemparser.xtandem;
 
-import interfaces.Ion;
-import interfaces.Peak;
+import de.proteinms.xtandemparser.interfaces.Ion;
+import de.proteinms.xtandemparser.interfaces.Peak;
 
 /**
  * This class holds the fragment ion and is an implementation of Ion.
