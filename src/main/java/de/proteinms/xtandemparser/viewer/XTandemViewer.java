@@ -1151,7 +1151,14 @@ public class XTandemViewer extends JFrame {
                             if (ionType.equals("y")) {
                                 ionCoverage[ionNumber][1]++;
                             }
-                            currentAnnotations.add(new DefaultSpectrumAnnotation(mzValue, ionCoverageErrorMargin, color, ionType + (ionNumber)));
+                            // Use standard ion type names, such as y5++
+                            String ionDesc;
+                            if (ionType.contains("++")){
+                                ionDesc = ionType.substring(0,1) + ionNumber + "++";
+                            } else {
+                                ionDesc = ionType + ionNumber;
+                            }
+                            currentAnnotations.add(new DefaultSpectrumAnnotation(mzValue, ionCoverageErrorMargin, color, ionDesc));
                         }
                     }
 
