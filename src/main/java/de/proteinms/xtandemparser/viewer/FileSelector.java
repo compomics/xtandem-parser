@@ -194,8 +194,7 @@ public class FileSelector extends JFrame {
         filename = System.getProperty("user.dir") + File.separator;
         JFileChooser fc = new JFileChooser(new File(filename));
         JFrame loadFrame = new JFrame();
-        Action openAction = new OpenFileAction(loadFrame, fc);
-        return openAction;
+        return new OpenFileAction(loadFrame, fc);
     }
 
     //  This action class creates and shows an open-file dialog.
