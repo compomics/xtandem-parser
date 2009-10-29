@@ -78,7 +78,7 @@ public class FileSelector extends JFrame {
      */
     private void constructScreen() {
         // Initialize frame
-        int frameWidth = 350;
+        int frameWidth = 450;
         int frameHeight = 130;
         this.setSize(frameWidth, frameHeight);
         this.setTitle(XTandemViewer.APPTITLE);
@@ -99,7 +99,7 @@ public class FileSelector extends JFrame {
         // Xml load panel  
         loadxmlPanel = new JPanel(new FlowLayout());
 
-        xmlSourceField = new JTextField(15);
+        xmlSourceField = new JTextField(35);
         xmlSourceField.setEditable(false);
         xmlSourceField.setEnabled(false);
         loadxmlPanel.add(xmlSourceField);
