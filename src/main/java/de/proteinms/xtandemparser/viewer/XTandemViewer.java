@@ -24,13 +24,13 @@ import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
-
 /**
  * This class provides a basic viewer for the spectra.
  *
  * @author Thilo Muth
  */
 public class XTandemViewer extends JFrame {
+
     public final static String APPTITLE = "X!Tandem Viewer";
     public final static String VERSION = "v. 1.0";
     private String lastSelectedFolder = "user.home";
@@ -215,6 +215,7 @@ public class XTandemViewer extends JFrame {
         exportSpectraTableMenuItem.setText("Spectra Files Table");
         exportSpectraTableMenuItem.setToolTipText("Export the Spectra Files Table as Tab Delimited Text File");
         exportSpectraTableMenuItem.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exportSpectraFilesTable(evt);
             }
@@ -225,6 +226,7 @@ public class XTandemViewer extends JFrame {
         exportAllIdentificationsMenuItem.setText("All Identifications (all hits)");
         exportAllIdentificationsMenuItem.setToolTipText("Export All Identifications (all hits) as Tab Delimited Text File");
         exportAllIdentificationsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exportAllIdentifications(evt);
             }
@@ -237,6 +239,7 @@ public class XTandemViewer extends JFrame {
         exportSelectedSpectrumMenuItem.setToolTipText("Export the Selected Spectrum as Tab Delimited Text File");
         exportSelectedSpectrumMenuItem.setEnabled(false);
         exportSelectedSpectrumMenuItem.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exportSelectedSpectrum(evt);
             }
@@ -247,6 +250,7 @@ public class XTandemViewer extends JFrame {
         exportAllSpectraMenuItem.setText("All Spectra");
         exportAllSpectraMenuItem.setToolTipText("Export all the Spectra as DTA Files");
         exportAllSpectraMenuItem.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exportAllSpectra(evt);
             }
@@ -257,6 +261,7 @@ public class XTandemViewer extends JFrame {
         helpMenuItem.setMnemonic('H');
         helpMenuItem.setText("Help");
         helpMenuItem.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 helpTriggered();
             }
@@ -266,6 +271,7 @@ public class XTandemViewer extends JFrame {
         aboutMenuItem.setMnemonic('a');
         aboutMenuItem.setText("About");
         aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 aboutTriggered();
             }
@@ -277,6 +283,7 @@ public class XTandemViewer extends JFrame {
         openMenuItem.setText("Open");
         openMenuItem.setToolTipText("Open a New X!Tandem XML File");
         openMenuItem.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent evt) {
                 openActionPerformed(evt);
             }
@@ -287,13 +294,14 @@ public class XTandemViewer extends JFrame {
         exitMenuItem.setText("Exit");
         exitMenuItem.setToolTipText("Exit XTandem Viewer");
         exitMenuItem.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent evt) {
                 System.exit(0);
             }
         });
         fileMenu.add(exitMenuItem);
         setJMenuBar(menuBar);
-    }  
+    }
 
     /**
      * The method that builds the help frame.
@@ -337,8 +345,10 @@ public class XTandemViewer extends JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         spectraTable = new JXTable() {
+
             protected JXTableHeader createDefaultTableHeader() {
                 return new JXTableHeader(columnModel) {
+
                     public String getToolTipText(MouseEvent e) {
                         String tip;
                         java.awt.Point p = e.getPoint();
@@ -355,8 +365,10 @@ public class XTandemViewer extends JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         identificationsTable = new JXTable() {
+
             protected JXTableHeader createDefaultTableHeader() {
                 return new JXTableHeader(columnModel) {
+
                     public String getToolTipText(MouseEvent e) {
                         String tip;
                         java.awt.Point p = e.getPoint();
@@ -384,8 +396,10 @@ public class XTandemViewer extends JFrame {
         chargeOverTwoJCheckBox = new JCheckBox();
         jScrollPane1 = new JScrollPane();
         spectrumJXTable = new JXTable() {
+
             protected JXTableHeader createDefaultTableHeader() {
                 return new JXTableHeader(columnModel) {
+
                     public String getToolTipText(MouseEvent e) {
                         String tip;
                         java.awt.Point p = e.getPoint();
@@ -406,13 +420,13 @@ public class XTandemViewer extends JFrame {
 
         spectraTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
-                new String[]{" ", "Filename", "m/z", "Charge", "Identified"}
-        ) {
+                new String[]{" ", "Filename", "m/z", "Charge", "Identified"}) {
+
             Class[] types = new Class[]{
-                    Integer.class, String.class, Double.class, Integer.class, Boolean.class
+                Integer.class, String.class, Double.class, Integer.class, Boolean.class
             };
             boolean[] canEdit = new boolean[]{
-                    false, false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -425,12 +439,14 @@ public class XTandemViewer extends JFrame {
         });
         spectraTable.setOpaque(false);
         spectraTable.addKeyListener(new java.awt.event.KeyAdapter() {
+
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 spectraJXTableKeyReleased(evt);
             }
         });
 
         spectraTable.addMouseListener(new java.awt.event.MouseAdapter() {
+
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 spectraJXTableMouseClicked(evt);
             }
@@ -440,18 +456,9 @@ public class XTandemViewer extends JFrame {
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
-                        .addContainerGap())
-        );
+                jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(jPanel1Layout.createSequentialGroup().addContainerGap().add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE).addContainerGap()));
         jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(jPanel1Layout.createSequentialGroup()
-                        .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
-                        .addContainerGap())
-        );
+                jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(jPanel1Layout.createSequentialGroup().add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE).addContainerGap()));
 
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Identifications", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
@@ -464,14 +471,14 @@ public class XTandemViewer extends JFrame {
         identificationsTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{
-                        " ", "Sequence", "Modified Sequence", "Start", "End", "Exp. Mass", "Theo. Mass", "E-value", "Accession"
-                }
-        ) {
+                    " ", "Sequence", "Modified Sequence", "Start", "End", "Exp. Mass", "Theo. Mass", "E-value", "Accession"
+                }) {
+
             Class[] types = new Class[]{
-                    Integer.class, String.class, String.class, Integer.class, Integer.class, Double.class, Double.class, Float.class, Float.class, String.class, String.class
+                Integer.class, String.class, String.class, Integer.class, Integer.class, Double.class, Double.class, Float.class, Float.class, String.class, String.class
             };
             boolean[] canEdit = new boolean[]{
-                    false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -489,26 +496,9 @@ public class XTandemViewer extends JFrame {
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-                jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                .add(jPanel2Layout.createSequentialGroup()
-                                        .add(jLabel1)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(modificationDetailsJLabel))
-                                .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1146, Short.MAX_VALUE))
-                        .addContainerGap())
-        );
+                jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(jPanel2Layout.createSequentialGroup().addContainerGap().add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(jPanel2Layout.createSequentialGroup().add(jLabel1).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(modificationDetailsJLabel)).add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1146, Short.MAX_VALUE)).addContainerGap()));
         jPanel2Layout.setVerticalGroup(
-                jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                        .add(jLabel1)
-                        .add(modificationDetailsJLabel)))
-        );
+                jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup().add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE).add(jLabel1).add(modificationDetailsJLabel))));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Spectrum", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
 
@@ -522,6 +512,7 @@ public class XTandemViewer extends JFrame {
         aIonsJCheckBox.setMinimumSize(new Dimension(39, 23));
         aIonsJCheckBox.setPreferredSize(new Dimension(39, 23));
         aIonsJCheckBox.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent evt) {
                 aIonsJCheckBoxActionPerformed(evt);
             }
@@ -534,6 +525,7 @@ public class XTandemViewer extends JFrame {
         bIonsJCheckBox.setMinimumSize(new Dimension(39, 23));
         bIonsJCheckBox.setPreferredSize(new Dimension(39, 23));
         bIonsJCheckBox.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent evt) {
                 bIonsJCheckBoxActionPerformed();
             }
@@ -546,6 +538,7 @@ public class XTandemViewer extends JFrame {
         cIonsJCheckBox.setMinimumSize(new Dimension(39, 23));
         cIonsJCheckBox.setPreferredSize(new Dimension(39, 23));
         cIonsJCheckBox.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent evt) {
                 cIonsJCheckBoxActionPerformed();
             }
@@ -558,6 +551,7 @@ public class XTandemViewer extends JFrame {
         yIonsJCheckBox.setMinimumSize(new Dimension(39, 23));
         yIonsJCheckBox.setPreferredSize(new Dimension(39, 23));
         yIonsJCheckBox.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent evt) {
                 yIonsJCheckBoxActionPerformed();
             }
@@ -570,6 +564,7 @@ public class XTandemViewer extends JFrame {
         xIonsJCheckBox.setMinimumSize(new Dimension(39, 23));
         xIonsJCheckBox.setPreferredSize(new Dimension(39, 23));
         xIonsJCheckBox.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent evt) {
                 xIonsJCheckBoxActionPerformed();
             }
@@ -582,6 +577,7 @@ public class XTandemViewer extends JFrame {
         zIonsJCheckBox.setMinimumSize(new Dimension(39, 23));
         zIonsJCheckBox.setPreferredSize(new Dimension(39, 23));
         zIonsJCheckBox.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent evt) {
                 zIonsJCheckBoxActionPerformed();
             }
@@ -594,6 +590,7 @@ public class XTandemViewer extends JFrame {
         chargeOneJCheckBox.setMinimumSize(new Dimension(39, 23));
         chargeOneJCheckBox.setPreferredSize(new Dimension(39, 23));
         chargeOneJCheckBox.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent evt) {
                 chargeOneJCheckBoxActionPerformed();
             }
@@ -606,6 +603,7 @@ public class XTandemViewer extends JFrame {
         chargeTwoJCheckBox.setMinimumSize(new java.awt.Dimension(39, 23));
         chargeTwoJCheckBox.setPreferredSize(new java.awt.Dimension(39, 23));
         chargeTwoJCheckBox.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(ActionEvent evt) {
                 chargeTwoJCheckBoxActionPerformed();
             }
@@ -615,6 +613,7 @@ public class XTandemViewer extends JFrame {
         chargeOverTwoJCheckBox.setText(">2");
         chargeOverTwoJCheckBox.setToolTipText("Show ions with charge >2");
         chargeOverTwoJCheckBox.addActionListener(new java.awt.event.ActionListener() {
+
             public void actionPerformed(ActionEvent evt) {
                 chargeOverTwoJCheckBoxActionPerformed();
             }
@@ -624,70 +623,21 @@ public class XTandemViewer extends JFrame {
         org.jdesktop.layout.GroupLayout jPanel4Layout = new org.jdesktop.layout.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
-                jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(yIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                        .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .add(chargeOneJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                                .add(2, 2, 2))
-                        .add(org.jdesktop.layout.GroupLayout.TRAILING, zIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                        .add(xIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                        .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                                .add(org.jdesktop.layout.GroupLayout.TRAILING, chargeTwoJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .add(org.jdesktop.layout.GroupLayout.TRAILING, chargeOverTwoJCheckBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 44, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .add(bIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                        .add(aIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                        .add(cIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                        .add(jPanel4Layout.createSequentialGroup()
-                                .add(jSeparator2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                                .addContainerGap())
-                        .add(jPanel4Layout.createSequentialGroup()
-                        .add(jSeparator1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                        .addContainerGap())))
-        );
+                jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(jPanel4Layout.createSequentialGroup().addContainerGap().add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(yIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE).add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup().add(chargeOneJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE).add(2, 2, 2)).add(org.jdesktop.layout.GroupLayout.TRAILING, zIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE).add(xIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE).add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false).add(org.jdesktop.layout.GroupLayout.TRAILING, chargeTwoJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).add(org.jdesktop.layout.GroupLayout.TRAILING, chargeOverTwoJCheckBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 44, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)).add(bIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE).add(aIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE).add(cIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE).add(jPanel4Layout.createSequentialGroup().add(jSeparator2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE).addContainerGap()).add(jPanel4Layout.createSequentialGroup().add(jSeparator1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE).addContainerGap()))));
         jPanel4Layout.setVerticalGroup(
-                jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(aIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(bIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(cIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(13, 13, 13)
-                        .add(xIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(yIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(zIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(12, 12, 12)
-                        .add(jSeparator2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(chargeOneJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(chargeTwoJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(chargeOverTwoJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(13, 13, 13))
-        );
+                jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(jPanel4Layout.createSequentialGroup().addContainerGap().add(aIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(bIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(cIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE).addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED).add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE).add(13, 13, 13).add(xIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(yIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(zIonsJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).add(12, 12, 12).add(jSeparator2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(chargeOneJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(chargeTwoJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(chargeOverTwoJCheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).add(13, 13, 13)));
 
         spectrumJXTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-
-                },
+                new Object[][]{},
                 new String[]{
-                        " ", "m/z", "Intensity"
-                }
-        ) {
+                    " ", "m/z", "Intensity"
+                }) {
+
             Class[] types = new Class[]{
-                    java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean[]{
-                    false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -705,57 +655,19 @@ public class XTandemViewer extends JFrame {
         org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
-                jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
-                                .add(jPanel3Layout.createSequentialGroup()
-                                .add(spectrumJPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jPanel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 48, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())
-        );
+                jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel3Layout.createSequentialGroup().addContainerGap().add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING).add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE).add(jPanel3Layout.createSequentialGroup().add(spectrumJPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(jPanel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 48, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))).addContainerGap()));
         jPanel3Layout.setVerticalGroup(
-                jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(jPanel3Layout.createSequentialGroup()
-                        .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                                .add(spectrumJPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .add(jPanel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                        .addContainerGap())
-        );
+                jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(jPanel3Layout.createSequentialGroup().add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false).add(spectrumJPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).add(jPanel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)).addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED).add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE).addContainerGap()));
 
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                .add(layout.createSequentialGroup()
-                                        .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                        .add(18, 18, 18)
-                                        .add(jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())
-        );
+                layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(layout.createSequentialGroup().addContainerGap().add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(layout.createSequentialGroup().add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE).add(18, 18, 18).add(jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)).add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)).addContainerGap()));
         layout.setVerticalGroup(
-                layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                .add(jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-        );
+                layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(layout.createSequentialGroup().addContainerGap().add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE).addContainerGap()));
         pack();
     }
-
 
     public void insertFiles(String aXTandemFile, String lastSelectedFolder) {
 
@@ -782,7 +694,6 @@ public class XTandemViewer extends JFrame {
 
         // Thread for the parsing of the XTandem xml file.
         new Thread("ParserThread") {
-
 
             public void run() {
 
@@ -816,7 +727,7 @@ public class XTandemViewer extends JFrame {
                     Runtime.getRuntime().gc();
                     JOptionPane.showMessageDialog(null,
                             "The task used up all the available memory and had to be stopped.\n" +
-                                    "Memory boundaries are set in ../Properties/JavaOptions.txt.",
+                            "Memory boundaries are set in ../Properties/JavaOptions.txt.",
                             "Out of Memory Error",
                             JOptionPane.ERROR_MESSAGE);
                     error.printStackTrace();
@@ -825,8 +736,8 @@ public class XTandemViewer extends JFrame {
                     saxException.getMessage();
                     JOptionPane.showMessageDialog(null,
                             "Error during parsing the xml file!\n" +
-                                    saxException.getMessage() + "\n" +
-                                    "Please load xml file in correct format...",
+                            saxException.getMessage() + "\n" +
+                            "Please load xml file in correct format...",
                             "Parser error",
                             JOptionPane.ERROR_MESSAGE);
                     System.exit(0);
@@ -847,7 +758,7 @@ public class XTandemViewer extends JFrame {
                 Iterator<Spectrum> iter = iXTandemFile.getSpectraIterator();
 
                 // Prepare everything for the peptides.
-                PeptideMap pepMap = iXTandemFile.getPeptideMap();           
+                PeptideMap pepMap = iXTandemFile.getPeptideMap();
 
 
                 while (iter.hasNext()) {
@@ -884,12 +795,12 @@ public class XTandemViewer extends JFrame {
                     accMap.put(spectrumNumber, accession);
                     // Add the values to the table (model).
                     ((DefaultTableModel) spectraTable.getModel()).addRow(new Object[]{
-                            spectrumNumber,
-                            label,
-                            precursorMh,
-                            precursorCharge,
-                            true
-                    });
+                                spectrumNumber,
+                                label,
+                                precursorMh,
+                                precursorCharge,
+                                true
+                            });
 
 
                     // Initialize the array lists
@@ -1045,13 +956,13 @@ public class XTandemViewer extends JFrame {
 
             Vector<DefaultSpectrumAnnotation> currentAnnotations = allAnnotations.get(
                     identificationsTable.getValueAt(selectedRow, 1) + "_" +
-                            identificationsTable.getValueAt(selectedRow, 7));
+                    identificationsTable.getValueAt(selectedRow, 7));
 
             spectrumPanel.setAnnotations(filterAnnotations(currentAnnotations));
             spectrumPanel.validate();
             spectrumPanel.repaint();
         }
-    }    
+    }
 
     private void spectraJXTableKeyReleased(KeyEvent evt) {
         spectraJXTableMouseClicked(null);
@@ -1086,10 +997,10 @@ public class XTandemViewer extends JFrame {
             for (int i = 0; i < mzValues.size(); i++) {
 
                 ((DefaultTableModel) spectrumJXTable.getModel()).addRow(new Object[]{
-                        new Integer(i + 1),
-                        mzValues.get(i),
-                        intensityValues.get(i)
-                });
+                            new Integer(i + 1),
+                            mzValues.get(i),
+                            intensityValues.get(i)
+                        });
 
                 mzValuesAsDouble[i] = mzValues.get(i);
                 intensityValuesAsDouble[i] = intensityValues.get(i);
@@ -1351,16 +1262,15 @@ public class XTandemViewer extends JFrame {
                     String accession = accMap.get((Integer) spectraTable.getValueAt(row, 0));
 
                     ((DefaultTableModel) identificationsTable.getModel()).addRow(new Object[]{
-                            (Integer) spectraTable.getValueAt(row, 0),
-                            sequence,
-                            modifiedSequenceColorCoded,
-                            domain.getDomainStart(),
-                            domain.getDomainEnd(),
-                            new Double(domain.getDomainMh()),
-                            new Double(theoMass),
-                            new Float(domain.getDomainExpect()),
-                            accession,
-                    });
+                                (Integer) spectraTable.getValueAt(row, 0),
+                                sequence,
+                                modifiedSequenceColorCoded,
+                                domain.getDomainStart(),
+                                domain.getDomainEnd(),
+                                new Double(domain.getDomainMh()),
+                                new Double(theoMass),
+                                new Float(domain.getDomainExpect()),
+                                accession,});
                 }
                 if (modificationDetails.endsWith(", ")) {
                     modificationDetails = modificationDetails.substring(0, modificationDetails.length() - 2);
@@ -1405,7 +1315,7 @@ public class XTandemViewer extends JFrame {
             while (selectedFile.exists()) {
                 int option = JOptionPane.showConfirmDialog(this,
                         "The  file " + chooser.getSelectedFile().getName() +
-                                " already exists. Replace file?",
+                        " already exists. Replace file?",
                         "Replace File?", JOptionPane.YES_NO_CANCEL_OPTION);
 
                 if (option == JOptionPane.NO_OPTION) {
@@ -1506,7 +1416,7 @@ public class XTandemViewer extends JFrame {
             while (selectedFile.exists()) {
                 int option = JOptionPane.showConfirmDialog(this,
                         "The  file " + chooser.getSelectedFile().getName() +
-                                " already exists. Replace file?",
+                        " already exists. Replace file?",
                         "Replace File?", JOptionPane.YES_NO_CANCEL_OPTION);
 
                 if (option == JOptionPane.NO_OPTION) {
@@ -1849,7 +1759,7 @@ public class XTandemViewer extends JFrame {
             while (selectedFile.exists()) {
                 int option = JOptionPane.showConfirmDialog(this,
                         "The  file " + chooser.getSelectedFile().getName() +
-                                " already exists. Replace file?",
+                        " already exists. Replace file?",
                         "Replace File?", JOptionPane.YES_NO_CANCEL_OPTION);
 
                 if (option == JOptionPane.NO_OPTION) {
