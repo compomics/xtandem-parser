@@ -1006,7 +1006,6 @@ public class XTandemViewer extends JFrame {
                 intensityValuesAsDouble[i] = intensityValues.get(i);
             }
             exportSelectedSpectrumMenuItem.setEnabled(true);
-            ;
 
             // Updating the spectrum panel
             spectrumPanel = new SpectrumPanel(

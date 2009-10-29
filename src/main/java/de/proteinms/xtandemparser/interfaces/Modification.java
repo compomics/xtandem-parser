@@ -1,10 +1,12 @@
 package de.proteinms.xtandemparser.interfaces;
+
 /**
  * Modification interface implemented by FixedModification and VariableModification.
  * @author Thilo Muth
  *
  */
 public interface Modification {
+
     /**
      * The method returns the name of the modification.
      * @return String

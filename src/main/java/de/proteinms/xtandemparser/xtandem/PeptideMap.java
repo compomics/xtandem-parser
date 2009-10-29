@@ -50,7 +50,6 @@ public class PeptideMap implements Serializable {
                 // Check if there are any values given out of the map
                 while (aRawPeptideMap.get("s" + i + "_p" + counter) != null) {
 
-
                     // The peptide id is consists of s + spectrum# + _p + peptide#
                     String peptideID = ("s" + i + "_p" + counter).toString();
                     int peptideStart = Integer.parseInt(aRawPeptideMap.get("start" + "_s" + i + "_p" + counter).toString());

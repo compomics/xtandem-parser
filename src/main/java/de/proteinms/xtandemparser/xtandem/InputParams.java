@@ -143,7 +143,6 @@ public class InputParams implements Serializable {
         if (map.get("OUTPUTSXSLPATH") != null) {
             iOutputXslPath = map.get("OUTPUTSXSLPATH").toString();
         }
-        ;
         if (map.get("OUTPUTSXSLPATH") != null) {
             iProteinC_termResModMass = Double.parseDouble(map.get("C_TERMRESMODMASS").toString());
         }
@@ -153,26 +152,21 @@ public class InputParams implements Serializable {
         if (map.get("C_TERMCLEAVMASSCHANGE") != null) {
             iProteinC_termCleavMassChange = map.get("C_TERMCLEAVMASSCHANGE").toString();
         }
-        ;
         if (map.get("N_TERMCLEAVMASSCHANGE") != null) {
             iProteinN_termCleavMassChange = map.get("N_TERMCLEAVMASSCHANGE").toString();
         }
-        ;
         if (map.get("CLEAVAGESITE") != null) {
             iProteinCleavageSite = map.get("CLEAVAGESITE").toString();
         }
-        ;
         if (map.get("HOMOLOGMANAGE") != null) {
             iProteinHomologManagement = convertStringToBool(map.get("HOMOLOGMANAGE").toString());
         }
         if (map.get("MODRESMASSFILE") != null) {
             iProteinModifiedResMassFile = map.get("MODRESMASSFILE").toString();
         }
-        ;
         if (map.get("TAXON") != null) {
             iProteinTaxon = map.get("TAXON").toString();
         }
-        ;
         if (map.get("REFINE") != null) {
             iRefine = convertStringToBool(map.get("REFINE").toString());
         }
@@ -260,7 +254,6 @@ public class InputParams implements Serializable {
         if (map.get("SPECFRAGMASSTYPE") != null) {
             iSpectrumFragMassType = map.get("SPECFRAGMASSTYPE").toString();
         }
-        ;
         if (map.get("SPECMONOISOMASSERROR") != null) {
             iSpectrumMonoIsoMassError = Double.parseDouble(map.get("SPECMONOISOMASSERROR").toString());
         }
@@ -306,7 +299,6 @@ public class InputParams implements Serializable {
         if (map.get("SPECUSENOISECOMP") != null) {
             iSpectrumUseNoiseCompression = convertStringToBool(map.get("SPECUSENOISECOMP").toString());
         }
-        ;
     }
 
     /**

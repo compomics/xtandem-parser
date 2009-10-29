@@ -54,7 +54,6 @@ public class ProteinMap implements Serializable {
                 iProteinMap.put(proteinID, protein);
             }
         }
-
     }
 
     /**
