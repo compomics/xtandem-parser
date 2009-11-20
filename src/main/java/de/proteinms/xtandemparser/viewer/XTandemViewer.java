@@ -32,7 +32,7 @@ import java.util.List;
 public class XTandemViewer extends JFrame {
 
     public final static String APPTITLE = "X!Tandem Viewer";
-    public final static String VERSION = "v. 1.0";
+    public final static String VERSION = "v. 1.0.1";
     private String lastSelectedFolder = "user.home";
     private SpectrumPanel spectrumPanel;
     private String iXTandemFileString;
@@ -1130,7 +1130,7 @@ public class XTandemViewer extends JFrame {
                         cTerminal = "-" + cTerminal;
                     }
 
-                    int[][] ionCoverage = new int[sequence.length()][2];
+                    int[][] ionCoverage = new int[sequence.length()+1][2];
 
                     Vector<DefaultSpectrumAnnotation> currentAnnotations = new Vector();
                     for (int i = 0; i < 12; i++) {
@@ -1175,11 +1175,29 @@ public class XTandemViewer extends JFrame {
                     // add the ion coverage to the modified sequence
                     int[][] ionCoverageProcessed = new int[sequence.length()][2];
 
-                    for (int i = 1; i < ionCoverage.length; i++) {
+                    // Process termini.
+                    // B1 ion (N-terminal residue)
+                    if(ionCoverage[1][0] > 0) {
+                        ionCoverageProcessed[0][0] = 1;
+                    }
+                    // Y1 ion (C-terminal residue)
+                    if(ionCoverage[1][1] > 0) {
+                        ionCoverageProcessed[ionCoverage.length - 2][1] = 1;
+                    }
+                    // Last B-ion (C-terminal residue)
+                    if(ionCoverage[ionCoverage.length-1][0] > 0) {
+                        ionCoverageProcessed[ionCoverage.length-2][0] = 1;
+                    }
+                    // Last Y-ion (N-terminal residue)
+                    if(ionCoverage[ionCoverage.length-1][1] > 0) {
+                        ionCoverageProcessed[0][1] = 1;
+                    }
+
+                    for (int i = 2; i < ionCoverage.length-1; i++) {
                         if (ionCoverage[i][0] > 0 && ionCoverage[i - 1][0] > 0) {
-                            ionCoverageProcessed[i][0] = 1;
+                            ionCoverageProcessed[i-1][0] = 1;
                         } else {
-                            ionCoverageProcessed[i][0] = 0;
+                            ionCoverageProcessed[i-1][0] = 0;
                         }
 
                         if (ionCoverage[i][1] > 0 && ionCoverage[i - 1][1] > 0) {

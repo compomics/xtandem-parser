@@ -45,8 +45,8 @@ public class XTandemViewerStarter {
         String javaHome = System.getProperty("java.home") + File.separator +
                 "bin" + File.separator;
 
-        cmdLine = javaHome + "java " + memoryOptions + " -cp " + new File(file, filename).getAbsolutePath()
-                + " de.proteinms.xtandemparser.viewer.FileSelector";
+        cmdLine = javaHome + "java " + memoryOptions + " -cp \"" + new File(file, filename).getAbsolutePath()
+                + "\" de.proteinms.xtandemparser.viewer.FileSelector";
 
         try {
             Process p = Runtime.getRuntime().exec(cmdLine);

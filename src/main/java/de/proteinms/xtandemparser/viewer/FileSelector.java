@@ -78,9 +78,6 @@ public class FileSelector extends JFrame {
      */
     private void constructScreen() {
         // Initialize frame
-        int frameWidth = 450;
-        int frameHeight = 130;
-        this.setSize(frameWidth, frameHeight);
         this.setTitle(XTandemViewer.APPTITLE);
         this.setLocationRelativeTo(null);
 
@@ -113,10 +110,6 @@ public class FileSelector extends JFrame {
         lowerPanel = new JPanel();
 
         okBtn = new JButton("OK");
-        Dimension size = new Dimension(48, okBtn.getPreferredSize().height);
-        okBtn.setPreferredSize(size);
-        okBtn.setMinimumSize(size);
-        okBtn.setMaximumSize(size);
         okBtn.setEnabled(false);
         okBtn.addActionListener(new ActionListener() {
 
@@ -125,9 +118,6 @@ public class FileSelector extends JFrame {
             }
         });
         cancelBtn = new JButton("Cancel");
-        cancelBtn.setPreferredSize(size);
-        cancelBtn.setMinimumSize(size);
-        cancelBtn.setMaximumSize(size);
         cancelBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent evt) {
@@ -144,6 +134,7 @@ public class FileSelector extends JFrame {
         mainPanel.add(lowerPanel, BorderLayout.SOUTH);
         cp.add(mainPanel);
         this.setResizable(false);
+        this.pack();
         this.setVisible(true);
     }
 
