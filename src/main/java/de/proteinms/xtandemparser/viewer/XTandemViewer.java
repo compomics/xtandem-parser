@@ -18,7 +18,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -31,8 +33,9 @@ import java.util.List;
  */
 public class XTandemViewer extends JFrame {
 
+    private static boolean useErrorLog = true;
     public final static String APPTITLE = "X!Tandem Viewer";
-    public final static String VERSION = "v. 1.0.1";
+    public final static String VERSION = "1.1";
     private String lastSelectedFolder = "user.home";
     private SpectrumPanel spectrumPanel;
     private String iXTandemFileString;
@@ -89,6 +92,35 @@ public class XTandemViewer extends JFrame {
      */
     public XTandemViewer(String aXTandemXmlFile, String lastSelectedFolder) {
 
+        if (useErrorLog) {
+            try {
+                String path = "" + this.getClass().getProtectionDomain().getCodeSource().getLocation();
+                path = path.substring(5, path.lastIndexOf("/"));
+                path = path + "/Properties/ErrorLog.txt";
+                path = path.replace("%20", " ");
+
+                File file = new File(path);
+                System.setOut(new java.io.PrintStream(new FileOutputStream(file, true)));
+                System.setErr(new java.io.PrintStream(new FileOutputStream(file, true)));
+
+                // creates a new error log file if it does not exist
+                if (!file.exists()) {
+                    file.createNewFile();
+
+                    FileWriter w = new FileWriter(file);
+                    BufferedWriter bw = new BufferedWriter(w);
+
+                    bw.close();
+                    w.close();
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(
+                        null, "An error occured when trying to create the ErrorLog." +
+                        "See ../Properties/ErrorLog.txt for more details.",
+                        "Error Creating ErrorLog", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
 
         // Construct the menu
         constructMenu();
@@ -346,9 +378,11 @@ public class XTandemViewer extends JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         spectraTable = new JXTable() {
 
+            @Override
             protected JXTableHeader createDefaultTableHeader() {
                 return new JXTableHeader(columnModel) {
 
+                    @Override
                     public String getToolTipText(MouseEvent e) {
                         String tip;
                         java.awt.Point p = e.getPoint();
@@ -366,9 +400,11 @@ public class XTandemViewer extends JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         identificationsTable = new JXTable() {
 
+            @Override
             protected JXTableHeader createDefaultTableHeader() {
                 return new JXTableHeader(columnModel) {
 
+                    @Override
                     public String getToolTipText(MouseEvent e) {
                         String tip;
                         java.awt.Point p = e.getPoint();
@@ -397,9 +433,11 @@ public class XTandemViewer extends JFrame {
         jScrollPane1 = new JScrollPane();
         spectrumJXTable = new JXTable() {
 
+            @Override
             protected JXTableHeader createDefaultTableHeader() {
                 return new JXTableHeader(columnModel) {
 
+                    @Override
                     public String getToolTipText(MouseEvent e) {
                         String tip;
                         java.awt.Point p = e.getPoint();
@@ -429,10 +467,12 @@ public class XTandemViewer extends JFrame {
                 false, false, false, false, false
             };
 
+            @Override
             public Class getColumnClass(int columnIndex) {
                 return types[columnIndex];
             }
 
+            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
@@ -440,6 +480,7 @@ public class XTandemViewer extends JFrame {
         spectraTable.setOpaque(false);
         spectraTable.addKeyListener(new java.awt.event.KeyAdapter() {
 
+            @Override
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 spectraJXTableKeyReleased(evt);
             }
@@ -447,6 +488,7 @@ public class XTandemViewer extends JFrame {
 
         spectraTable.addMouseListener(new java.awt.event.MouseAdapter() {
 
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 spectraJXTableMouseClicked(evt);
             }
@@ -481,10 +523,12 @@ public class XTandemViewer extends JFrame {
                 false, false, false, false, false, false, false, false, false, false, false
             };
 
+            @Override
             public Class getColumnClass(int columnIndex) {
                 return types[columnIndex];
             }
 
+            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
@@ -640,10 +684,12 @@ public class XTandemViewer extends JFrame {
                 false, false, false
             };
 
+            @Override
             public Class getColumnClass(int columnIndex) {
                 return types[columnIndex];
             }
 
+            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
@@ -695,6 +741,7 @@ public class XTandemViewer extends JFrame {
         // Thread for the parsing of the XTandem xml file.
         new Thread("ParserThread") {
 
+            @Override
             public void run() {
 
                 spectraTable.setSortable(false);
@@ -1308,9 +1355,10 @@ public class XTandemViewer extends JFrame {
                     identificationsTable.setRowSelectionInterval(0, 0);
                 }
             }
-            // At the end set the cursor back to default.
-            this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
+
+        // At the end set the cursor back to default.
+        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     /**
@@ -1406,7 +1454,7 @@ public class XTandemViewer extends JFrame {
                         "An error occured when exporting the spectra file details.",
                         "Error Exporting Spectra Files",
                         JOptionPane.ERROR_MESSAGE);
-
+                ex.printStackTrace();
             }
 
             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));

@@ -53,12 +53,7 @@ public class FileSelector extends JFrame {
     public FileSelector(JFrame aParent, String title) {
         // Initialize frame.
         super(title);
-        addWindowListener(new WindowAdapter() {
-
-            public void windowClosing(WindowEvent evt) {
-                cancelButtonActionPerformed();
-            }
-        });
+        
         iParent = aParent;
         // GUI construction
         this.constructScreen();
@@ -79,7 +74,6 @@ public class FileSelector extends JFrame {
     private void constructScreen() {
         // Initialize frame
         this.setTitle(XTandemViewer.APPTITLE);
-        this.setLocationRelativeTo(null);
 
         // Set JGoodies Look&Feel
         configureUI();
@@ -110,6 +104,7 @@ public class FileSelector extends JFrame {
         lowerPanel = new JPanel();
 
         okBtn = new JButton("OK");
+        okBtn.setPreferredSize(new Dimension(100, 20));
         okBtn.setEnabled(false);
         okBtn.addActionListener(new ActionListener() {
 
@@ -118,6 +113,7 @@ public class FileSelector extends JFrame {
             }
         });
         cancelBtn = new JButton("Cancel");
+        cancelBtn.setPreferredSize(new Dimension(100, 20));
         cancelBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent evt) {
@@ -133,8 +129,18 @@ public class FileSelector extends JFrame {
         mainPanel.add(centerPanel, BorderLayout.CENTER);
         mainPanel.add(lowerPanel, BorderLayout.SOUTH);
         cp.add(mainPanel);
+
+        addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                cancelButtonActionPerformed();
+            }
+        });
+
         this.setResizable(false);
         this.pack();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
