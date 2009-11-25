@@ -5,7 +5,7 @@
     <artifactId>xtandem-parser</artifactId>
     <name>xtandem-parser</name>
     <version>1.1</version>
-    <description>XTandem Parser is a Java based parser for extracting information from X!Tandem output xml files.</description>
+    <description>XTandem Parser is a Java based parser for extracting information from X!Tandem output XML files.</description>
     <url>http://xtandem-parser.googlecode.com/</url>
 
 
@@ -21,8 +21,8 @@
     <!-- Developers -->
     <developers>
         <developer>
-            <id>thilo</id>
             <name>Thilo Muth</name>
+            <id>thilo</id>
             <email>Thilo.Muth@uni-jena.de</email>
         </developer>
         <developer>
@@ -57,8 +57,8 @@
             </resource>
         </resources>
 
-        <plugins>
 
+        <plugins>
 
             <!-- Compiler plugin -->
             <plugin>
@@ -70,7 +70,6 @@
                     <target>1.5</target>
                 </configuration>
             </plugin>
-
 
             <!-- Dependency plugin -->
             <plugin>
@@ -93,7 +92,6 @@
                 </executions>
             </plugin>
 
-
             <!-- Jar plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -109,7 +107,6 @@
                     <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/</outputDirectory>
                 </configuration>
             </plugin>
-
 
             <!-- Resources plugin -->
             <plugin>
@@ -146,6 +143,7 @@
 
    <!-- Repositores -->
     <repositories>
+
         <!-- UGent Genesis Maven 1 repository -->
         <repository>
             <id>genesis-maven-repository</id>

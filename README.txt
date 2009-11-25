@@ -1,20 +1,18 @@
 
    =====> XTandem Parser Website <=====
 
-
    Here you can find all updated about the XTandem Parser project:
    http://xtandem-parser.googlecode.com
+
    On the website you can also find a manual of how to use the parser library in detail.
 
 
    =====> XTandem Viewer <=====
 
-
    For starting the XTandem Viewer just double click the jar file (xtandemparser-XYZ.jar).
 
 
    =====> Licence <=====
-
 
    Copyright 2009 Thilo Muth, Marc Vaudel, Harald Barsnes and Lennart Martens.
 

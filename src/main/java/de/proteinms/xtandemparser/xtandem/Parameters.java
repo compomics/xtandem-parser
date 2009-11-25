@@ -2,8 +2,8 @@ package de.proteinms.xtandemparser.xtandem;
 
 /**
  * This class holds all the parameters needed for the X!Tandem file processing.
- * @author Thilo Muth
  *
+ * @author Thilo Muth
  */
 public class Parameters {
 

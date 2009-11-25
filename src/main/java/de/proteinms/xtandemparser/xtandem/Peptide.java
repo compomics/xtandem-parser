@@ -1,12 +1,12 @@
 package de.proteinms.xtandemparser.xtandem;
 
 import de.proteinms.xtandemparser.interfaces.Ion;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * The peptide object contains all the information about itself and its identification, which is called in xtandem domain.
+ * The peptide object contains all the information about itself and its
+ * identification, which is called in xtandem domain.
  * 
  * @author Thilo Muth
  */
@@ -91,6 +91,11 @@ public class Peptide implements Serializable {
 
     /**
      * The Peptide constructor gets the peptide id the start + end position and the sequences as string.
+     *
+     * @param aPeptideID
+     * @param aStart
+     * @param aEnd
+     * @param aSequence
      */
     public Peptide(String aPeptideID, int aStart, int aEnd, String aSequence) {
         iPeptideID = aPeptideID;
@@ -137,6 +142,7 @@ public class Peptide implements Serializable {
 
     /**
      * This method returns the corrisponding spectrum number for the peptide
+     *
      * @return iSpectrumNumber
      */
     public int getSpectrumNumber() {
@@ -145,6 +151,7 @@ public class Peptide implements Serializable {
 
     /**
      * Sets the spectrum number for the peptide.
+     *
      * @param aSpectrumNumber
      */
     public void setSpectrumNumber(int aSpectrumNumber) {
@@ -153,6 +160,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the protein sequence of the peptide.
+     *
      * @return iSequence
      */
     public String getSequence() {
@@ -161,6 +169,7 @@ public class Peptide implements Serializable {
 
     /**
      * Sets the protein sequence of the peptide.
+     *
      * @param aSequence
      */
     public void setSequence(String aSequence) {
@@ -169,6 +178,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the domain id of the peptide.
+     *
      * @return iDomainID
      */
     public String getDomainID() {
@@ -177,6 +187,7 @@ public class Peptide implements Serializable {
 
     /**
      * Sets the domain id of the peptide.
+     *
      * @param domainID
      */
     public void setDomainID(String domainID) {
@@ -185,6 +196,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the domains start location.
+     *
      * @return iDomainStart
      */
     public int getDomainStart() {
@@ -193,6 +205,7 @@ public class Peptide implements Serializable {
 
     /**
      * Sets the domain start location.
+     *
      * @param domainStart
      */
     public void setDomainStart(int domainStart) {
@@ -201,6 +214,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the domain end location.
+     *
      * @return iDomainEnd
      */
     public int getDomainEnd() {
@@ -209,6 +223,7 @@ public class Peptide implements Serializable {
 
     /**
      * Sets the domain end location.
+     *
      * @param domainEnd
      */
     public void setDomainEnd(int domainEnd) {
@@ -217,6 +232,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the domain expect value.
+     *
      * @return iDomainExpect
      */
     public double getDomainExpect() {
@@ -225,6 +241,7 @@ public class Peptide implements Serializable {
 
     /**
      * Sets the domain expect value
+     *
      * @param domainExpect
      */
     public void setDomainExpect(double domainExpect) {
@@ -233,6 +250,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the domain mh/mz of the peptide.
+     *
      * @return iDomainMz
      */
     public double getDomainMh() {
@@ -241,6 +259,7 @@ public class Peptide implements Serializable {
 
     /**
      * Sets the domain mh/mz for the peptide.
+     *
      * @param domainMh
      */
     public void setDomainMh(double domainMh) {
@@ -249,6 +268,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the domain delta mh/mz.
+     *
      * @return iDomainDeltaMz
      */
     public double getDomainDeltaMh() {
@@ -257,6 +277,7 @@ public class Peptide implements Serializable {
 
     /**
      * Sets the domain delta mh/mz.
+     *
      * @param domainDeltaMh
      */
     public void setDomainDeltaMh(double domainDeltaMh) {
@@ -265,6 +286,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the domain hyperscore.
+     *
      * @return iDomainHyperScore
      */
     public double getDomainHyperScore() {
@@ -273,6 +295,7 @@ public class Peptide implements Serializable {
 
     /**
      * Sets the domain hyperscore
+     *
      * @param domainHyperScore
      */
     public void setDomainHyperScore(double domainHyperScore) {
@@ -281,6 +304,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the domain nextscore.
+     *
      * @return iDomainNextScore
      */
     public double getDomainNextScore() {
@@ -289,6 +313,7 @@ public class Peptide implements Serializable {
 
     /**
      * Sets the domain nextscore.
+     *
      * @param domainNextScore
      */
     public void setDomainNextScore(double domainNextScore) {
@@ -297,6 +322,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns a list of ions for the peptide.
+     *
      * @return iIons
      */
     public ArrayList<Ion> getIons() {
@@ -305,6 +331,7 @@ public class Peptide implements Serializable {
 
     /**
      * Sets the ions for peptide.
+     *
      * @param aIons
      */
     public void setIons(ArrayList<Ion> aIons) {
@@ -313,6 +340,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the upstream flanking sequence of the peptide.
+     *
      * @return iUpFlankSequence
      */
     public String getUpFlankSequence() {
@@ -321,6 +349,7 @@ public class Peptide implements Serializable {
 
     /**
      * Sets the upstream flanking sequence of the peptide.
+     *
      * @param aUpFlankSequence
      */
     public void setUpFlankSequence(String aUpFlankSequence) {
@@ -329,6 +358,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the downstream flanking sequence of the peptide.
+     *
      * @return iDownFlankSequence
      */
     public String getDownFlankSequence() {
@@ -337,6 +367,7 @@ public class Peptide implements Serializable {
 
     /**
      * Sets the downstream flanking sequence of the peptide.
+     *
      * @param aDownFlankSequence
      */
     public void setDownFlankSequence(String aDownFlankSequence) {
@@ -345,6 +376,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the domain sequence as a string.
+     *
      * @return iDomainSequence
      */
     public String getDomainSequence() {
@@ -353,6 +385,7 @@ public class Peptide implements Serializable {
 
     /**
      * Sets the domain sequence of the peptide.
+     *
      * @param aDomainSequence
      */
     public void setDomainSequence(String aDomainSequence) {
@@ -361,6 +394,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the number of missed cleavages.
+     *
      * @return iMissedCleavages
      */
     public int getMissedCleavages() {
@@ -369,6 +403,7 @@ public class Peptide implements Serializable {
 
     /**
      * Sets the number of missed cleavages.
+     *
      * @param aMissedCleavages
      */
     public void setMissedCleavages(int aMissedCleavages) {
@@ -377,6 +412,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the fasta file path.
+     *
      * @return iFastaFilePath
      */
     public String getFastaFilePath() {
@@ -385,6 +421,7 @@ public class Peptide implements Serializable {
 
     /**
      * Sets the fasta file path.
+     *
      * @param aFastaFilePath
      */
     public void setFastaFilePath(String aFastaFilePath) {
@@ -393,6 +430,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the peptide id as string.
+     * 
      * @return iPeptideID
      */
     public String getPeptideID() {

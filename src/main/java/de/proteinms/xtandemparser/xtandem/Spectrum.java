@@ -7,13 +7,13 @@ import java.util.ArrayList;
  * This class holds the spectrum details given from the xtandem xml file.
  *
  * @author Thilo Muth
- *
  */
 public class Spectrum implements Serializable {
 
     /**
-     * This variable holds the spectrum id, which is the number associated with the mass spectrum that was identified.
-     * The number usually represents the 1-based position of this spectrum in the original data file.
+     * This variable holds the spectrum id, which is the number associated with the 
+     * mass spectrum that was identified. The number usually represents the 1-based
+     * position of this spectrum in the original data file.
      */
     private int iSpectrumId = 0;
     /**
@@ -47,8 +47,8 @@ public class Spectrum implements Serializable {
      */
     private double iIntensityMultiplier = 0;
     /**
-     * The list holds the double values of the expectation value, the summed score, the maximum fragment ion intensity
-     * and the intensity multiplier.
+     * The list holds the double values of the expectation value, the summed score, the maximum 
+     * fragment ion intensity and the intensity multiplier.
      */
     private ArrayList<Double> iSpectrumValues = null;
     /**
@@ -78,7 +78,9 @@ public class Spectrum implements Serializable {
      * @param aLabel
      * @param aSpectrumNumber
      */
-    public Spectrum(int aSpectrumID, double aPrecursorMh, int aPrecursorCharge, ArrayList<Double> aSpectrumValues, String aLabel, int aSpectrumNumber) {
+    public Spectrum(int aSpectrumID, double aPrecursorMh, int aPrecursorCharge, 
+            ArrayList<Double> aSpectrumValues, String aLabel, int aSpectrumNumber) {
+
         iSpectrumId = aSpectrumID;
         iPrecursorMh = aPrecursorMh;
         iPrecursorCharge = aPrecursorCharge;
@@ -92,6 +94,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Returns the spectrum id.
+     *
      * @return iSpectrumId
      */
     public int getSpectrumId() {
@@ -100,6 +103,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Sets the spectrum id.
+     *
      * @param aSpectrumId
      */
     public void setSpectrumId(int aSpectrumId) {
@@ -108,6 +112,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Returns the precursor mass.
+     *
      * @return iPrecursorMh
      */
     public double getPrecursorMh() {
@@ -116,6 +121,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Sets the precursor mass.
+     *
      * @param aPrecursorMh
      */
     public void setPrecursorMh(double aPrecursorMh) {
@@ -124,6 +130,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Returns the precursor charge.
+     *
      * @return iPrecursorCharge
      */
     public int getPrecursorCharge() {
@@ -132,6 +139,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Sets the precursor charge.
+     *
      * @param aPrecursorCharge
      */
     public void setPrecursorCharge(int aPrecursorCharge) {
@@ -140,6 +148,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Returns the expect value.
+     *
      * @return iExpectValue
      */
     public double getExpectValue() {
@@ -148,6 +157,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Sets the expect value
+     *
      * @param aExpectValue
      */
     public void setExpectValue(double aExpectValue) {
@@ -156,6 +166,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Returns the label of the spectrum.
+     *
      * @return iLabel
      */
     public String getLabel() {
@@ -164,6 +175,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Sets the label of the spectrum.
+     *
      * @param aLabel
      */
     public void setLabel(String aLabel) {
@@ -172,6 +184,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Returns the summed score of the spectrum.
+     *
      * @return iSummedScore
      */
     public double getSummedScore() {
@@ -180,6 +193,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Sets the summed score of the spectrum.
+     *
      * @param aSummedScore
      */
     public void setSummedScore(double aSummedScore) {
@@ -188,6 +202,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Returns the maximum fragment ion intensity.
+     *
      * @return iMaxFragIonIntensity
      */
     public double getMaxFragIonIntensity() {
@@ -196,6 +211,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Sets the maximum fragment ion intensity.
+     *
      * @param aMaxFragIonIntensity
      */
     public void setMaxFragIonIntensity(double aMaxFragIonIntensity) {
@@ -204,6 +220,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Returns the intensity multiplier.
+     *
      * @return iIntensityMultiplier
      */
     public double getIntensityMultiplier() {
@@ -212,6 +229,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Sets he intensity multiplier.
+     *
      * @param aIntensityMultiplier
      */
     public void setIntensityMultiplier(double aIntensityMultiplier) {
@@ -220,6 +238,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Returns a double list of the spectrum values.
+     *
      * @return iSpectrumValues
      */
     public ArrayList<Double> getISpectrumValues() {
@@ -228,6 +247,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Sets a double list of the spectrum values.
+     *
      * @param aSpectrumValues
      */
     public void setISpectrumValues(ArrayList<Double> aSpectrumValues) {
@@ -236,6 +256,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Returns the number of the spectrum.
+     *
      * @return iSpectrumNumber
      */
     public int getSpectrumNumber() {
@@ -244,6 +265,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Sets the number of the spectrum.
+     * 
      * @param aSpectrumNumber
      */
     public void setSpectrumNumber(int aSpectrumNumber) {

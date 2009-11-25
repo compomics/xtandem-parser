@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 /**
  * This class holds the performance parameters in map.
- * @author Thilo Muth
  *
+ * @author Thilo Muth
  */
 public class PerformParams {
 
@@ -120,9 +120,11 @@ public class PerformParams {
 
     /**
      * The constructor gets a hash map containing all the performance parameters.
+     *
      * @param map
      */
     public PerformParams(HashMap map) {
+
         if (map.get("SEQSRC1") != null) {
             iSequenceSource_1 = map.get("SEQSRC1").toString();
         }

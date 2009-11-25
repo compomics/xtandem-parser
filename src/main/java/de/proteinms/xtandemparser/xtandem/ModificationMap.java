@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * In this class the fixed and variable modifications are sorted out and lists for these modifications are build.
+ * In this class the fixed and variable modifications are sorted out
+ * and lists for these modifications are build.
  *
  * @author Thilo Muth
- *
  */
 public class ModificationMap implements Serializable {
 
@@ -106,7 +106,7 @@ public class ModificationMap implements Serializable {
             for (int j = 1; j <= iPeptideMap.getNumberOfPeptides(aSpectrumNumber); j++) {
                 int modCount = 1;
                 while (iFixedModificationMap.get("s" + aSpectrumNumber + "_p" + j + "_m" + modCount) != null) {
-                    modificationList.add((Modification) iFixedModificationMap.get("s" + aSpectrumNumber + "_p" + j + "_m" + modCount));
+                    modificationList.add(iFixedModificationMap.get("s" + aSpectrumNumber + "_p" + j + "_m" + modCount));
                     modCount++;
                 }
             }
@@ -126,7 +126,7 @@ public class ModificationMap implements Serializable {
             for (int j = 1; j <= iPeptideMap.getNumberOfPeptides(aSpectrumNumber); j++) {
                 int modCount = 1;
                 while (iVarModificationMap.get("s" + aSpectrumNumber + "_p" + j + "_m" + modCount) != null) {
-                    modificationList.add((Modification) iVarModificationMap.get("s" + aSpectrumNumber + "_p" + j + "_m" + modCount));
+                    modificationList.add(iVarModificationMap.get("s" + aSpectrumNumber + "_p" + j + "_m" + modCount));
                     modCount++;
                 }
             }

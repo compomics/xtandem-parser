@@ -1,7 +1,6 @@
 package de.proteinms.xtandemparser.xtandem;
 
 import de.proteinms.xtandemparser.interfaces.Modification;
-
 import java.io.Serializable;
 
 /**
@@ -38,6 +37,7 @@ public class FixedModification implements Modification, Serializable {
      * @param aName The modification name
      * @param aMass The modification mass
      * @param aLocation The modification location
+     * @param aDomainID The domain ID
      */
     public FixedModification(String aName, double aMass, String aLocation, String aDomainID) {
         iName = aName;
@@ -48,6 +48,8 @@ public class FixedModification implements Modification, Serializable {
 
     /**
      * Returns the modification name.
+     *
+     * @return the modification name
      */
     public String getName() {
         return iName;
@@ -55,6 +57,7 @@ public class FixedModification implements Modification, Serializable {
 
     /**
      * Sets the modification name.
+     *
      * @param aName The modification name
      */
     public void setName(String aName) {
@@ -63,6 +66,8 @@ public class FixedModification implements Modification, Serializable {
 
     /**
      * Returns the modification mass.
+     *
+     * @return the modification mass
      */
     public double getMass() {
         return iMass;
@@ -70,6 +75,7 @@ public class FixedModification implements Modification, Serializable {
 
     /**
      * Sets the modification mass.
+     *
      * @param aMass The modification mass
      */
     public void setMass(double aMass) {
@@ -78,6 +84,8 @@ public class FixedModification implements Modification, Serializable {
 
     /**
      * Returns the modification location.
+     *
+     * @return the modification location
      */
     public String getLocation() {
         return iLocation;
@@ -85,6 +93,7 @@ public class FixedModification implements Modification, Serializable {
 
     /**
      * Sets the modification location.
+     *
      * @param aLocation The modification location
      */
     public void setLocation(String aLocation) {
@@ -93,6 +102,8 @@ public class FixedModification implements Modification, Serializable {
 
     /**
      * Always returns true because it's a fixed modification.
+     *
+     * @return true because it's a fixed modification
      */
     public boolean isFixed() {
         return true;
@@ -100,6 +111,7 @@ public class FixedModification implements Modification, Serializable {
 
     /**
      * Returns the domain id.
+     *
      * @return iDomainID
      */
     public String getDomainID() {
@@ -108,6 +120,7 @@ public class FixedModification implements Modification, Serializable {
 
     /**
      * Sets the domain id.
+     *
      * @param aDomainID The domain id
      */
     public void setDomainID(String aDomainID) {
@@ -116,6 +129,7 @@ public class FixedModification implements Modification, Serializable {
 
     /**
      * Returns the modified residue (a peptide letter).
+     * 
      * @return iModifiedResidue
      */
     public String getModifiedResidue() {

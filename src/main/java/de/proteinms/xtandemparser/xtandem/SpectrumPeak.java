@@ -4,8 +4,8 @@ import de.proteinms.xtandemparser.interfaces.Peak;
 
 /**
  * This class is an implementation of Peak and is used for the fragment ion calculation.
- * @author Thilo Muth
  *
+ * @author Thilo Muth
  */
 public class SpectrumPeak implements Peak {
 
@@ -30,6 +30,7 @@ public class SpectrumPeak implements Peak {
 
     /**
      * Constructor gets the m/z, the intensity and the charge.
+     *
      * @param aMz
      * @param aIntensity
      * @param aCharge
@@ -42,6 +43,7 @@ public class SpectrumPeak implements Peak {
 
     /**
      * Sets the charge.
+     *
      * @param aCharge
      */
     public void setCharge(int aCharge) {
@@ -50,6 +52,8 @@ public class SpectrumPeak implements Peak {
 
     /**
      * Returns the charge.
+     *
+     * @return the charge
      */
     public int getCharge() {
         return iCharge;
@@ -57,6 +61,7 @@ public class SpectrumPeak implements Peak {
 
     /**
      * Sets the intensity.
+     *
      * @param aIntensity
      */
     public void setIntensity(double aIntensity) {
@@ -65,6 +70,8 @@ public class SpectrumPeak implements Peak {
 
     /**
      * Returns the intensity.
+     *
+     * @return the intensity
      */
     public double getIntensity() {
         return iIntensity;
@@ -72,6 +79,7 @@ public class SpectrumPeak implements Peak {
 
     /**
      * Sets the m/z.
+     *
      * @param aMz
      */
     public void setMz(double aMz) {
@@ -80,6 +88,8 @@ public class SpectrumPeak implements Peak {
 
     /**
      * Returns the m/z.
+     *
+     * @return the m/z
      */
     public double getMZ() {
         return iMz;

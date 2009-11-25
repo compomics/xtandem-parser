@@ -3,8 +3,8 @@ package de.proteinms.xtandemparser.xtandem;
 import java.io.Serializable;
 
 /**
- *
  * This class contains all the parsed data from a xtandem file protein.
+ *
  * @author Thilo Muth
  */
 public class Protein implements Serializable {
@@ -32,6 +32,7 @@ public class Protein implements Serializable {
 
     /**
      * The constructor get id, uid, label, expect value and summed score to build a protein object.
+     *
      * @param aID
      * @param aUID
      * @param aLabel
@@ -48,6 +49,7 @@ public class Protein implements Serializable {
 
     /**
      * Returns the expect value for the protein.
+     *
      * @return iExpectValue
      */
     public double getExpectValue() {
@@ -56,6 +58,7 @@ public class Protein implements Serializable {
 
     /**
      * Sets the expect value for the protein.
+     *
      * @param aExpectValue
      */
     public void setExpectValue(double aExpectValue) {
@@ -64,6 +67,7 @@ public class Protein implements Serializable {
 
     /**
      * Returns the id of the protein.
+     *
      * @return iID
      */
     public String getID() {
@@ -72,6 +76,7 @@ public class Protein implements Serializable {
 
     /**
      * Sets the id of the protein.
+     *
      * @param aId
      */
     public void setID(String aId) {
@@ -80,6 +85,7 @@ public class Protein implements Serializable {
 
     /**
      * Returns the uId of the protein.
+     *
      * @return iUID
      */
     public String getUID() {
@@ -88,6 +94,7 @@ public class Protein implements Serializable {
 
     /**
      * Sets the uID of the protein.
+     *
      * @param aUid
      */
     public void setUID(String aUid) {
@@ -96,6 +103,7 @@ public class Protein implements Serializable {
 
     /**
      * Returns the label of the protein.
+     *
      * @return iLabel
      */
     public String getLabel() {
@@ -104,6 +112,7 @@ public class Protein implements Serializable {
 
     /**
      * Sets the label of the protein.
+     *
      * @param aLabel
      */
     public void setLabel(String aLabel) {
@@ -112,6 +121,7 @@ public class Protein implements Serializable {
 
     /**
      * Returns the summed score of the protein.
+     *
      * @return iSummedScore
      */
     public double getSummedScore() {
@@ -120,6 +130,7 @@ public class Protein implements Serializable {
 
     /**
      * Sets the summed score of the protein.
+     * 
      * @param aSummedScore
      */
     public void setSummedScore(double aSummedScore) {

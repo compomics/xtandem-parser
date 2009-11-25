@@ -33,6 +33,10 @@ import java.util.List;
  */
 public class XTandemViewer extends JFrame {
 
+    /**
+     * If set to true, all print outs (both standard and error) will be sent to
+     * the ErrorLog.txt file in the Properties folder.
+     */
     private static boolean useErrorLog = true;
     public final static String APPTITLE = "X!Tandem Viewer";
     public final static String VERSION = "1.1";
@@ -40,58 +44,35 @@ public class XTandemViewer extends JFrame {
     private SpectrumPanel spectrumPanel;
     private String iXTandemFileString;
     private HashMap<Integer, ArrayList<Peptide>> peptideMap;
-    private HashMap<Integer, ArrayList<Double>> allMzValues;
-    private HashMap<Integer, ArrayList<Double>> allIntensityValues;
-    private HashMap<Integer, ArrayList<Modification>> allFixMods;
-    private HashMap<Integer, ArrayList<Modification>> allVarMods;
+    private HashMap<Integer, ArrayList<Double>> allMzValues, allIntensityValues;
+    private HashMap<Integer, ArrayList<Modification>> allFixMods, allVarMods;
     private HashMap<String, FragmentIon[]> ionsMap;
     private HashMap<Integer, String> accMap;
-    private Vector spectraTableColToolTips;
-    private Vector spectrumTableColToolTips;
-    private Vector spectrumJXTableColToolTips;
-    private Vector identificationsJXTableColumnToolTips;
+    private Vector spectraTableColToolTips, spectrumTableColToolTips, spectrumJXTableColToolTips,
+            identificationsJXTableColumnToolTips;
     private HashMap<String, Vector<DefaultSpectrumAnnotation>> allAnnotations;
-    private JCheckBox aIonsJCheckBox;
-    private JCheckBox bIonsJCheckBox;
-    private JCheckBox cIonsJCheckBox;
-    private JCheckBox chargeOneJCheckBox;
-    private JCheckBox chargeTwoJCheckBox;
-    private JCheckBox chargeOverTwoJCheckBox;
-    private JXTable identificationsTable;
-    private JLabel jLabel1;
-    private JPanel jPanel1;
-    private JPanel jPanel2;
-    private JPanel jPanel3;
-    private JPanel jPanel4;
-    private JScrollPane jScrollPane1;
-    private JScrollPane jScrollPane3;
-    private JScrollPane jScrollPane4;
-    private JSeparator jSeparator1;
-    private JSeparator jSeparator2;
-    private JLabel modificationDetailsJLabel;
-    private JXTable spectraTable;
-    private JPanel spectrumJPanel;
-    private JXTable spectrumJXTable;
-    private JCheckBox xIonsJCheckBox;
-    private JCheckBox yIonsJCheckBox;
-    private JCheckBox zIonsJCheckBox;
+    private JCheckBox aIonsJCheckBox, bIonsJCheckBox, cIonsJCheckBox, chargeOneJCheckBox,
+            chargeTwoJCheckBox, chargeOverTwoJCheckBox, xIonsJCheckBox, yIonsJCheckBox, zIonsJCheckBox;
+    private JLabel jLabel1, modificationDetailsJLabel;
+    private JScrollPane jScrollPane1, jScrollPane3, jScrollPane4;
+    private JSeparator jSeparator1, jSeparator2;
+    private JXTable identificationsTable, spectraTable, spectrumJXTable;
+    private JPanel jPanel1, jPanel2, jPanel3, jPanel4, spectrumJPanel;
     private double ionCoverageErrorMargin = 0.0;
     private ProgressDialog progressDialog;
-    private JMenuItem openMenuItem;
-    private JMenuItem exitMenuItem;
-    private JMenuItem aboutMenuItem;
-    private JMenuItem helpMenuItem;
-    private JMenuItem exportSpectraTableMenuItem;
-    private JMenuItem exportAllIdentificationsMenuItem;
-    private JMenuItem exportAllSpectraMenuItem;
-    private JMenuItem exportSelectedSpectrumMenuItem;
+    private JMenuItem openMenuItem, exitMenuItem, aboutMenuItem, helpMenuItem, exportSpectraTableMenuItem,
+            exportAllIdentificationsMenuItem, exportAllSpectraMenuItem, exportSelectedSpectrumMenuItem;
     private XTandemFile iXTandemFile;
 
     /**
      * Constructor gets the xml output result file.
+     *
+     * @param aXTandemXmlFile
+     * @param lastSelectedFolder
      */
     public XTandemViewer(String aXTandemXmlFile, String lastSelectedFolder) {
 
+        // set up the error log
         if (useErrorLog) {
             try {
                 String path = "" + this.getClass().getProtectionDomain().getCodeSource().getLocation();
@@ -184,7 +165,6 @@ public class XTandemViewer extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         insertFiles(aXTandemXmlFile, lastSelectedFolder);
-
     }
 
     /**
@@ -264,7 +244,6 @@ public class XTandemViewer extends JFrame {
             }
         });
         exportMenu.add(exportAllIdentificationsMenuItem);
-
 
         exportSelectedSpectrumMenuItem.setMnemonic('S');
         exportSelectedSpectrumMenuItem.setText("Selected Spectrum");
@@ -450,9 +429,7 @@ public class XTandemViewer extends JFrame {
             }
         };
 
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Spectra Files", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
 
@@ -501,7 +478,6 @@ public class XTandemViewer extends JFrame {
                 jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(jPanel1Layout.createSequentialGroup().addContainerGap().add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE).addContainerGap()));
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(jPanel1Layout.createSequentialGroup().add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE).addContainerGap()));
-
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Identifications", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
 
@@ -715,6 +691,12 @@ public class XTandemViewer extends JFrame {
         pack();
     }
 
+    /**
+     * ToDo: JavaDoc missing...
+     *
+     * @param aXTandemFile
+     * @param lastSelectedFolder
+     */
     public void insertFiles(String aXTandemFile, String lastSelectedFolder) {
 
         iXTandemFileString = aXTandemFile;
@@ -951,37 +933,60 @@ public class XTandemViewer extends JFrame {
      */
     private void openActionPerformed(ActionEvent evt) {
         new FileSelector(this, APPTITLE);
-
     }
 
+    /**
+     * @see #aIonsJCheckBoxActionPerformed(java.awt.event.ActionEvent)
+     */
     private void bIonsJCheckBoxActionPerformed() {
         aIonsJCheckBoxActionPerformed(null);
     }
 
+    /**
+     * @see #aIonsJCheckBoxActionPerformed(java.awt.event.ActionEvent)
+     */
     private void cIonsJCheckBoxActionPerformed() {
         aIonsJCheckBoxActionPerformed(null);
     }
 
+    /**
+     * @see #aIonsJCheckBoxActionPerformed(java.awt.event.ActionEvent)
+     */
     private void yIonsJCheckBoxActionPerformed() {
         aIonsJCheckBoxActionPerformed(null);
     }
 
+    /**
+     * @see #aIonsJCheckBoxActionPerformed(java.awt.event.ActionEvent)
+     */
     private void xIonsJCheckBoxActionPerformed() {
         aIonsJCheckBoxActionPerformed(null);
     }
 
+    /**
+     * @see #aIonsJCheckBoxActionPerformed(java.awt.event.ActionEvent)
+     */
     private void zIonsJCheckBoxActionPerformed() {
         aIonsJCheckBoxActionPerformed(null);
     }
 
+    /**
+     * @see #aIonsJCheckBoxActionPerformed(java.awt.event.ActionEvent)
+     */
     private void chargeOneJCheckBoxActionPerformed() {
         aIonsJCheckBoxActionPerformed(null);
     }
 
+    /**
+     * @see #aIonsJCheckBoxActionPerformed(java.awt.event.ActionEvent)
+     */
     private void chargeTwoJCheckBoxActionPerformed() {
         aIonsJCheckBoxActionPerformed(null);
     }
 
+    /**
+     * @see #aIonsJCheckBoxActionPerformed(java.awt.event.ActionEvent)
+     */
     private void chargeOverTwoJCheckBoxActionPerformed() {
         aIonsJCheckBoxActionPerformed(null);
     }
@@ -1011,15 +1016,25 @@ public class XTandemViewer extends JFrame {
         }
     }
 
+    /**
+     * @see #spectraJXTableMouseClicked(java.awt.event.MouseEvent)
+     */
     private void spectraJXTableKeyReleased(KeyEvent evt) {
         spectraJXTableMouseClicked(null);
     }
 
+    /**
+     * Update the tables based on the spectrum selected.
+     * 
+     * @param evt
+     */
     private void spectraJXTableMouseClicked(MouseEvent evt) {
+
         // Set the cursor into the wait status.
         this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 
         int row = spectraTable.getSelectedRow();
+
         // Condition if one row is selected.
         if (row != -1) {
             List<Double> mzValues = allMzValues.get((Integer) spectraTable.getValueAt(row, 0));
@@ -1254,6 +1269,7 @@ public class XTandemViewer extends JFrame {
                         }
                     }
                     String modifiedSequenceColorCoded = "<html>";
+
                     // add nTerminal
                     if (!nTerminal.startsWith("<")) {
                         modifiedSequenceColorCoded += nTerminal;
@@ -1292,13 +1308,11 @@ public class XTandemViewer extends JFrame {
                                 // y ions
                                 modifiedSequenceColorCoded += "</font>";
                             }
-
                         } else {
                             if (ionCoverageProcessed[aminoAcidCounter][0] > 0) {
                                 // b ions
                                 modifiedSequenceColorCoded += "<u>";
                             }
-
                             if (ionCoverageProcessed[aminoAcidCounter][1] > 0) {
                                 // y ions
                                 modifiedSequenceColorCoded += "<font color=\"red\">";
@@ -1317,6 +1331,7 @@ public class XTandemViewer extends JFrame {
                         }
                         modifiedSequenceColorCoded += "<font color=\"black\">";
                     }
+
                     // add cTerminal
                     if (!cTerminal.startsWith("-<")) {
                         modifiedSequenceColorCoded += cTerminal;
@@ -1326,7 +1341,6 @@ public class XTandemViewer extends JFrame {
                         modifiedSequenceColorCoded += "&gt;";
                     }
                     modifiedSequenceColorCoded += "</html>";
-
 
                     // Calculate the theoretical mass of the domain
                     double theoMass = (domain.getDomainMh() + domain.getDomainDeltaMh());
@@ -1346,11 +1360,9 @@ public class XTandemViewer extends JFrame {
                 if (modificationDetails.endsWith(", ")) {
                     modificationDetails = modificationDetails.substring(0, modificationDetails.length() - 2);
                 }
-
                 if (modificationDetails.length() > 0) {
                     modificationDetailsJLabel.setText("Modifications: " + modificationDetails);
                 }
-
                 if (identificationsTable.getRowCount() > 1) {
                     identificationsTable.setRowSelectionInterval(0, 0);
                 }
@@ -1544,11 +1556,9 @@ public class XTandemViewer extends JFrame {
 
                 f.write(identificationsTable.getColumnName(identificationsTable.getColumnCount() - 1) + "\n");
 
-
                 // iterate all the identifications and print them to the file
                 // Iterate over all the spectra
                 Iterator<Spectrum> iter = iXTandemFile.getSpectraIterator();
-
 
                 String modificationDetails = "";
 
@@ -1737,7 +1747,6 @@ public class XTandemViewer extends JFrame {
                                     // b ions
                                     modifiedSequenceColorCoded += "<u>";
                                 }
-
                                 if (ionCoverageProcessed[aminoAcidCounter][1] > 0) {
                                     // y ions
                                     modifiedSequenceColorCoded += "<font color=\"red\">";
@@ -1789,7 +1798,6 @@ public class XTandemViewer extends JFrame {
                     }
                 }
 
-
                 f.close();
 
                 lastSelectedFolder = selectedFile.getPath();
@@ -1802,6 +1810,7 @@ public class XTandemViewer extends JFrame {
                 ex.printStackTrace();
             }
         }
+
         this.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
     }
 

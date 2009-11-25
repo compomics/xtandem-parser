@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * 
  * This class holds the information about the supporting data:
  * 1) Hyperscore expectation function
  * 2) Convolution survival function
@@ -51,6 +50,7 @@ public class SupportData implements Serializable {
 
     /**
      * Constructor gets the raw support map and the spectrum number.
+     *
      * @param map The raw support map
      * @param spectrumNumber The spectrum number
      */
@@ -413,6 +413,7 @@ public class SupportData implements Serializable {
     /**
      * Splits a given number string into a separate Integer values,
      * which are stored in an array list.
+     *
      * @param aNumberString Number string
      * @return NumberList
      */
@@ -432,6 +433,7 @@ public class SupportData implements Serializable {
     /**
      * Splits a given number string into a separate Double values,
      * which are stored in an array list.
+     * 
      * @param aNumberString Number string
      * @return NumberList
      */

@@ -9,6 +9,8 @@ import java.awt.*;
 
 /**
  * The table retrieves the parameters and layouts them in a table.
+ *
+ * @author Thilo Muth
  */
 public class ParameterTable extends JTable {
 

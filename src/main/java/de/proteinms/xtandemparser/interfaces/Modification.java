@@ -2,25 +2,28 @@ package de.proteinms.xtandemparser.interfaces;
 
 /**
  * Modification interface implemented by FixedModification and VariableModification.
- * @author Thilo Muth
  *
+ * @author Thilo Muth
  */
 public interface Modification {
 
     /**
      * The method returns the name of the modification.
+     *
      * @return String
      */
     String getName();
 
     /**
      * The method returns the mass of the modification.
+     *
      * @return double
      */
     double getMass();
 
     /**
      * The method returns the location of the modification.
+     *
      * @return String
      */
     String getLocation();
@@ -34,6 +37,7 @@ public interface Modification {
 
     /**
      * The method returns the domain id as identification for the modification.
+     *
      * @return String
      */
     String getDomainID();

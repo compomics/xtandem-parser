@@ -7,16 +7,16 @@ import java.util.HashMap;
 import java.util.Vector;
 
 /**
- * This class is used to do a calculation for the theoretical masses of a, b, c, x, y and z ions (plus double charged ones)
- * and do the matching of experimental and theoretical masses. 
- * @author Thilo Muth
+ * This class is used to do a calculation for the theoretical masses of 
+ * a, b, c, x, y and z ions (plus double charged ones) and do the matching
+ * of experimental and theoretical masses.
  *
+ * @author Thilo Muth
  */
 public class InSilicoDigester {
 
     /**
      * This variable contains the peptide sequence.
-     * @param aSequence
      */
     private String iSequence;
     /**
@@ -86,6 +86,7 @@ public class InSilicoDigester {
 
     /**
      * Constructor get a peptide object, the modification map, the input parameters and the masses map.
+     *
      * @param aPeptide A peptide object which should be "in silico" digested.
      * @param aModMap Modification map to know where have been modifications on the peptide.
      * @param aMasses Masses map to know which amino acid has which mass.
@@ -183,7 +184,9 @@ public class InSilicoDigester {
     }
 
     /**
-     * This method tries to match the theoretical masses of the ions with the masses of the experimental peaks.
+     * This method tries to match the theoretical masses of the ions with the 
+     * masses of the experimental peaks.
+     *
      * @param theoFragIons The theoretical fragment ions.
      * @param aPeaks The experimental peaks.
      * @return matchedIons A Vector containing all the matched fragment ions.
@@ -200,6 +203,7 @@ public class InSilicoDigester {
 
     /**
      * Returns an array of the (successfully matched) b ions.
+     *
      * @return iBions
      */
     public FragmentIon[] getBIons() {
@@ -214,7 +218,8 @@ public class InSilicoDigester {
     public FragmentIon[] getBDoubleIons() {
         iBDoubleIons = new FragmentIon[iBIons.length];
         for (int i = 0; i < iBIons.length; i++) {
-            iBDoubleIons[i] = new FragmentIon(((iBIons[i].getMZ() + 1.007825) / 2), FragmentIon.B_DOUBLE_ION, (i + 1), "b++", iFragmentMassError);
+            iBDoubleIons[i] = new FragmentIon(((iBIons[i].getMZ() + 1.007825) / 2),
+                    FragmentIon.B_DOUBLE_ION, (i + 1), "b++", iFragmentMassError);
         }
         return iBDoubleIons;
     }
@@ -227,7 +232,8 @@ public class InSilicoDigester {
     public FragmentIon[] getAIons() {
         iAIons = new FragmentIon[iBIons.length];
         for (int i = 0; i < iBIons.length; i++) {
-            iAIons[i] = new FragmentIon((iBIons[i].getMZ() - 27.994915), FragmentIon.A_ION, (i + 1), "a", iFragmentMassError);
+            iAIons[i] = new FragmentIon((iBIons[i].getMZ() - 27.994915),
+                    FragmentIon.A_ION, (i + 1), "a", iFragmentMassError);
         }
         return iAIons;
     }
@@ -240,7 +246,8 @@ public class InSilicoDigester {
     public FragmentIon[] getADoubleIons() {
         iADoubleIons = new FragmentIon[iAIons.length];
         for (int i = 0; i < iAIons.length; i++) {
-            iADoubleIons[i] = new FragmentIon(((iAIons[i].getMZ() + 1.007825) / 2), FragmentIon.A_DOUBLE_ION, (i + 1), "a++", iFragmentMassError);
+            iADoubleIons[i] = new FragmentIon(((iAIons[i].getMZ() + 1.007825) / 2),
+                    FragmentIon.A_DOUBLE_ION, (i + 1), "a++", iFragmentMassError);
         }
         return iADoubleIons;
     }
@@ -253,7 +260,8 @@ public class InSilicoDigester {
     public FragmentIon[] getCIons() {
         iCIons = new FragmentIon[iBIons.length];
         for (int i = 0; i < iBIons.length; i++) {
-            iCIons[i] = new FragmentIon((iBIons[i].getMZ() + 17.026549), FragmentIon.C_ION, (i + 1), "c", iFragmentMassError);
+            iCIons[i] = new FragmentIon((iBIons[i].getMZ() + 17.026549),
+                    FragmentIon.C_ION, (i + 1), "c", iFragmentMassError);
         }
         return iCIons;
     }
@@ -266,13 +274,15 @@ public class InSilicoDigester {
     public FragmentIon[] getCDoubleIons() {
         iCDoubleIons = new FragmentIon[iCIons.length];
         for (int i = 0; i < iCIons.length; i++) {
-            iCDoubleIons[i] = new FragmentIon(((iCIons[i].getMZ() + 1.007825) / 2), FragmentIon.C_DOUBLE_ION, (i + 1), "c++", iFragmentMassError);
+            iCDoubleIons[i] = new FragmentIon(((iCIons[i].getMZ() + 1.007825) / 2),
+                    FragmentIon.C_DOUBLE_ION, (i + 1), "c++", iFragmentMassError);
         }
         return iCDoubleIons;
     }
 
     /**
      * Returns an array of the (successfully matched) y ions.
+     *
      * @return iYIons
      */
     public FragmentIon[] getYIons() {
@@ -287,7 +297,8 @@ public class InSilicoDigester {
     public FragmentIon[] getYDoubleIons() {
         iYDoubleIons = new FragmentIon[iYIons.length];
         for (int i = 0; i < iYIons.length; i++) {
-            iYDoubleIons[i] = new FragmentIon(((iYIons[i].getMZ() + 1.007825) / 2), FragmentIon.Y_DOUBLE_ION, (i + 1), "y++", iFragmentMassError);
+            iYDoubleIons[i] = new FragmentIon(((iYIons[i].getMZ() + 1.007825) / 2),
+                    FragmentIon.Y_DOUBLE_ION, (i + 1), "y++", iFragmentMassError);
         }
         return iYDoubleIons;
     }
@@ -300,7 +311,8 @@ public class InSilicoDigester {
     public FragmentIon[] getXIons() {
         iXIons = new FragmentIon[iYIons.length];
         for (int i = 0; i < iYIons.length; i++) {
-            iXIons[i] = new FragmentIon((iYIons[i].getMZ() + 25.979265), FragmentIon.X_ION, (i + 1), "x", iFragmentMassError);
+            iXIons[i] = new FragmentIon((iYIons[i].getMZ() + 25.979265),
+                    FragmentIon.X_ION, (i + 1), "x", iFragmentMassError);
         }
         return iXIons;
     }
@@ -313,7 +325,8 @@ public class InSilicoDigester {
     public FragmentIon[] getXDoubleIons() {
         iXDoubleIons = new FragmentIon[iXIons.length];
         for (int i = 0; i < iXIons.length; i++) {
-            iXDoubleIons[i] = new FragmentIon(((iXIons[i].getMZ() + 1.007825) / 2), FragmentIon.X_DOUBLE_ION, (i + 1), "x++", iFragmentMassError);
+            iXDoubleIons[i] = new FragmentIon(((iXIons[i].getMZ() + 1.007825) / 2),
+                    FragmentIon.X_DOUBLE_ION, (i + 1), "x++", iFragmentMassError);
         }
         return iXDoubleIons;
     }
@@ -326,7 +339,8 @@ public class InSilicoDigester {
     public FragmentIon[] getZIons() {
         iZIons = new FragmentIon[iYIons.length];
         for (int i = 0; i < iYIons.length; i++) {
-            iZIons[i] = new FragmentIon((iYIons[i].getMZ() - 17.026549), FragmentIon.Z_ION, (i + 1), "z", iFragmentMassError);
+            iZIons[i] = new FragmentIon((iYIons[i].getMZ() - 17.026549),
+                    FragmentIon.Z_ION, (i + 1), "z", iFragmentMassError);
         }
         return iZIons;
     }
@@ -339,7 +353,8 @@ public class InSilicoDigester {
     public FragmentIon[] getZDoubleIons() {
         iZDoubleIons = new FragmentIon[iZIons.length];
         for (int i = 0; i < iZIons.length; i++) {
-            iZDoubleIons[i] = new FragmentIon(((iZIons[i].getMZ() + 1.007825) / 2), FragmentIon.Z_DOUBLE_ION, (i + 1), "z++", iFragmentMassError);
+            iZDoubleIons[i] = new FragmentIon(((iZIons[i].getMZ() + 1.007825) / 2),
+                    FragmentIon.Z_DOUBLE_ION, (i + 1), "z++", iFragmentMassError);
         }
         return iZDoubleIons;
     }

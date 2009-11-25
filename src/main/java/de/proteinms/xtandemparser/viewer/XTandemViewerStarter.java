@@ -9,9 +9,10 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- * This bootstrap class is used to start the jar file special memory options.
+ * This bootstrap class is used to start the jar file with memory options
+ * extracted from the JavaOptions file in the Properties folder.
  *
- * @author  Thilo Muth
+ * @author Thilo Muth
  */
 public class XTandemViewerStarter {
 
@@ -29,6 +30,7 @@ public class XTandemViewerStarter {
      */
     public XTandemViewerStarter() {
 
+        // set the look and feel
         try {
             PlasticLookAndFeel.setPlasticTheme(new SkyKrupp());
             UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
@@ -49,9 +51,8 @@ public class XTandemViewerStarter {
      * @throws java.lang.Exception
      */
     private void start() throws Exception {
-        String cmdLine, path;
 
-        path = this.getClass().getResource("XTandemViewerStarter.class").getPath();
+        String path = this.getClass().getResource("XTandemViewerStarter.class").getPath();
         path = path.substring(5, path.indexOf(filename));
         path = path.replace("%20", " ");
 
@@ -88,8 +89,7 @@ public class XTandemViewerStarter {
 
         File file = new File(path);
 
-        String javaHome = System.getProperty("java.home") + File.separator +
-                "bin" + File.separator;
+        String javaHome = System.getProperty("java.home") + File.separator + "bin" + File.separator;
 
         String quote = "";
 
@@ -97,7 +97,7 @@ public class XTandemViewerStarter {
             quote = "\"";
         }
 
-        cmdLine = javaHome + "java " + options + " -cp " +  quote
+        String cmdLine = javaHome + "java " + options + " -cp " +  quote
                 + new File(file, filename).getAbsolutePath() + quote
                 + " de.proteinms.xtandemparser.viewer.FileSelector";
 

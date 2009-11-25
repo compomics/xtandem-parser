@@ -2,8 +2,8 @@ package de.proteinms.xtandemparser.xtandem;
 
 /**
  * This class holds all the masses used for the calculation of theoretical masses.
- * @author Thilo Muth
  *
+ * @author Thilo Muth
  */
 public class Masses {
 
@@ -34,6 +34,7 @@ public class Masses {
     public static final double X = 111.000000;
     public static final double Y = 163.063330;
     public static final double Z = 128.550590;
+
     /**
      * The mass of Hydrogen
      */

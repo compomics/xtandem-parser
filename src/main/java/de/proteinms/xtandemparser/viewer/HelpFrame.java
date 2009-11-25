@@ -15,7 +15,6 @@ import javax.swing.event.HyperlinkEvent;
  * about the X!Tandem Viewer. It displays a given html-sheet.
  * 
  * @author Thilo Muth
- * 
  */
 public class HelpFrame extends JFrame {
 
@@ -26,6 +25,9 @@ public class HelpFrame extends JFrame {
 
     /**
      * Constructor constructs the frame with an editorpane.
+     *
+     * @param parent
+     * @param aUrl
      */
     public HelpFrame(JFrame parent, URL aUrl) {
 

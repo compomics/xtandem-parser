@@ -1,12 +1,12 @@
 package de.proteinms.xtandemparser.interfaces;
 
 /**
- * This class represents an Ion object. It holds the ion number, the ion score and the 6 different types of ions:
+ * This class represents an Ion object. It holds the ion number,
+ * the ion score and the 6 different types of ions:
  * 1) a-c ions
  * 2) x-z ions
  * 
  * @author Thilo Muth
- *
  */
 public interface Ion {
 
@@ -61,6 +61,7 @@ public interface Ion {
 
     /**
      * This method checks whether the ion matched with a given set of peaks
+     *
      * @param peaks
      * @param aMassError
      * @return boolean
@@ -69,30 +70,35 @@ public interface Ion {
 
     /**
      * Returns the m/z.
+     *
      * @return double
      */
     public double getMZ();
 
     /**
      * Returns the intensity.
+     *
      * @return double
      */
     public double getIntensity();
 
     /**
      * Returns the type.
+     *
      * @return String
      */
     public String getType();
 
     /**
      * Returns the ion number.
+     *
      * @return int
      */
     public int getNumber();
 
     /**
      * Returns the score.
+     *
      * @return double
      */
     public double getScore();

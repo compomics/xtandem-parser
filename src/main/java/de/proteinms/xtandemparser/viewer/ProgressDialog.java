@@ -14,7 +14,6 @@ import javax.swing.WindowConstants;
  * This dialog show information about the progress of the file parsing.
  *
  * @author  Thilo Muth
- * 
  */
 public class ProgressDialog extends JDialog {
 
@@ -45,6 +44,7 @@ public class ProgressDialog extends JDialog {
         setResizable(false);
         addWindowListener(new WindowAdapter() {
 
+            @Override
             public void windowClosing(WindowEvent evt) {
                 closeDialog(evt);
             }
@@ -81,7 +81,7 @@ public class ProgressDialog extends JDialog {
     /**
      * Sets the maximum value of the progress bar
      * 
-     * @param value 
+     * @param maxvalue
      */
     public void setMaxValue(final int maxvalue) {
 

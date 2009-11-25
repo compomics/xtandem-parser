@@ -3,11 +3,9 @@ package de.proteinms.xtandemparser.viewer;
 import javax.swing.*;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Thilo Muth
- * Date: 17.10.2009
- * Time: 15:53:29
- * To change this template use File | Settings | File Templates.
+ * ToDo: JavaDoc missing...
+ *
+ * @author Thilo Muth
  */
 public class ParameterDialog extends JFrame {
 
@@ -16,6 +14,13 @@ public class ParameterDialog extends JFrame {
     private JScrollPane scrollPane;
     private JPanel panel;
 
+    /**
+     * ToDo: JavaDoc missing...
+     *
+     * @param parent
+     * @param aType
+     * @param table
+     */
     public ParameterDialog(JFrame parent, String aType, ParameterTable table) {
         iType = aType;
         setTitle(XTandemViewer.APPTITLE + " --- " + "Help");

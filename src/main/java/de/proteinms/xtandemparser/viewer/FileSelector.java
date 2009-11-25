@@ -48,13 +48,16 @@ public class FileSelector extends JFrame {
     /**
      * Constructor gets a title string
      *
+     * @param aParent
      * @param title
      */
     public FileSelector(JFrame aParent, String title) {
+
         // Initialize frame.
         super(title);
         
         iParent = aParent;
+
         // GUI construction
         this.constructScreen();
     }
@@ -72,6 +75,7 @@ public class FileSelector extends JFrame {
      * This method constructs the screen.
      */
     private void constructScreen() {
+
         // Initialize frame
         this.setTitle(XTandemViewer.APPTITLE);
 
@@ -79,10 +83,10 @@ public class FileSelector extends JFrame {
         configureUI();
 
         Container cp = this.getContentPane();
+
         // The main panel
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
-
 
         // Sets icon image
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icons/xtandemviewer.gif")));
@@ -112,6 +116,7 @@ public class FileSelector extends JFrame {
                 okButtonActionPerformed();
             }
         });
+
         cancelBtn = new JButton("Cancel");
         cancelBtn.setPreferredSize(new Dimension(100, 20));
         cancelBtn.addActionListener(new ActionListener() {
@@ -120,6 +125,7 @@ public class FileSelector extends JFrame {
                 cancelButtonActionPerformed();
             }
         });
+
         lowerPanel.add(okBtn);
         lowerPanel.add(cancelBtn);
         mainPanel.add(upperPanel, BorderLayout.NORTH);
@@ -187,6 +193,11 @@ public class FileSelector extends JFrame {
         }
     }
 
+    /**
+     * ToDo: JavaDoc missing...
+     *
+     * @return
+     */
     private Action openFileAction() {
         filename = System.getProperty("user.dir") + File.separator;
         JFileChooser fc = new JFileChooser(new File(filename));
@@ -194,7 +205,9 @@ public class FileSelector extends JFrame {
         return new OpenFileAction(loadFrame, fc);
     }
 
-    //  This action class creates and shows an open-file dialog.
+    /**
+     * This action class creates and shows an open-file dialog.
+     */
     public class OpenFileAction extends AbstractAction {
 
         private JFrame frame;
@@ -224,6 +237,9 @@ public class FileSelector extends JFrame {
         }
     }
 
+    /**
+     * ToDo: JavaDoc missing...
+     */
     private static class InnerXmlFileFilter extends javax.swing.filechooser.FileFilter {
 
         public boolean accept(File f) {

@@ -7,7 +7,6 @@ import java.util.HashMap;
  * This class holds information of the given input parameters.
  * 
  * @author Thilo Muth
- *
  */
 public class InputParams implements Serializable {
 
@@ -85,6 +84,11 @@ public class InputParams implements Serializable {
     private int iSpectrumTotalPeakNumber = 0;
     private boolean iSpectrumUseNoiseCompression = false;
 
+    /**
+     * ToDo: JavaDoc missing...
+     *
+     * @param map
+     */
     public InputParams(HashMap map) {
         if (map.get("DEFAULTPARAMPATH") != null) {
             iDefaultParamPath = map.get("DEFAULTPARAMPATH").toString();
@@ -303,6 +307,7 @@ public class InputParams implements Serializable {
 
     /**
      * Converts the "yes"/"no"-strings to the corresponding boolean value
+     *
      * @param aString
      * @return flag
      */

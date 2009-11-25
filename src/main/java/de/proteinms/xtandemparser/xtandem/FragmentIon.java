@@ -5,8 +5,8 @@ import de.proteinms.xtandemparser.interfaces.Peak;
 
 /**
  * This class holds the fragment ion and is an implementation of Ion.
- * @author Thilo Muth
  *
+ * @author Thilo Muth
  */
 public class FragmentIon implements Ion {
 
@@ -45,6 +45,7 @@ public class FragmentIon implements Ion {
 
     /**
      * Constructor gets all the parameters to create an fragment ion object.
+     *
      * @param aMz The m/z value of the fragment ion.
      * @param aID The ID of the fragment ion.
      * @param aNumber The number of the fragment ion.
@@ -61,6 +62,7 @@ public class FragmentIon implements Ion {
 
     /**
      * The same constructor as above but with the intensity.
+     *
      * @param aMz The m/z value of the fragment ion.
      * @param aIntensity The intensity of the fragment ion.
      * @param aID The ID of the fragment ion.
@@ -79,10 +81,17 @@ public class FragmentIon implements Ion {
 
     /**
      * This method compares the theoretical mass peak with the experimental one and tells
-     * if it's a match using a specific mass error tolerance and calculating the theoretical/experimental mass error.
+     * if it's a match using a specific mass error tolerance and calculating the theoretical/
+     * experimental mass error.
+     *
+     * @param aPeaks
+     * @param aMassError
+     * @return
      */
     public boolean isMatch(Peak[] aPeaks, double aMassError) {
+
         boolean matchFlag = false;
+
         for (int i = 0; i < aPeaks.length; i++) {
             if (-aMassError <= (aPeaks[i].getMZ() - iMz) && (aPeaks[i].getMZ() - iMz) <= aMassError) {
                 iTheoreticalExperimentalMassError = aPeaks[i].getMZ() - iMz;
@@ -91,11 +100,13 @@ public class FragmentIon implements Ion {
                 break;
             }
         }
+
         return matchFlag;
     }
 
     /**
      * Returns the m/z of the fragment ion.
+     *
      * @return iMz
      */
     public double getMZ() {
@@ -104,6 +115,7 @@ public class FragmentIon implements Ion {
 
     /**
      * Returns the intensity of the fragment ion.
+     *
      * @return iIntensity
      */
     public double getIntensity() {
@@ -112,6 +124,7 @@ public class FragmentIon implements Ion {
 
     /**
      * Returns the number of the fragment ion.
+     *
      * @return iNumber
      */
     public int getNumber() {
@@ -120,6 +133,7 @@ public class FragmentIon implements Ion {
 
     /**
      * Returns the score of the fragment ion.
+     *
      * @return iScore
      */
     public double getScore() {
@@ -128,6 +142,7 @@ public class FragmentIon implements Ion {
 
     /**
      * Returns the type of the fragment ion.
+     *
      * @return iType
      */
     public String getType() {
@@ -136,6 +151,7 @@ public class FragmentIon implements Ion {
 
     /**
      * Returns the error margin.
+     *
      * @return iErrorMargin
      */
     public double getErrorMargin() {
@@ -144,6 +160,7 @@ public class FragmentIon implements Ion {
 
     /**
      * Returns the id of the fragment ion.
+     *
      * @return iID
      */
     public int getID() {
@@ -152,6 +169,7 @@ public class FragmentIon implements Ion {
 
     /**
      * Returns the theoretical experimental mass error.
+     * 
      * @return iTheoreticalExperimentalMassError
      */
     public double getTheoreticalExperimentalMassError() {

@@ -2,6 +2,7 @@ package de.proteinms.xtandemparser.xtandem;
 
 import de.proteinms.xtandemparser.interfaces.Ion;
 import de.proteinms.xtandemparser.interfaces.Peaklist;
+import de.proteinms.xtandemparser.parser.XTandemParser;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,14 +13,12 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import org.xml.sax.SAXException;
-import de.proteinms.xtandemparser.parser.XTandemParser;
 
 /**
- * This class represents the xtandem file object as the starting point which provides all the methods
- * to use the information which are parsed by the Xtandem parser.
+ * This class represents the xtandem file object as the starting point which provides 
+ * all the methods to use the information which are parsed by the Xtandem parser.
  * 
  * @author Thilo Muth
- *
  */
 public class XTandemFile implements Serializable {
 
@@ -77,7 +76,8 @@ public class XTandemFile implements Serializable {
     /**
      * Constructor of XTandemFile gets a string to an existing path and filename of the xtandem file.
      *
-     * @param aXTandemFile 
+     * @param aXTandemFile
+     * @throws SAXException
      */
     public XTandemFile(String aXTandemFile) throws SAXException {
         try {
@@ -93,6 +93,11 @@ public class XTandemFile implements Serializable {
         }
     }
 
+    /**
+     * Returns the input parameters.
+     *
+     * @return the input parameters
+     */
     public InputParams getInputParameters() {
         if (iInputParams == null) {
             iInputParams = new InputParams(iXTParser.getInputParamMap());
@@ -100,6 +105,11 @@ public class XTandemFile implements Serializable {
         return iInputParams;
     }
 
+    /**
+     * Returns the perform parameters.
+     *
+     * @return the perform parameters
+     */
     public PerformParams getPerformParameters() {
         if (iPerformParams == null) {
             iPerformParams = new PerformParams(iXTParser.getPerformParamMap());
@@ -109,6 +119,7 @@ public class XTandemFile implements Serializable {
 
     /**
      * This method returns a hash map for the masses.
+     *
      * @return map The masses hashmap
      */
     public HashMap getMassesMap() {
@@ -163,6 +174,7 @@ public class XTandemFile implements Serializable {
 
     /**
      * Returns a vector with two arrays of b ions and y ions respectively.
+     *
      * @param peptide
      * @return Vector The vector containing b ions and y ions
      */
@@ -309,6 +321,7 @@ public class XTandemFile implements Serializable {
 
     /**
      * Returns an iterator over all the spectra.
+     *
      * @return Iterator
      */
     public Iterator getSpectraIterator() {
@@ -322,6 +335,7 @@ public class XTandemFile implements Serializable {
 
     /**
      * This method returns a list of all the spectra.
+     *
      * @return iSpectraList ArrayList<Spectrum>
      */
     public ArrayList<Spectrum> getSpectraList() {
@@ -371,15 +385,17 @@ public class XTandemFile implements Serializable {
 
     /**
      * This method returns a specific spectrum for a given spectrum number.
+     *
      * @param aSpectrumNumber
      * @return Spectrum
      */
     public Spectrum getSpectrum(final int aSpectrumNumber) {
-        return (Spectrum) getSpectraList().get(aSpectrumNumber - 1);  //To change body of implemented methods use File | Settings | File Templates.
+        return getSpectraList().get(aSpectrumNumber - 1);
     }
 
     /**
      * Returns a spectrum number for a given spectrum id.
+     *
      * @param aSpectrumID
      * @return spectrumNumber
      */
@@ -393,6 +409,12 @@ public class XTandemFile implements Serializable {
         return spectrumNumber;
     }
 
+    /**
+     * Returns the support data section.
+     *
+     * @param aSpectrumNumber
+     * @return the support data section
+     */
     public SupportData getSupportData(int aSpectrumNumber) {
         iSupportData = new SupportData(iXTParser.getSupportDataMap(), aSpectrumNumber);
         return iSupportData;
@@ -414,6 +436,7 @@ public class XTandemFile implements Serializable {
 
     /**
      * Returns the path and the name of the X!Tandem file.
+     *
      * @return iFileName String
      */
     public String getFileName() {
@@ -426,6 +449,7 @@ public class XTandemFile implements Serializable {
 
     /**
      * Sets the path and the name of the X!Tandem file.
+     *
      * @param aFileName
      */
     public void setFileName(String aFileName) {
@@ -434,6 +458,7 @@ public class XTandemFile implements Serializable {
 
     /**
      * This method returns the xtandem parser.
+     *
      * @return iXTParser XTandemParser
      */
     public XTandemParser getXTandemParser() {
@@ -442,6 +467,7 @@ public class XTandemFile implements Serializable {
 
     /**
      * Returns the total number of spectra.
+     * 
      * @return iSpectraNumber
      */
     public int getSpectraNumber() {

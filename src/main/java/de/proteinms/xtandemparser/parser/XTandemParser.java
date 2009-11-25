@@ -19,8 +19,8 @@ import org.xml.sax.SAXException;
 
 /**
  * This class extracts information from the xtandem output xml.
- * @author Thilo Muth
  *
+ * @author Thilo Muth
  */
 public class XTandemParser implements Serializable {
 
@@ -65,8 +65,8 @@ public class XTandemParser implements Serializable {
     /**
      * Constructor for parsing a result file stored locally.
      *
-     * @param   aFile
-     * @exception   IOException
+     * @param aFile
+     * @exception IOException
      * @exception SAXParseException
      */
     public XTandemParser(File aFile) throws IOException, SAXException {
@@ -75,7 +75,10 @@ public class XTandemParser implements Serializable {
 
     /**
      * In this method the X!Tandem file gets parsed.
+     *
      * @param aInputFile
+     * @exception IOException
+     * @exception SAXException
      */
     private void parseXTandemFile(File aInputFile) throws IOException, SAXException {
 
@@ -141,229 +144,274 @@ public class XTandemParser implements Serializable {
                     if (nodes.item(i).getAttributes().getNamedItem("type") != null) {
                         // Parse the input parameters
                         if (nodes.item(i).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("parameters") &&
-                                (nodes.item(i).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("input parameters") || nodes.item(i).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("unused input parameters"))) {
+                                (nodes.item(i).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("input parameters")
+                                || nodes.item(i).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("unused input parameters"))) {
                             parameterNodes = nodes.item(i).getChildNodes();
 
                             // Iterate over all the parameter nodes
                             for (int m = 0; m < parameterNodes.getLength(); m++) {
                                 if (parameterNodes.item(m).getAttributes() != null) {
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"list path, default parameters\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"list path, default parameters\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("DEFAULTPARAMPATH", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"list path, taxonomy information\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"list path, taxonomy information\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("TAXONOMYINFOPATH", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, histogram column width\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, histogram column width\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("HISTOCOLWIDTH", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, histograms\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, histograms\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("HISTOEXIST", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, logpath\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, logpath\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("LOGPATH", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, maximum valid expectation value\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, maximum valid expectation value\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("MAXVALIDEXPECT", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, message\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, message\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("OUTPUTMESSAGE", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, one sequence copy\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, one sequence copy\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("ONESEQCOPY", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, parameters\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, parameters\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("OUTPUTPARAMS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
 
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, path\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, path\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("OUTPUTPATH", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, path hashing\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, path hashing\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("OUTPUTPATHHASH", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, performance\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, performance\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("OUTPUTPERFORMANCE", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, proteins\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, proteins\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("OUTPUTPROTEINS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, results\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, results\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("OUTPUTRESULTS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, sequence path\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, sequence path\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("OUTPUTSEQPATH", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, sequences\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, sequences\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("OUTPUTSEQUENCES", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, sort results by\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, sort results by\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("OUTPUTSORTRESULTS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, spectra\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, spectra\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("OUTPUTSPECTRA", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"output, xsl path\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"output, xsl path\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("OUTPUTSXSLPATH", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"protein, C-terminal residue modification mass\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"protein, C-terminal residue modification mass\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("C_TERMRESMODMASS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"protein, N-terminal residue modification mass\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"protein, N-terminal residue modification mass\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("N_TERMRESMODMASS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"protein, cleavage C-terminal mass change\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"protein, cleavage C-terminal mass change\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("C_TERMCLEAVMASSCHANGE", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"protein, cleavage N-terminal mass change\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"protein, cleavage N-terminal mass change\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("N_TERMCLEAVMASSCHANGE", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"protein, cleavage site\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"protein, cleavage site\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("CLEAVAGESITE", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"protein, homolog management\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"protein, homolog management\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("HOMOLOGMANAGE", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"protein, modified residue mass file\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"protein, modified residue mass file\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("MODRESMASSFILE", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"protein, taxon\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"protein, taxon\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("TAXON", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refine\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refine\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("REFINE", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refine, maximum valid expectation value\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refine, maximum valid expectation value\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("REFINEMAXVALIDEXPECT", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refine, modification mass\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refine, modification mass\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("REFINEMODMASS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refine, point mutations\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refine, point mutations\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("POINTMUTATIONS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refine, potential C-terminus modifications\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refine, potential C-terminus modifications\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("POTC_TERMMODS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refine, potential N-terminus modifications\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refine, potential N-terminus modifications\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("POTN_TERMMODS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refine, potential modification mass\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refine, potential modification mass\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("POTMODMASS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refine, potential modification motif\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refine, potential modification motif\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("POTMODMOTIF", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refine, sequence path\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refine, sequence path\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("REFINESEQPATH", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refine, spectrum synthesis\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refine, spectrum synthesis\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("REFINESPECSYTNH", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refine, tic percent\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refine, tic percent\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("REFINETIC", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refine, unanticipated cleavage\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refine, unanticipated cleavage\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("REFINEUNANTICLEAV", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refine, use potential modifications for full refinement\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refine, use potential modifications for full refinement\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("POTMODSFULLREFINE", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"residue, modification mass\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"residue, modification mass\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("RESIDUEMODMASS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"residue, potential modification mass\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"residue, potential modification mass\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("RESIDUEPOTMODMASS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"residue, potential modification motif\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"residue, potential modification motif\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("RESIDUEPOTMODMOTIV", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"scoring, a ions\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"scoring, a ions\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SCORING_AIONS", parameterNodes.item(m).getTextContent());
                                             if (parameterNodes.item(m).getTextContent().equals("yes")) {
@@ -371,7 +419,8 @@ public class XTandemParser implements Serializable {
                                             }
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"scoring, b ions\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"scoring, b ions\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SCORING_BIONS", parameterNodes.item(m).getTextContent());
                                             if (parameterNodes.item(m).getTextContent().equals("yes")) {
@@ -380,7 +429,8 @@ public class XTandemParser implements Serializable {
 
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"scoring, c ions\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"scoring, c ions\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SCORING_CIONS", parameterNodes.item(m).getTextContent());
                                             if (parameterNodes.item(m).getTextContent().equals("yes")) {
@@ -388,32 +438,38 @@ public class XTandemParser implements Serializable {
                                             }
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"scoring, cyclic permutation\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"scoring, cyclic permutation\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SCORINGCYCLPERM", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"scoring, include reverse\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"scoring, include reverse\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SCORINGINCREV", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"scoring, maximum missed cleavage sites\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"scoring, maximum missed cleavage sites\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SCORINGMISSCLEAV", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"scoring, minimum ion count\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"scoring, minimum ion count\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SCORINGMINIONCOUNT", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"scoring, pluggable scoring\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"scoring, pluggable scoring\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SCORINGPLUGSCORING", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"scoring, x ions\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"scoring, x ions\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SCORING_XIONS", parameterNodes.item(m).getTextContent());
                                             if (parameterNodes.item(m).getTextContent().equals("yes")) {
@@ -422,7 +478,8 @@ public class XTandemParser implements Serializable {
 
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"scoring, y ions\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"scoring, y ions\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SCORING_YIONS", parameterNodes.item(m).getTextContent());
                                             if (parameterNodes.item(m).getTextContent().equals("yes")) {
@@ -430,7 +487,8 @@ public class XTandemParser implements Serializable {
                                             }
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"scoring, z ions\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"scoring, z ions\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SCORING_ZIONS", parameterNodes.item(m).getTextContent());
                                             if (parameterNodes.item(m).getTextContent().equals("yes")) {
@@ -438,87 +496,104 @@ public class XTandemParser implements Serializable {
                                             }
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, dynamic range\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, dynamic range\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECDYNRANGE", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, fragment mass type\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, fragment mass type\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECFRAGMASSTYPE", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, fragment monoisotopic mass error\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, fragment monoisotopic mass error\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECMONOISOMASSERROR", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, fragment monoisotopic mass error units\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, fragment monoisotopic mass error units\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECMONOISOMASSERRORUNITS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, maximum parent charge\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, maximum parent charge\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECMAXPRECURSORCHANGE", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, minimum fragment mz\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, minimum fragment mz\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECMINFRAGMZ", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, minimum parent m+h\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, minimum parent m+h\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECMINPRECURSORMZ", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, minimum peaks\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, minimum peaks\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECMINPEAKS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, parent monoisotopic mass error minus\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, parent monoisotopic mass error minus\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECPARENTMASSERRORMINUS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, parent monoisotopic mass error plus\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, parent monoisotopic mass error plus\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECPARENTMASSERRORPLUS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, parent monoisotopic mass error units\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, parent monoisotopic mass error units\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECPARENTMASSERRORUNITS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, parent monoisotopic mass isotope error\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, parent monoisotopic mass isotope error\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECPARENTMASSISOERROR", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, path\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, path\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECTRUMPATH", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, sequence batch size\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, sequence batch size\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECBATCHSIZE", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, threads\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, threads\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECTHREADS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, total peaks\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, total peaks\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECTOTALPEAK", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"spectrum, use noise suppression\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"spectrum, use noise suppression\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECUSENOISECOMP", parameterNodes.item(m).getTextContent());
                                         }
@@ -534,137 +609,164 @@ public class XTandemParser implements Serializable {
                             // Iterate over all the parameter nodes
                             for (int m = 0; m < parameterNodes.getLength(); m++) {
                                 if (parameterNodes.item(m).getAttributes() != null) {
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"list path, sequence source #1\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"list path, sequence source #1\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("SEQSRC1", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"list path, sequence source #2\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"list path, sequence source #2\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("SEQSRC2", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"list path, sequence source #3\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"list path, sequence source #3\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("SEQSRC3", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"list path, sequence source description #1\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"list path, sequence source description #1\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("SEQSRCDESC1", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"list path, sequence source description #2\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"list path, sequence source description #2\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("SEQSRCDESC2", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"list path, sequence source description #3\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"list path, sequence source description #3\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("SEQSRCDESC3", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"modelling, estimated false positives\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"modelling, estimated false positives\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("ESTFP", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"modelling, spectrum noise suppression ratio\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"modelling, spectrum noise suppression ratio\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("NOISESUPP", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"modelling, total peptides used\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"modelling, total peptides used\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("TOTALPEPUSED", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"modelling, total proteins used\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"modelling, total proteins used\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("TOTALPROTUSED", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"modelling, total spectra assigned\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"modelling, total spectra assigned\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("TOTALSPECASS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"modelling, total spectra used\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"modelling, total spectra used\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("TOTALSPECUSED", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"modelling, total unique assigned\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"modelling, total unique assigned\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("TOTALUNIQUEASS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"process, start time\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"process, start time\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("PROCSTART", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"process, version\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"process, version\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("PROCVER", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"quality values\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"quality values\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("QUALVAL", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refining, # input models\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refining, # input models\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("INPUTMOD", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refining, # input spectra\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refining, # input spectra\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("INPUTSPEC", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refining, # partial cleavage\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refining, # partial cleavage\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("PARTCLEAV", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refining, # point mutations\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refining, # point mutations\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("POINTMUT", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refining, # potential C-terminii\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refining, # potential C-terminii\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("POTC_TERM", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refining, # potential N-terminii\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refining, # potential N-terminii\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("POTN_TERM", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"refining, # unanticipated cleavage\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"refining, # unanticipated cleavage\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("UNANTICLEAV", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"timing, initial modelling total (sec)\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"timing, initial modelling total (sec)\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("INITMODELTOTALTIME", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"timing, initial modelling/spectrum (sec)\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"timing, initial modelling/spectrum (sec)\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("INITMODELSPECTIME", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"timing, load sequence models (sec)\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"timing, load sequence models (sec)\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("LOADSEQMODELTIME", parameterNodes.item(m).getTextContent());
                                         }
                                     }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase("label=\"timing, refinement/spectrum (sec)\"")) {
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                            "label=\"timing, refinement/spectrum (sec)\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iPerformParamMap.put("REFINETIME", parameterNodes.item(m).getTextContent());
                                         }
@@ -761,9 +863,12 @@ public class XTandemParser implements Serializable {
                             // the the sum of all the fragment ions that identify this protein
                             if (proteinNodes.item(k).getNodeName().equalsIgnoreCase("peptide")) {
                                 iRawPeptideMap.put("s" + spectraCounter + "_p" + p_counter, protID);
-                                iRawPeptideMap.put("start" + "_s" + spectraCounter + "_p" + p_counter, proteinNodes.item(k).getAttributes().getNamedItem("start").getNodeValue());
-                                iRawPeptideMap.put("end" + "_s" + spectraCounter + "_p" + p_counter, proteinNodes.item(k).getAttributes().getNamedItem("end").getNodeValue());
-                                iRawPeptideMap.put("seq" + "_s" + spectraCounter + "_p" + p_counter, proteinNodes.item(k).getTextContent());
+                                iRawPeptideMap.put("start" + "_s" + spectraCounter + "_p"
+                                        + p_counter, proteinNodes.item(k).getAttributes().getNamedItem("start").getNodeValue());
+                                iRawPeptideMap.put("end" + "_s" + spectraCounter + "_p"
+                                        + p_counter, proteinNodes.item(k).getAttributes().getNamedItem("end").getNodeValue());
+                                iRawPeptideMap.put("seq" + "_s" + spectraCounter + "_p"
+                                        + p_counter, proteinNodes.item(k).getTextContent());
 
                                 peptideNodes = proteinNodes.item(k).getChildNodes();
 
@@ -775,91 +880,115 @@ public class XTandemParser implements Serializable {
 
                                         // Get the domain/peptide id for a separate list
                                         //String domainID = peptideNodes.item(m).getAttributes().getNamedItem("id").getNodeValue();
-                                        iRawPeptideMap.put("domainid" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("id").getNodeValue());
+                                        iRawPeptideMap.put("domainid" + "_s" + spectraCounter + "_p"
+                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("id").getNodeValue());
 
                                         // the start position of the peptide
-                                        iRawPeptideMap.put("domainstart" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("start").getNodeValue());
+                                        iRawPeptideMap.put("domainstart" + "_s" + spectraCounter + "_p"
+                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("start").getNodeValue());
 
                                         // the end position of the peptide
-                                        iRawPeptideMap.put("domainend" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("end").getNodeValue());
+                                        iRawPeptideMap.put("domainend" + "_s" + spectraCounter + "_p"
+                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("end").getNodeValue());
 
                                         // the expect value
-                                        iRawPeptideMap.put("expect" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("expect").getNodeValue());
+                                        iRawPeptideMap.put("expect" + "_s" + spectraCounter + "_p"
+                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("expect").getNodeValue());
 
                                         // the mass + a proton
-                                        iRawPeptideMap.put("mh" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("mh").getNodeValue());
+                                        iRawPeptideMap.put("mh" + "_s" + spectraCounter + "_p"
+                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("mh").getNodeValue());
 
                                         // the mass delta
-                                        iRawPeptideMap.put("delta" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("delta").getNodeValue());
+                                        iRawPeptideMap.put("delta" + "_s" + spectraCounter + "_p"
+                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("delta").getNodeValue());
 
                                         // the hyper score
-                                        iRawPeptideMap.put("hyperscore" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("hyperscore").getNodeValue());
+                                        iRawPeptideMap.put("hyperscore" + "_s" + spectraCounter + "_p"
+                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("hyperscore").getNodeValue());
 
                                         // Is the peak count used ?
                                         //domainPeakCount = new Integer(peptideNodes.item(m).getAttributes().getNamedItem("peak_count").getNodeValue());
 
                                         // the next score
-                                        iRawPeptideMap.put("nextscore" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("nextscore").getNodeValue());
+                                        iRawPeptideMap.put("nextscore" + "_s" + spectraCounter + "_p"
+                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("nextscore").getNodeValue());
 
                                         if (xIonFlag) {
                                             // the x score
-                                            iRawPeptideMap.put("x_score" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("x_score").getNodeValue());
+                                            iRawPeptideMap.put("x_score" + "_s" + spectraCounter + "_p"
+                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("x_score").getNodeValue());
 
                                             // the x ion number
-                                            iRawPeptideMap.put("x_ions" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("x_ions").getNodeValue());
+                                            iRawPeptideMap.put("x_ions" + "_s" + spectraCounter + "_p"
+                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("x_ions").getNodeValue());
                                         }
 
                                         if (yIonFlag) {
                                             // the y score
-                                            iRawPeptideMap.put("y_score" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("y_score").getNodeValue());
+                                            iRawPeptideMap.put("y_score" + "_s" + spectraCounter + "_p"
+                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("y_score").getNodeValue());
 
                                             // the y ion number
-                                            iRawPeptideMap.put("y_ions" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("y_ions").getNodeValue());
+                                            iRawPeptideMap.put("y_ions" + "_s" + spectraCounter + "_p"
+                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("y_ions").getNodeValue());
                                         }
 
                                         if (zIonFlag) {
                                             // the z score
-                                            iRawPeptideMap.put("z_score" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("z_score").getNodeValue());
+                                            iRawPeptideMap.put("z_score" + "_s" + spectraCounter + "_p"
+                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("z_score").getNodeValue());
 
                                             // the z ion number
-                                            iRawPeptideMap.put("z_ions" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("z_ions").getNodeValue());
+                                            iRawPeptideMap.put("z_ions" + "_s" + spectraCounter + "_p"
+                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("z_ions").getNodeValue());
                                         }
 
                                         if (aIonFlag) {
                                             // the a score
-                                            iRawPeptideMap.put("a_score" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("a_score").getNodeValue());
+                                            iRawPeptideMap.put("a_score" + "_s" + spectraCounter + "_p"
+                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("a_score").getNodeValue());
 
                                             // the a ion number
-                                            iRawPeptideMap.put("a_ions" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("a_ions").getNodeValue());
+                                            iRawPeptideMap.put("a_ions" + "_s" + spectraCounter + "_p"
+                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("a_ions").getNodeValue());
                                         }
 
                                         if (bIonFlag) {
                                             // the b score
-                                            iRawPeptideMap.put("b_score" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("b_score").getNodeValue());
+                                            iRawPeptideMap.put("b_score" + "_s" + spectraCounter + "_p"
+                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("b_score").getNodeValue());
 
                                             // the b ion number
-                                            iRawPeptideMap.put("b_ions" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("b_ions").getNodeValue());
+                                            iRawPeptideMap.put("b_ions" + "_s" + spectraCounter + "_p"
+                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("b_ions").getNodeValue());
                                         }
 
                                         if (cIonFlag) {
                                             // the c score
-                                            iRawPeptideMap.put("c_score" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("c_score").getNodeValue());
+                                            iRawPeptideMap.put("c_score" + "_s" + spectraCounter + "_p"
+                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("c_score").getNodeValue());
 
                                             // the c ion number
-                                            iRawPeptideMap.put("c_ions" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("c_ions").getNodeValue());
+                                            iRawPeptideMap.put("c_ions" + "_s" + spectraCounter + "_p"
+                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("c_ions").getNodeValue());
                                         }
 
                                         // the upstream flanking sequence
-                                        iRawPeptideMap.put("pre" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("pre").getNodeValue());
+                                        iRawPeptideMap.put("pre" + "_s" + spectraCounter + "_p"
+                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("pre").getNodeValue());
 
                                         // the downstream flanking sequence
-                                        iRawPeptideMap.put("post" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("post").getNodeValue());
+                                        iRawPeptideMap.put("post" + "_s" + spectraCounter + "_p"
+                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("post").getNodeValue());
 
                                         // the domain sequence
-                                        iRawPeptideMap.put("domainseq" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("seq").getNodeValue());
+                                        iRawPeptideMap.put("domainseq" + "_s" + spectraCounter + "_p"
+                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("seq").getNodeValue());
 
                                         // the number of missed cleavages
-                                        iRawPeptideMap.put("missed_cleavages" + "_s" + spectraCounter + "_p" + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("missed_cleavages").getNodeValue());
+                                        iRawPeptideMap.put("missed_cleavages" + "_s" + spectraCounter + "_p"
+                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("missed_cleavages").getNodeValue());
 
                                         int modCounter = 0;
                                         for (int n = 0; n < peptideNodes.item(m).getChildNodes().getLength(); n++) {
@@ -874,11 +1003,13 @@ public class XTandemParser implements Serializable {
 
                                                 // use the old calculation with domainStart!
                                                 //modificationMap.getNamedItem("at").getNodeValue()) - domainStart + 1)
-                                                iRawModMap.put("at" + "_s" + spectraCounter + "_p" + p_counter + "_m" + modCounter, modificationMap.getNamedItem("at").getNodeValue());
+                                                iRawModMap.put("at" + "_s" + spectraCounter + "_p"
+                                                        + p_counter + "_m" + modCounter, modificationMap.getNamedItem("at").getNodeValue());
 
                                                 // modified is the residue mass change caused by the modification
                                                 modificationMass = Double.parseDouble(modificationMap.getNamedItem("modified").getNodeValue());
-                                                iRawModMap.put("modified" + "_s" + spectraCounter + "_p" + p_counter + "_m" + modCounter, modificationMap.getNamedItem("modified").getNodeValue());
+                                                iRawModMap.put("modified" + "_s" + spectraCounter + "_p"
+                                                        + p_counter + "_m" + modCounter, modificationMap.getNamedItem("modified").getNodeValue());
 
                                                 modificationName = modificationMass + "@" + modificationName;
 
@@ -890,7 +1021,6 @@ public class XTandemParser implements Serializable {
                                 }
                             }
                         }
-
                     }
 
                     // Go to the group node inside the other group node (support)
@@ -902,8 +1032,10 @@ public class XTandemParser implements Serializable {
                             for (int a = 0; a < supportDataNodes.getLength(); a++) {
                                 if (supportDataNodes.item(a).getNodeName().equalsIgnoreCase("GAML:trace")) {
                                     // Parse the hyperscore expectation function values
-                                    if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("hyperscore expectation function")) {
-                                        iSupportDataMap.put("HYPERLABEL" + "_s" + spectraCounter, supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
+                                    if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase(
+                                            "hyperscore expectation function")) {
+                                        iSupportDataMap.put("HYPERLABEL" + "_s" + spectraCounter,
+                                                supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
 
                                         hyperNodes = supportDataNodes.item(a).getChildNodes();
                                         // Iterate over the hyperscore nodes
@@ -940,8 +1072,10 @@ public class XTandemParser implements Serializable {
                                     }
 
                                     // Parse the convolution survival funtion values
-                                    if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("convolution survival function")) {
-                                        iSupportDataMap.put("CONVOLLABEL" + "_s" + spectraCounter, supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
+                                    if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase(
+                                            "convolution survival function")) {
+                                        iSupportDataMap.put("CONVOLLABEL" + "_s" + spectraCounter,
+                                                supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
                                         supportDataNodes.item(a).getChildNodes();
 
                                         convolNodes = supportDataNodes.item(a).getChildNodes();
@@ -971,7 +1105,8 @@ public class XTandemParser implements Serializable {
                                     // Parse the a ion histogram values
                                     if (aIonFlag) {
                                         if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("a ion histogram")) {
-                                            iSupportDataMap.put("A_IONLABEL" + "_s" + spectraCounter, supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
+                                            iSupportDataMap.put("A_IONLABEL" + "_s" + spectraCounter,
+                                                    supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
                                             supportDataNodes.item(a).getChildNodes();
 
                                             aIonNodes = supportDataNodes.item(a).getChildNodes();
@@ -992,7 +1127,8 @@ public class XTandemParser implements Serializable {
                                                     yDataNodes = aIonNodes.item(b).getChildNodes();
                                                     for (int e = 0; e < yDataNodes.getLength(); e++) {
                                                         if (yDataNodes.item(e).getNodeName().equalsIgnoreCase("GAML:values")) {
-                                                            iSupportDataMap.put("YVAL_AIONS" + "_s" + spectraCounter, yDataNodes.item(e).getTextContent());
+                                                            iSupportDataMap.put("YVAL_AIONS" + "_s"
+                                                                    + spectraCounter, yDataNodes.item(e).getTextContent());
                                                         }
                                                     }
                                                 }
@@ -1003,7 +1139,8 @@ public class XTandemParser implements Serializable {
                                     // Parse the b ion histogram values
                                     if (bIonFlag) {
                                         if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("b ion histogram")) {
-                                            iSupportDataMap.put("B_IONLABEL" + "_s" + spectraCounter, supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
+                                            iSupportDataMap.put("B_IONLABEL" + "_s" + spectraCounter,
+                                                    supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
                                             supportDataNodes.item(a).getChildNodes();
 
                                             bIonNodes = supportDataNodes.item(a).getChildNodes();
@@ -1015,7 +1152,8 @@ public class XTandemParser implements Serializable {
                                                     xDataNodes = bIonNodes.item(b).getChildNodes();
                                                     for (int d = 0; d < xDataNodes.getLength(); d++) {
                                                         if (xDataNodes.item(d).getNodeName().equalsIgnoreCase("GAML:values")) {
-                                                            iSupportDataMap.put("XVAL_BIONS" + "_s" + spectraCounter, xDataNodes.item(d).getTextContent());
+                                                            iSupportDataMap.put("XVAL_BIONS" + "_s"
+                                                                    + spectraCounter, xDataNodes.item(d).getTextContent());
                                                         }
                                                     }
                                                 }
@@ -1024,7 +1162,8 @@ public class XTandemParser implements Serializable {
                                                     yDataNodes = bIonNodes.item(b).getChildNodes();
                                                     for (int e = 0; e < yDataNodes.getLength(); e++) {
                                                         if (yDataNodes.item(e).getNodeName().equalsIgnoreCase("GAML:values")) {
-                                                            iSupportDataMap.put("YVAL_BIONS" + "_s" + spectraCounter, yDataNodes.item(e).getTextContent());
+                                                            iSupportDataMap.put("YVAL_BIONS" + "_s"
+                                                                    + spectraCounter, yDataNodes.item(e).getTextContent());
                                                         }
                                                     }
                                                 }
@@ -1035,7 +1174,8 @@ public class XTandemParser implements Serializable {
                                     // Parse the c ion histogram values
                                     if (cIonFlag) {
                                         if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("c ion histogram")) {
-                                            iSupportDataMap.put("C_IONLABEL" + "_s" + spectraCounter, supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
+                                            iSupportDataMap.put("C_IONLABEL" + "_s" + spectraCounter,
+                                                    supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
                                             supportDataNodes.item(a).getChildNodes();
 
                                             cIonNodes = supportDataNodes.item(a).getChildNodes();
@@ -1047,7 +1187,8 @@ public class XTandemParser implements Serializable {
                                                     xDataNodes = cIonNodes.item(b).getChildNodes();
                                                     for (int d = 0; d < xDataNodes.getLength(); d++) {
                                                         if (xDataNodes.item(d).getNodeName().equalsIgnoreCase("GAML:values")) {
-                                                            iSupportDataMap.put("XVAL_CIONS" + "_s" + spectraCounter, xDataNodes.item(d).getTextContent());
+                                                            iSupportDataMap.put("XVAL_CIONS" + "_s"
+                                                                    + spectraCounter, xDataNodes.item(d).getTextContent());
                                                         }
                                                     }
                                                 }
@@ -1056,7 +1197,8 @@ public class XTandemParser implements Serializable {
                                                     yDataNodes = cIonNodes.item(b).getChildNodes();
                                                     for (int e = 0; e < yDataNodes.getLength(); e++) {
                                                         if (yDataNodes.item(e).getNodeName().equalsIgnoreCase("GAML:values")) {
-                                                            iSupportDataMap.put("YVAL_CIONS" + "_s" + spectraCounter, yDataNodes.item(e).getTextContent());
+                                                            iSupportDataMap.put("YVAL_CIONS" + "_s"
+                                                                    + spectraCounter, yDataNodes.item(e).getTextContent());
                                                         }
                                                     }
                                                 }
@@ -1067,7 +1209,8 @@ public class XTandemParser implements Serializable {
                                     if (xIonFlag) {
                                         // Parse the x ion histogram values
                                         if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equals("x ion histogram")) {
-                                            iSupportDataMap.put("X_IONLABEL" + "_s" + spectraCounter, supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
+                                            iSupportDataMap.put("X_IONLABEL" + "_s" + spectraCounter,
+                                                    supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
                                             supportDataNodes.item(a).getChildNodes();
 
                                             xIonNodes = supportDataNodes.item(a).getChildNodes();
@@ -1078,7 +1221,8 @@ public class XTandemParser implements Serializable {
                                                     xDataNodes = xIonNodes.item(b).getChildNodes();
                                                     for (int d = 0; d < xDataNodes.getLength(); d++) {
                                                         if (xDataNodes.item(d).getNodeName().equalsIgnoreCase("GAML:values")) {
-                                                            iSupportDataMap.put("XVAL_XIONS" + "_s" + spectraCounter, xDataNodes.item(d).getTextContent());
+                                                            iSupportDataMap.put("XVAL_XIONS" + "_s"
+                                                                    + spectraCounter, xDataNodes.item(d).getTextContent());
                                                         }
                                                     }
                                                 }
@@ -1087,7 +1231,8 @@ public class XTandemParser implements Serializable {
                                                     yDataNodes = xIonNodes.item(b).getChildNodes();
                                                     for (int e = 0; e < yDataNodes.getLength(); e++) {
                                                         if (yDataNodes.item(e).getNodeName().equalsIgnoreCase("GAML:values")) {
-                                                            iSupportDataMap.put("YVAL_XIONS" + "_s" + spectraCounter, yDataNodes.item(e).getTextContent());
+                                                            iSupportDataMap.put("YVAL_XIONS" + "_s"
+                                                                    + spectraCounter, yDataNodes.item(e).getTextContent());
                                                         }
                                                     }
                                                 }
@@ -1098,7 +1243,8 @@ public class XTandemParser implements Serializable {
                                     if (yIonFlag) {
                                         // Parse the y ion histogram values
                                         if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equals("y ion histogram")) {
-                                            iSupportDataMap.put("Y_IONLABEL" + "_s" + spectraCounter, supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
+                                            iSupportDataMap.put("Y_IONLABEL" + "_s" + spectraCounter,
+                                                    supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
                                             supportDataNodes.item(a).getChildNodes();
 
                                             yIonNodes = supportDataNodes.item(a).getChildNodes();
@@ -1109,7 +1255,8 @@ public class XTandemParser implements Serializable {
                                                     xDataNodes = yIonNodes.item(b).getChildNodes();
                                                     for (int d = 0; d < xDataNodes.getLength(); d++) {
                                                         if (xDataNodes.item(d).getNodeName().equalsIgnoreCase("GAML:values")) {
-                                                            iSupportDataMap.put("XVAL_YIONS" + "_s" + spectraCounter, xDataNodes.item(d).getTextContent());
+                                                            iSupportDataMap.put("XVAL_YIONS" + "_s"
+                                                                    + spectraCounter, xDataNodes.item(d).getTextContent());
                                                         }
                                                     }
                                                 }
@@ -1118,7 +1265,8 @@ public class XTandemParser implements Serializable {
                                                     yDataNodes = yIonNodes.item(b).getChildNodes();
                                                     for (int e = 0; e < yDataNodes.getLength(); e++) {
                                                         if (yDataNodes.item(e).getNodeName().equalsIgnoreCase("GAML:values")) {
-                                                            iSupportDataMap.put("YVAL_YIONS" + "_s" + spectraCounter, yDataNodes.item(e).getTextContent());
+                                                            iSupportDataMap.put("YVAL_YIONS" + "_s"
+                                                                    + spectraCounter, yDataNodes.item(e).getTextContent());
                                                         }
                                                     }
                                                 }
@@ -1129,7 +1277,8 @@ public class XTandemParser implements Serializable {
                                     if (zIonFlag) {
                                         // Parse the x ion histogram values
                                         if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equals("z ion histogram")) {
-                                            iSupportDataMap.put("Z_IONLABEL" + "_s" + spectraCounter, supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
+                                            iSupportDataMap.put("Z_IONLABEL" + "_s" + spectraCounter,
+                                                    supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
                                             supportDataNodes.item(a).getChildNodes();
 
                                             zIonNodes = supportDataNodes.item(a).getChildNodes();
@@ -1140,7 +1289,8 @@ public class XTandemParser implements Serializable {
                                                     xDataNodes = zIonNodes.item(b).getChildNodes();
                                                     for (int d = 0; d < xDataNodes.getLength(); d++) {
                                                         if (xDataNodes.item(d).getNodeName().equalsIgnoreCase("GAML:values")) {
-                                                            iSupportDataMap.put("XVAL_ZIONS" + "_s" + spectraCounter, xDataNodes.item(d).getTextContent());
+                                                            iSupportDataMap.put("XVAL_ZIONS" + "_s"
+                                                                    + spectraCounter, xDataNodes.item(d).getTextContent());
                                                         }
                                                     }
                                                 }
@@ -1149,7 +1299,8 @@ public class XTandemParser implements Serializable {
                                                     yDataNodes = zIonNodes.item(b).getChildNodes();
                                                     for (int e = 0; e < yDataNodes.getLength(); e++) {
                                                         if (yDataNodes.item(e).getNodeName().equalsIgnoreCase("GAML:values")) {
-                                                            iSupportDataMap.put("YVAL_ZIONS" + "_s" + spectraCounter, yDataNodes.item(e).getTextContent());
+                                                            iSupportDataMap.put("YVAL_ZIONS" + "_s"
+                                                                    + spectraCounter, yDataNodes.item(e).getTextContent());
                                                         }
                                                     }
                                                 }
@@ -1171,7 +1322,8 @@ public class XTandemParser implements Serializable {
                                 if (supportDataNodes.item(a).getNodeName().equalsIgnoreCase("GAML:trace")) {
                                     // Parse the tandem mass spectrum values
                                     if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("tandem mass spectrum")) {
-                                        iSupportDataMap.put("SPECTRUMLABEL" + "_s" + spectraCounter, supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
+                                        iSupportDataMap.put("SPECTRUMLABEL" + "_s" + spectraCounter,
+                                                supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
                                         supportDataNodes.item(a).getChildNodes();
 
                                         fragIonNodes = supportDataNodes.item(a).getChildNodes();
@@ -1180,11 +1332,13 @@ public class XTandemParser implements Serializable {
                                             if (fragIonNodes.item(b).getNodeName().equalsIgnoreCase("GAML:attribute")) {
                                                 // Get the a0 value
                                                 if (fragIonNodes.item(b).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("M+H")) {
-                                                    iSupportDataMap.put("FRAGIONMZ" + "_s" + spectraCounter, fragIonNodes.item(b).getTextContent());
+                                                    iSupportDataMap.put("FRAGIONMZ" + "_s"
+                                                            + spectraCounter, fragIonNodes.item(b).getTextContent());
                                                 }
                                                 // Get the a1 value
                                                 if (fragIonNodes.item(b).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("charge")) {
-                                                    iSupportDataMap.put("FRAGIONCHARGE" + "_s" + spectraCounter, fragIonNodes.item(b).getTextContent());
+                                                    iSupportDataMap.put("FRAGIONCHARGE" + "_s"
+                                                            + spectraCounter, fragIonNodes.item(b).getTextContent());
                                                 }
                                             }
                                             // Get the Xdata
@@ -1192,7 +1346,8 @@ public class XTandemParser implements Serializable {
                                                 xDataNodes = fragIonNodes.item(b).getChildNodes();
                                                 for (int d = 0; d < xDataNodes.getLength(); d++) {
                                                     if (xDataNodes.item(d).getNodeName().equalsIgnoreCase("GAML:values")) {
-                                                        iSupportDataMap.put("XVAL_FRAGIONMZ" + "_s" + spectraCounter, xDataNodes.item(d).getTextContent());
+                                                        iSupportDataMap.put("XVAL_FRAGIONMZ" + "_s"
+                                                                + spectraCounter, xDataNodes.item(d).getTextContent());
                                                     }
                                                 }
                                             }
@@ -1201,7 +1356,8 @@ public class XTandemParser implements Serializable {
                                                 yDataNodes = fragIonNodes.item(b).getChildNodes();
                                                 for (int e = 0; e < yDataNodes.getLength(); e++) {
                                                     if (yDataNodes.item(e).getNodeName().equalsIgnoreCase("GAML:values")) {
-                                                        iSupportDataMap.put("YVAL_FRAGIONMZ" + "_s" + spectraCounter, yDataNodes.item(e).getTextContent());
+                                                        iSupportDataMap.put("YVAL_FRAGIONMZ" + "_s"
+                                                                + spectraCounter, yDataNodes.item(e).getTextContent());
                                                     }
                                                 }
                                             }
@@ -1212,7 +1368,6 @@ public class XTandemParser implements Serializable {
                         }
                     }
                 }
-
             }
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
@@ -1223,6 +1378,7 @@ public class XTandemParser implements Serializable {
 
     /**
      * Returns the total number of spectra.
+     *
      * @return iNumberOfSpectra
      */
     public int getNumberOfSpectra() {
@@ -1231,6 +1387,7 @@ public class XTandemParser implements Serializable {
 
     /**
      * Returns the raw spectrum map.
+     *
      * @return iRawSpectrumMap
      */
     public HashMap<String, String> getRawSpectrumMap() {
@@ -1239,6 +1396,7 @@ public class XTandemParser implements Serializable {
 
     /**
      * Returns the raw peptide map.
+     *
      * @return iRawPeptideMap
      */
     public HashMap<String, String> getRawPeptideMap() {
@@ -1247,6 +1405,7 @@ public class XTandemParser implements Serializable {
 
     /**
      * Returns the raw protein map.
+     *
      * @return iRawProteinMap
      */
     public HashMap<String, String> getRawProteinMap() {
@@ -1255,6 +1414,7 @@ public class XTandemParser implements Serializable {
 
     /**
      * Returns the protein id list
+     *
      * @return iProteinIDList ArrayList<String>
      */
     public ArrayList<String> getProteinIDList() {
@@ -1263,6 +1423,7 @@ public class XTandemParser implements Serializable {
 
     /**
      * Returns the raw modification map.
+     *
      * @return iRawModMap
      */
     public HashMap<String, String> getRawModMap() {
@@ -1271,6 +1432,7 @@ public class XTandemParser implements Serializable {
 
     /**
      * Returns the performance parameters map.
+     *
      * @return iPerformParamMap
      */
     public HashMap<String, String> getPerformParamMap() {
@@ -1279,6 +1441,7 @@ public class XTandemParser implements Serializable {
 
     /**
      * Returns the input parameter map.
+     *
      * @return iInputParamMap
      */
     public HashMap<String, String> getInputParamMap() {
@@ -1287,6 +1450,7 @@ public class XTandemParser implements Serializable {
 
     /**
      * Returns the support data map
+     *
      * @return iSupportDataMap
      */
     public HashMap<String, String> getSupportDataMap() {
@@ -1295,6 +1459,7 @@ public class XTandemParser implements Serializable {
 
     /**
      * Returns the title2spectrum id map.
+     * 
      * @return iTitle2SpectrumIDMap.
      */
     public HashMap<String, Integer> getTitle2SpectrumIDMap() {

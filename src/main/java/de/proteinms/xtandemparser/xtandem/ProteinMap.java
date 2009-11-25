@@ -7,8 +7,8 @@ import java.util.Iterator;
 
 /**
  * This class holds the protein information in a map.
- * @author Thilo Muth
  *
+ * @author Thilo Muth
  */
 public class ProteinMap implements Serializable {
 
@@ -19,6 +19,9 @@ public class ProteinMap implements Serializable {
 
     /**
      * The constructor gets a raw protein map from the xtandem parser.
+     *
+     * @param aProteinIDList
+     * @param aRawProteinMap
      */
     public ProteinMap(ArrayList<String> aProteinIDList, HashMap aRawProteinMap) {
         if (aProteinIDList != null && aRawProteinMap != null) {
@@ -28,6 +31,7 @@ public class ProteinMap implements Serializable {
 
     /**
      * This method initializes the protein map from a given raw map.
+     *
      * @param aProteinIDList
      * @param aProteinMap
      */
@@ -58,6 +62,7 @@ public class ProteinMap implements Serializable {
 
     /**
      * Returns a protein object for a given protein id.
+     *
      * @param aProteinID String
      * @return iProtein Protein
      */
@@ -67,6 +72,7 @@ public class ProteinMap implements Serializable {
 
     /**
      * This method returns an iterator of the keys in the protein map.
+     *
      * @return iProteinMap.keySet().iterator()
      */
     public Iterator getProteinIDIterator() {

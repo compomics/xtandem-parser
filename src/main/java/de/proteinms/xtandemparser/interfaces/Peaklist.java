@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 /**
  * This class respresents the Peaklist interface.
- * @author Thilo Muth
  *
+ * @author Thilo Muth
  */
 public interface Peaklist {
 

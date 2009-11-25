@@ -6,17 +6,11 @@ import javax.swing.filechooser.*;
 /**
  * File filter for *.txt files.
  *
- * Created February 2009
- *
  * @author  Harald Barsnes
  */
 public class TxtFileFilter extends FileFilter {
 
-    private final static String xml = "xml";
     private final static String txt = "txt";
-    private final static String omx = "omx";
-    private final static String XML = "XML";
-    private final static String OMX = "OMX";
     private final static String TXT = "TXT";
 
     /**
