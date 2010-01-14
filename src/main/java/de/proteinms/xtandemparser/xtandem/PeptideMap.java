@@ -138,13 +138,6 @@ public class PeptideMap implements Serializable {
                     // Put the peptide into the map, value is the id.
                     iPeptideMap.put(peptideID, peptide);
 
-                    // Update the PeptideHit in the ProteinMap.
-//	                    PeptideHit lPeptideHit = (PeptideHit) lSecondDimension.get(lCount - 1);
-//	                    int lNumberOfProteinHits = lPeptideHit.getProteinHits().size();
-//	                    for (int k = 0; k < lNumberOfProteinHits; k++) {
-//	                        ProteinHit lProteinHit = (ProteinHit) lPeptideHit.getProteinHits().get(k);
-//	                        aProteinMap.addProteinSource(lProteinHit.getAccession(), i, lCount);
-//	                    }
                     counter++;
                 }
 
