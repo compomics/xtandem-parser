@@ -67,7 +67,22 @@ public class ProteinMap implements Serializable {
      * @return iProtein Protein
      */
     public Protein getProtein(String aProteinID) {
-        return iProteinMap.get(aProteinID);
+        if(iProteinMap != null){
+            return iProteinMap.get(aProteinID);
+        } else return null;
+
+    }
+
+    /**
+     * Returns a protein object for a given peptide id.
+     *
+     * @param aPeptideID String
+     * @return iProtein Protein
+     */
+    public Protein getProteinWithPeptideID(String aPeptideID) {
+        String protID = aPeptideID.substring(0, aPeptideID.length()-2);
+        return this.getProtein(protID);
+
     }
 
     /**
