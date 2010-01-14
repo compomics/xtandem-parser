@@ -39,11 +39,12 @@ public class XTandemViewer extends JFrame {
      */
     private static boolean useErrorLog = true;
     public final static String APPTITLE = "X!Tandem Viewer";
-    public final static String VERSION = "1.1";
+    public final static String VERSION = "1.1.1";
     private String lastSelectedFolder = "user.home";
     private SpectrumPanel spectrumPanel;
     private String iXTandemFileString;
     private HashMap<Integer, ArrayList<Peptide>> peptideMap;
+    private HashMap<String, String> proteinLabelMap;
     private HashMap<Integer, ArrayList<Double>> allMzValues, allIntensityValues;
     private HashMap<Integer, ArrayList<Modification>> allFixMods, allVarMods;
     private HashMap<String, FragmentIon[]> ionsMap;
@@ -776,6 +777,7 @@ public class XTandemViewer extends JFrame {
 
                 // Set up the hash maps
                 peptideMap = new HashMap<Integer, ArrayList<Peptide>>();
+                proteinLabelMap = new HashMap<String, String>();
                 accMap = new HashMap<Integer, String>();
                 allMzValues = new HashMap<Integer, ArrayList<Double>>();
                 allIntensityValues = new HashMap<Integer, ArrayList<Double>>();
@@ -789,6 +791,8 @@ public class XTandemViewer extends JFrame {
                 // Prepare everything for the peptides.
                 PeptideMap pepMap = iXTandemFile.getPeptideMap();
 
+                // Prepare everything for the proteins.
+                ProteinMap protMap = iXTandemFile.getProteinMap();
 
                 while (iter.hasNext()) {
 
@@ -799,6 +803,13 @@ public class XTandemViewer extends JFrame {
                     // Get the peptide hits.
                     ArrayList<Peptide> pepList = pepMap.getAllPeptides(spectrumNumber);
                     for (Peptide peptide : pepList) {
+
+                        Protein protein = protMap.getProteinWithPeptideID(peptide.getDomainID());
+                        if (protein != null){
+                            String protAccession = protein.getLabel();
+                            proteinLabelMap.put(peptide.getDomainID(), protAccession);
+                        }
+
                         // Get the b and y ions
                         Vector IonVector = iXTandemFile.getFragmentIonsForPeptide(peptide);
 
@@ -812,8 +823,8 @@ public class XTandemViewer extends JFrame {
                     // Get the support data for each spectrum.
                     SupportData supportData = iXTandemFile.getSupportData(spectrumNumber);
 
-                    // Fill the map: for each spectrum get the corressponding peptide list.
-                    peptideMap.put(spectrumNumber, pepList);
+                    // Fill the peptide map: for each spectrum get the corressponding peptide list.
+                    peptideMap.put(spectrumNumber, pepList);                 
 
 
                     //int spectrumID = spectrum.getSpectrumId();
@@ -1344,8 +1355,8 @@ public class XTandemViewer extends JFrame {
 
                     // Calculate the theoretical mass of the domain
                     double theoMass = (domain.getDomainMh() + domain.getDomainDeltaMh());
-                    String accession = accMap.get((Integer) spectraTable.getValueAt(row, 0));
-
+                    //String accession = accMap.get((Integer) spectraTable.getValueAt(row, 0));
+                    String accession = proteinLabelMap.get(domain.getDomainID());
                     ((DefaultTableModel) identificationsTable.getModel()).addRow(new Object[]{
                                 (Integer) spectraTable.getValueAt(row, 0),
                                 sequence,
@@ -1783,7 +1794,7 @@ public class XTandemViewer extends JFrame {
                         modifiedSequence = nTerminal + modifiedSequence + cTerminal;
 
                         double theoMass = (domain.getDomainMh() + domain.getDomainDeltaMh());
-                        String accession = accMap.get((Integer) domain.getSpectrumNumber());
+                        String accession = proteinLabelMap.get(domain.getDomainID());
 
                         f.write(domain.getSpectrumNumber() + "\t" +
                                 sequence + "\t" +
