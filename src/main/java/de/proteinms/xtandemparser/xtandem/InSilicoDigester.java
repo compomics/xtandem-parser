@@ -115,7 +115,7 @@ public class InSilicoDigester {
             mass = 0.0;
 
             // Add the fixed modifications masses (N and C term included)
-            ArrayList<Modification> fixModList = iModMap.getFixedModifications(iPeptide.getSpectrumNumber());
+            ArrayList<Modification> fixModList = iModMap.getFixedModifications(iPeptide.getDomainID());
             if (fixModList.size() > 0) {
                 for (Modification fixMod : fixModList) {
                     int modIndex = (Integer.parseInt(fixMod.getLocation()) - iPeptide.getDomainStart());
@@ -126,7 +126,7 @@ public class InSilicoDigester {
             }
 
             // Add the the variable modification masses (N and C term included)
-            ArrayList<Modification> varModList = iModMap.getVariableModifications(iPeptide.getSpectrumNumber());
+            ArrayList<Modification> varModList = iModMap.getVariableModifications(iPeptide.getDomainID());
             if (varModList.size() > 0) {
                 for (Modification varMod : varModList) {
                     int modIndex = (Integer.parseInt(varMod.getLocation()) - iPeptide.getDomainStart());

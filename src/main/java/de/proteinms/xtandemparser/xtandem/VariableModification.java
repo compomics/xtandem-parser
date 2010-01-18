@@ -22,11 +22,12 @@ public class VariableModification implements Modification, Serializable {
      * This variable contains the location of the modification.
      */
     private String iLocation;
+    
     /**
-     * This variable holds the domainID as identification to which
-     * peptide belongs the modification.
+     * This variable holds number of the modification from one peptide.
      */
-    private String iDomainID;
+    private int iNumber;
+
     /**
      * This variables holds the modified residue.
      */
@@ -38,13 +39,13 @@ public class VariableModification implements Modification, Serializable {
      * @param aName The modification name
      * @param aMass The modification mass
      * @param aLocation The modification location
-     * @param aDomainID The domain ID
+     * @param aNumber The number of the modification
      */
-    public VariableModification(String aName, double aMass, String aLocation, String aDomainID) {
+    public VariableModification(String aName, double aMass, String aLocation, int aNumber) {
         iName = aName;
         iMass = aMass;
         iLocation = aLocation;
-        iDomainID = aDomainID;
+        iNumber = aNumber;
     }
 
     /**
@@ -113,19 +114,19 @@ public class VariableModification implements Modification, Serializable {
     /**
      * Returns the domain id.
      *
-     * @return the domain id
+     * @return the number of modifcation
      */
-    public String getDomainID() {
-        return iDomainID;
+    public int getNumber(){
+        return iNumber;
     }
 
     /**
      * Sets the domain id.
      *
-     * @param aDomainID The domain id
+     * @param aNumber The number of the modification.
      */
-    public void setIDomainID(String aDomainID) {
-        iDomainID = aDomainID;
+    public void setNumber(int aNumber) {
+        iNumber = aNumber;
     }
 
     /**

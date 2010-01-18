@@ -41,7 +41,8 @@ public class FragmentIon implements Ion {
     /**
      * This variable holds the calculated theoretical vs. experimental error.
      */
-    private double iTheoreticalExperimentalMassError;
+    private double iTheoreticalExperimentalMassError;  
+
 
     /**
      * Constructor gets all the parameters to create an fragment ion object.

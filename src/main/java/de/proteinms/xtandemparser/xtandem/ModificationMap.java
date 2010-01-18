@@ -62,27 +62,29 @@ public class ModificationMap implements Serializable {
                     int m_counter = 1;
 
                     while (rawModMap.get("name" + "_s" + i + "_p" + j + "_m" + m_counter) != null) {
-                        // Get a specific id for the modification s_(spectrum#)_p(peptide#)_m(modifcation#)
-                        String modID = ("s" + i + "_p" + j + "_m" + m_counter).toString();
+
 
                         // Get the specific parameters for the modification
                         String modName = rawModMap.get("name" + "_s" + i + "_p" + j + "_m" + m_counter).toString();
                         double modMass = Double.parseDouble(rawModMap.get("modified" + "_s" + i + "_p" + j + "_m" + m_counter).toString());
                         String modLocation = rawModMap.get("at" + "_s" + i + "_p" + j + "_m" + m_counter).toString();
-
+                                              
                         // Get the domainID
                         String domainID = peptideMap.getPeptideByIndex(i, j).getDomainID();
 
+                        // Get a specific id for the modification (domainID)_m(modifcation#)
+                        String modID = (domainID + "_m" + m_counter).toString();
+                        
                         // Check for fixed modification
                         if (inputParams.getResidueModMass().equals(modName)) {
                             // Create an instance of a fixed modification.
-                            FixedModification fixedMod = new FixedModification(modName, modMass, modLocation, domainID);
+                            FixedModification fixedMod = new FixedModification(modName, modMass, modLocation, m_counter);
 
                             // Put the modification into the map, value is the mod id.
                             iFixedModificationMap.put(modID, fixedMod);
                         } else {
                             // The rest will be assumed to be variable modifications.
-                            VariableModification varMod = new VariableModification(modName, modMass, modLocation, domainID);
+                            VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter);
 
                             // Put the modification into the map, value is the mod id.
                             iVarModificationMap.put(modID, varMod);
@@ -97,18 +99,16 @@ public class ModificationMap implements Serializable {
     /**
      * Returns the fixed modifications as list.
      *
-     * @param aSpectrumNumber The number of the spectrum
+     * @param aDomainID The domainID of the identification
      * @return modificationsList The fixed modification list
      */
-    public ArrayList<Modification> getFixedModifications(int aSpectrumNumber) {
+    public ArrayList<Modification> getFixedModifications(String aDomainID) {
         ArrayList<Modification> modificationList = new ArrayList<Modification>();
-        if (iPeptideMap != null && iFixedModificationMap != null) {
-            for (int j = 1; j <= iPeptideMap.getNumberOfPeptides(aSpectrumNumber); j++) {
-                int modCount = 1;
-                while (iFixedModificationMap.get("s" + aSpectrumNumber + "_p" + j + "_m" + modCount) != null) {
-                    modificationList.add(iFixedModificationMap.get("s" + aSpectrumNumber + "_p" + j + "_m" + modCount));
-                    modCount++;
-                }
+        if (iFixedModificationMap != null) {
+            int modCount = 1;
+            while (iFixedModificationMap.get(aDomainID + "_m" + modCount) != null) {
+                modificationList.add(iFixedModificationMap.get(aDomainID + "_m" + modCount));
+                modCount++;
             }
         }
         return modificationList;
@@ -117,18 +117,16 @@ public class ModificationMap implements Serializable {
     /**
      * Returns the variable modifications as list.
      *
-     * @param aSpectrumNumber The number of the spectrum
+     * @param aDomainID The domainID of the identification
      * @return modificationsList The variable modification list
      */
-    public ArrayList<Modification> getVariableModifications(int aSpectrumNumber) {
+    public ArrayList<Modification> getVariableModifications(String aDomainID) {
         ArrayList<Modification> modificationList = new ArrayList<Modification>();
-        if (iPeptideMap != null && iVarModificationMap != null) {
-            for (int j = 1; j <= iPeptideMap.getNumberOfPeptides(aSpectrumNumber); j++) {
-                int modCount = 1;
-                while (iVarModificationMap.get("s" + aSpectrumNumber + "_p" + j + "_m" + modCount) != null) {
-                    modificationList.add(iVarModificationMap.get("s" + aSpectrumNumber + "_p" + j + "_m" + modCount));
-                    modCount++;
-                }
+        if (iVarModificationMap != null) {
+            int modCount = 1;
+            while (iVarModificationMap.get(aDomainID + "_m" + modCount) != null) {
+                modificationList.add(iVarModificationMap.get(aDomainID + "_m" + modCount));
+                modCount++;
             }
         }
         return modificationList;

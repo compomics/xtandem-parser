@@ -46,7 +46,7 @@ public class XTandemViewer extends JFrame {
     private HashMap<Integer, ArrayList<Peptide>> peptideMap;
     private HashMap<String, String> proteinLabelMap;
     private HashMap<Integer, ArrayList<Double>> allMzValues, allIntensityValues;
-    private HashMap<Integer, ArrayList<Modification>> allFixMods, allVarMods;
+    private HashMap<String, ArrayList<Modification>> allFixMods, allVarMods;
     private HashMap<String, FragmentIon[]> ionsMap;
     private HashMap<Integer, String> accMap;
     private Vector spectraTableColToolTips, spectrumTableColToolTips, spectrumJXTableColToolTips,
@@ -781,8 +781,8 @@ public class XTandemViewer extends JFrame {
                 accMap = new HashMap<Integer, String>();
                 allMzValues = new HashMap<Integer, ArrayList<Double>>();
                 allIntensityValues = new HashMap<Integer, ArrayList<Double>>();
-                allFixMods = new HashMap<Integer, ArrayList<Modification>>();
-                allVarMods = new HashMap<Integer, ArrayList<Modification>>();
+                allFixMods = new HashMap<String, ArrayList<Modification>>();
+                allVarMods = new HashMap<String, ArrayList<Modification>>();
                 ionsMap = new HashMap<String, FragmentIon[]>();
 
                 // Iterate over all the spectra
@@ -809,6 +809,12 @@ public class XTandemViewer extends JFrame {
                             String protAccession = protein.getLabel();
                             proteinLabelMap.put(peptide.getDomainID(), protAccession);
                         }
+
+                        // Do the modifications
+                        ArrayList<Modification> fixModList = iXTandemFile.getModificationMap().getFixedModifications(peptide.getDomainID());
+                        ArrayList<Modification> varModList = iXTandemFile.getModificationMap().getVariableModifications(peptide.getDomainID());
+                        allFixMods.put(peptide.getDomainID(), fixModList);
+                        allVarMods.put(peptide.getDomainID(), varModList);
 
                         // Get the b and y ions
                         Vector IonVector = iXTandemFile.getFragmentIonsForPeptide(peptide);
@@ -856,11 +862,7 @@ public class XTandemViewer extends JFrame {
                     allMzValues.put(new Integer(spectrumNumber), mzValues);
                     allIntensityValues.put(new Integer(spectrumNumber), intensityValues);
 
-                    // Do the modifications
-                    ArrayList<Modification> fixModList = iXTandemFile.getModificationMap().getFixedModifications(spectrumNumber);
-                    ArrayList<Modification> varModList = iXTandemFile.getModificationMap().getVariableModifications(spectrumNumber);
-                    allFixMods.put(spectrumNumber, fixModList);
-                    allVarMods.put(spectrumNumber, varModList);
+
 
                 }
                 spectraTable.setSortable(true);
@@ -1123,42 +1125,36 @@ public class XTandemViewer extends JFrame {
                     String nTerminal = "";
                     String cTerminal = "";
 
-                    ArrayList<Modification> fixedModList = allFixMods.get((Integer) spectraTable.getValueAt(row, 0));
-                    ArrayList<Modification> varModList = allVarMods.get((Integer) spectraTable.getValueAt(row, 0));
+                    ArrayList<Modification> fixedModList = allFixMods.get(domain.getDomainID());
+                    ArrayList<Modification> varModList = allVarMods.get(domain.getDomainID());
 
                     // Handle fixed modifications
                     if (fixedModList != null) {
                         for (int i = 0; i < fixedModList.size(); i++) {
                             FixedModification fixMod = (FixedModification) fixedModList.get(i);
-                            Vector<String> modifiedResidues = new Vector<String>();
-                            if (domain.getDomainID().equals(fixMod.getDomainID())) {
-                                modifiedResidues.add(fixMod.getModifiedResidue());
-                            }
-                            for (int j = 0; j < modifiedResidues.size(); j++) {
+                            int[] modRes = new int[domain.getDomainSequence().length()];
+                            int modIndex = Integer.parseInt(fixMod.getLocation()) - domain.getDomainStart();
+                            modRes[modIndex] = fixMod.getNumber();
 
-                                int index = sequence.indexOf(modifiedResidues.get(j));
-                                while (index != -1) {
-                                    modifications[index] += "<" + "M*" + ">";
-
-                                    index = sequence.indexOf(modifiedResidues.get(j), index + 1);
+                            for (int j = 0; j < modRes.length; j++) {
+                                if (modRes[j] > 0) {
+                                    modifications[j] += "<" + "M" + modRes[j] +"*" + ">";
                                 }
                             }
                         }
                     }
+                    //Handle variable modifications
                     if (varModList != null) {
                         for (int i = 0; i < varModList.size(); i++) {
                             VariableModification varMod = (VariableModification) varModList.get(i);
-                            Vector<String> modifiedResidues = new Vector<String>();
-                            if (domain.getDomainID().equals(varMod.getDomainID())) {
-                                modifiedResidues.add(varMod.getModifiedResidue());
-                            }
-                            for (int j = 0; j < modifiedResidues.size(); j++) {
+                            int[] modRes = new int[domain.getDomainSequence().length()];
 
-                                int index = sequence.indexOf(modifiedResidues.get(j));
-                                while (index != -1) {
-                                    modifications[index] += "<" + "M*" + ">";
+                            int modIndex = Integer.parseInt(varMod.getLocation()) - domain.getDomainStart();
+                            modRes[modIndex] = varMod.getNumber();
 
-                                    index = sequence.indexOf(modifiedResidues.get(j), index + 1);
+                            for (int j = 0; j < modRes.length; j++) {
+                                if (modRes[j] > 0) {
+                                    modifications[j] += "<" + "M" + modRes[j] +"*" + ">";
                                 }
                             }
                         }
@@ -1587,46 +1583,40 @@ public class XTandemViewer extends JFrame {
                         String nTerminal = "";
                         String cTerminal = "";
 
-                        ArrayList<Modification> fixedModList = allFixMods.get(domain.getSpectrumNumber());
-                        ArrayList<Modification> varModList = allVarMods.get(domain.getSpectrumNumber());
+                        ArrayList<Modification> fixedModList = allFixMods.get(domain.getDomainID());
+                        ArrayList<Modification> varModList = allVarMods.get(domain.getDomainID());
 
                         // Handle fixed modifications
-                        if (fixedModList != null) {
-                            for (int i = 0; i < fixedModList.size(); i++) {
-                                FixedModification fixMod = (FixedModification) fixedModList.get(i);
-                                Vector<String> modifiedResidues = new Vector<String>();
-                                if (domain.getDomainID().equals(fixMod.getDomainID())) {
-                                    modifiedResidues.add(fixMod.getModifiedResidue());
-                                }
-                                for (int j = 0; j < modifiedResidues.size(); j++) {
+                    if (fixedModList != null) {
+                        for (int i = 0; i < fixedModList.size(); i++) {
+                            FixedModification fixMod = (FixedModification) fixedModList.get(i);
+                            int[] modRes = new int[domain.getDomainSequence().length()];
+                            int modIndex = Integer.parseInt(fixMod.getLocation()) - domain.getDomainStart();
+                            modRes[modIndex] = fixMod.getNumber();
 
-                                    int index = sequence.indexOf(modifiedResidues.get(j));
-                                    while (index != -1) {
-                                        modifications[index] += "<" + "M*" + ">";
-
-                                        index = sequence.indexOf(modifiedResidues.get(j), index + 1);
-                                    }
+                            for (int j = 0; j < modRes.length; j++) {
+                                if (modRes[j] > 0) {
+                                    modifications[j] += "<" + "M" + modRes[j] +"*" + ">";
                                 }
                             }
                         }
-                        if (varModList != null) {
-                            for (int i = 0; i < varModList.size(); i++) {
-                                VariableModification varMod = (VariableModification) varModList.get(i);
-                                Vector<String> modifiedResidues = new Vector<String>();
-                                if (domain.getDomainID().equals(varMod.getDomainID())) {
-                                    modifiedResidues.add(varMod.getModifiedResidue());
-                                }
-                                for (int j = 0; j < modifiedResidues.size(); j++) {
+                    }
+                    // Handle variable modifications
+                    if (varModList != null) {
+                        for (int i = 0; i < varModList.size(); i++) {
+                            VariableModification varMod = (VariableModification) varModList.get(i);
+                            int[] modRes = new int[domain.getDomainSequence().length()];
 
-                                    int index = sequence.indexOf(modifiedResidues.get(j));
-                                    while (index != -1) {
-                                        modifications[index] += "<" + "M*" + ">";
+                            int modIndex = Integer.parseInt(varMod.getLocation()) - domain.getDomainStart();
+                            modRes[modIndex] = varMod.getNumber();
 
-                                        index = sequence.indexOf(modifiedResidues.get(j), index + 1);
-                                    }
+                            for (int j = 0; j < modRes.length; j++) {
+                                if (modRes[j] > 0) {
+                                    modifications[j] += "<" + "M" + modRes[j] +"*" + ">";
                                 }
                             }
                         }
+                    }
 
                         // Cycle through all the modifications and extract the modification type if possible
                         for (int i = 0; i < modifications.length; i++) {
