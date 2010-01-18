@@ -39,7 +39,7 @@ public class XTandemViewer extends JFrame {
      */
     private static boolean useErrorLog = true;
     public final static String APPTITLE = "X!Tandem Viewer";
-    public final static String VERSION = "1.1.1";
+    public final static String VERSION = "1.2";
     private String lastSelectedFolder = "user.home";
     private SpectrumPanel spectrumPanel;
     private String iXTandemFileString;
