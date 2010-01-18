@@ -482,9 +482,9 @@ public class XTandemViewer extends JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Identifications", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
 
-        modificationDetailsJLabel.setFont(modificationDetailsJLabel.getFont().deriveFont((modificationDetailsJLabel.getFont().getStyle() | java.awt.Font.ITALIC)));
+        modificationDetailsJLabel.setFont(modificationDetailsJLabel.getFont().deriveFont((modificationDetailsJLabel.getFont().getStyle() | java.awt.Font.PLAIN)));
 
-        jLabel1.setFont(jLabel1.getFont().deriveFont((jLabel1.getFont().getStyle() | java.awt.Font.ITALIC)));
+        jLabel1.setFont(jLabel1.getFont().deriveFont((jLabel1.getFont().getStyle() | java.awt.Font.PLAIN)));
         jLabel1.setText("Legend:   ");
 
         identificationsTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -1168,13 +1168,17 @@ public class XTandemViewer extends JFrame {
                         if (!modifications[i].equalsIgnoreCase("")) {
                             String[] residues = modifications[i].split(">");
                             for (int j = 0; j < residues.length; j++) {
-
                                 String currentMod = residues[j] + ">";
+                                int nameIndex = 0;
+                                if (currentMod.length() > 0){
+                                    nameIndex = (Integer.parseInt(currentMod.substring(2,3)) - 1);
+                                }
+
                                 if (modificationDetails.lastIndexOf(currentMod) == -1) {
                                     if (fixedModList.size() > 0) {
-                                        modificationDetails += currentMod + " " + fixedModList.get(j).getName() + ", ";
+                                        modificationDetails += currentMod + " " + fixedModList.get(nameIndex).getName() + ", ";
                                     } else if (varModList.size() > 0) {
-                                        modificationDetails += currentMod + " " + varModList.get(j).getName() + ", ";
+                                        modificationDetails += currentMod + " " + varModList.get(nameIndex).getName() + ", ";                                       
                                     }
 
                                     modifiedSequence += currentMod;

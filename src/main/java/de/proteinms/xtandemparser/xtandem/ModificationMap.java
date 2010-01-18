@@ -65,7 +65,7 @@ public class ModificationMap implements Serializable {
 
 
                         // Get the specific parameters for the modification
-                        String modName = rawModMap.get("name" + "_s" + i + "_p" + j + "_m" + m_counter).toString();
+                        String modName = rawModMap.get("name" + "_s" + i + "_p" + j + "_m" + m_counter).toString();                        
                         double modMass = Double.parseDouble(rawModMap.get("modified" + "_s" + i + "_p" + j + "_m" + m_counter).toString());
                         String modLocation = rawModMap.get("at" + "_s" + i + "_p" + j + "_m" + m_counter).toString();
                                               
