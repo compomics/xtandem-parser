@@ -36,9 +36,9 @@ public interface Modification {
     boolean isFixed();
 
     /**
-     * The method returns the domain id as identification for the modification.
+     * The method returns the number of the modification.
      *
-     * @return String
+     * @return int
      */
-    String getDomainID();
+    int getNumber();
 }
