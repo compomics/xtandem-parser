@@ -1,6 +1,6 @@
 package de.proteinms.xtandemparser.viewer;
 
-import java.awt.Cursor;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 
@@ -30,7 +30,8 @@ public class HelpFrame extends JFrame {
      * @param aUrl
      */
     public HelpFrame(JFrame parent, URL aUrl) {
-
+        // Sets icon image
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icons/xtandemviewer.gif")));
         setTitle(XTandemViewer.APPTITLE + " --- " + "Help");
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         editorPane = new JEditorPane();

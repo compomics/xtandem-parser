@@ -130,7 +130,7 @@ public class FileSelector extends JFrame {
         lowerPanel.add(cancelBtn);
         mainPanel.add(upperPanel, BorderLayout.NORTH);
 
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
         centerPanel = new JPanel();
         mainPanel.add(centerPanel, BorderLayout.CENTER);
         mainPanel.add(lowerPanel, BorderLayout.SOUTH);

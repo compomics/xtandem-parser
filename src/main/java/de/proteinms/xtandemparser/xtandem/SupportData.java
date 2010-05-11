@@ -425,7 +425,9 @@ public class SupportData implements Serializable {
         temp = aNumberString.split(" ");
 
         for (String string : temp) {
-            NumberList.add(Integer.parseInt((string)));
+            if(string.length()>0){
+                NumberList.add(Integer.parseInt((string)));
+            }            
         }
         return NumberList;
     }

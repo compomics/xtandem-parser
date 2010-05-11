@@ -37,7 +37,8 @@ public class XTandemViewer extends JFrame {
      * If set to true, all print outs (both standard and error) will be sent to
      * the ErrorLog.txt file in the Properties folder.
      */
-    private static boolean useErrorLog = true;
+    // TODO: remove this
+    private static boolean useErrorLog = false;
     public final static String APPTITLE = "X!Tandem Viewer";
     public final static String VERSION = "1.2";
     private String lastSelectedFolder = "user.home";
@@ -81,7 +82,7 @@ public class XTandemViewer extends JFrame {
                 path = path + "/Properties/ErrorLog.txt";
                 path = path.replace("%20", " ");
 
-                File file = new File(path);
+                File file = new File(path);    
                 System.setOut(new java.io.PrintStream(new FileOutputStream(file, true)));
                 System.setErr(new java.io.PrintStream(new FileOutputStream(file, true)));
 

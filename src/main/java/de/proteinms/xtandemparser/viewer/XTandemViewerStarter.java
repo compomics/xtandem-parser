@@ -84,7 +84,7 @@ public class XTandemViewerStarter {
                 ex.printStackTrace();
             }
         } else {
-            options = "-Xms128M -Xmx768M";
+            options = "-Xms256M -Xmx1024M";
         }
 
         File file = new File(path);

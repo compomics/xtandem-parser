@@ -3,8 +3,11 @@ package de.proteinms.xtandemparser.xtandem;
 import de.proteinms.xtandemparser.interfaces.Modification;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.StringTokenizer;
+import java.util.Map;
 
 /**
  * In this class the fixed and variable modifications are sorted out
@@ -28,6 +31,11 @@ public class ModificationMap implements Serializable {
     private PeptideMap iPeptideMap;
 
     /**
+     * InputParams object
+     */
+    private InputParams iInputParams;
+
+    /**
      * The constructor builds the fixed and variable modification maps from the given raw mod map and the input parameters.
      *
      * @param aRawModMap The raw modification map from the parser
@@ -36,19 +44,19 @@ public class ModificationMap implements Serializable {
      * @param aNumberOfSpectra The total number of spectra
      */
     public ModificationMap(HashMap aRawModMap, PeptideMap aPeptideMap, InputParams aInputParams, int aNumberOfSpectra) {
-        buildModificationMaps(aRawModMap, aPeptideMap, aInputParams, aNumberOfSpectra);
-        iPeptideMap = aPeptideMap;
+        iInputParams = aInputParams;
+        buildModificationMaps(aRawModMap, aPeptideMap, aNumberOfSpectra);
+        iPeptideMap = aPeptideMap;        
     }
 
     /**
      * This method checks for fixed or variable modifications and builds the maps.
      *
      * @param rawModMap The raw modification map from the parser
-     * @param peptideMap The peptide map
-     * @param inputParams The input parameters from the parser
+     * @param peptideMap The peptide map 
      * @param numberOfSpectra The total number of spectra
      */
-    private void buildModificationMaps(HashMap rawModMap, PeptideMap peptideMap, InputParams inputParams, int numberOfSpectra) {
+    private void buildModificationMaps(HashMap rawModMap, PeptideMap peptideMap, int numberOfSpectra) {
 
         // Initialize the modification hash maps
         iFixedModificationMap = new HashMap<String, Modification>();
@@ -74,16 +82,26 @@ public class ModificationMap implements Serializable {
 
                         // Get a specific id for the modification (domainID)_m(modifcation#)
                         String modID = (domainID + "_m" + m_counter).toString();
-                        
+
                         // Check for fixed modification
-                        if (inputParams.getResidueModMass().equals(modName)) {
+                        if (isFixedModificationInput(modMass)) {
                             // Create an instance of a fixed modification.
                             FixedModification fixedMod = new FixedModification(modName, modMass, modLocation, m_counter);
 
                             // Put the modification into the map, value is the mod id.
                             iFixedModificationMap.put(modID, fixedMod);
-                        } else {
+
+                        } else if(isVariableModificationInput(modMass)){
+
                             // The rest will be assumed to be variable modifications.
+                            VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter);
+
+                            // Put the modification into the map, value is the mod id.
+                            iVarModificationMap.put(modID, varMod);
+
+                        } else {
+                           
+                             // The rest will be assumed to be variable modifications.
                             VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter);
 
                             // Put the modification into the map, value is the mod id.
@@ -94,6 +112,46 @@ public class ModificationMap implements Serializable {
                 }
             }
         }
+    }
+
+    /**
+     * Checks if a given modification mass is given in the fixed modification input parameter section:
+     * --> label="residue, modification mass">
+     * @param aModMass
+     * @return boolean
+     */
+    private boolean isFixedModificationInput(double aModMass){
+            BigDecimal modMass = new BigDecimal(aModMass);
+            modMass = modMass.setScale(3,BigDecimal.ROUND_HALF_UP);            
+            String modificationMasses = iInputParams.getResidueModMass();
+            StringTokenizer tokenizer = new StringTokenizer(modificationMasses, ",");
+            while (tokenizer.hasMoreTokens()){
+                String[] tokens = tokenizer.nextToken().split("@");
+                BigDecimal inputMass = new BigDecimal(new Double(tokens[0]));
+                inputMass = inputMass.setScale(3,BigDecimal.ROUND_HALF_UP);                
+                if (modMass.equals(inputMass)) return true;
+            }
+        return false;
+    }
+
+    /**
+     * Checks if a given modification mass is given in the variable modification input parameter section:
+     * --> label="residue, potential modification mass">
+     * @param aModMass
+     * @return boolean
+     */
+    private boolean isVariableModificationInput(double aModMass){
+            BigDecimal modMass = new BigDecimal(aModMass);
+            modMass = modMass.setScale(3,BigDecimal.ROUND_HALF_UP);
+            String modificationMasses = iInputParams.getResiduePotModMass();
+            StringTokenizer tokenizer = new StringTokenizer(modificationMasses, ",");
+            while (tokenizer.hasMoreTokens()){
+                String[] tokens = tokenizer.nextToken().split("@");
+                BigDecimal inputMass = new BigDecimal(new Double(tokens[0]));
+                inputMass = inputMass.setScale(3,BigDecimal.ROUND_HALF_UP);               
+                if (modMass.equals(inputMass)) return true;
+            }
+        return false;
     }
 
     /**
@@ -114,6 +172,30 @@ public class ModificationMap implements Serializable {
         return modificationList;
     }
 
+    /**
+     * Returns an arrayList of all the fixed modifications in the file.
+     * @return fixedModList
+     */
+    public ArrayList<Modification> getAllFixedModifications(){
+        ArrayList<Modification> fixedModList = new ArrayList<Modification>();
+        for(Map.Entry<String, Modification> e : iFixedModificationMap.entrySet()){
+            fixedModList.add(e.getValue());
+        }
+        return fixedModList;
+    }
+
+      /**
+     * Returns an arrayList of all the variable modifications in the file.
+     * @return varModList ArrayList<Modification>
+     */
+    public ArrayList<Modification> getAllVariableModifications(){
+        ArrayList<Modification> varModList = new ArrayList<Modification>();
+        for(Map.Entry<String, Modification> e : iVarModificationMap.entrySet()){
+            varModList.add(e.getValue());
+        }
+        return varModList;
+    }
+    
     /**
      * Returns the variable modifications as list.
      *
