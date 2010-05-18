@@ -80,7 +80,7 @@ public class ProteinMap implements Serializable {
      * @return iProtein Protein
      */
     public Protein getProteinWithPeptideID(String aPeptideID) {
-        String protID = aPeptideID.substring(0, aPeptideID.length()-2);
+        String protID = aPeptideID.substring(0, aPeptideID.lastIndexOf('.'));
         return this.getProtein(protID);
 
     }

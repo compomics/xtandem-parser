@@ -2,19 +2,20 @@ package main.java;
 
 import de.proteinms.xtandemparser.xtandem.*;
 import de.proteinms.xtandemparser.interfaces.Modification;
-import org.junit.Test;
-import static org.junit.Assert.fail;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import static junit.framework.Assert.fail;
 import org.xml.sax.SAXException;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class XTandemFileTest {
+public class XTandemFileTest extends TestCase {
 
     XTandemFile xTandemFile;
     public XTandemFileTest(){
         try {
-            xTandemFile = new XTandemFile("C:/Users/User/IntelliJ_workspace/XTandem-Parser/orbitrap001756.xml");
+            xTandemFile = new XTandemFile("testFiles/orbitrap003956.xml");
             //xTandemFile = new XTandemFile("C:/Users/User/IntelliJ_workspace/XTandem-Parser/orbitrap001888.xml");
 
         } catch (SAXException saxException) {
@@ -25,17 +26,16 @@ public class XTandemFileTest {
     /**
      * Test the support data.
      */
-    @Test
 	public void testSupportData() {
 		try {
-		xTandemFile.getSupportData(1);
+		SupportData supportData =  xTandemFile.getSupportData(962);
+        String spectrumName = supportData.getFragIonSpectrumDescription();
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
 	}
 
-    @Test
     public void testFixedModificationMap() {
         try {
             ModificationMap modMap = xTandemFile.getModificationMap();
@@ -53,7 +53,6 @@ public class XTandemFileTest {
         }
     }
 
-    @Test
     public void testVariableModificationMap() {
         try {
             ModificationMap modMap = xTandemFile.getModificationMap();
@@ -72,7 +71,6 @@ public class XTandemFileTest {
         }
     }  
 
-    @Test
     public void testInputParamsModifications() {
         try {
             InputParams inputParams = xTandemFile.getInputParameters();            

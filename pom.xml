@@ -160,6 +160,13 @@
 
   <!-- Dependencies -->
     <dependencies>
+        <!-- This project depends on the junit JAR file.
+          -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+        </dependency>
         <dependency>
             <groupId>com.jgoodies</groupId>
             <artifactId>looks</artifactId>
@@ -168,7 +175,7 @@
         <dependency>
             <groupId>lennart</groupId>
             <artifactId>utilities</artifactId>
-            <version>2.9.9</version>
+            <version>3.0</version>
         </dependency>
         <dependency>
             <groupId>org.swinglabs</groupId>
@@ -179,6 +186,16 @@
             <groupId>org.swinglabs</groupId>
             <artifactId>swingx</artifactId>
             <version>0.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
         </dependency>
     </dependencies>
 </project>
