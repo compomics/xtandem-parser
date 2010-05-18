@@ -85,9 +85,9 @@ public class FragmentIon implements Ion {
      * if it's a match using a specific mass error tolerance and calculating the theoretical/
      * experimental mass error.
      *
-     * @param aPeaks
-     * @param aMassError
-     * @return
+     * @param aPeaks The mass peak array
+     * @param aMassError The mass error 
+     * @return matchFlag boolean
      */
     public boolean isMatch(Peak[] aPeaks, double aMassError) {
 
