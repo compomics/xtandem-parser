@@ -58,6 +58,14 @@ public interface Ion {
      * This int is the identifier for a z++ ion.
      */
     public final static int Z_DOUBLE_ION = 11;
+    /**
+     * This int is the identifier for a b-h20 ion.
+     */
+    public final static int B_H20_ION = 12;
+    /**
+     * This int is the identifier for a b-nh3 ion.
+     */
+    public final static int B_NH3_ION = 13;
 
     /**
      * This method checks whether the ion matched with a given set of peaks

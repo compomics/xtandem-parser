@@ -186,6 +186,8 @@ public class XTandemFile implements Serializable {
         FragmentIon[] aDoubleIons = digester.getADoubleIons();
         FragmentIon[] bIons = digester.getBIons();
         FragmentIon[] bDoubleIons = digester.getBDoubleIons();
+        FragmentIon[] bH20Ions = digester.getBH2Oions();
+        FragmentIon[] bNH3Ions = digester.getBNH3ions();
         FragmentIon[] cIons = digester.getCIons();
         FragmentIon[] cDoubleIons = digester.getCDoubleIons();
         FragmentIon[] xIons = digester.getXIons();
@@ -291,6 +293,21 @@ public class XTandemFile implements Serializable {
             matchDoubleZIons[i] = matchedZDoubleIons.get(i);
         }
 
+        // Match the b-H20 ions     
+        Vector<FragmentIon> matchedBH20Ions = digester.getMatchedIons(bH20Ions, peaks);
+
+        FragmentIon[] matchH20BIons = new FragmentIon[matchedBH20Ions.size()];
+        for (int i = 0; i < matchedBH20Ions.size(); i++) {
+            matchH20BIons[i] = matchedBH20Ions.get(i);
+        }
+
+        // Match the b-NH§ ions
+        Vector<FragmentIon> matchedBNH3Ions = digester.getMatchedIons(bNH3Ions, peaks);
+        FragmentIon[] matchNH3BIons = new FragmentIon[matchedBNH3Ions.size()];
+        for (int i = 0; i < matchedBNH3Ions.size(); i++) {
+            matchNH3BIons[i] = matchedBNH3Ions.get(i);
+        }
+
         // Add the matched ions to the vector
         fragIons.add(matchBIons);
         fragIons.add(matchYIons);
@@ -304,6 +321,8 @@ public class XTandemFile implements Serializable {
         fragIons.add(matchDoubleXIons);
         fragIons.add(matchDoubleCIons);
         fragIons.add(matchDoubleZIons);
+        fragIons.add(matchH20BIons);
+        fragIons.add(matchNH3BIons);
         return fragIons;
     }
 

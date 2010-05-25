@@ -64,6 +64,14 @@ public class InSilicoDigester {
      */
     private FragmentIon[] iBDoubleIons;
     /**
+     * The b-H20 ions
+     */
+    private FragmentIon[] iBH20Ions;
+        /**
+     * The b-NH3 ions
+     */
+    private FragmentIon[] iBNH3Ions;
+    /**
      * The c++ ions.
      */
     private FragmentIon[] iCDoubleIons;
@@ -79,6 +87,19 @@ public class InSilicoDigester {
      * The z++ ions.
      */
     private FragmentIon[] iZDoubleIons;
+
+    private int start_A_H20 = -1;
+    private int start_B_H20 = -1;
+    private int start_C_H20 = -1;
+    private int start_X_H20 = -1;
+    private int start_Y_H20 = -1;
+    private int start_Z_H20 = -1;
+    private int start_A_NH3 = -1;
+    private int start_B_NH3 = -1;
+    private int start_C_NH3 = -1;
+    private int start_X_NH3 = -1;
+    private int start_Y_NH3 = -1;
+    private int start_Z_NH3 = -1;
     /**
      * The fragment mass error tolerance.
      */
@@ -115,26 +136,26 @@ public class InSilicoDigester {
             mass = 0.0;
 
             // Add the fixed modifications masses (N and C term included)
-            ArrayList<Modification> fixModList = iModMap.getFixedModifications(iPeptide.getDomainID());
-            if (fixModList.size() > 0) {
-                for (Modification fixMod : fixModList) {
-                    int modIndex = (Integer.parseInt(fixMod.getLocation()) - iPeptide.getDomainStart());
-                    if (modIndex == i) {
-                        mass += fixMod.getMass();
-                    }
-                }
-            }
-
-            // Add the the variable modification masses (N and C term included)
-            ArrayList<Modification> varModList = iModMap.getVariableModifications(iPeptide.getDomainID());
-            if (varModList.size() > 0) {
-                for (Modification varMod : varModList) {
-                    int modIndex = (Integer.parseInt(varMod.getLocation()) - iPeptide.getDomainStart());
-                    if (modIndex == i) {
-                        mass += varMod.getMass();
-                    }
-                }
-            }
+//            ArrayList<Modification> fixModList = iModMap.getFixedModifications(iPeptide.getDomainID());
+//            if (fixModList.size() > 0) {
+//                for (Modification fixMod : fixModList) {
+//                    int modIndex = (Integer.parseInt(fixMod.getLocation()) - iPeptide.getDomainStart());
+//                    if (modIndex == i) {
+//                        mass += fixMod.getMass();
+//                    }
+//                }
+//            }
+//
+//            // Add the the variable modification masses (N and C term included)
+//            ArrayList<Modification> varModList = iModMap.getVariableModifications(iPeptide.getDomainID());
+//            if (varModList.size() > 0) {
+//                for (Modification varMod : varModList) {
+//                    int modIndex = (Integer.parseInt(varMod.getLocation()) - iPeptide.getDomainStart());
+//                    if (modIndex == i) {
+//                        mass += varMod.getMass();
+//                    }
+//                }
+//            }
 
             // For each amino acid add the specific mass
             String aa = String.valueOf(iSequence.charAt(i));
@@ -193,11 +214,16 @@ public class InSilicoDigester {
      */
     public Vector getMatchedIons(FragmentIon[] theoFragIons, Peak[] aPeaks) {
         Vector matchedIons = new Vector();
+
         for (FragmentIon fragIon : theoFragIons) {
-            if (fragIon.isMatch(aPeaks, iFragmentMassError)) {
-                matchedIons.add(fragIon);
+            if (fragIon != null) {
+                if (fragIon.isMatch(aPeaks, iFragmentMassError)) {
+                    matchedIons.add(fragIon);
+                }
             }
         }
+
+
         return matchedIons;
     }
 
@@ -222,6 +248,78 @@ public class InSilicoDigester {
                     FragmentIon.B_DOUBLE_ION, (i + 1), "b++", iFragmentMassError);
         }
         return iBDoubleIons;
+    }
+
+    /**
+     * Returns an array of the b-H20 ions.
+     *
+     * @return iBH20Ions
+     */
+    public FragmentIon[] getBH2Oions() {
+        int start = getStartBH20();
+        iBH20Ions = new FragmentIon[iBIons.length];
+        int count = 0;
+        for (int i = start; i < iBIons.length; i++) {
+            iBH20Ions[count] = new FragmentIon((iBIons[i].getMZ() - 18.010565), FragmentIon.B_H20_ION, (i + 1), "b-H2O", iFragmentMassError);
+            count++;
+        }
+        return iBH20Ions;
+    }
+
+     /**
+     * Returns an array of the b-NH3 ions.
+     *
+     * @return iBNH3Ions
+     */
+     public FragmentIon[] getBNH3ions() {
+          int start = getNH3StartB();
+          iBNH3Ions = new FragmentIon[iBIons.length - start];
+          int count = 0;
+          for (int i = start; i < iBIons.length; i++) {
+            iBNH3Ions[count] = new FragmentIon((iBIons[i].getMZ() - 17.026549), FragmentIon.B_NH3_ION, (i + 1), "b-NH3", iFragmentMassError);
+            count++;
+        }
+        return iBNH3Ions;
+     }   
+
+    private int getStartBH20() {
+       if (start_B_H20 == -1) {
+            int start = iSequence.length() - 1;
+            if (iSequence.indexOf('S') != -1 && iSequence.indexOf('S') < start) {
+                start = iSequence.indexOf('S');
+            }
+            if (iSequence.indexOf('T') != -1 && iSequence.indexOf('T') < start) {
+                start = iSequence.indexOf('T');
+            }
+            if (iSequence.indexOf('D') != -1 && iSequence.indexOf('D') < start) {
+                 start = iSequence.indexOf('D');
+             }
+            if (iSequence.indexOf('E') != -1 && iSequence.indexOf('E') < start) {
+                 start = iSequence.indexOf('E');
+             }
+             start_B_H20 = start;
+     }
+        return start_B_H20;
+    }
+
+    private int getNH3StartB() {
+       if (start_B_NH3 == -1) {
+           int start = iSequence.length() - 1;
+           if (iSequence.indexOf('R') != -1 && iSequence.indexOf('R') < start) {
+               start = iSequence.indexOf('R');
+          }
+             if (iSequence.indexOf('K') != -1 && iSequence.indexOf('K') < start) {
+              start = iSequence.indexOf('K');
+           }
+            if (iSequence.indexOf('N') != -1 && iSequence.indexOf('N') < start) {
+               start = iSequence.indexOf('N');
+             }
+           if (iSequence.indexOf('Q') != -1 && iSequence.indexOf('Q') < start) {
+               start = iSequence.indexOf('Q');
+             }
+          start_B_NH3 = start;
+      }
+        return start_B_NH3;
     }
 
     /**
