@@ -110,4 +110,11 @@ public interface Ion {
      * @return double
      */
     public double getScore();
+
+    /**
+     * returns the iID of the ion, ie the type according to a static identifier
+     *
+     * @return int
+     */
+    public int getID();
 }
