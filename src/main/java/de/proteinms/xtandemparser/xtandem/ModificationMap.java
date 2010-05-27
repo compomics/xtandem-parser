@@ -68,44 +68,57 @@ public class ModificationMap implements Serializable {
                 for (int j = 1; j <= peptideMap.getNumberOfPeptides(i); j++) {
                     // The counter for the peptides
                     int m_counter = 1;
+                    int m_counter_variable = 1;
+                    int m_counter_fixed = 1;
 
                     while (rawModMap.get("name" + "_s" + i + "_p" + j + "_m" + m_counter) != null) {
 
 
                         // Get the specific parameters for the modification
-                        String modName = rawModMap.get("name" + "_s" + i + "_p" + j + "_m" + m_counter).toString();                        
+                        String modName = rawModMap.get("name" + "_s" + i + "_p" + j + "_m" + m_counter).toString();
                         double modMass = Double.parseDouble(rawModMap.get("modified" + "_s" + i + "_p" + j + "_m" + m_counter).toString());
                         String modLocation = rawModMap.get("at" + "_s" + i + "_p" + j + "_m" + m_counter).toString();
                                               
                         // Get the domainID
                         String domainID = peptideMap.getPeptideByIndex(i, j).getDomainID();
 
-                        // Get a specific id for the modification (domainID)_m(modifcation#)
-                        String modID = (domainID + "_m" + m_counter).toString();
 
                         // Check for fixed modification
                         if (isFixedModificationInput(modMass)) {
+
+                        // Get a specific id for the modification (domainID)_m(modifcation#)
+                        String modID = (domainID + "_m" + m_counter_fixed).toString();
+
                             // Create an instance of a fixed modification.
                             FixedModification fixedMod = new FixedModification(modName, modMass, modLocation, m_counter);
 
                             // Put the modification into the map, value is the mod id.
                             iFixedModificationMap.put(modID, fixedMod);
+                            m_counter_fixed++;
 
                         } else if(isVariableModificationInput(modMass)){
+
+                        // Get a specific id for the modification (domainID)_m(modifcation#)
+                        String modID = (domainID + "_m" + m_counter_variable).toString();
 
                             // The rest will be assumed to be variable modifications.
                             VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter);
 
                             // Put the modification into the map, value is the mod id.
                             iVarModificationMap.put(modID, varMod);
+                            m_counter_variable++;
 
                         } else {
-                           
+
+                        // Get a specific id for the modification (domainID)_m(modifcation#)
+                        String modID = (domainID + "_m" + m_counter_variable).toString();
+
                              // The rest will be assumed to be variable modifications.
                             VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter);
 
                             // Put the modification into the map, value is the mod id.
                             iVarModificationMap.put(modID, varMod);
+                            m_counter_variable++;
                         }
                         m_counter++;
                     }
@@ -122,13 +135,13 @@ public class ModificationMap implements Serializable {
      */
     private boolean isFixedModificationInput(double aModMass){
             BigDecimal modMass = new BigDecimal(aModMass);
-            modMass = modMass.setScale(3,BigDecimal.ROUND_HALF_UP);            
+            modMass = modMass.setScale(2,BigDecimal.ROUND_HALF_UP);
             String modificationMasses = iInputParams.getResidueModMass();
             StringTokenizer tokenizer = new StringTokenizer(modificationMasses, ",");
             while (tokenizer.hasMoreTokens()){
                 String[] tokens = tokenizer.nextToken().split("@");
                 BigDecimal inputMass = new BigDecimal(new Double(tokens[0]));
-                inputMass = inputMass.setScale(3,BigDecimal.ROUND_HALF_UP);                
+                inputMass = inputMass.setScale(2,BigDecimal.ROUND_HALF_UP);                
                 if (modMass.equals(inputMass)) return true;
             }
         return false;
