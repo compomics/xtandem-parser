@@ -15,57 +15,61 @@ public interface Ion {
      */
     public final static int A_ION = 0;
     /**
+     * This int is the identifier for an a* ion.
+     */
+    public final static int ANH3_ION = 1;
+    /**
+     * This int is the identifier for an a° ion.
+     */
+    public final static int AH2O_ION = 2;
+    /**
      * This int is the identifier for a b ion.
      */
-    public final static int B_ION = 1;
+    public final static int B_ION = 3;
+    /**
+     * This int is the identifier for a b* ion.
+     */
+    public final static int BNH3_ION = 4;
+    /**
+     * This int is the identifier for a b° ion.
+     */
+    public final static int BH2O_ION = 5;
     /**
      * This int is the identifier for a c ion.
      */
-    public final static int C_ION = 2;
+    public final static int C_ION = 6;
     /**
      * This int is the identifier for a x ion.
      */
-    public final static int X_ION = 3;
+    public final static int X_ION = 7;
     /**
      * This int is the identifier for a y ion.
      */
-    public final static int Y_ION = 4;
+    public final static int Y_ION = 8;
+    /**
+     * This int is the identifier for a y* ion.
+     */
+    public final static int YNH3_ION = 9;
+    /**
+     * This int is the identifier for a y° ion.
+     */
+    public final static int YH2O_ION = 10;
     /**
      * This int is the identifier for a z ion.
      */
-    public final static int Z_ION = 5;
-    /**
-     * This int is the identifier for an a++ ion.
+    public final static int Z_ION = 11;
+     /**
+     * This int is the identifier for an MH ion.
      */
-    public final static int A_DOUBLE_ION = 6;
-    /**
-     * This int is the identifier for a b++ ion.
+    public final static int MH_ION = 12;
+     /**
+     * This int is the identifier for an MH-NH3 ion.
      */
-    public final static int B_DOUBLE_ION = 7;
-    /**
-     * This int is the identifier for a c++ ion.
+    public final static int MHNH3_ION = 13;
+     /**
+     * This int is the identifier for an MH-H2O ion.
      */
-    public final static int C_DOUBLE_ION = 8;
-    /**
-     * This int is the identifier for a x++ ion.
-     */
-    public final static int X_DOUBLE_ION = 9;
-    /**
-     * This int is the identifier for a y++ ion.
-     */
-    public final static int Y_DOUBLE_ION = 10;
-    /**
-     * This int is the identifier for a z++ ion.
-     */
-    public final static int Z_DOUBLE_ION = 11;
-    /**
-     * This int is the identifier for a b-h20 ion.
-     */
-    public final static int B_H20_ION = 12;
-    /**
-     * This int is the identifier for a b-nh3 ion.
-     */
-    public final static int B_NH3_ION = 13;
+    public final static int MHH2O_ION = 14;
 
     /**
      * This method checks whether the ion matched with a given set of peaks
@@ -91,11 +95,11 @@ public interface Ion {
     public double getIntensity();
 
     /**
-     * Returns the type.
+     * Returns the type of ion.
      *
-     * @return String
+     * @return int
      */
-    public String getType();
+    public int getType();
 
     /**
      * Returns the ion number.
@@ -110,11 +114,4 @@ public interface Ion {
      * @return double
      */
     public double getScore();
-
-    /**
-     * returns the iID of the ion, ie the type according to a static identifier
-     *
-     * @return int
-     */
-    public int getID();
 }

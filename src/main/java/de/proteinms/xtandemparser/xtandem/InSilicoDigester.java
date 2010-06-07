@@ -1,13 +1,12 @@
 package de.proteinms.xtandemparser.xtandem;
 
-import de.proteinms.xtandemparser.interfaces.Modification;
 import de.proteinms.xtandemparser.interfaces.Peak;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Vector;
 
 /**
- * This class is used to do a calculation for the theoretical masses of 
+ * This class is used to do a calculation for the theoretical masses of
  * a, b, c, x, y and z ions (plus double charged ones) and do the matching
  * of experimental and theoretical masses.
  *
@@ -36,9 +35,25 @@ public class InSilicoDigester {
      */
     private FragmentIon[] iAIons;
     /**
+     * The a* ions.
+     */
+    private FragmentIon[] iANH3Ions;
+    /**
+     * The a° ions.
+     */
+    private FragmentIon[] iAH2OIons;
+    /**
      * The b ions.
      */
     private FragmentIon[] iBIons;
+    /**
+     * The b* ions.
+     */
+    private FragmentIon[] iBNH3Ions;
+    /**
+     * The b° ions.
+     */
+    private FragmentIon[] iBH2OIons;
     /**
      * The c ions.
      */
@@ -52,73 +67,67 @@ public class InSilicoDigester {
      */
     private FragmentIon[] iYIons;
     /**
+     * The y* ions.
+     */
+    private FragmentIon[] iYNH3Ions;
+    /**
+     * The y° ions.
+     */
+    private FragmentIon[] iYH2OIons;
+    /**
      * The z ions.
      */
     private FragmentIon[] iZIons;
     /**
-     * The a++ ions.
+     * The MH ion.
      */
-    private FragmentIon[] iADoubleIons;
+    private FragmentIon[] iMH;
     /**
-     * The b++ ions.
+     * The MH-NH3 ion.
      */
-    private FragmentIon[] iBDoubleIons;
+    private FragmentIon[] iMHNH3;
     /**
-     * The b-H20 ions
+     * The MH-H2O ion.
      */
-    private FragmentIon[] iBH20Ions;
-        /**
-     * The b-NH3 ions
-     */
-    private FragmentIon[] iBNH3Ions;
-    /**
-     * The c++ ions.
-     */
-    private FragmentIon[] iCDoubleIons;
-    /**
-     * The x++ ions.
-     */
-    private FragmentIon[] iXDoubleIons;
-    /**
-     * The y++ ions.
-     */
-    private FragmentIon[] iYDoubleIons;
-    /**
-     * The z++ ions.
-     */
-    private FragmentIon[] iZDoubleIons;
-
-    private int start_A_H20 = -1;
-    private int start_B_H20 = -1;
-    private int start_C_H20 = -1;
-    private int start_X_H20 = -1;
-    private int start_Y_H20 = -1;
-    private int start_Z_H20 = -1;
-    private int start_A_NH3 = -1;
-    private int start_B_NH3 = -1;
-    private int start_C_NH3 = -1;
-    private int start_X_NH3 = -1;
-    private int start_Y_NH3 = -1;
-    private int start_Z_NH3 = -1;
+    private FragmentIon[] iMHH2O;
     /**
      * The fragment mass error tolerance.
      */
     private double iFragmentMassError;
+    /**
+     * The peptide charge
+     */
+    private int iPeptideCharge;
 
     /**
      * Constructor get a peptide object, the modification map, the input parameters and the masses map.
      *
      * @param aPeptide A peptide object which should be "in silico" digested.
-     * @param aModMap Modification map to know where have been modifications on the peptide.
-     * @param aMasses Masses map to know which amino acid has which mass.
+     * @param aModMap  Modification map to know where have been modifications on the peptide.
+     * @param aMasses  Masses map to know which amino acid has which mass.
      */
-    public InSilicoDigester(Peptide aPeptide, ModificationMap aModMap, HashMap aMasses) {
+    public InSilicoDigester(Peptide aPeptide, ModificationMap aModMap, HashMap aMasses, int aCharge) {
         iPeptide = aPeptide;
         iSequence = iPeptide.getDomainSequence();
         iModMap = aModMap;
         iMasses = aMasses;
-        iBIons = new FragmentIon[iSequence.length()];
-        iYIons = new FragmentIon[iSequence.length()];
+        iPeptideCharge = aCharge;
+        int length = iSequence.length() * (iPeptideCharge - 1);
+        iAIons = new FragmentIon[length];
+        iAH2OIons = new FragmentIon[length];
+        iANH3Ions = new FragmentIon[length];
+        iBIons = new FragmentIon[length];
+        iBH2OIons = new FragmentIon[length];
+        iBNH3Ions = new FragmentIon[length];
+        iCIons = new FragmentIon[length];
+        iXIons = new FragmentIon[length];
+        iYIons = new FragmentIon[length];
+        iYNH3Ions = new FragmentIon[length];
+        iYH2OIons = new FragmentIon[length];
+        iZIons = new FragmentIon[length];
+        iMH = new FragmentIon[iPeptideCharge];
+        iMHNH3 = new FragmentIon[iPeptideCharge];
+        iMHH2O = new FragmentIon[iPeptideCharge];
         iFragmentMassError = Parameters.FRAGMENTMASSERROR;
         calculateIons();
     }
@@ -168,54 +177,82 @@ public class InSilicoDigester {
     }
 
     /**
-     * This method calculated the theoretical masses of the b and y ions of the peptide.
+     * This method calculates the theoretical masses of the ions of the peptide.
      * The fragment ion are stored as objects, for example yIons[0] is the y1 ion.
      */
     private void calculateIons() {
         double[] peptideMasses = calculatePeptideMasses();
-        double hydrogenMass = iMasses.get("Hydrogen");
+        double hydrogenMass = Masses.Hydrogen;
+        double oxygenMass = Masses.Oxygen;
+        double nitrogenMass = Masses.Nitrogen;
+        double carbonMass = Masses.Carbon;
         double c_termMass = iMasses.get("C_term");
 
-        // Calculate the b and y ions
+        // Calculate ions masses for each charge
         int length = iSequence.length();
-        for (int i = 0; i < length; i++) {
-            double bMass = 0.0;
-            double yMass = 0.0;
+        if (iSequence.compareTo("LHYFNAR") == 0) {
+            int a = 0;
+        }
+        int cptb = 0;
+        int cpty = 0;
+        for (int charge = 1; charge <= iPeptideCharge; charge++) {
+            iMH[charge - 1] = new FragmentIon((iPeptide.getDomainMh() + (charge - 1) * hydrogenMass) / charge, FragmentIon.MH_ION, 0, charge, iFragmentMassError);
+            iMHH2O[charge - 1] = new FragmentIon((iPeptide.getDomainMh() - oxygenMass - 2 * hydrogenMass + (charge - 1) * hydrogenMass) / charge, FragmentIon.MHH2O_ION, 0, charge, iFragmentMassError);
+            iMHNH3[charge - 1] = new FragmentIon((iPeptide.getDomainMh() - nitrogenMass - 3 * hydrogenMass + (charge - 1) * hydrogenMass) / charge, FragmentIon.MHNH3_ION, 0, charge, iFragmentMassError);
+            if (charge < iPeptideCharge) {
+                for (int i = 0; i < length; i++) {
+                    double bMass = 0.0;
+                    double yMass = 0.0;
 
-            // Each peptide mass is added to the b ion mass
-            for (int j = 0; j <= i; j++) {
-                bMass += peptideMasses[j];
+                    // Each peptide mass is added to the b ion mass
+                    for (int j = 0; j <= i; j++) {
+                        bMass += peptideMasses[j];
+                    }
+
+                    // Create an instance for each fragment ion
+                    if (i > 0) {
+                        iAIons[cptb] = new FragmentIon((bMass - oxygenMass - carbonMass + charge * hydrogenMass) / charge, FragmentIon.A_ION, i + 1, charge, iFragmentMassError);
+                        iANH3Ions[cptb] = new FragmentIon((bMass - oxygenMass - carbonMass - nitrogenMass - 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.ANH3_ION, i + 1, charge, iFragmentMassError);
+                        iAH2OIons[cptb] = new FragmentIon((bMass - 2 * oxygenMass - carbonMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.AH2O_ION, i + 1, charge, iFragmentMassError);
+                        iBIons[cptb] = new FragmentIon((bMass + charge * hydrogenMass) / charge, FragmentIon.B_ION, i + 1, charge, iFragmentMassError);
+                        iBNH3Ions[cptb] = new FragmentIon((bMass - nitrogenMass - 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.BNH3_ION, i + 1, charge, iFragmentMassError);
+                        iBH2OIons[cptb] = new FragmentIon((bMass - oxygenMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.BH2O_ION, i + 1, charge, iFragmentMassError);
+                        iCIons[cptb] = new FragmentIon((bMass + nitrogenMass + 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.C_ION, i + 1, charge, iFragmentMassError);
+                        cptb++;
+                    }
+
+                    // Each peptide mass is added to the y ion mass, taking the reverse direction (from the C terminal end)
+                    for (int j = 0; j <= i; j++) {
+                        yMass += peptideMasses[(length - 1) - j];
+                    }
+                    // Add two extra hydrogen on the N terminal end and one hydroxyl at the C terminal end
+                    yMass = yMass + c_termMass + hydrogenMass;
+
+                    // Create an instance of the fragment y ion
+                    iXIons[cpty] = new FragmentIon((yMass + carbonMass + oxygenMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.X_ION, i + 1, charge, iFragmentMassError);
+                    iYIons[cpty] = new FragmentIon((yMass + charge * hydrogenMass) / charge, FragmentIon.Y_ION, i + 1, charge, iFragmentMassError);
+                    iYNH3Ions[cpty] = new FragmentIon((yMass - nitrogenMass - 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.YNH3_ION, i + 1, charge, iFragmentMassError);
+                    iYH2OIons[cpty] = new FragmentIon((yMass - 2 * hydrogenMass - oxygenMass + charge * hydrogenMass) / charge, FragmentIon.YH2O_ION, i + 1, charge, iFragmentMassError);
+                    iZIons[cpty] = new FragmentIon((yMass - nitrogenMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.Z_ION, i + 1, charge, iFragmentMassError);
+                    cpty++;
+                }
             }
-            // Add one extra hydrogen on the N terminal amino acid
-            bMass = bMass + hydrogenMass;
-
-            // Create an instance of the fragment b ion
-            iBIons[i] = new FragmentIon(bMass, FragmentIon.B_ION, i + 1, "b", iFragmentMassError);
-
-            // Each peptide mass is added to the y ion mass, taking the reverse direction (from the C terminal end)
-            for (int j = 0; j <= i; j++) {
-                yMass += peptideMasses[(length - 1) - j];
-            }
-            // Add two extra hydrogen on the N terminal end and one hydroxyl at the C terminal end
-            yMass = yMass + c_termMass + (2 * hydrogenMass);
-
-            // Create an instance of the fragment y ion
-            iYIons[i] = new FragmentIon(yMass, FragmentIon.Y_ION, i + 1, "y", iFragmentMassError);
         }
     }
 
     /**
-     * This method tries to match the theoretical masses of the ions with the 
+     * This method tries to match the theoretical masses of the ions with the
      * masses of the experimental peaks.
      *
-     * @param theoFragIons The theoretical fragment ions.
-     * @param aPeaks The experimental peaks.
+     * @param ionType The ion type.
+     * @param aPeaks  The experimental peaks.
      * @return matchedIons A Vector containing all the matched fragment ions.
      */
-    public Vector getMatchedIons(FragmentIon[] theoFragIons, Peak[] aPeaks) {
+    public Vector getMatchedIons(int ionType, Peak[] aPeaks) {
         Vector matchedIons = new Vector();
+        FragmentIon[] theoreticIons = getTheoreticIons(ionType);
 
-        for (FragmentIon fragIon : theoFragIons) {
+        for (FragmentIon fragIon : theoreticIons) {
             if (fragIon != null) {
                 if (fragIon.isMatch(aPeaks, iFragmentMassError)) {
                     matchedIons.add(fragIon);
@@ -227,233 +264,42 @@ public class InSilicoDigester {
         return matchedIons;
     }
 
-    /**
-     * Returns an array of the (successfully matched) b ions.
-     *
-     * @return iBions
+    /*
+     * Returns the corresponding array of theoretic ions.
      */
-    public FragmentIon[] getBIons() {
-        return iBIons;
-    }
-
-    /**
-     * Returns an array of the b++ ions: b ions plus H divided by 2
-     *
-     * @return iBDoubleIons 
-     */
-    public FragmentIon[] getBDoubleIons() {
-        iBDoubleIons = new FragmentIon[iBIons.length];
-        for (int i = 0; i < iBIons.length; i++) {
-            iBDoubleIons[i] = new FragmentIon(((iBIons[i].getMZ() + 1.007825) / 2),
-                    FragmentIon.B_DOUBLE_ION, (i + 1), "b++", iFragmentMassError);
+    private FragmentIon[] getTheoreticIons(int type) {
+        switch (type) {
+            case FragmentIon.A_ION:
+                return iAIons;
+            case FragmentIon.AH2O_ION:
+                return iAH2OIons;
+            case FragmentIon.ANH3_ION:
+                return iANH3Ions;
+            case FragmentIon.B_ION:
+                return iBIons;
+            case FragmentIon.BH2O_ION:
+                return iBH2OIons;
+            case FragmentIon.BNH3_ION:
+                return iBNH3Ions;
+            case FragmentIon.C_ION:
+                return iCIons;
+            case FragmentIon.X_ION:
+                return iXIons;
+            case FragmentIon.Y_ION:
+                return iYIons;
+            case FragmentIon.YH2O_ION:
+                return iYH2OIons;
+            case FragmentIon.YNH3_ION:
+                return iYNH3Ions;
+            case FragmentIon.Z_ION:
+                return iZIons;
+            case FragmentIon.MH_ION:
+                return iMH;
+            case FragmentIon.MHNH3_ION:
+                return iMHNH3;
+            case FragmentIon.MHH2O_ION:
+                return iMHH2O;
         }
-        return iBDoubleIons;
-    }
-
-    /**
-     * Returns an array of the b-H20 ions.
-     *
-     * @return iBH20Ions
-     */
-    public FragmentIon[] getBH2Oions() {
-        int start = getStartBH20();
-        iBH20Ions = new FragmentIon[iBIons.length];
-        int count = 0;
-        for (int i = start; i < iBIons.length; i++) {
-            iBH20Ions[count] = new FragmentIon((iBIons[i].getMZ() - 18.010565), FragmentIon.B_H20_ION, (i + 1), "b-H2O", iFragmentMassError);
-            count++;
-        }
-        return iBH20Ions;
-    }
-
-     /**
-     * Returns an array of the b-NH3 ions.
-     *
-     * @return iBNH3Ions
-     */
-     public FragmentIon[] getBNH3ions() {
-          int start = getNH3StartB();
-          iBNH3Ions = new FragmentIon[iBIons.length - start];
-          int count = 0;
-          for (int i = start; i < iBIons.length; i++) {
-            iBNH3Ions[count] = new FragmentIon((iBIons[i].getMZ() - 17.026549), FragmentIon.B_NH3_ION, (i + 1), "b-NH3", iFragmentMassError);
-            count++;
-        }
-        return iBNH3Ions;
-     }   
-
-    private int getStartBH20() {
-       if (start_B_H20 == -1) {
-            int start = iSequence.length() - 1;
-            if (iSequence.indexOf('S') != -1 && iSequence.indexOf('S') < start) {
-                start = iSequence.indexOf('S');
-            }
-            if (iSequence.indexOf('T') != -1 && iSequence.indexOf('T') < start) {
-                start = iSequence.indexOf('T');
-            }
-            if (iSequence.indexOf('D') != -1 && iSequence.indexOf('D') < start) {
-                 start = iSequence.indexOf('D');
-             }
-            if (iSequence.indexOf('E') != -1 && iSequence.indexOf('E') < start) {
-                 start = iSequence.indexOf('E');
-             }
-             start_B_H20 = start;
-     }
-        return start_B_H20;
-    }
-
-    private int getNH3StartB() {
-       if (start_B_NH3 == -1) {
-           int start = iSequence.length() - 1;
-           if (iSequence.indexOf('R') != -1 && iSequence.indexOf('R') < start) {
-               start = iSequence.indexOf('R');
-          }
-             if (iSequence.indexOf('K') != -1 && iSequence.indexOf('K') < start) {
-              start = iSequence.indexOf('K');
-           }
-            if (iSequence.indexOf('N') != -1 && iSequence.indexOf('N') < start) {
-               start = iSequence.indexOf('N');
-             }
-           if (iSequence.indexOf('Q') != -1 && iSequence.indexOf('Q') < start) {
-               start = iSequence.indexOf('Q');
-             }
-          start_B_NH3 = start;
-      }
-        return start_B_NH3;
-    }
-
-    /**
-     * Returns an array of the a ions: b ions minus CO and plus H2.
-     *
-     * @return iAIons 
-     */
-    public FragmentIon[] getAIons() {
-        iAIons = new FragmentIon[iBIons.length];
-        for (int i = 0; i < iBIons.length; i++) {
-            iAIons[i] = new FragmentIon((iBIons[i].getMZ() - 27.994915),
-                    FragmentIon.A_ION, (i + 1), "a", iFragmentMassError);
-        }
-        return iAIons;
-    }
-
-    /**
-     * Returns an array of the a++ ions: a ions plus H divided by 2
-     *
-     * @return iADoubleIons 
-     */
-    public FragmentIon[] getADoubleIons() {
-        iADoubleIons = new FragmentIon[iAIons.length];
-        for (int i = 0; i < iAIons.length; i++) {
-            iADoubleIons[i] = new FragmentIon(((iAIons[i].getMZ() + 1.007825) / 2),
-                    FragmentIon.A_DOUBLE_ION, (i + 1), "a++", iFragmentMassError);
-        }
-        return iADoubleIons;
-    }
-
-    /**
-     * Returns an array of the c ions: b ions plus NH3
-     *
-     * @return iCIons 
-     */
-    public FragmentIon[] getCIons() {
-        iCIons = new FragmentIon[iBIons.length];
-        for (int i = 0; i < iBIons.length; i++) {
-            iCIons[i] = new FragmentIon((iBIons[i].getMZ() + 17.026549),
-                    FragmentIon.C_ION, (i + 1), "c", iFragmentMassError);
-        }
-        return iCIons;
-    }
-
-    /**
-     * Returns an array of the c++ ions: c ions plus H divided by 2
-     *
-     * @return iCDoubleIons 
-     */
-    public FragmentIon[] getCDoubleIons() {
-        iCDoubleIons = new FragmentIon[iCIons.length];
-        for (int i = 0; i < iCIons.length; i++) {
-            iCDoubleIons[i] = new FragmentIon(((iCIons[i].getMZ() + 1.007825) / 2),
-                    FragmentIon.C_DOUBLE_ION, (i + 1), "c++", iFragmentMassError);
-        }
-        return iCDoubleIons;
-    }
-
-    /**
-     * Returns an array of the (successfully matched) y ions.
-     *
-     * @return iYIons
-     */
-    public FragmentIon[] getYIons() {
-        return iYIons;
-    }
-
-    /**
-     * Returns an array of the y++ ions: y ions plus H divided by 2
-     *
-     * @return iYDoubleIons 
-     */
-    public FragmentIon[] getYDoubleIons() {
-        iYDoubleIons = new FragmentIon[iYIons.length];
-        for (int i = 0; i < iYIons.length; i++) {
-            iYDoubleIons[i] = new FragmentIon(((iYIons[i].getMZ() + 1.007825) / 2),
-                    FragmentIon.Y_DOUBLE_ION, (i + 1), "y++", iFragmentMassError);
-        }
-        return iYDoubleIons;
-    }
-
-    /**
-     * Returns an array of the x ions: y ions plus CO and minus H2
-     *
-     * @return iXIons 
-     */
-    public FragmentIon[] getXIons() {
-        iXIons = new FragmentIon[iYIons.length];
-        for (int i = 0; i < iYIons.length; i++) {
-            iXIons[i] = new FragmentIon((iYIons[i].getMZ() + 25.979265),
-                    FragmentIon.X_ION, (i + 1), "x", iFragmentMassError);
-        }
-        return iXIons;
-    }
-
-    /**
-     * Returns an array of the x++ ions: x ions plus H divided by 2
-     *
-     * @return iXDoubleIons 
-     */
-    public FragmentIon[] getXDoubleIons() {
-        iXDoubleIons = new FragmentIon[iXIons.length];
-        for (int i = 0; i < iXIons.length; i++) {
-            iXDoubleIons[i] = new FragmentIon(((iXIons[i].getMZ() + 1.007825) / 2),
-                    FragmentIon.X_DOUBLE_ION, (i + 1), "x++", iFragmentMassError);
-        }
-        return iXDoubleIons;
-    }
-
-    /**
-     * Returns an array of the z ions: y ions minus NH3
-     *
-     * @return iZIons 
-     */
-    public FragmentIon[] getZIons() {
-        iZIons = new FragmentIon[iYIons.length];
-        for (int i = 0; i < iYIons.length; i++) {
-            iZIons[i] = new FragmentIon((iYIons[i].getMZ() - 17.026549),
-                    FragmentIon.Z_ION, (i + 1), "z", iFragmentMassError);
-        }
-        return iZIons;
-    }
-
-    /**
-     * Returns an array of the z++ ions: z ions plus H divided by 2
-     *
-     * @return iZDoubleIons 
-     */
-    public FragmentIon[] getZDoubleIons() {
-        iZDoubleIons = new FragmentIon[iZIons.length];
-        for (int i = 0; i < iZIons.length; i++) {
-            iZDoubleIons[i] = new FragmentIon(((iZIons[i].getMZ() + 1.007825) / 2),
-                    FragmentIon.Z_DOUBLE_ION, (i + 1), "z++", iFragmentMassError);
-        }
-        return iZDoubleIons;
+        return null;
     }
 }

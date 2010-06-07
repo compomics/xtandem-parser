@@ -27,55 +27,56 @@ public class FragmentIon implements Ion {
      */
     private int iScore = 0;
     /**
-     * The type of this ion. b1 is a b type
+     * The type of this ion as defined int the Ion interface.
      */
-    private String iType;
+    private int iType;
     /**
      * The error margin of the fragment ion. Is needed later for the spectrum panel.
      */
     private double iErrorMargin = 0.0;
     /**
-     * The ID of the fragment ion. The values are specified in the Ion interface.
-     */
-    private int iID = -1;
-    /**
      * This variable holds the calculated theoretical vs. experimental error.
      */
-    private double iTheoreticalExperimentalMassError;  
+    private double iTheoreticalExperimentalMassError;
+    /*
+     * The charge of the ion
+     */
+    private int iCharge;
 
 
     /**
      * Constructor gets all the parameters to create an fragment ion object.
      *
-     * @param aMz The m/z value of the fragment ion.
-     * @param aID The ID of the fragment ion.
-     * @param aNumber The number of the fragment ion.
-     * @param aType The type of the fragment ion.
+     * @param aMz          The m/z value of the fragment ion.
+     * @param aType        The type of the fragment ion as defined in the ion interface.
+     * @param aNumber      The number of the fragment ion.
+     * @param aCharge      The charge of the fragment ion.
      * @param aErrorMargin The error margin of the fragment ion.
      */
-    public FragmentIon(double aMz, int aID, int aNumber, String aType, double aErrorMargin) {
+    public FragmentIon(double aMz, int aType, int aNumber, int aCharge, double aErrorMargin) {
         iMz = aMz;
-        iID = aID;
-        iNumber = aNumber;
         iType = aType;
+        iNumber = aNumber;
+        iCharge = aCharge;
         iErrorMargin = aErrorMargin;
     }
 
     /**
      * The same constructor as above but with the intensity.
      *
-     * @param aMz The m/z value of the fragment ion.
-     * @param aIntensity The intensity of the fragment ion.
-     * @param aID The ID of the fragment ion.
-     * @param aNumber The number of the fragment ion.
-     * @param aType The type of the fragment ion.
+     * @param aMz          The m/z value of the fragment ion.
+     * @param aIntensity   The intensity of the fragment ion.
+     * @param aType        The type of the fragment ion as defined in the ion interface.
+     * @param aNumber      The number of the fragment ion.
+     * @param aType        The type of the fragment ion.
      * @param aErrorMargin The error margin of the fragment ion.
      */
-    public FragmentIon(double aMz, double aIntensity, int aID, int aNumber, String aType, double aErrorMargin) {
+    public FragmentIon(double aMz, double aIntensity, int aType, int aNumber, int aCharge, double aErrorMargin) {
         iMz = aMz;
         iIntensity = aIntensity;
-        iID = aID;
+        iType = aType;
         iNumber = aNumber;
+        iCharge = aCharge;
         iType = aType;
         iErrorMargin = aErrorMargin;
     }
@@ -85,8 +86,8 @@ public class FragmentIon implements Ion {
      * if it's a match using a specific mass error tolerance and calculating the theoretical/
      * experimental mass error.
      *
-     * @param aPeaks The mass peak array
-     * @param aMassError The mass error 
+     * @param aPeaks     The mass peak array
+     * @param aMassError The mass error
      * @return matchFlag boolean
      */
     public boolean isMatch(Peak[] aPeaks, double aMassError) {
@@ -146,7 +147,7 @@ public class FragmentIon implements Ion {
      *
      * @return iType
      */
-    public String getType() {
+    public int getType() {
         return iType;
     }
 
@@ -160,20 +161,63 @@ public class FragmentIon implements Ion {
     }
 
     /**
-     * Returns the id of the fragment ion.
-     *
-     * @return iID
-     */
-    public int getID() {
-        return iID;
-    }
-
-    /**
      * Returns the theoretical experimental mass error.
-     * 
+     *
      * @return iTheoreticalExperimentalMassError
      */
     public double getTheoreticalExperimentalMassError() {
         return iTheoreticalExperimentalMassError;
     }
+
+    /**
+     * Returns the charge.
+     *
+     * @return iCharge
+     */
+    public double getCharge() {
+        return iCharge;
+    }
+
+    /**
+     * Returns the fragment ion canonical letter.
+     *
+     * @return letter string
+     */
+    public String getLetter() {
+        switch (iType) {
+            case FragmentIon.A_ION:
+                return "a";
+            case FragmentIon.AH2O_ION:
+                return "a°";
+            case FragmentIon.ANH3_ION:
+                return "a*";
+            case FragmentIon.B_ION:
+                return "b";
+            case FragmentIon.BH2O_ION:
+                return "b°";
+            case FragmentIon.BNH3_ION:
+                return "b*";
+            case FragmentIon.C_ION:
+                return "c";
+            case FragmentIon.X_ION:
+                return "x";
+            case FragmentIon.Y_ION:
+                return "y";
+            case FragmentIon.YH2O_ION:
+                return "y°";
+            case FragmentIon.YNH3_ION:
+                return "y*";
+            case FragmentIon.Z_ION:
+                return "z";
+            case FragmentIon.MH_ION:
+                return "MH";
+            case FragmentIon.MHNH3_ION:
+                return "MH*";
+            case FragmentIon.MHH2O_ION:
+                return "MH°";
+        }
+        return null;
+
+    }
+
 }
