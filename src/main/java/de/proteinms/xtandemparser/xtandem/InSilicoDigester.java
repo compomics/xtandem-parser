@@ -112,7 +112,7 @@ public class InSilicoDigester {
         iModMap = aModMap;
         iMasses = aMasses;
         iPeptideCharge = aCharge;
-        int length = iSequence.length() * (iPeptideCharge - 1);
+        int length = iSequence.length() * iPeptideCharge;
         iAIons = new FragmentIon[length];
         iAH2OIons = new FragmentIon[length];
         iANH3Ions = new FragmentIon[length];
@@ -199,43 +199,41 @@ public class InSilicoDigester {
             iMH[charge - 1] = new FragmentIon((iPeptide.getDomainMh() + (charge - 1) * hydrogenMass) / charge, FragmentIon.MH_ION, 0, charge, iFragmentMassError);
             iMHH2O[charge - 1] = new FragmentIon((iPeptide.getDomainMh() - oxygenMass - 2 * hydrogenMass + (charge - 1) * hydrogenMass) / charge, FragmentIon.MHH2O_ION, 0, charge, iFragmentMassError);
             iMHNH3[charge - 1] = new FragmentIon((iPeptide.getDomainMh() - nitrogenMass - 3 * hydrogenMass + (charge - 1) * hydrogenMass) / charge, FragmentIon.MHNH3_ION, 0, charge, iFragmentMassError);
-            if (charge < iPeptideCharge) {
-                for (int i = 0; i < length; i++) {
-                    double bMass = 0.0;
-                    double yMass = 0.0;
 
-                    // Each peptide mass is added to the b ion mass
-                    for (int j = 0; j <= i; j++) {
-                        bMass += peptideMasses[j];
-                    }
+            for (int i = 0; i < length; i++) {
+                double bMass = 0.0;
+                double yMass = 0.0;
 
-                    // Create an instance for each fragment ion
-                    if (i > 0) {
-                        iAIons[cptb] = new FragmentIon((bMass - oxygenMass - carbonMass + charge * hydrogenMass) / charge, FragmentIon.A_ION, i + 1, charge, iFragmentMassError);
-                        iANH3Ions[cptb] = new FragmentIon((bMass - oxygenMass - carbonMass - nitrogenMass - 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.ANH3_ION, i + 1, charge, iFragmentMassError);
-                        iAH2OIons[cptb] = new FragmentIon((bMass - 2 * oxygenMass - carbonMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.AH2O_ION, i + 1, charge, iFragmentMassError);
-                        iBIons[cptb] = new FragmentIon((bMass + charge * hydrogenMass) / charge, FragmentIon.B_ION, i + 1, charge, iFragmentMassError);
-                        iBNH3Ions[cptb] = new FragmentIon((bMass - nitrogenMass - 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.BNH3_ION, i + 1, charge, iFragmentMassError);
-                        iBH2OIons[cptb] = new FragmentIon((bMass - oxygenMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.BH2O_ION, i + 1, charge, iFragmentMassError);
-                        iCIons[cptb] = new FragmentIon((bMass + nitrogenMass + 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.C_ION, i + 1, charge, iFragmentMassError);
-                        cptb++;
-                    }
-
-                    // Each peptide mass is added to the y ion mass, taking the reverse direction (from the C terminal end)
-                    for (int j = 0; j <= i; j++) {
-                        yMass += peptideMasses[(length - 1) - j];
-                    }
-                    // Add two extra hydrogen on the N terminal end and one hydroxyl at the C terminal end
-                    yMass = yMass + c_termMass + hydrogenMass;
-
-                    // Create an instance of the fragment y ion
-                    iXIons[cpty] = new FragmentIon((yMass + carbonMass + oxygenMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.X_ION, i + 1, charge, iFragmentMassError);
-                    iYIons[cpty] = new FragmentIon((yMass + charge * hydrogenMass) / charge, FragmentIon.Y_ION, i + 1, charge, iFragmentMassError);
-                    iYNH3Ions[cpty] = new FragmentIon((yMass - nitrogenMass - 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.YNH3_ION, i + 1, charge, iFragmentMassError);
-                    iYH2OIons[cpty] = new FragmentIon((yMass - 2 * hydrogenMass - oxygenMass + charge * hydrogenMass) / charge, FragmentIon.YH2O_ION, i + 1, charge, iFragmentMassError);
-                    iZIons[cpty] = new FragmentIon((yMass - nitrogenMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.Z_ION, i + 1, charge, iFragmentMassError);
-                    cpty++;
+                // Each peptide mass is added to the b ion mass
+                for (int j = 0; j <= i; j++) {
+                    bMass += peptideMasses[j];
                 }
+                // Create an instance for each fragment ion
+                if (i > 0 && charge < iPeptideCharge) {
+                    iAIons[cptb] = new FragmentIon((bMass - oxygenMass - carbonMass + charge * hydrogenMass) / charge, FragmentIon.A_ION, i + 1, charge, iFragmentMassError);
+                    iANH3Ions[cptb] = new FragmentIon((bMass - oxygenMass - carbonMass - nitrogenMass - 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.ANH3_ION, i + 1, charge, iFragmentMassError);
+                    iAH2OIons[cptb] = new FragmentIon((bMass - 2 * oxygenMass - carbonMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.AH2O_ION, i + 1, charge, iFragmentMassError);
+                    iBIons[cptb] = new FragmentIon((bMass + charge * hydrogenMass) / charge, FragmentIon.B_ION, i + 1, charge, iFragmentMassError);
+                    iBNH3Ions[cptb] = new FragmentIon((bMass - nitrogenMass - 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.BNH3_ION, i + 1, charge, iFragmentMassError);
+                    iBH2OIons[cptb] = new FragmentIon((bMass - oxygenMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.BH2O_ION, i + 1, charge, iFragmentMassError);
+                    iCIons[cptb] = new FragmentIon((bMass + nitrogenMass + 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.C_ION, i + 1, charge, iFragmentMassError);
+                    cptb++;
+                }
+
+                // Each peptide mass is added to the y ion mass, taking the reverse direction (from the C terminal end)
+                for (int j = 0; j <= i; j++) {
+                    yMass += peptideMasses[(length - 1) - j];
+                }
+                // Add two extra hydrogen on the N terminal end and one hydroxyl at the C terminal end
+                yMass = yMass + c_termMass + hydrogenMass;
+
+                // Create an instance of the fragment y ion
+                iXIons[cpty] = new FragmentIon((yMass + carbonMass + oxygenMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.X_ION, i + 1, charge, iFragmentMassError);
+                iYIons[cpty] = new FragmentIon((yMass + charge * hydrogenMass) / charge, FragmentIon.Y_ION, i + 1, charge, iFragmentMassError);
+                iYNH3Ions[cpty] = new FragmentIon((yMass - nitrogenMass - 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.YNH3_ION, i + 1, charge, iFragmentMassError);
+                iYH2OIons[cpty] = new FragmentIon((yMass - 2 * hydrogenMass - oxygenMass + charge * hydrogenMass) / charge, FragmentIon.YH2O_ION, i + 1, charge, iFragmentMassError);
+                iZIons[cpty] = new FragmentIon((yMass - nitrogenMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.Z_ION, i + 1, charge, iFragmentMassError);
+                cpty++;
             }
         }
     }
