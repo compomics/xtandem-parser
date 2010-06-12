@@ -143,18 +143,22 @@
 
    <!-- Repositores -->
     <repositories>
-
         <!-- UGent Genesis Maven 1 repository -->
         <repository>
             <id>genesis-maven-repository</id>
             <name>Genesis repository</name>
             <url>http://genesis.UGent.be/maven</url>
             <layout>legacy</layout>
-            <releases>
-            </releases>
-            <snapshots>
-            </snapshots>
         </repository>
+
+        <!-- UGent Genesis Maven 2 repository -->
+        <repository>
+            <id>genesis-maven2-repository</id>
+            <name>Genesis maven2 repository</name>
+            <url>http://genesis.UGent.be/maven2</url>
+            <layout>default</layout>
+        </repository>
+
     </repositories>
 
 
@@ -172,11 +176,11 @@
             <artifactId>looks</artifactId>
             <version>2.2.2</version>
         </dependency>
-        <dependency>
+       <dependency>
             <groupId>com.compomics</groupId>
             <artifactId>utilities</artifactId>
-            <version>3.0
-            </version>
+            <version>3.0</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.swinglabs</groupId>
