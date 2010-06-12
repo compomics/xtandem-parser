@@ -67,7 +67,7 @@ public class InSilicoDigesterTest extends TestCase {
             assertEquals(645.339402, yIons[4].getMZ(), 0.000001);
             assertEquals(716.376512, yIons[5].getMZ());
 
-            // Test all yNH3Ions
+            // Test all bH20Ions
             assertEquals(141.066403, bH20Ions[0].getMZ());
             assertEquals(272.106888, bH20Ions[1].getMZ());
             assertEquals(369.159652, bH20Ions[2].getMZ());
