@@ -89,4 +89,29 @@ public class InSilicoDigesterTest extends TestCase {
         }
     }
 
+    /**
+     * Test XML test file orbitrap0001756.xml
+     */
+    public void testFile0001756() {
+        try {
+            PeptideMap pepMap = xTandemFile.getPeptideMap();
+            ArrayList<Peptide> pepList = pepMap.getAllPeptides(2);
+            Peptide peptide = pepList.get(0);
+
+            InSilicoDigester digester = new InSilicoDigester(peptide, xTandemFile.getModificationMap(), XTandemFile.getMassesMap(), 1);
+            System.out.println(peptide.getDomainSequence());
+            FragmentIon[] bIons = digester.getTheoreticIons(FragmentIon.B_ION);
+            FragmentIon[] mhIons = digester.getTheoreticIons(FragmentIon.MH_ION);
+            FragmentIon[] mhH20Ions = digester.getTheoreticIons(FragmentIon.MHH2O_ION);
+            FragmentIon[] mhNH3Ions = digester.getTheoreticIons(FragmentIon.MHNH3_ION);
+            System.out.println("MH: " + mhIons[0].getMZ());
+            System.out.println("MH-H20: " + mhH20Ions[0].getMZ());
+            System.out.println("MH-NH3: " + mhNH3Ions[0].getMZ());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+	}
+
 }
