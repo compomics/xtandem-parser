@@ -58,10 +58,6 @@ public class XTandemFile implements Serializable {
      *  This is an instance of the PerformParams object.
      */
     private PerformParams iPerformParams = null;
-    /**
-     * This is an instance of the SupportData object.
-     */
-    private SupportData iSupportData = null;
     private String iRawFile = null;
     /**
      * This string holds the raw file type.
@@ -76,8 +72,8 @@ public class XTandemFile implements Serializable {
     /**
      * Constructor of XTandemFile gets a string to an existing path and filename of the xtandem file.
      *
-     * @param aXTandemFile
-     * @throws SAXException
+     * @param aXTandemFile The given XTandem file.
+     * @throws SAXException SAX parsing exception thrown.
      */
     public XTandemFile(String aXTandemFile) throws SAXException {
         try {
@@ -122,7 +118,7 @@ public class XTandemFile implements Serializable {
      *
      * @return map The masses hashmap
      */
-    public HashMap getMassesMap() {
+    public static HashMap getMassesMap() {
         HashMap<String, Double> map = new HashMap<String, Double>();
         map.put("A", Masses.A);
         map.put("B", Masses.B);
@@ -175,14 +171,14 @@ public class XTandemFile implements Serializable {
     /**
      * Returns a vector with two arrays of b ions and y ions respectively.
      *
-     * @param peptide
+     * @param peptide The given peptide
      * @return Vector The vector containing b ions and y ions
      */
     public Vector getFragmentIonsForPeptide(Peptide peptide) {
         Vector<Ion[]> fragIons = new Vector();
         int charge = getSpectrum(peptide.getSpectrumNumber()).getPrecursorCharge();
         // Get an instance of the InSilicoDigester
-        InSilicoDigester digester = new InSilicoDigester(peptide, this.getModificationMap(), this.getMassesMap(), charge);
+        InSilicoDigester digester = new InSilicoDigester(peptide, this.getModificationMap(), getMassesMap(), charge);
 
         // The vector should contain two arrays: b ions & y ions
         SupportData supData = this.getSupportData(peptide.getSpectrumNumber());
@@ -335,7 +331,7 @@ public class XTandemFile implements Serializable {
      *
      * @return iSpectraList ArrayList<Spectrum>
      */
-    public ArrayList<Spectrum> getSpectraList() {
+   ArrayList<Spectrum> getSpectraList() {
         if (iSpectraList == null) {
 
             iSpectraNumber = iXTParser.getNumberOfSpectra();
@@ -350,7 +346,7 @@ public class XTandemFile implements Serializable {
 
                 // SpectrumID
                 int spectrumID = Integer.parseInt(spectrumSection.get("id" + i));
-                iIdToNumberMap.put(spectrumSection.get("id" + i).toString(), i);
+                iIdToNumberMap.put(spectrumSection.get("id" + i), i);
 
                 // Precursor mass
                 double precursorMh = Double.parseDouble(spectrumSection.get("mh" + i));
@@ -383,21 +379,21 @@ public class XTandemFile implements Serializable {
     /**
      * This method returns a specific spectrum for a given spectrum number.
      *
-     * @param aSpectrumNumber
+     * @param aSpectrumNumber The spectrum number
      * @return Spectrum
      */
-    public Spectrum getSpectrum(final int aSpectrumNumber) {
+   Spectrum getSpectrum(final int aSpectrumNumber) {
         return getSpectraList().get(aSpectrumNumber - 1);
     }
 
     /**
      * Returns a spectrum number for a given spectrum id.
      *
-     * @param aSpectrumID
+     * @param aSpectrumID The spectrumID
      * @return spectrumNumber
      */
     public int getSpectrumNumberForId(String aSpectrumID) {
-        int spectrumNumber = 0;
+        int spectrumNumber;
 
         if (iSpectraList == null) {
             iSpectraList = this.getSpectraList();
@@ -409,12 +405,12 @@ public class XTandemFile implements Serializable {
     /**
      * Returns the support data section.
      *
-     * @param aSpectrumNumber
+     * @param aSpectrumNumber The spectrum number
      * @return the support data section
      */
     public SupportData getSupportData(int aSpectrumNumber) {
-        iSupportData = new SupportData(iXTParser.getSupportDataMap(), aSpectrumNumber);
-        return iSupportData;
+        return new SupportData(iXTParser.getSupportDataMap(), aSpectrumNumber);
+
     }
 
     /**
@@ -447,9 +443,9 @@ public class XTandemFile implements Serializable {
     /**
      * Sets the path and the name of the X!Tandem file.
      *
-     * @param aFileName
+     * @param aFileName The name of the X!Tandem file
      */
-    public void setFileName(String aFileName) {
+    void setFileName(String aFileName) {
         iFileName = aFileName;
     }
 

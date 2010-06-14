@@ -261,10 +261,6 @@ public class SupportData implements Serializable {
         return iHyper_a1;
     }
 
-    public void setHyper_a1(double aHyper_a1) {
-        iHyper_a1 = aHyper_a1;
-    }
-
     public ArrayList<Integer> getXValuesHyperscore() {
         return iXValuesHyperscore;
     }
@@ -417,7 +413,7 @@ public class SupportData implements Serializable {
      * @param aNumberString Number string
      * @return NumberList
      */
-    public ArrayList<Integer> splitStringToIntegerList(String aNumberString) {
+    ArrayList<Integer> splitStringToIntegerList(String aNumberString) {
         ArrayList<Integer> NumberList = new ArrayList<Integer>();
         String[] temp;
         aNumberString = aNumberString.trim();
@@ -439,7 +435,7 @@ public class SupportData implements Serializable {
      * @param aNumberString Number string
      * @return NumberList
      */
-    public ArrayList<Double> splitStringToDoubleList(String aNumberString) {
+    ArrayList<Double> splitStringToDoubleList(String aNumberString) {
         ArrayList<Double> NumberList = new ArrayList<Double>();
         String[] temp;
         aNumberString = aNumberString.trim();

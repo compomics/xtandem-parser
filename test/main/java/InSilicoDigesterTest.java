@@ -1,8 +1,10 @@
 package main.java;
 
 import de.proteinms.xtandemparser.xtandem.*;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+
 import org.xml.sax.SAXException;
 import junit.framework.TestCase;
 
@@ -17,14 +19,14 @@ import java.util.ArrayList;
  */
 public class InSilicoDigesterTest extends TestCase {
 
-    XTandemFile xTandemFile;
-    
-    public InSilicoDigesterTest(){
+    private XTandemFile xTandemFile;
+
+    public InSilicoDigesterTest() {
         try {
-            xTandemFile = new XTandemFile("C:/Users/User/workspace/XTandem-Parser/orbitrap001756.xml");           
+            xTandemFile = new XTandemFile("C:/Users/User/workspace/XTandem-Parser/orbitrap001756.xml");
         } catch (Exception e) {
-                    e.printStackTrace();
-                    fail();
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -37,8 +39,8 @@ public class InSilicoDigesterTest extends TestCase {
             Peptide peptide = new Peptide("1", 0, 6, "SAMPLER");
             peptide.setDomainSequence("SAMPLER");
             peptide.setDomainMh(803.4080);
-            InSilicoDigester digester = new InSilicoDigester(peptide, null, XTandemFile.getMassesMap(), 1);           
-            FragmentIon[] bIons = digester.getTheoreticIons(FragmentIon.B_ION);           
+            InSilicoDigester digester = new InSilicoDigester(peptide, null, XTandemFile.getMassesMap(), 1);
+            FragmentIon[] bIons = digester.getTheoreticIons(FragmentIon.B_ION);
             FragmentIon[] yIons = digester.getTheoreticIons(FragmentIon.Y_ION);
             FragmentIon[] bH20Ions = digester.getTheoreticIons(FragmentIon.BH2O_ION);
             FragmentIon[] yNH3Ions = digester.getTheoreticIons(FragmentIon.YNH3_ION);

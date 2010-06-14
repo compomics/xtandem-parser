@@ -17,87 +17,83 @@ public class InSilicoDigester {
     /**
      * This variable contains the peptide sequence.
      */
-    private String iSequence;
-    /**
-     * Contains the modification map.
-     */
-    private ModificationMap iModMap;
+    private final String iSequence;
     /**
      * Contains the peptide object which should be digested.
      */
-    private Peptide iPeptide;
+    private final Peptide iPeptide;
     /**
      * The masses map for knowledge of amino acid masses etc.
      */
-    private HashMap<String, Double> iMasses;
+    private final HashMap<String, Double> iMasses;
     /**
      * The a ions.
      */
-    private FragmentIon[] iAIons;
+    private final FragmentIon[] iAIons;
     /**
      * The a* ions.
      */
-    private FragmentIon[] iANH3Ions;
+    private final FragmentIon[] iANH3Ions;
     /**
      * The a° ions.
      */
-    private FragmentIon[] iAH2OIons;
+    private final FragmentIon[] iAH2OIons;
     /**
      * The b ions.
      */
-    private FragmentIon[] iBIons;
+    private final FragmentIon[] iBIons;
     /**
      * The b* ions.
      */
-    private FragmentIon[] iBNH3Ions;
+    private final FragmentIon[] iBNH3Ions;
     /**
      * The b° ions.
      */
-    private FragmentIon[] iBH2OIons;
+    private final FragmentIon[] iBH2OIons;
     /**
      * The c ions.
      */
-    private FragmentIon[] iCIons;
+    private final FragmentIon[] iCIons;
     /**
      * The x ions.
      */
-    private FragmentIon[] iXIons;
+    private final FragmentIon[] iXIons;
     /**
      * The y ions.
      */
-    private FragmentIon[] iYIons;
+    private final FragmentIon[] iYIons;
     /**
      * The y* ions.
      */
-    private FragmentIon[] iYNH3Ions;
+    private final FragmentIon[] iYNH3Ions;
     /**
      * The y° ions.
      */
-    private FragmentIon[] iYH2OIons;
+    private final FragmentIon[] iYH2OIons;
     /**
      * The z ions.
      */
-    private FragmentIon[] iZIons;
+    private final FragmentIon[] iZIons;
     /**
      * The MH ion.
      */
-    private FragmentIon[] iMH;
+    private final FragmentIon[] iMH;
     /**
      * The MH-NH3 ion.
      */
-    private FragmentIon[] iMHNH3;
+    private final FragmentIon[] iMHNH3;
     /**
      * The MH-H2O ion.
      */
-    private FragmentIon[] iMHH2O;
+    private final FragmentIon[] iMHH2O;
     /**
      * The fragment mass error tolerance.
      */
-    private double iFragmentMassError;
+    private final double iFragmentMassError;
     /**
      * The peptide charge
      */
-    private int iPeptideCharge;
+    private final int iPeptideCharge;
 
     /**
      * Constructor get a peptide object, the modification map, the input parameters and the masses map.
@@ -105,11 +101,12 @@ public class InSilicoDigester {
      * @param aPeptide A peptide object which should be "in silico" digested.
      * @param aModMap  Modification map to know where have been modifications on the peptide.
      * @param aMasses  Masses map to know which amino acid has which mass.
+     * @param aCharge The charge of the given peptide.
      */
     public InSilicoDigester(Peptide aPeptide, ModificationMap aModMap, HashMap aMasses, int aCharge) {
         iPeptide = aPeptide;
         iSequence = iPeptide.getDomainSequence();
-        iModMap = aModMap;
+        ModificationMap iModMap=aModMap;
         iMasses = aMasses;
         iPeptideCharge = aCharge;
         int length = iSequence.length() * iPeptideCharge;
@@ -138,7 +135,7 @@ public class InSilicoDigester {
      *
      * @return double[] Contains the mass of the part of the sequence. The amino acid position is the index.
      */
-    public double[] calculatePeptideMasses() {
+    double[] calculatePeptideMasses() {
         double mass;
         double[] peptideMasses = new double[iSequence.length()];
         for (int i = 0; i < iSequence.length(); i++) {
@@ -196,7 +193,7 @@ public class InSilicoDigester {
         int cptb = 0;
         int cpty = 0;
         for (int charge = 1; charge <= iPeptideCharge; charge++) {
-            iMH[charge - 1] = new FragmentIon((iPeptide.getDomainMh() + (charge - 1) * hydrogenMass) / charge, FragmentIon.MH_ION, 0, charge, iFragmentMassError);
+            iMH[charge - 1] = new FragmentIon((iPeptide.getDomainMh() + (charge - 1) * hydrogenMass) / charge, FragmentIon.MH_ION, 0, charge, iFragmentMassError);            
             iMHH2O[charge - 1] = new FragmentIon((iPeptide.getDomainMh() - oxygenMass - 2 * hydrogenMass + (charge - 1) * hydrogenMass) / charge, FragmentIon.MHH2O_ION, 0, charge, iFragmentMassError);
             iMHNH3[charge - 1] = new FragmentIon((iPeptide.getDomainMh() - nitrogenMass - 3 * hydrogenMass + (charge - 1) * hydrogenMass) / charge, FragmentIon.MHNH3_ION, 0, charge, iFragmentMassError);
 
@@ -209,11 +206,11 @@ public class InSilicoDigester {
                     bMass += peptideMasses[j];
                 }
                 // Create an instance for each fragment ion
-                if (i > 0 && charge < iPeptideCharge) {
+                if (i > 0 && charge <= iPeptideCharge) {
                     iAIons[cptb] = new FragmentIon((bMass - oxygenMass - carbonMass + charge * hydrogenMass) / charge, FragmentIon.A_ION, i + 1, charge, iFragmentMassError);
                     iANH3Ions[cptb] = new FragmentIon((bMass - oxygenMass - carbonMass - nitrogenMass - 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.ANH3_ION, i + 1, charge, iFragmentMassError);
                     iAH2OIons[cptb] = new FragmentIon((bMass - 2 * oxygenMass - carbonMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.AH2O_ION, i + 1, charge, iFragmentMassError);
-                    iBIons[cptb] = new FragmentIon((bMass + charge * hydrogenMass) / charge, FragmentIon.B_ION, i + 1, charge, iFragmentMassError);
+                    iBIons[cptb] = new FragmentIon((bMass + charge * hydrogenMass) / charge, FragmentIon.B_ION, i + 1, charge, iFragmentMassError);      
                     iBNH3Ions[cptb] = new FragmentIon((bMass - nitrogenMass - 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.BNH3_ION, i + 1, charge, iFragmentMassError);
                     iBH2OIons[cptb] = new FragmentIon((bMass - oxygenMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.BH2O_ION, i + 1, charge, iFragmentMassError);
                     iCIons[cptb] = new FragmentIon((bMass + nitrogenMass + 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.C_ION, i + 1, charge, iFragmentMassError);
@@ -265,7 +262,7 @@ public class InSilicoDigester {
     /*
      * Returns the corresponding array of theoretic ions.
      */
-    private FragmentIon[] getTheoreticIons(int type) {
+    public FragmentIon[] getTheoreticIons(int type) {
         switch (type) {
             case FragmentIon.A_ION:
                 return iAIons;
