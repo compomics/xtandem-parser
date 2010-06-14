@@ -51,8 +51,8 @@ public class XTandemViewer extends JFrame {
     private HashMap<String, Vector<DefaultSpectrumAnnotation>> allAnnotations;
     private JCheckBox aIonsJCheckBox, bIonsJCheckBox, cIonsJCheckBox, chargeOneJCheckBox,
             chargeTwoJCheckBox, chargeOverTwoJCheckBox, xIonsJCheckBox, yIonsJCheckBox, zIonsJCheckBox;
-    private JLabel jLabel1, modificationDetailsJLabel;
-    private JScrollPane jScrollPane1, jScrollPane3, jScrollPane4;
+    private JLabel modificationDetailsJLabel;
+    private JScrollPane jScrollPane1; private JScrollPane jScrollPane3;
     private JSeparator jSeparator1, jSeparator2;
     private JXTable identificationsTable, spectraTable, spectrumJXTable;
     private JPanel jPanel1, jPanel2, jPanel3, jPanel4, spectrumJPanel;
@@ -373,8 +373,8 @@ public class XTandemViewer extends JFrame {
         };
         jPanel2 = new javax.swing.JPanel();
         modificationDetailsJLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
+        JLabel jLabel1=new JLabel();
+        JScrollPane jScrollPane4=new JScrollPane();
         identificationsTable = new JXTable() {
 
             @Override
@@ -695,7 +695,7 @@ public class XTandemViewer extends JFrame {
      * @param aXTandemFile
      * @param lastSelectedFolder
      */
-    public void insertFiles(String aXTandemFile, String lastSelectedFolder) {
+    void insertFiles(String aXTandemFile, String lastSelectedFolder) {
 
         iXTandemFileString = aXTandemFile;
         progressDialog = new ProgressDialog(this);
@@ -847,8 +847,8 @@ public class XTandemViewer extends JFrame {
 
 
                     // Initialize the array lists
-                    ArrayList<Double> mzValues = new ArrayList();
-                    ArrayList<Double> intensityValues = new ArrayList();
+                    ArrayList<Double> mzValues;
+                    ArrayList<Double> intensityValues;
 
                     // Get the spectrum fragment mz and intensity values
                     mzValues = supportData.getXValuesFragIonMass2Charge();
@@ -1047,8 +1047,8 @@ public class XTandemViewer extends JFrame {
 
         // Condition if one row is selected.
         if (row != -1) {
-            List<Double> mzValues = allMzValues.get((Integer) spectraTable.getValueAt(row, 0));
-            List<Double> intensityValues = allIntensityValues.get((Integer) spectraTable.getValueAt(row, 0));
+            List<Double> mzValues = allMzValues.get(spectraTable.getValueAt(row, 0));
+            List<Double> intensityValues = allIntensityValues.get(spectraTable.getValueAt(row, 0));
 
             // Empty the spectrum table.
             while (spectrumJXTable.getRowCount() > 0) {
@@ -1103,8 +1103,8 @@ public class XTandemViewer extends JFrame {
             modificationDetailsJLabel.setText("");
 
             // Iterate over all the peptides as identifications (domains)
-            if (peptideMap.get((Integer) spectraTable.getValueAt(row, 0)) != null) {
-                ArrayList<Peptide> domainList = peptideMap.get((Integer) spectraTable.getValueAt(row, 0));
+            if (peptideMap.get(spectraTable.getValueAt(row, 0)) != null) {
+                ArrayList<Peptide> domainList = peptideMap.get(spectraTable.getValueAt(row, 0));
                 Iterator domainIter = domainList.iterator();
 
                 String modificationDetails = "";
@@ -1973,8 +1973,8 @@ public class XTandemViewer extends JFrame {
 
             for (int j = 0; j < spectraTable.getRowCount(); j++) {
 
-                List<Double> mzValues = allMzValues.get((Integer) spectraTable.getValueAt(j, 0));
-                List<Double> intensityValues = allIntensityValues.get((Integer) spectraTable.getValueAt(j, 0));
+                List<Double> mzValues = allMzValues.get(spectraTable.getValueAt(j, 0));
+                List<Double> intensityValues = allIntensityValues.get(spectraTable.getValueAt(j, 0));
 
                 File currentFile = new File(selectedFolder, "" + spectraTable.getValueAt(j, 1));
 
