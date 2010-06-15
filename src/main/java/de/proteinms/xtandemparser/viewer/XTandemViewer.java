@@ -36,7 +36,7 @@ public class XTandemViewer extends JFrame {
     // TODO: remove this
     private static boolean useErrorLog = false;
     public final static String APPTITLE = "X!Tandem Viewer";
-    public final static String VERSION = "1.2";
+    public final static String VERSION = "1.2.1";
     private final static String MODIFICATIONSLEGEND = "  |  <M *> are fixed and <M °> are variable modifications.";
     private String lastSelectedFolder = "user.home";
     private SpectrumPanel spectrumPanel;
