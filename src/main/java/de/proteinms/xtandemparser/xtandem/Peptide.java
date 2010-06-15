@@ -65,10 +65,6 @@ public class Peptide implements Serializable {
      */
     private double iDomainNextScore = 0;
     /**
-     * This list contains all the differnt sorts of ions.
-     */
-    private ArrayList<Ion> iIons = null;
-    /**
      * This String holds the upstream flanking sequence
      */
     private String iUpFlankSequence = null;
@@ -318,25 +314,7 @@ public class Peptide implements Serializable {
      */
     public void setDomainNextScore(double domainNextScore) {
         this.iDomainNextScore = domainNextScore;
-    }
-
-    /**
-     * Returns a list of ions for the peptide.
-     *
-     * @return iIons
-     */
-    public ArrayList<Ion> getIons() {
-        return iIons;
-    }
-
-    /**
-     * Sets the ions for peptide.
-     *
-     * @param aIons
-     */
-    public void setIons(ArrayList<Ion> aIons) {
-        iIons = aIons;
-    }
+    }  
 
     /**
      * Returns the upstream flanking sequence of the peptide.
