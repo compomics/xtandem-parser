@@ -1,8 +1,10 @@
 package de.proteinms.xtandemparser.xtandem;
 
+import de.proteinms.xtandemparser.interfaces.Modification;
 import de.proteinms.xtandemparser.interfaces.Peak;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -96,6 +98,11 @@ public class InSilicoDigester {
     private final int iPeptideCharge;
 
     /**
+     * The modification map
+     */
+    private ModificationMap iModMap;
+
+    /**
      * Constructor get a peptide object, the modification map, the input parameters and the masses map.
      *
      * @param aPeptide A peptide object which should be "in silico" digested.
@@ -106,7 +113,7 @@ public class InSilicoDigester {
     public InSilicoDigester(Peptide aPeptide, ModificationMap aModMap, HashMap aMasses, int aCharge) {
         iPeptide = aPeptide;
         iSequence = iPeptide.getDomainSequence();
-        ModificationMap iModMap=aModMap;
+        iModMap = aModMap;
         iMasses = aMasses;
         iPeptideCharge = aCharge;
         int length = iSequence.length() * iPeptideCharge;
@@ -142,26 +149,26 @@ public class InSilicoDigester {
             mass = 0.0;
 
             // Add the fixed modifications masses (N and C term included)
-//            ArrayList<Modification> fixModList = iModMap.getFixedModifications(iPeptide.getDomainID());
-//            if (fixModList.size() > 0) {
-//                for (Modification fixMod : fixModList) {
-//                    int modIndex = (Integer.parseInt(fixMod.getLocation()) - iPeptide.getDomainStart());
-//                    if (modIndex == i) {
-//                        mass += fixMod.getMass();
-//                    }
-//                }
-//            }
-//
-//            // Add the the variable modification masses (N and C term included)
-//            ArrayList<Modification> varModList = iModMap.getVariableModifications(iPeptide.getDomainID());
-//            if (varModList.size() > 0) {
-//                for (Modification varMod : varModList) {
-//                    int modIndex = (Integer.parseInt(varMod.getLocation()) - iPeptide.getDomainStart());
-//                    if (modIndex == i) {
-//                        mass += varMod.getMass();
-//                    }
-//                }
-//            }
+            List<Modification> fixModList = iModMap.getFixedModifications(iPeptide.getDomainID());
+            if (fixModList.size() > 0) {
+                for (Modification fixMod : fixModList) {
+                    int modIndex = (Integer.parseInt(fixMod.getLocation()) - iPeptide.getDomainStart());
+                    if (modIndex == i) {
+                        mass += fixMod.getMass();
+                    }
+                }
+            }
+
+            // Add the the variable modification masses (N and C term included)
+            List<Modification> varModList = iModMap.getVariableModifications(iPeptide.getDomainID());
+            if (varModList.size() > 0) {
+                for (Modification varMod : varModList) {
+                    int modIndex = (Integer.parseInt(varMod.getLocation()) - iPeptide.getDomainStart());
+                    if (modIndex == i) {
+                        mass += varMod.getMass();
+                    }
+                }
+            }
 
             // For each amino acid add the specific mass
             String aa = String.valueOf(iSequence.charAt(i));
@@ -206,7 +213,7 @@ public class InSilicoDigester {
                     bMass += peptideMasses[j];
                 }
                 // Create an instance for each fragment ion
-                if (i > 0 && charge <= iPeptideCharge) {
+                if (charge <= iPeptideCharge) {
                     iAIons[cptb] = new FragmentIon((bMass - oxygenMass - carbonMass + charge * hydrogenMass) / charge, FragmentIon.A_ION, i + 1, charge, iFragmentMassError);
                     iANH3Ions[cptb] = new FragmentIon((bMass - oxygenMass - carbonMass - nitrogenMass - 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.ANH3_ION, i + 1, charge, iFragmentMassError);
                     iAH2OIons[cptb] = new FragmentIon((bMass - 2 * oxygenMass - carbonMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.AH2O_ION, i + 1, charge, iFragmentMassError);
