@@ -100,7 +100,7 @@ public class InSilicoDigester {
     /**
      * The modification map
      */
-    private ModificationMap iModMap;
+    private final ModificationMap iModMap;
 
     /**
      * Constructor get a peptide object, the modification map, the input parameters and the masses map.
