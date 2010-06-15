@@ -37,7 +37,7 @@ public class XTandemViewer extends JFrame {
     private static boolean useErrorLog = false;
     public final static String APPTITLE = "X!Tandem Viewer";
     public final static String VERSION = "1.2";
-    private final static String MODIFICATIONSLEGEND = "  |  <M *> are fixed and <M +> are variable modifications.";
+    private final static String MODIFICATIONSLEGEND = "  |  <M *> are fixed and <M °> are variable modifications.";
     private String lastSelectedFolder = "user.home";
     private SpectrumPanel spectrumPanel;
     private String iXTandemFileString;
@@ -1152,7 +1152,7 @@ public class XTandemViewer extends JFrame {
 
                             for (int j = 0; j < modRes.length; j++) {
                                 if (modRes[j] > 0) {
-                                    modifications[j] += "<" + "M" + modRes[j] +"+" + ">";
+                                    modifications[j] += "<" + "M" + modRes[j] +"°" + ">";
                                 }
                             }
                         }
@@ -1172,7 +1172,7 @@ public class XTandemViewer extends JFrame {
                                 if (currentMod.length() > 0){                                    
                                     if(currentMod.contains("*")){
                                         fixModIndex = (Integer.parseInt(currentMod.substring(2,3)) - 1);
-                                    } else if(currentMod.contains("+")){
+                                    } else if(currentMod.contains("°")){
                                         varModIndex = (Integer.parseInt(currentMod.substring(2,3)) - 1);
                                     }
                                 }
@@ -1180,10 +1180,9 @@ public class XTandemViewer extends JFrame {
                                 if (modificationDetails.lastIndexOf(currentMod) == -1) {
                                     if (fixedModList.size() > 0 && currentMod.contains("*")) {                                        
                                         modificationDetails += currentMod + " " + fixedModList.get(fixModIndex).getName() + ", ";
-                                    } else if (varModList.size() > 0 && currentMod.contains("+")) {
+                                    } else if (varModList.size() > 0 && currentMod.contains("°")) {
                                         modificationDetails += currentMod + " " + varModList.get(varModIndex).getName() + ", ";
                                     }
-
                                     modifiedSequence += currentMod;
                                 } else {
                                     modifiedSequence += currentMod;
