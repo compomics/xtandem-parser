@@ -65,9 +65,9 @@ public class XTandemParser implements Serializable {
     /**
      * Constructor for parsing a result file stored locally.
      *
-     * @param aFile
+     * @param aFile The input XML file.
      * @exception IOException
-     * @exception SAXParseException
+     * @exception SAXException
      */
     public XTandemParser(File aFile) throws IOException, SAXException {
         this.parseXTandemFile(aFile);
@@ -76,7 +76,7 @@ public class XTandemParser implements Serializable {
     /**
      * In this method the X!Tandem file gets parsed.
      *
-     * @param aInputFile
+     * @param aInputFile The file which will be parsed.
      * @exception IOException
      * @exception SAXException
      */
