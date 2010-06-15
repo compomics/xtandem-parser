@@ -37,6 +37,7 @@ public class XTandemViewer extends JFrame {
     private static boolean useErrorLog = false;
     public final static String APPTITLE = "X!Tandem Viewer";
     public final static String VERSION = "1.2";
+    private final static String MODIFICATIONSLEGEND = "  |  <M *> are fixed and <M +> are variable modifications.";
     private String lastSelectedFolder = "user.home";
     private SpectrumPanel spectrumPanel;
     private String iXTandemFileString;
@@ -1147,11 +1148,11 @@ public class XTandemViewer extends JFrame {
                             int[] modRes = new int[domain.getDomainSequence().length()];
 
                             int modIndex = Integer.parseInt(varMod.getLocation()) - domain.getDomainStart();
-                            modRes[modIndex] = varMod.getNumber();
+                            modRes[modIndex] = varMod.getNumber();                           
 
                             for (int j = 0; j < modRes.length; j++) {
                                 if (modRes[j] > 0) {
-                                    modifications[j] += "<" + "M" + modRes[j] +"*" + ">";
+                                    modifications[j] += "<" + "M" + modRes[j] +"+" + ">";
                                 }
                             }
                         }
@@ -1166,16 +1167,21 @@ public class XTandemViewer extends JFrame {
                             String[] residues = modifications[i].split(">");
                             for (int j = 0; j < residues.length; j++) {
                                 String currentMod = residues[j] + ">";
-                                int nameIndex = 0;
-                                if (currentMod.length() > 0){
-                                    nameIndex = (Integer.parseInt(currentMod.substring(2,3)) - 1);
+                                int fixModIndex = 0;
+                                int varModIndex = 0;
+                                if (currentMod.length() > 0){                                    
+                                    if(currentMod.contains("*")){
+                                        fixModIndex = (Integer.parseInt(currentMod.substring(2,3)) - 1);
+                                    } else if(currentMod.contains("+")){
+                                        varModIndex = (Integer.parseInt(currentMod.substring(2,3)) - 1);
+                                    }
                                 }
 
                                 if (modificationDetails.lastIndexOf(currentMod) == -1) {
-                                    if (fixedModList.size() > 0) {
-                                        modificationDetails += currentMod + " " + fixedModList.get(nameIndex).getName() + ", ";
-                                    } else if (varModList.size() > 0) {
-                                        modificationDetails += currentMod + " " + varModList.get(nameIndex).getName() + ", ";                                       
+                                    if (fixedModList.size() > 0 && currentMod.contains("*")) {                                        
+                                        modificationDetails += currentMod + " " + fixedModList.get(fixModIndex).getName() + ", ";
+                                    } else if (varModList.size() > 0 && currentMod.contains("+")) {
+                                        modificationDetails += currentMod + " " + varModList.get(varModIndex).getName() + ", ";
                                     }
 
                                     modifiedSequence += currentMod;
@@ -1402,7 +1408,7 @@ public class XTandemViewer extends JFrame {
                     modificationDetails = modificationDetails.substring(0, modificationDetails.length() - 2);
                 }
                 if (modificationDetails.length() > 0) {
-                    modificationDetailsJLabel.setText("Modifications: " + modificationDetails);
+                    modificationDetailsJLabel.setText(modificationDetails + MODIFICATIONSLEGEND);
                 }
                 if (identificationsTable.getRowCount() > 1) {
                     identificationsTable.setRowSelectionInterval(0, 0);
