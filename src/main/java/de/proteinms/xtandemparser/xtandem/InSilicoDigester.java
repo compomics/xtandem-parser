@@ -251,7 +251,7 @@ public class InSilicoDigester {
      * @return matchedIons A Vector containing all the matched fragment ions.
      */
     public Vector getMatchedIons(int ionType, Peak[] aPeaks) {
-        Vector matchedIons = new Vector();
+        Vector<FragmentIon> matchedIons = new Vector<FragmentIon>();
         FragmentIon[] theoreticIons = getTheoreticIons(ionType);
 
         for (FragmentIon fragIon : theoreticIons) {
@@ -261,8 +261,6 @@ public class InSilicoDigester {
                 }
             }
         }
-
-
         return matchedIons;
     }
 
