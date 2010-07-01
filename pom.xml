@@ -176,7 +176,7 @@
        <dependency>
             <groupId>com.compomics</groupId>
             <artifactId>utilities</artifactId>
-            <version>3.0</version>
+            <version>3.0.9</version>
             <type>jar</type>
         </dependency>
         <dependency>
