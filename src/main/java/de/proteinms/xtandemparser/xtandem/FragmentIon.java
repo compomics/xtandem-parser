@@ -68,7 +68,7 @@ public class FragmentIon implements Ion {
      * @param aIntensity   The intensity of the fragment ion.
      * @param aType        The type of the fragment ion as defined in the ion interface.
      * @param aNumber      The number of the fragment ion.
-     * @param aType        The type of the fragment ion.
+     * @param aCharge      The charge of the fragment ion.
      * @param aErrorMargin The error margin of the fragment ion.
      */
     public FragmentIon(double aMz, double aIntensity, int aType, int aNumber, int aCharge, double aErrorMargin) {
