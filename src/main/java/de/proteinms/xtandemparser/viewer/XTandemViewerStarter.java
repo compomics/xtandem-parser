@@ -19,7 +19,7 @@ public class XTandemViewerStarter {
     /**
      * The name of the xtandem parser jar file.
      */
-    private String filename = "xtandem-parser-" + XTandemViewer.VERSION + ".jar";
+    private String filename = "xtandem-parser-" + new Properties().getVersion() + ".jar";
     /**
      * If set to true debug output will be written to the screen.
      */

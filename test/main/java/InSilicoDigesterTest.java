@@ -1,11 +1,6 @@
-package main.java;
+package test.main.java;
 
 import de.proteinms.xtandemparser.xtandem.*;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import org.xml.sax.SAXException;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
@@ -114,6 +109,5 @@ public class InSilicoDigesterTest extends TestCase {
             e.printStackTrace();
             fail();
         }
-	}
-
+    }
 }

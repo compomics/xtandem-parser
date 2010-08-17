@@ -36,7 +36,6 @@ public class XTandemViewer extends JFrame {
     // TODO: remove this
     private static boolean useErrorLog = false;
     public final static String APPTITLE = "X!Tandem Viewer";
-    public final static String VERSION = "1.2.2";
     private final static String MODIFICATIONSLEGEND = "  |  <M *> are fixed and <M °> are variable modifications.";
     private String lastSelectedFolder = "user.home";
     private SpectrumPanel spectrumPanel;
@@ -327,7 +326,7 @@ public class XTandemViewer extends JFrame {
      */
     private void aboutTriggered() {
         StringBuffer tMsg = new StringBuffer();
-        tMsg.append(APPTITLE + " " + VERSION);
+        tMsg.append(APPTITLE + " " + new Properties().getVersion());
         tMsg.append("\n");
         tMsg.append("\n");
         tMsg.append("The XTandem parser is a Java project for extracting information from X!Tandem output xml files.");
@@ -344,7 +343,7 @@ public class XTandemViewer extends JFrame {
         tMsg.append("");
         tMsg.append("");
         JOptionPane.showMessageDialog(this, tMsg,
-                "About " + APPTITLE + " " + VERSION, JOptionPane.INFORMATION_MESSAGE);
+                "About " + APPTITLE + " " + new Properties().getVersion(), JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
@@ -705,7 +704,7 @@ public class XTandemViewer extends JFrame {
         this.lastSelectedFolder = lastSelectedFolder;
 
         // Set the title of the application
-        setTitle(APPTITLE + " " + VERSION + "  ---  " + new File(iXTandemFileString).getPath());
+        setTitle(APPTITLE + " " + new Properties().getVersion() + "  ---  " + new File(iXTandemFileString).getPath());
 
         // Thread for the progress dialog.
         final Thread t = new Thread(new Runnable() {

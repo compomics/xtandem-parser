@@ -1,8 +1,7 @@
-package main.java;
+package test.main.java;
 
 import de.proteinms.xtandemparser.xtandem.*;
 import de.proteinms.xtandemparser.interfaces.Modification;
-import junit.framework.Test;
 import junit.framework.TestCase;
 import static junit.framework.Assert.fail;
 import org.xml.sax.SAXException;

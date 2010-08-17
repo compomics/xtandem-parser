@@ -4,10 +4,14 @@
     <groupId>de.proteinms.xtandemparser</groupId>
     <artifactId>xtandem-parser</artifactId>
     <name>xtandem-parser</name>
-    <version>1.2.3</version>
+    <version>${version.number}</version> <!-- version number is set below -->
     <description>XTandem Parser is a Java based parser for extracting information from X!Tandem output XML files.</description>
     <url>http://xtandem-parser.googlecode.com/</url>
 
+    <!-- Set the version number for the whole project -->
+    <properties>
+        <version.number>1.2.3</version.number>
+    </properties>
 
     <!-- License -->
     <licenses>
@@ -47,6 +51,10 @@
         <resources>
             <resource>
                 <directory>./</directory>
+                <includes>
+                    <include>xtandem-parser.properties</include>
+                </includes>
+                <filtering>true</filtering>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
@@ -128,6 +136,10 @@
                                         <include>LICENSE-2.0.txt</include>
                                         <include>xtandem_parser.ico</include>
                                     </includes>
+                                    <excludes>
+                                        <exclude>target/</exclude>
+                                        <exclude>test/</exclude>
+                                    </excludes>
                                 </resource>
                             </resources>
                         </configuration>
@@ -173,7 +185,7 @@
             <artifactId>looks</artifactId>
             <version>2.2.2</version>
         </dependency>
-       <dependency>
+        <dependency>
             <groupId>com.compomics</groupId>
             <artifactId>utilities</artifactId>
             <version>3.0.9</version>
@@ -199,5 +211,5 @@
             <name>Genesis Maven Repository</name>
             <url>scp://genesis.ugent.be/home/maven/public_html/maven2</url>
         </repository>
-    </distributionManagement>    
+    </distributionManagement>
 </project>
