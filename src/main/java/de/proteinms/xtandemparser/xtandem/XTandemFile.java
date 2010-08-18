@@ -331,7 +331,7 @@ public class XTandemFile implements Serializable {
      *
      * @return iSpectraList ArrayList<Spectrum>
      */
-   ArrayList<Spectrum> getSpectraList() {
+   public ArrayList<Spectrum> getSpectraList() {
         if (iSpectraList == null) {
 
             iSpectraNumber = iXTParser.getNumberOfSpectra();
@@ -382,7 +382,7 @@ public class XTandemFile implements Serializable {
      * @param aSpectrumNumber The spectrum number
      * @return Spectrum
      */
-   Spectrum getSpectrum(final int aSpectrumNumber) {
+   public Spectrum getSpectrum(final int aSpectrumNumber) {
         return getSpectraList().get(aSpectrumNumber - 1);
     }
 
