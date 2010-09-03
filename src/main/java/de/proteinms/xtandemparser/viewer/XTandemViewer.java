@@ -835,6 +835,12 @@ public class XTandemViewer extends JFrame {
                     int precursorCharge = spectrum.getPrecursorCharge();
                     double precursorMh = spectrum.getPrecursorMh();
                     String accession = spectrum.getLabel();
+                    boolean identified = false;
+                    if(pepList.isEmpty()) {
+                        identified = false;
+                    } else {
+                        identified = true;
+                    }
                     accMap.put(spectrumNumber, accession);
                     // Add the values to the table (model).
                     ((DefaultTableModel) spectraTable.getModel()).addRow(new Object[]{
@@ -842,7 +848,7 @@ public class XTandemViewer extends JFrame {
                                 label,
                                 precursorMh,
                                 precursorCharge,
-                                true
+                                identified
                             });
 
 
@@ -1979,12 +1985,23 @@ public class XTandemViewer extends JFrame {
 
                 List<Double> mzValues = allMzValues.get(spectraTable.getValueAt(j, 0));
                 List<Double> intensityValues = allIntensityValues.get(spectraTable.getValueAt(j, 0));
+                File currentFile;
+                String spectrum = spectraTable.getValueAt(j, 1).toString();
+                if(spectrum.contains(".")){
+                    spectrum = spectrum.replace(".", "_");
+                }
+                if(spectrum.contains("|")){
+                    spectrum = spectrum.replace("|", "_");
+                }
 
-                File currentFile = new File(selectedFolder, "" + spectraTable.getValueAt(j, 1));
+                spectrum = spectrum.replaceAll("/+", "_");
+                spectrum = spectrum.replaceAll("\\+", "_");
+
+                currentFile = new File(selectedFolder, "" + spectrum +".dta");
 
                 FileWriter f;
 
-                try {
+                try {                                  
                     f = new FileWriter(currentFile);
 
                     double precusorMz = ((Double) spectraTable.getValueAt(j, 2)).doubleValue();
