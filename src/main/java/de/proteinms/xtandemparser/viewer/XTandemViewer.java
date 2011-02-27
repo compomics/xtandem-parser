@@ -5,6 +5,7 @@ import com.jgoodies.looks.Options;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.compomics.util.gui.spectrum.SpectrumPanel;
 import com.compomics.util.gui.spectrum.DefaultSpectrumAnnotation;
+import com.compomics.util.protein.Header;
 import de.proteinms.xtandemparser.interfaces.Modification;
 import de.proteinms.xtandemparser.xtandem.*;
 import org.jdesktop.swingx.JXTable;
@@ -33,8 +34,7 @@ public class XTandemViewer extends JFrame {
      * If set to true, all print outs (both standard and error) will be sent to
      * the ErrorLog.txt file in the Properties folder.
      */
-    // TODO: remove this
-    private static boolean useErrorLog = false;
+    private static boolean useErrorLog = true;
     public final static String APPTITLE = "X!Tandem Viewer";
     private final static String MODIFICATIONSLEGEND = "  |  <M *> are fixed and <M °> are variable modifications.";
     private String lastSelectedFolder = "user.home";
@@ -52,7 +52,8 @@ public class XTandemViewer extends JFrame {
     private JCheckBox aIonsJCheckBox, bIonsJCheckBox, cIonsJCheckBox, chargeOneJCheckBox,
             chargeTwoJCheckBox, chargeOverTwoJCheckBox, xIonsJCheckBox, yIonsJCheckBox, zIonsJCheckBox;
     private JLabel modificationDetailsJLabel;
-    private JScrollPane jScrollPane1; private JScrollPane jScrollPane3;
+    private JScrollPane jScrollPane1;
+    private JScrollPane jScrollPane3;
     private JSeparator jSeparator1, jSeparator2;
     private JXTable identificationsTable, spectraTable, spectrumJXTable;
     private JPanel jPanel1, jPanel2, jPanel3, jPanel4, spectrumJPanel;
@@ -78,7 +79,7 @@ public class XTandemViewer extends JFrame {
                 path = path + "/Properties/ErrorLog.txt";
                 path = path.replace("%20", " ");
 
-                File file = new File(path);    
+                File file = new File(path);
                 System.setOut(new java.io.PrintStream(new FileOutputStream(file, true)));
                 System.setErr(new java.io.PrintStream(new FileOutputStream(file, true)));
 
@@ -94,8 +95,8 @@ public class XTandemViewer extends JFrame {
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(
-                        null, "An error occured when trying to create the ErrorLog." +
-                        "See ../Properties/ErrorLog.txt for more details.",
+                        null, "An error occured when trying to create the ErrorLog."
+                        + "See ../Properties/ErrorLog.txt for more details.",
                         "Error Creating ErrorLog", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
             }
@@ -159,6 +160,7 @@ public class XTandemViewer extends JFrame {
         identificationsJXTableColumnToolTips.add("Theoretical Mass");
         identificationsJXTableColumnToolTips.add("E-value");
         identificationsJXTableColumnToolTips.add("Protein Accession Number");
+        identificationsJXTableColumnToolTips.add("Protein Description");
         setMinimumSize(new Dimension(900, 600));
         setLocationRelativeTo(null);
         setVisible(true);
@@ -373,8 +375,8 @@ public class XTandemViewer extends JFrame {
         };
         jPanel2 = new javax.swing.JPanel();
         modificationDetailsJLabel = new javax.swing.JLabel();
-        JLabel jLabel1=new JLabel();
-        JScrollPane jScrollPane4=new JScrollPane();
+        JLabel jLabel1 = new JLabel();
+        JScrollPane jScrollPane4 = new JScrollPane();
         identificationsTable = new JXTable() {
 
             @Override
@@ -487,14 +489,14 @@ public class XTandemViewer extends JFrame {
         identificationsTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{
-                    " ", "Sequence", "Modified Sequence", "Start", "End", "Exp. Mass", "Theo. Mass", "E-value", "Accession"
+                    " ", "Sequence", "Modified Sequence", "Start", "End", "Exp. Mass", "Theo. Mass", "E-value", "Accession", "Description"
                 }) {
 
             Class[] types = new Class[]{
-                Integer.class, String.class, String.class, Integer.class, Integer.class, Double.class, Double.class, Float.class, Float.class, String.class, String.class
+                Integer.class, String.class, String.class, Integer.class, Integer.class, Double.class, Double.class, Float.class, Float.class, String.class, String.class, String.class
             };
             boolean[] canEdit = new boolean[]{
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             @Override
@@ -753,8 +755,8 @@ public class XTandemViewer extends JFrame {
                 } catch (OutOfMemoryError error) {
                     Runtime.getRuntime().gc();
                     JOptionPane.showMessageDialog(null,
-                            "The task used up all the available memory and had to be stopped.\n" +
-                            "Memory boundaries are set in ../Properties/JavaOptions.txt.",
+                            "The task used up all the available memory and had to be stopped.\n"
+                            + "Memory boundaries are set in ../Properties/JavaOptions.txt.",
                             "Out of Memory Error",
                             JOptionPane.ERROR_MESSAGE);
                     error.printStackTrace();
@@ -762,9 +764,9 @@ public class XTandemViewer extends JFrame {
                 } catch (SAXException saxException) {
                     saxException.getMessage();
                     JOptionPane.showMessageDialog(null,
-                            "Error during parsing the xml file!\n" +
-                            saxException.getMessage() + "\n" +
-                            "Please load xml file in correct format...",
+                            "Error during parsing the xml file!\n"
+                            + saxException.getMessage() + "\n"
+                            + "Please load xml file in correct format...",
                             "Parser error",
                             JOptionPane.ERROR_MESSAGE);
                     System.exit(0);
@@ -802,7 +804,7 @@ public class XTandemViewer extends JFrame {
                     for (Peptide peptide : pepList) {
 
                         Protein protein = protMap.getProteinWithPeptideID(peptide.getDomainID());
-                        if (protein != null){
+                        if (protein != null) {
                             String protAccession = protein.getLabel();
                             proteinLabelMap.put(peptide.getDomainID(), protAccession);
                         }
@@ -827,7 +829,7 @@ public class XTandemViewer extends JFrame {
                     SupportData supportData = iXTandemFile.getSupportData(spectrumNumber);
 
                     // Fill the peptide map: for each spectrum get the corressponding peptide list.
-                    peptideMap.put(spectrumNumber, pepList);                 
+                    peptideMap.put(spectrumNumber, pepList);
 
 
                     //int spectrumID = spectrum.getSpectrumId();
@@ -836,7 +838,7 @@ public class XTandemViewer extends JFrame {
                     double precursorMh = spectrum.getPrecursorMh();
                     String accession = spectrum.getLabel();
                     boolean identified = false;
-                    if(pepList.isEmpty()) {
+                    if (pepList.isEmpty()) {
                         identified = false;
                     } else {
                         identified = true;
@@ -851,7 +853,6 @@ public class XTandemViewer extends JFrame {
                                 identified
                             });
 
-
                     // Initialize the array lists
                     ArrayList<Double> mzValues;
                     ArrayList<Double> intensityValues;
@@ -864,13 +865,16 @@ public class XTandemViewer extends JFrame {
                     // Fill the maps
                     allMzValues.put(new Integer(spectrumNumber), mzValues);
                     allIntensityValues.put(new Integer(spectrumNumber), intensityValues);
-
-
-
                 }
                 spectraTable.setSortable(true);
                 progressDialog.setVisible(false);
                 progressDialog.dispose();
+
+                // select the first row in the spectra files table
+                if (spectraTable.getRowCount() > 0) {
+                    spectraTable.setRowSelectionInterval(0, 0);
+                    spectraJXTableMouseClicked(null);
+                }
             }
         }.start();
     }
@@ -1017,14 +1021,14 @@ public class XTandemViewer extends JFrame {
 
             int selectedRow = 0;
 
-            if (identificationsTable.getRowCount() > 1 &&
-                    identificationsTable.getSelectedRow() != -1) {
+            if (identificationsTable.getRowCount() > 1
+                    && identificationsTable.getSelectedRow() != -1) {
                 selectedRow = identificationsTable.getSelectedRow();
             }
 
             Vector<DefaultSpectrumAnnotation> currentAnnotations = allAnnotations.get(
-                    identificationsTable.getValueAt(selectedRow, 1) + "_" +
-                    identificationsTable.getValueAt(selectedRow, 7));
+                    identificationsTable.getValueAt(selectedRow, 1) + "_"
+                    + identificationsTable.getValueAt(selectedRow, 7));
 
             spectrumPanel.setAnnotations(filterAnnotations(currentAnnotations));
             spectrumPanel.validate();
@@ -1092,7 +1096,7 @@ public class XTandemViewer extends JFrame {
                     ((Double) spectraTable.getValueAt(row, 2)),
                     "" + spectraTable.getValueAt(row, 3),
                     ((String) spectraTable.getValueAt(row, 1)),
-                    60, true, false);
+                    60, false);
 
             spectrumJPanel.add(spectrumPanel);
             spectrumJPanel.validate();
@@ -1141,7 +1145,7 @@ public class XTandemViewer extends JFrame {
 
                             for (int j = 0; j < modRes.length; j++) {
                                 if (modRes[j] > 0) {
-                                    modifications[j] += "<" + "M" + modRes[j] +"*" + ">";
+                                    modifications[j] += "<" + "M" + modRes[j] + "*" + ">";
                                 }
                             }
                         }
@@ -1153,11 +1157,11 @@ public class XTandemViewer extends JFrame {
                             int[] modRes = new int[domain.getDomainSequence().length()];
 
                             int modIndex = Integer.parseInt(varMod.getLocation()) - domain.getDomainStart();
-                            modRes[modIndex] = varMod.getNumber();                           
+                            modRes[modIndex] = varMod.getNumber();
 
                             for (int j = 0; j < modRes.length; j++) {
                                 if (modRes[j] > 0) {
-                                    modifications[j] += "<" + "M" + modRes[j] +"°" + ">";
+                                    modifications[j] += "<" + "M" + modRes[j] + "°" + ">";
                                 }
                             }
                         }
@@ -1174,16 +1178,16 @@ public class XTandemViewer extends JFrame {
                                 String currentMod = residues[j] + ">";
                                 int fixModIndex = 0;
                                 int varModIndex = 0;
-                                if (currentMod.length() > 0){                                    
-                                    if(currentMod.contains("*")){
-                                        fixModIndex = (Integer.parseInt(currentMod.substring(2,3)) - 1);
-                                    } else if(currentMod.contains("°")){
-                                        varModIndex = (Integer.parseInt(currentMod.substring(2,3)) - 1);
+                                if (currentMod.length() > 0) {
+                                    if (currentMod.contains("*")) {
+                                        fixModIndex = (Integer.parseInt(currentMod.substring(2, 3)) - 1);
+                                    } else if (currentMod.contains("°")) {
+                                        varModIndex = (Integer.parseInt(currentMod.substring(2, 3)) - 1);
                                     }
                                 }
 
                                 if (modificationDetails.lastIndexOf(currentMod) == -1) {
-                                    if (fixedModList.size() > 0 && currentMod.contains("*")) {                                        
+                                    if (fixedModList.size() > 0 && currentMod.contains("*")) {
                                         modificationDetails += currentMod + " " + fixedModList.get(fixModIndex).getName() + ", ";
                                     } else if (varModList.size() > 0 && currentMod.contains("°")) {
                                         modificationDetails += currentMod + " " + varModList.get(varModIndex).getName() + ", ";
@@ -1210,7 +1214,7 @@ public class XTandemViewer extends JFrame {
                         cTerminal = "-" + cTerminal;
                     }
 
-                    int[][] ionCoverage = new int[sequence.length()+1][12];
+                    int[][] ionCoverage = new int[sequence.length() + 1][12];
 
                     Vector<DefaultSpectrumAnnotation> currentAnnotations = new Vector();
                     for (int i = 0; i < 12; i++) {
@@ -1263,11 +1267,11 @@ public class XTandemViewer extends JFrame {
                             }
                             // Use standard ion type names, such as y5++
                             String ionDesc = ion.getLetter();
-                            if (ionNumber >0) {
-                            ionDesc += ionNumber;
+                            if (ionNumber > 0) {
+                                ionDesc += ionNumber;
                             }
                             if (ion.getCharge() > 1) {
-                                for (int j=0 ; j < ion.getCharge() ; j++) {
+                                for (int j = 0; j < ion.getCharge(); j++) {
                                     ionDesc += "+";
                                 }
                             }
@@ -1290,27 +1294,27 @@ public class XTandemViewer extends JFrame {
 
                     // Process termini.
                     // B1 ion (N-terminal residue)
-                    if(ionCoverage[1][3] > 0 || ionCoverage[1][4] > 0 || ionCoverage[1][5] > 0) {
+                    if (ionCoverage[1][3] > 0 || ionCoverage[1][4] > 0 || ionCoverage[1][5] > 0) {
                         ionCoverageProcessed[0][0] = 1;
                     }
                     // Y1 ion (C-terminal residue)
-                    if(ionCoverage[1][8] > 0 || ionCoverage[1][9] > 0 || ionCoverage[1][10] > 0) {
+                    if (ionCoverage[1][8] > 0 || ionCoverage[1][9] > 0 || ionCoverage[1][10] > 0) {
                         ionCoverageProcessed[ionCoverage.length - 2][1] = 1;
                     }
                     // Last B-ion (C-terminal residue)
-                    if(ionCoverage[ionCoverage.length-1][3] > 0 || ionCoverage[ionCoverage.length-1][4] > 0 || ionCoverage[ionCoverage.length-1][5] > 0) {
-                        ionCoverageProcessed[ionCoverage.length-2][0] = 1;
+                    if (ionCoverage[ionCoverage.length - 1][3] > 0 || ionCoverage[ionCoverage.length - 1][4] > 0 || ionCoverage[ionCoverage.length - 1][5] > 0) {
+                        ionCoverageProcessed[ionCoverage.length - 2][0] = 1;
                     }
                     // Last Y-ion (N-terminal residue)
-                    if(ionCoverage[ionCoverage.length-1][8] > 0 || ionCoverage[ionCoverage.length-1][9] > 0 || ionCoverage[ionCoverage.length-1][10] > 0) {
+                    if (ionCoverage[ionCoverage.length - 1][8] > 0 || ionCoverage[ionCoverage.length - 1][9] > 0 || ionCoverage[ionCoverage.length - 1][10] > 0) {
                         ionCoverageProcessed[0][1] = 1;
                     }
 
-                    for (int i = 2; i < ionCoverage.length-1; i++) {
+                    for (int i = 2; i < ionCoverage.length - 1; i++) {
                         if (ionCoverage[i][3] > 0 && ionCoverage[i - 1][3] > 0 || ionCoverage[i][4] > 0 && ionCoverage[i - 1][4] > 0 || ionCoverage[i][5] > 0 && ionCoverage[i - 1][5] > 0) {
-                            ionCoverageProcessed[i-1][0] = 1;
+                            ionCoverageProcessed[i - 1][0] = 1;
                         } else {
-                            ionCoverageProcessed[i-1][0] = 0;
+                            ionCoverageProcessed[i - 1][0] = 0;
                         }
 
                         if (ionCoverage[i][8] > 0 && ionCoverage[i - 1][8] > 0 || ionCoverage[i][9] > 0 && ionCoverage[i - 1][9] > 0 || ionCoverage[i][10] > 0 && ionCoverage[i - 1][10] > 0) {
@@ -1395,8 +1399,12 @@ public class XTandemViewer extends JFrame {
 
                     // Calculate the theoretical mass of the domain
                     double theoMass = (domain.getDomainMh() + domain.getDomainDeltaMh());
-                    //String accession = accMap.get((Integer) spectraTable.getValueAt(row, 0));
-                    String accession = proteinLabelMap.get(domain.getDomainID());
+
+                    // parse the header
+                    Header header = Header.parseFromFASTA(proteinLabelMap.get(domain.getDomainID()));
+                    String accession = header.getAccession();
+                    String description = header.getDescription();
+
                     ((DefaultTableModel) identificationsTable.getModel()).addRow(new Object[]{
                                 (Integer) spectraTable.getValueAt(row, 0),
                                 sequence,
@@ -1406,7 +1414,8 @@ public class XTandemViewer extends JFrame {
                                 new Double(domain.getDomainMh()),
                                 new Double(theoMass),
                                 new Float(domain.getDomainExpect()),
-                                accession,});
+                                accession,
+                                description});
                 }
                 if (modificationDetails.endsWith(", ")) {
                     modificationDetails = modificationDetails.substring(0, modificationDetails.length() - 2);
@@ -1449,8 +1458,8 @@ public class XTandemViewer extends JFrame {
 
             while (selectedFile.exists()) {
                 int option = JOptionPane.showConfirmDialog(this,
-                        "The  file " + chooser.getSelectedFile().getName() +
-                        " already exists. Replace file?",
+                        "The  file " + chooser.getSelectedFile().getName()
+                        + " already exists. Replace file?",
                         "Replace File?", JOptionPane.YES_NO_CANCEL_OPTION);
 
                 if (option == JOptionPane.NO_OPTION) {
@@ -1550,8 +1559,8 @@ public class XTandemViewer extends JFrame {
 
             while (selectedFile.exists()) {
                 int option = JOptionPane.showConfirmDialog(this,
-                        "The  file " + chooser.getSelectedFile().getName() +
-                        " already exists. Replace file?",
+                        "The  file " + chooser.getSelectedFile().getName()
+                        + " already exists. Replace file?",
                         "Replace File?", JOptionPane.YES_NO_CANCEL_OPTION);
 
                 if (option == JOptionPane.NO_OPTION) {
@@ -1631,36 +1640,36 @@ public class XTandemViewer extends JFrame {
                         ArrayList<Modification> varModList = allVarMods.get(domain.getDomainID());
 
                         // Handle fixed modifications
-                    if (fixedModList != null) {
-                        for (int i = 0; i < fixedModList.size(); i++) {
-                            FixedModification fixMod = (FixedModification) fixedModList.get(i);
-                            int[] modRes = new int[domain.getDomainSequence().length()];
-                            int modIndex = Integer.parseInt(fixMod.getLocation()) - domain.getDomainStart();
-                            modRes[modIndex] = fixMod.getNumber();
+                        if (fixedModList != null) {
+                            for (int i = 0; i < fixedModList.size(); i++) {
+                                FixedModification fixMod = (FixedModification) fixedModList.get(i);
+                                int[] modRes = new int[domain.getDomainSequence().length()];
+                                int modIndex = Integer.parseInt(fixMod.getLocation()) - domain.getDomainStart();
+                                modRes[modIndex] = fixMod.getNumber();
 
-                            for (int j = 0; j < modRes.length; j++) {
-                                if (modRes[j] > 0) {
-                                    modifications[j] += "<" + "M" + modRes[j] +"*" + ">";
+                                for (int j = 0; j < modRes.length; j++) {
+                                    if (modRes[j] > 0) {
+                                        modifications[j] += "<" + "M" + modRes[j] + "*" + ">";
+                                    }
                                 }
                             }
                         }
-                    }
-                    // Handle variable modifications
-                    if (varModList != null) {
-                        for (int i = 0; i < varModList.size(); i++) {
-                            VariableModification varMod = (VariableModification) varModList.get(i);
-                            int[] modRes = new int[domain.getDomainSequence().length()];
+                        // Handle variable modifications
+                        if (varModList != null) {
+                            for (int i = 0; i < varModList.size(); i++) {
+                                VariableModification varMod = (VariableModification) varModList.get(i);
+                                int[] modRes = new int[domain.getDomainSequence().length()];
 
-                            int modIndex = Integer.parseInt(varMod.getLocation()) - domain.getDomainStart();
-                            modRes[modIndex] = varMod.getNumber();
+                                int modIndex = Integer.parseInt(varMod.getLocation()) - domain.getDomainStart();
+                                modRes[modIndex] = varMod.getNumber();
 
-                            for (int j = 0; j < modRes.length; j++) {
-                                if (modRes[j] > 0) {
-                                    modifications[j] += "<" + "M" + modRes[j] +"*" + ">";
+                                for (int j = 0; j < modRes.length; j++) {
+                                    if (modRes[j] > 0) {
+                                        modifications[j] += "<" + "M" + modRes[j] + "*" + ">";
+                                    }
                                 }
                             }
                         }
-                    }
 
                         // Cycle through all the modifications and extract the modification type if possible
                         for (int i = 0; i < modifications.length; i++) {
@@ -1830,16 +1839,16 @@ public class XTandemViewer extends JFrame {
                         double theoMass = (domain.getDomainMh() + domain.getDomainDeltaMh());
                         String accession = proteinLabelMap.get(domain.getDomainID());
 
-                        f.write(domain.getSpectrumNumber() + "\t" +
-                                sequence + "\t" +
-                                modifiedSequence + "\t" +
-                                modifiedSequenceColorCoded + "\t" +
-                                domain.getDomainStart() + "\t" +
-                                domain.getDomainEnd() + "\t" +
-                                new Double(domain.getDomainMh()) + "\t" +
-                                theoMass + "\t" +
-                                new Float(domain.getDomainExpect()) + "\t" +
-                                accession + "\n");
+                        f.write(domain.getSpectrumNumber() + "\t"
+                                + sequence + "\t"
+                                + modifiedSequence + "\t"
+                                + modifiedSequenceColorCoded + "\t"
+                                + domain.getDomainStart() + "\t"
+                                + domain.getDomainEnd() + "\t"
+                                + new Double(domain.getDomainMh()) + "\t"
+                                + theoMass + "\t"
+                                + new Float(domain.getDomainExpect()) + "\t"
+                                + accession + "\n");
                     }
                 }
 
@@ -1884,8 +1893,8 @@ public class XTandemViewer extends JFrame {
 
             while (selectedFile.exists()) {
                 int option = JOptionPane.showConfirmDialog(this,
-                        "The  file " + chooser.getSelectedFile().getName() +
-                        " already exists. Replace file?",
+                        "The  file " + chooser.getSelectedFile().getName()
+                        + " already exists. Replace file?",
                         "Replace File?", JOptionPane.YES_NO_CANCEL_OPTION);
 
                 if (option == JOptionPane.NO_OPTION) {
@@ -1987,27 +1996,27 @@ public class XTandemViewer extends JFrame {
                 List<Double> intensityValues = allIntensityValues.get(spectraTable.getValueAt(j, 0));
                 File currentFile;
                 String spectrum = spectraTable.getValueAt(j, 1).toString();
-                if(spectrum.contains(".")){
+                if (spectrum.contains(".")) {
                     spectrum = spectrum.replace(".", "_");
                 }
-                if(spectrum.contains("|")){
+                if (spectrum.contains("|")) {
                     spectrum = spectrum.replace("|", "_");
                 }
 
                 spectrum = spectrum.replaceAll("/+", "_");
                 spectrum = spectrum.replaceAll("\\+", "_");
 
-                currentFile = new File(selectedFolder, "" + spectrum +".dta");
+                currentFile = new File(selectedFolder, "" + spectrum + ".dta");
 
                 FileWriter f;
 
-                try {                                  
+                try {
                     f = new FileWriter(currentFile);
 
                     double precusorMz = ((Double) spectraTable.getValueAt(j, 2)).doubleValue();
                     int precursorCharge = ((Integer) spectraTable.getValueAt(j, 3)).intValue();
-                    double precursorMh = precusorMz * precursorCharge -
-                            precursorCharge * Masses.Hydrogen + Masses.Hydrogen;
+                    double precursorMh = precusorMz * precursorCharge
+                            - precursorCharge * Masses.Hydrogen + Masses.Hydrogen;
 
                     f.write("" + precursorMh);
                     f.write(" " + precursorCharge + "\n");
