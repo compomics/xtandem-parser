@@ -10,7 +10,7 @@
 
     <!-- Set the version number for the whole project -->
     <properties>
-        <version.number>1.2.6</version.number>
+        <version.number>1.2.7</version.number>
     </properties>
 
     <!-- License -->
@@ -187,7 +187,7 @@
         <dependency>
             <groupId>com.compomics</groupId>
             <artifactId>utilities</artifactId>
-            <version>3.0.40</version>
+            <version>3.0.46</version>
             <type>jar</type>
             <exclusions>
                 <exclusion>
