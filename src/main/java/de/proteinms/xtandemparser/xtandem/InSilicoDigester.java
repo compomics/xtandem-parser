@@ -103,6 +103,11 @@ public class InSilicoDigester {
     private final ModificationMap iModMap;
 
     /**
+     * The domain (identification) variable.
+     */
+    private Domain iDomain;
+
+    /**
      * Constructor get a peptide object, the modification map, the input parameters and the masses map.
      *
      * @param aPeptide A peptide object which should be "in silico" digested.
@@ -110,9 +115,10 @@ public class InSilicoDigester {
      * @param aMasses  Masses map to know which amino acid has which mass.
      * @param aCharge The charge of the given peptide.
      */
-    public InSilicoDigester(Peptide aPeptide, ModificationMap aModMap, HashMap aMasses, int aCharge) {
+    public InSilicoDigester(Peptide aPeptide, Domain aDomain, ModificationMap aModMap, HashMap aMasses, int aCharge) {
         iPeptide = aPeptide;
-        iSequence = iPeptide.getDomainSequence();
+        iDomain = aDomain;
+        iSequence = aDomain.getDomainSequence();
         iModMap = aModMap;
         iMasses = aMasses;
         iPeptideCharge = aCharge;
@@ -149,10 +155,10 @@ public class InSilicoDigester {
             mass = 0.0;
 
             // Add the fixed modifications masses (N and C term included)
-            List<Modification> fixModList = iModMap.getFixedModifications(iPeptide.getDomainID());
+            List<Modification> fixModList = iModMap.getFixedModifications(iDomain.getDomainID());
             if (fixModList.size() > 0) {
                 for (Modification fixMod : fixModList) {
-                    int modIndex = (Integer.parseInt(fixMod.getLocation()) - iPeptide.getDomainStart());
+                    int modIndex = (Integer.parseInt(fixMod.getLocation()) - iDomain.getDomainStart());
                     if (modIndex == i) {
                         mass += fixMod.getMass();
                     }
@@ -160,10 +166,10 @@ public class InSilicoDigester {
             }
 
             // Add the the variable modification masses (N and C term included)
-            List<Modification> varModList = iModMap.getVariableModifications(iPeptide.getDomainID());
+            List<Modification> varModList = iModMap.getVariableModifications(iDomain.getDomainID());
             if (varModList.size() > 0) {
                 for (Modification varMod : varModList) {
-                    int modIndex = (Integer.parseInt(varMod.getLocation()) - iPeptide.getDomainStart());
+                    int modIndex = (Integer.parseInt(varMod.getLocation()) - iDomain.getDomainStart());
                     if (modIndex == i) {
                         mass += varMod.getMass();
                     }
@@ -200,9 +206,9 @@ public class InSilicoDigester {
         int cptb = 0;
         int cpty = 0;
         for (int charge = 1; charge <= iPeptideCharge; charge++) {
-            iMH[charge - 1] = new FragmentIon((iPeptide.getDomainMh() + (charge - 1) * hydrogenMass) / charge, FragmentIon.MH_ION, 0, charge, iFragmentMassError);            
-            iMHH2O[charge - 1] = new FragmentIon((iPeptide.getDomainMh() - oxygenMass - 2 * hydrogenMass + (charge - 1) * hydrogenMass) / charge, FragmentIon.MHH2O_ION, 0, charge, iFragmentMassError);
-            iMHNH3[charge - 1] = new FragmentIon((iPeptide.getDomainMh() - nitrogenMass - 3 * hydrogenMass + (charge - 1) * hydrogenMass) / charge, FragmentIon.MHNH3_ION, 0, charge, iFragmentMassError);
+            iMH[charge - 1] = new FragmentIon((iDomain.getDomainMh() + (charge - 1) * hydrogenMass) / charge, FragmentIon.MH_ION, 0, charge, iFragmentMassError);
+            iMHH2O[charge - 1] = new FragmentIon((iDomain.getDomainMh() - oxygenMass - 2 * hydrogenMass + (charge - 1) * hydrogenMass) / charge, FragmentIon.MHH2O_ION, 0, charge, iFragmentMassError);
+            iMHNH3[charge - 1] = new FragmentIon((iDomain.getDomainMh() - nitrogenMass - 3 * hydrogenMass + (charge - 1) * hydrogenMass) / charge, FragmentIon.MHNH3_ION, 0, charge, iFragmentMassError);
 
             for (int i = 0; i < length; i++) {
                 double bMass = 0.0;

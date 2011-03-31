@@ -802,27 +802,30 @@ public class XTandemViewer extends JFrame {
                     // Get the peptide hits.
                     ArrayList<Peptide> pepList = pepMap.getAllPeptides(spectrumNumber);
                     for (Peptide peptide : pepList) {
+                        List<Domain> domainList = peptide.getDomains();
+                        for (Domain domain : domainList) {
+                            Protein protein = protMap.getProteinWithPeptideID(domain.getDomainID());
+                            if (protein != null) {
+                                String protAccession = protein.getLabel();
+                                proteinLabelMap.put(domain.getDomainID(), protAccession);
+                            }
 
-                        Protein protein = protMap.getProteinWithPeptideID(peptide.getDomainID());
-                        if (protein != null) {
-                            String protAccession = protein.getLabel();
-                            proteinLabelMap.put(peptide.getDomainID(), protAccession);
+                            // Do the modifications
+                            ArrayList<Modification> fixModList = iXTandemFile.getModificationMap().getFixedModifications(domain.getDomainID());
+                            ArrayList<Modification> varModList = iXTandemFile.getModificationMap().getVariableModifications(domain.getDomainID());
+                            allFixMods.put(domain.getDomainID(), fixModList);
+                            allVarMods.put(domain.getDomainID(), varModList);
+
+                            // Get the fragment ions
+                            Vector IonVector = iXTandemFile.getFragmentIonsForPeptide(peptide, domain);
+
+                            // Get all the ion types from the vector
+                            for (int i = 0; i < IonVector.size(); i++) {
+                                FragmentIon[] ions = (FragmentIon[]) IonVector.get(i);
+                                ionsMap.put(domain.getDomainID() + "_" + i, ions);
+                            }
                         }
 
-                        // Do the modifications
-                        ArrayList<Modification> fixModList = iXTandemFile.getModificationMap().getFixedModifications(peptide.getDomainID());
-                        ArrayList<Modification> varModList = iXTandemFile.getModificationMap().getVariableModifications(peptide.getDomainID());
-                        allFixMods.put(peptide.getDomainID(), fixModList);
-                        allVarMods.put(peptide.getDomainID(), varModList);
-
-                        // Get the fragment ions
-                        Vector IonVector = iXTandemFile.getFragmentIonsForPeptide(peptide);
-
-                        // Get all the ion types from the vector
-                        for (int i = 0; i < IonVector.size(); i++) {
-                            FragmentIon[] ions = (FragmentIon[]) IonVector.get(i);
-                            ionsMap.put(peptide.getDomainID() + "_" + i, ions);
-                        }
                     }
 
                     // Get the support data for each spectrum.
@@ -1114,15 +1117,18 @@ public class XTandemViewer extends JFrame {
 
             // Iterate over all the peptides as identifications (domains)
             if (peptideMap.get(spectraTable.getValueAt(row, 0)) != null) {
-                ArrayList<Peptide> domainList = peptideMap.get(spectraTable.getValueAt(row, 0));
-                Iterator domainIter = domainList.iterator();
+                ArrayList<Peptide> pepList = peptideMap.get(spectraTable.getValueAt(row, 0));
+                Iterator pepIter = pepList.iterator();
 
                 String modificationDetails = "";
 
-                while (domainIter.hasNext()) {
+                while (pepIter.hasNext()) {
 
-                    Peptide domain = (Peptide) domainIter.next();
-                    String sequence = domain.getDomainSequence();
+                    Peptide peptide = (Peptide) pepIter.next();
+                    List<Domain> domainList = peptide.getDomains();
+
+                    for (Domain domain : domainList){
+                               String sequence = domain.getDomainSequence();
 
                     String[] modifications = new String[sequence.length()];
                     for (int i = 0; i < modifications.length; i++) {
@@ -1417,6 +1423,8 @@ public class XTandemViewer extends JFrame {
                                 accession,
                                 description});
                 }
+                    }
+
                 if (modificationDetails.endsWith(", ")) {
                     modificationDetails = modificationDetails.substring(0, modificationDetails.length() - 2);
                 }
@@ -1624,9 +1632,12 @@ public class XTandemViewer extends JFrame {
 
                 while (iter.hasNext()) {
 
-                    ArrayList<Peptide> list = peptideMap.get(iter.next().getSpectrumNumber());
-                    for (Peptide domain : list) {
-                        String sequence = domain.getDomainSequence();
+                    ArrayList<Peptide> pepList = peptideMap.get(iter.next().getSpectrumNumber());
+                    for (Peptide peptide : pepList) {
+
+                        List<Domain> domainList = peptide.getDomains();
+                        for(Domain domain: domainList){
+                                  String sequence = domain.getDomainSequence();
 
                         String[] modifications = new String[sequence.length()];
                         for (int i = 0; i < modifications.length; i++) {
@@ -1839,7 +1850,7 @@ public class XTandemViewer extends JFrame {
                         double theoMass = (domain.getDomainMh() + domain.getDomainDeltaMh());
                         String accession = proteinLabelMap.get(domain.getDomainID());
 
-                        f.write(domain.getSpectrumNumber() + "\t"
+                        f.write(peptide.getSpectrumNumber() + "\t"
                                 + sequence + "\t"
                                 + modifiedSequence + "\t"
                                 + modifiedSequenceColorCoded + "\t"
@@ -1850,6 +1861,8 @@ public class XTandemViewer extends JFrame {
                                 + new Float(domain.getDomainExpect()) + "\t"
                                 + accession + "\n");
                     }
+                        }
+
                 }
 
                 f.close();

@@ -174,11 +174,11 @@ public class XTandemFile implements Serializable {
      * @param peptide The given peptide
      * @return Vector The vector containing b ions and y ions
      */
-    public Vector getFragmentIonsForPeptide(Peptide peptide) {
+    public Vector getFragmentIonsForPeptide(Peptide peptide, Domain domain) {
         Vector<Ion[]> fragIons = new Vector();
         int charge = getSpectrum(peptide.getSpectrumNumber()).getPrecursorCharge();
         // Get an instance of the InSilicoDigester
-        InSilicoDigester digester = new InSilicoDigester(peptide, this.getModificationMap(), getMassesMap(), charge);
+        InSilicoDigester digester = new InSilicoDigester(peptide, domain, this.getModificationMap(), getMassesMap(), charge);
 
         // The vector should contain two arrays: b ions & y ions
         SupportData supData = this.getSupportData(peptide.getSpectrumNumber());

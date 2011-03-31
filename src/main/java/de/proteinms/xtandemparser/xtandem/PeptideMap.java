@@ -4,6 +4,7 @@ import de.proteinms.xtandemparser.interfaces.Ion;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * This class holds the peptide informatin in a map.
@@ -54,41 +55,52 @@ public class PeptideMap implements Serializable {
             for (int i = 1; i <= aNumberOfSpectra; i++) {
 
                 // The counter for the peptides
-                int counter = 1;
+                int pCount = 1;
 
                 // Check if there are any values given out of the map
-                while (aRawPeptideMap.get("s" + i + "_p" + counter) != null) {
+                while (aRawPeptideMap.get("s" + i + "_p" + pCount) != null) {
 
                     // The peptide id is consists of s + spectrum# + _p + peptide#
-                    String peptideID = ("s" + i + "_p" + counter).toString();
-                    int peptideStart = Integer.parseInt(aRawPeptideMap.get("start" + "_s" + i + "_p" + counter).toString());
-                    int peptideEnd = Integer.parseInt(aRawPeptideMap.get("end" + "_s" + i + "_p" + counter).toString());
-                    String sequence = aRawPeptideMap.get("seq" + "_s" + i + "_p" + counter).toString().trim();
+                    String peptideID = ("s" + i + "_p" + pCount).toString();                    
+                    int peptideStart = Integer.parseInt(aRawPeptideMap.get("start" + "_s" + i + "_p" + pCount).toString());
+                    int peptideEnd = Integer.parseInt(aRawPeptideMap.get("end" + "_s" + i + "_p" + pCount).toString());
+                    String sequence = aRawPeptideMap.get("seq" + "_s" + i + "_p" + pCount).toString().trim();
 
                     // Create an instance of a protein.
                     Peptide peptide = new Peptide(peptideID, peptideStart, peptideEnd, sequence);
-
                     // Set the domain values
                     peptide.setSpectrumNumber(i);
-                    peptide.setDomainID(aRawPeptideMap.get("domainid" + "_s" + i + "_p" + counter).toString());
-                    peptide.setDomainStart(Integer.parseInt(aRawPeptideMap.get("domainstart" + "_s" + i + "_p" + counter).toString()));
-                    peptide.setDomainEnd(Integer.parseInt(aRawPeptideMap.get("domainend" + "_s" + i + "_p" + counter).toString()));
-                    peptide.setDomainExpect(Double.parseDouble(aRawPeptideMap.get("expect" + "_s" + i + "_p" + counter).toString()));
-                    peptide.setDomainMh(Double.parseDouble(aRawPeptideMap.get("mh" + "_s" + i + "_p" + counter).toString()));
-                    peptide.setDomainDeltaMh(Double.parseDouble(aRawPeptideMap.get("delta" + "_s" + i + "_p" + counter).toString()));
-                    peptide.setDomainHyperScore(Double.parseDouble(aRawPeptideMap.get("hyperscore" + "_s" + i + "_p" + counter).toString()));
-                    peptide.setDomainNextScore(Double.parseDouble(aRawPeptideMap.get("nextscore" + "_s" + i + "_p" + counter).toString()));              
-                    peptide.setUpFlankSequence(aRawPeptideMap.get("pre" + "_s" + i + "_p" + counter).toString());
-                    peptide.setDownFlankSequence(aRawPeptideMap.get("post" + "_s" + i + "_p" + counter).toString());
-                    peptide.setDomainSequence(aRawPeptideMap.get("domainseq" + "_s" + i + "_p" + counter).toString());
-                    peptide.setMissedCleavages(Integer.parseInt(aRawPeptideMap.get("missed_cleavages" + "_s" + i + "_p" + counter).toString()));
 
-                    // Put the peptide into the map, value is the id.
+                    // The counter for the domains
+                    int dCount = 1;
+
+                    // List of the domains
+                    List<Domain> domainList = new ArrayList<Domain>();
+                    while (aRawPeptideMap.get("s" + i + "_p" + pCount + "_d" + dCount) != null) {
+                        Domain domain = new Domain();
+                        domain.setDomainID(aRawPeptideMap.get("domainid" + "_s" + i + "_p" + pCount + "_d" + dCount).toString());
+                        domain.setDomainStart(Integer.parseInt(aRawPeptideMap.get("domainstart" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
+                        domain.setDomainEnd(Integer.parseInt(aRawPeptideMap.get("domainend" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
+                        domain.setDomainExpect(Double.parseDouble(aRawPeptideMap.get("expect" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
+                        domain.setDomainMh(Double.parseDouble(aRawPeptideMap.get("mh" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
+                        domain.setDomainDeltaMh(Double.parseDouble(aRawPeptideMap.get("delta" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
+                        domain.setDomainHyperScore(Double.parseDouble(aRawPeptideMap.get("hyperscore" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
+                        domain.setDomainNextScore(Double.parseDouble(aRawPeptideMap.get("nextscore" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
+                        domain.setUpFlankSequence(aRawPeptideMap.get("pre" + "_s" + i + "_p" + pCount + "_d" + dCount).toString());
+                        domain.setDownFlankSequence(aRawPeptideMap.get("post" + "_s" + i + "_p" + pCount + "_d" + dCount).toString());
+                        domain.setDomainSequence(aRawPeptideMap.get("domainseq" + "_s" + i + "_p" + pCount + "_d" + dCount).toString());
+                        domain.setMissedCleavages(Integer.parseInt(aRawPeptideMap.get("missed_cleavages" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
+                        domainList.add(domain);
+                        dCount++;
+                    }
+                   
+                    // Set the domains for the peptide
+                    peptide.setDomains(domainList);
+                    
+                    // Put the peptide into the map, value is the domain id.
                     iPeptideMap.put(peptideID, peptide);
-
-                    counter++;
+                    pCount++;
                 }
-
                 iSpectrumAndPeptideMap.put("s" + i, iPeptideMap);
             }
         }
@@ -113,10 +125,10 @@ public class PeptideMap implements Serializable {
     public ArrayList<Peptide> getAllPeptides(int aSpectrumNumber) {
         ArrayList<Peptide> peptideList = new ArrayList<Peptide>();
         HashMap<String, Peptide> peptideMap = iSpectrumAndPeptideMap.get("s" + aSpectrumNumber);
-        int pepCount = 1;
-        while (peptideMap.get("s" + aSpectrumNumber + "_p" + pepCount) != null) {
-            peptideList.add(peptideMap.get("s" + aSpectrumNumber + "_p" + pepCount));
-            pepCount++;
+        int pCount = 1;       
+        while (peptideMap.get("s" + aSpectrumNumber + "_p" + pCount) != null) { 
+            peptideList.add(peptideMap.get("s" + aSpectrumNumber + "_p" + pCount));
+            pCount++;
         }
         return peptideList;
     }

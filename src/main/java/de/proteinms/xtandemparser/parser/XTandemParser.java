@@ -872,123 +872,124 @@ public class XTandemParser implements Serializable {
 
                                 peptideNodes = proteinNodes.item(k).getChildNodes();
 
-                                // Iterate over all the peptide nodes
+                                // Domain counter
+                                int dCount = 0;
 
+                                // Iterate over all the peptide nodes
                                 for (int m = 0; m < peptideNodes.getLength(); m++) {
                                     // Get the domain entries
                                     if (peptideNodes.item(m).getNodeName().equalsIgnoreCase("domain")) {
+                                        dCount++;
+                                        // Get the domainid
+                                        String domainID = peptideNodes.item(m).getAttributes().getNamedItem("id").getNodeValue();
+                                        iRawPeptideMap.put("s" + spectraCounter + "_p" + p_counter + "_d" + dCount, domainID);
 
-                                        // Get the domain/peptide id for a separate list
-                                        //String domainID = peptideNodes.item(m).getAttributes().getNamedItem("id").getNodeValue();
                                         iRawPeptideMap.put("domainid" + "_s" + spectraCounter + "_p"
-                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("id").getNodeValue());
-
+                                                + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("id").getNodeValue());
+                                        
                                         // the start position of the peptide
                                         iRawPeptideMap.put("domainstart" + "_s" + spectraCounter + "_p"
-                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("start").getNodeValue());
+                                                + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("start").getNodeValue());
 
                                         // the end position of the peptide
                                         iRawPeptideMap.put("domainend" + "_s" + spectraCounter + "_p"
-                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("end").getNodeValue());
+                                                + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("end").getNodeValue());
 
                                         // the expect value
                                         iRawPeptideMap.put("expect" + "_s" + spectraCounter + "_p"
-                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("expect").getNodeValue());
+                                                + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("expect").getNodeValue());
 
                                         // the mass + a proton
                                         iRawPeptideMap.put("mh" + "_s" + spectraCounter + "_p"
-                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("mh").getNodeValue());
+                                                + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("mh").getNodeValue());
 
                                         // the mass delta
                                         iRawPeptideMap.put("delta" + "_s" + spectraCounter + "_p"
-                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("delta").getNodeValue());
+                                                + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("delta").getNodeValue());
 
                                         // the hyper score
                                         iRawPeptideMap.put("hyperscore" + "_s" + spectraCounter + "_p"
-                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("hyperscore").getNodeValue());
-
-                                        // Is the peak count used ?
-                                        //domainPeakCount = new Integer(peptideNodes.item(m).getAttributes().getNamedItem("peak_count").getNodeValue());
+                                                + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("hyperscore").getNodeValue());
 
                                         // the next score
                                         iRawPeptideMap.put("nextscore" + "_s" + spectraCounter + "_p"
-                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("nextscore").getNodeValue());
+                                                + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("nextscore").getNodeValue());
 
                                         if (xIonFlag) {
                                             // the x score
                                             iRawPeptideMap.put("x_score" + "_s" + spectraCounter + "_p"
-                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("x_score").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("x_score").getNodeValue());
 
                                             // the x ion number
                                             iRawPeptideMap.put("x_ions" + "_s" + spectraCounter + "_p"
-                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("x_ions").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("x_ions").getNodeValue());
                                         }
 
                                         if (yIonFlag) {
                                             // the y score
                                             iRawPeptideMap.put("y_score" + "_s" + spectraCounter + "_p"
-                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("y_score").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("y_score").getNodeValue());
 
                                             // the y ion number
                                             iRawPeptideMap.put("y_ions" + "_s" + spectraCounter + "_p"
-                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("y_ions").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("y_ions").getNodeValue());
                                         }
 
                                         if (zIonFlag) {
                                             // the z score
                                             iRawPeptideMap.put("z_score" + "_s" + spectraCounter + "_p"
-                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("z_score").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("z_score").getNodeValue());
 
                                             // the z ion number
                                             iRawPeptideMap.put("z_ions" + "_s" + spectraCounter + "_p"
-                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("z_ions").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("z_ions").getNodeValue());
                                         }
 
                                         if (aIonFlag) {
                                             // the a score
                                             iRawPeptideMap.put("a_score" + "_s" + spectraCounter + "_p"
-                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("a_score").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("a_score").getNodeValue());
 
                                             // the a ion number
                                             iRawPeptideMap.put("a_ions" + "_s" + spectraCounter + "_p"
-                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("a_ions").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("a_ions").getNodeValue());
                                         }
 
                                         if (bIonFlag) {
                                             // the b score
                                             iRawPeptideMap.put("b_score" + "_s" + spectraCounter + "_p"
-                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("b_score").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("b_score").getNodeValue());
 
                                             // the b ion number
                                             iRawPeptideMap.put("b_ions" + "_s" + spectraCounter + "_p"
-                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("b_ions").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("b_ions").getNodeValue());
                                         }
 
                                         if (cIonFlag) {
                                             // the c score
                                             iRawPeptideMap.put("c_score" + "_s" + spectraCounter + "_p"
-                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("c_score").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("c_score").getNodeValue());
 
                                             // the c ion number
                                             iRawPeptideMap.put("c_ions" + "_s" + spectraCounter + "_p"
-                                                    + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("c_ions").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("c_ions").getNodeValue());
                                         }
 
                                         // the upstream flanking sequence
                                         iRawPeptideMap.put("pre" + "_s" + spectraCounter + "_p"
-                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("pre").getNodeValue());
+                                                + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("pre").getNodeValue());
 
                                         // the downstream flanking sequence
                                         iRawPeptideMap.put("post" + "_s" + spectraCounter + "_p"
-                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("post").getNodeValue());
+                                                + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("post").getNodeValue());
 
                                         // the domain sequence
                                         iRawPeptideMap.put("domainseq" + "_s" + spectraCounter + "_p"
-                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("seq").getNodeValue());
+                                                + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("seq").getNodeValue());
 
                                         // the number of missed cleavages
                                         iRawPeptideMap.put("missed_cleavages" + "_s" + spectraCounter + "_p"
-                                                + p_counter, peptideNodes.item(m).getAttributes().getNamedItem("missed_cleavages").getNodeValue());
+                                                + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("missed_cleavages").getNodeValue());
 
                                         int modCounter = 0;
                                         for (int n = 0; n < peptideNodes.item(m).getChildNodes().getLength(); n++) {

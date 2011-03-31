@@ -1,4 +1,4 @@
-package test.main.java;
+package main.java;
 
 import de.proteinms.xtandemparser.xtandem.*;
 import de.proteinms.xtandemparser.interfaces.Modification;

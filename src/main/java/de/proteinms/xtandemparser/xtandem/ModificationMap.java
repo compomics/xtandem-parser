@@ -4,10 +4,7 @@ import de.proteinms.xtandemparser.interfaces.Modification;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.StringTokenizer;
-import java.util.Map;
+import java.util.*;
 
 /**
  * In this class the fixed and variable modifications are sorted out
@@ -80,46 +77,50 @@ public class ModificationMap implements Serializable {
                         String modLocation = rawModMap.get("at" + "_s" + i + "_p" + j + "_m" + m_counter).toString();
                                               
                         // Get the domainID
-                        String domainID = peptideMap.getPeptideByIndex(i, j).getDomainID();
+                        List<Domain> domainList = peptideMap.getPeptideByIndex(i, j).getDomains();
+                        for (Domain domain : domainList) {
+                            String domainID = domain.getDomainID();
 
-                        // Check for fixed modification
-                        if (isFixedModificationInput(modMass)) {
+                            // Check for fixed modification
+                            if (isFixedModificationInput(modMass)) {
 
-                        // Get a specific id for the modification (domainID)_m(modifcation#)
-                        String modID = (domainID + "_m" + m_counter_fixed);
+                                // Get a specific id for the modification (domainID)_m(modifcation#)
+                                String modID = (domainID + "_m" + m_counter_fixed);
 
-                            // Create an instance of a fixed modification.
-                            FixedModification fixedMod = new FixedModification(modName, modMass, modLocation, m_counter_fixed);
+                                // Create an instance of a fixed modification.
+                                FixedModification fixedMod = new FixedModification(modName, modMass, modLocation, m_counter_fixed);
 
-                            // Put the modification into the map, value is the mod id.
-                            iFixedModificationMap.put(modID, fixedMod);
-                            m_counter_fixed++;
+                                // Put the modification into the map, value is the mod id.
+                                iFixedModificationMap.put(modID, fixedMod);
+                                m_counter_fixed++;
 
-                        } else if(isVariableModificationInput(modMass)){
+                            } else if (isVariableModificationInput(modMass)) {
 
-                        // Get a specific id for the modification (domainID)_m(modifcation#)
-                        String modID = (domainID + "_m" + m_counter_variable);
+                                // Get a specific id for the modification (domainID)_m(modifcation#)
+                                String modID = (domainID + "_m" + m_counter_variable);
 
-                            // The rest will be assumed to be variable modifications.
-                            VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter_variable);
+                                // The rest will be assumed to be variable modifications.
+                                VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter_variable);
 
-                            // Put the modification into the map, value is the mod id.
-                            iVarModificationMap.put(modID, varMod);
-                            m_counter_variable++;
+                                // Put the modification into the map, value is the mod id.
+                                iVarModificationMap.put(modID, varMod);
+                                m_counter_variable++;
 
-                        } else {
+                            } else {
 
-                        // Get a specific id for the modification (domainID)_m(modifcation#)
-                        String modID = (domainID + "_m" + m_counter_variable);
+                                // Get a specific id for the modification (domainID)_m(modifcation#)
+                                String modID = (domainID + "_m" + m_counter_variable);
 
-                             // The rest will be assumed to be variable modifications.
-                            VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter_variable);
+                                // The rest will be assumed to be variable modifications.
+                                VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter_variable);
 
-                            // Put the modification into the map, value is the mod id.
-                            iVarModificationMap.put(modID, varMod);
-                            m_counter_variable++;
+                                // Put the modification into the map, value is the mod id.
+                                iVarModificationMap.put(modID, varMod);
+                                m_counter_variable++;
+                            }
+                            m_counter++;
                         }
-                        m_counter++;
+
                     }
                 }
             }

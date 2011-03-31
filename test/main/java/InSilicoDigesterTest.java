@@ -1,4 +1,8 @@
-package test.main.java;
+package main.java;
+
+import junit.framework.TestCase;
+
+
 
 import de.proteinms.xtandemparser.xtandem.*;
 import junit.framework.TestCase;
@@ -32,9 +36,8 @@ public class InSilicoDigesterTest extends TestCase {
     public void testSamplerPeptideCharged1() {
         try {
             Peptide peptide = new Peptide("1", 0, 6, "SAMPLER");
-            peptide.setDomainSequence("SAMPLER");
-            peptide.setDomainMh(803.4080);
-            InSilicoDigester digester = new InSilicoDigester(peptide, null, XTandemFile.getMassesMap(), 1);
+            Domain domain = peptide.getDomains().get(0);
+            InSilicoDigester digester = new InSilicoDigester(peptide, domain, null, XTandemFile.getMassesMap(), 1);
             FragmentIon[] bIons = digester.getTheoreticIons(FragmentIon.B_ION);
             FragmentIon[] yIons = digester.getTheoreticIons(FragmentIon.Y_ION);
             FragmentIon[] bH20Ions = digester.getTheoreticIons(FragmentIon.BH2O_ION);
@@ -94,9 +97,8 @@ public class InSilicoDigesterTest extends TestCase {
             PeptideMap pepMap = xTandemFile.getPeptideMap();
             ArrayList<Peptide> pepList = pepMap.getAllPeptides(2);
             Peptide peptide = pepList.get(0);
-
-            InSilicoDigester digester = new InSilicoDigester(peptide, xTandemFile.getModificationMap(), XTandemFile.getMassesMap(), 1);
-            System.out.println(peptide.getDomainSequence());
+            Domain domain = peptide.getDomains().get(0);
+            InSilicoDigester digester = new InSilicoDigester(peptide, domain, xTandemFile.getModificationMap(), XTandemFile.getMassesMap(), 1);            
             FragmentIon[] bIons = digester.getTheoreticIons(FragmentIon.B_ION);
             FragmentIon[] mhIons = digester.getTheoreticIons(FragmentIon.MH_ION);
             FragmentIon[] mhH20Ions = digester.getTheoreticIons(FragmentIon.MHH2O_ION);
