@@ -26,7 +26,6 @@ public class ModificationMap implements Serializable {
      * The instance contains a PeptideMap object.
      */
     private PeptideMap iPeptideMap;
-
     /**
      * InputParams object
      */
@@ -43,7 +42,7 @@ public class ModificationMap implements Serializable {
     public ModificationMap(HashMap aRawModMap, PeptideMap aPeptideMap, InputParams aInputParams, int aNumberOfSpectra) {
         iInputParams = aInputParams;
         buildModificationMaps(aRawModMap, aPeptideMap, aNumberOfSpectra);
-        iPeptideMap = aPeptideMap;        
+        iPeptideMap = aPeptideMap;
     }
 
     /**
@@ -75,7 +74,7 @@ public class ModificationMap implements Serializable {
                         String modName = rawModMap.get("name" + "_s" + i + "_p" + j + "_m" + m_counter).toString();
                         double modMass = Double.parseDouble(rawModMap.get("modified" + "_s" + i + "_p" + j + "_m" + m_counter).toString());
                         String modLocation = rawModMap.get("at" + "_s" + i + "_p" + j + "_m" + m_counter).toString();
-                                              
+
                         // Get the domainID
                         List<Domain> domainList = peptideMap.getPeptideByIndex(i, j).getDomains();
                         for (Domain domain : domainList) {
@@ -133,17 +132,24 @@ public class ModificationMap implements Serializable {
      * @param aModMass
      * @return boolean
      */
-    private boolean isFixedModificationInput(double aModMass){
-            BigDecimal modMass = new BigDecimal(aModMass);
-            modMass = modMass.setScale(2,BigDecimal.ROUND_HALF_UP);
-            String modificationMasses = iInputParams.getResidueModMass();
+    private boolean isFixedModificationInput(double aModMass) {
+        BigDecimal modMass = new BigDecimal(aModMass);
+        modMass = modMass.setScale(2, BigDecimal.ROUND_HALF_UP);
+        String modificationMasses = iInputParams.getResidueModMass();
+
+        if (modificationMasses != null) {
+
             StringTokenizer tokenizer = new StringTokenizer(modificationMasses, ",");
-            while (tokenizer.hasMoreTokens()){
+
+            while (tokenizer.hasMoreTokens()) {
                 String[] tokens = tokenizer.nextToken().split("@");
                 BigDecimal inputMass = new BigDecimal(new Double(tokens[0]));
-                inputMass = inputMass.setScale(2,BigDecimal.ROUND_HALF_UP);                
-                if (modMass.equals(inputMass)) return true;
+                inputMass = inputMass.setScale(2, BigDecimal.ROUND_HALF_UP);
+                if (modMass.equals(inputMass)) {
+                    return true;
+                }
             }
+        }
         return false;
     }
 
@@ -153,17 +159,23 @@ public class ModificationMap implements Serializable {
      * @param aModMass
      * @return boolean
      */
-    private boolean isVariableModificationInput(double aModMass){
-            BigDecimal modMass = new BigDecimal(aModMass);
-            modMass = modMass.setScale(3,BigDecimal.ROUND_HALF_UP);
-            String modificationMasses = iInputParams.getResiduePotModMass();
+    private boolean isVariableModificationInput(double aModMass) {
+        BigDecimal modMass = new BigDecimal(aModMass);
+        modMass = modMass.setScale(3, BigDecimal.ROUND_HALF_UP);
+        String modificationMasses = iInputParams.getResiduePotModMass();
+
+        if (modificationMasses != null) {
+
             StringTokenizer tokenizer = new StringTokenizer(modificationMasses, ",");
-            while (tokenizer.hasMoreTokens()){
+            while (tokenizer.hasMoreTokens()) {
                 String[] tokens = tokenizer.nextToken().split("@");
                 BigDecimal inputMass = new BigDecimal(new Double(tokens[0]));
-                inputMass = inputMass.setScale(3,BigDecimal.ROUND_HALF_UP);               
-                if (modMass.equals(inputMass)) return true;
+                inputMass = inputMass.setScale(3, BigDecimal.ROUND_HALF_UP);
+                if (modMass.equals(inputMass)) {
+                    return true;
+                }
             }
+        }
         return false;
     }
 
@@ -189,26 +201,26 @@ public class ModificationMap implements Serializable {
      * Returns an arrayList of all the fixed modifications in the file.
      * @return fixedModList
      */
-    public ArrayList<Modification> getAllFixedModifications(){
+    public ArrayList<Modification> getAllFixedModifications() {
         ArrayList<Modification> fixedModList = new ArrayList<Modification>();
-        for(Map.Entry<String, Modification> e : iFixedModificationMap.entrySet()){
+        for (Map.Entry<String, Modification> e : iFixedModificationMap.entrySet()) {
             fixedModList.add(e.getValue());
         }
         return fixedModList;
     }
 
-      /**
+    /**
      * Returns an arrayList of all the variable modifications in the file.
      * @return varModList ArrayList<Modification>
      */
-    public ArrayList<Modification> getAllVariableModifications(){
+    public ArrayList<Modification> getAllVariableModifications() {
         ArrayList<Modification> varModList = new ArrayList<Modification>();
-        for(Map.Entry<String, Modification> e : iVarModificationMap.entrySet()){
+        for (Map.Entry<String, Modification> e : iVarModificationMap.entrySet()) {
             varModList.add(e.getValue());
         }
         return varModList;
     }
-    
+
     /**
      * Returns the variable modifications as list.
      *
