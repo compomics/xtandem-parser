@@ -15,20 +15,20 @@ import java.util.HashMap;
  */
 public class SupportData implements Serializable {
 
-    private String iHyperlabel = "";
-    private String iConvolLabel = "";
-    private String iA_ionLabel = "";
-    private String iB_ionLabel = "";
-    private String iC_ionLabel = "";
-    private String iX_ionLabel = "";
-    private String iY_ionLabel = "";
-    private String iZ_ionLabel = "";
-    private String iSpectrumLabel = "";
-    private String iFragIonSpectrumDescription = "";
-    private double iFragIonMz = 0;
-    private int iFragIonCharge = 0;
-    private double iHyper_a0 = 0;
-    private double iHyper_a1 = 0;
+    private String iHyperlabel = null;
+    private String iConvolLabel = null;
+    private String iA_ionLabel = null;
+    private String iB_ionLabel = null;
+    private String iC_ionLabel = null;
+    private String iX_ionLabel = null;
+    private String iY_ionLabel = null;
+    private String iZ_ionLabel = null;
+    private String iSpectrumLabel = null;
+    private String iFragIonSpectrumDescription = null;
+    private double iFragIonMz;
+    private int iFragIonCharge;
+    private double iHyper_a0;
+    private double iHyper_a1;
     private ArrayList<Integer> iXValuesHyperscore = null;
     private ArrayList<Integer> iYValuesHyperscore = null;
     private ArrayList<Integer> iXValuesConvolute = null;

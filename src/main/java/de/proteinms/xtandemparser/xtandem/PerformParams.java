@@ -36,87 +36,87 @@ public class PerformParams {
     /**
      * Holds the number of estimated false positives.
      */
-    private int iEstFalsePositives = 0;
+    private int iEstFalsePositives;
     /**
      * This double holds the spectrum noise suppression ratio.
      */
-    private double iSpectrumNoiseSuppressionRatio = 0;
+    private double iSpectrumNoiseSuppressionRatio;
     /**
      * This Integer holds the number of total peptides used.
      */
-    private int iTotalPeptidesUsed = 0;
+    private int iTotalPeptidesUsed;
     /**
      * This Integer holds the number of total proteins used.
      */
-    private int iTotalProteinsUsed = 0;
+    private int iTotalProteinsUsed;
     /**
      * This Integer holds the number of total spectra assigned.
      */
-    private int iTotalSpectraAssigned = 0;
+    private int iTotalSpectraAssigned;
     /**
      * This Integer holds the total number of spectra used.
      */
-    private int iTotalSpectraUsed = 0;
+    private int iTotalSpectraUsed;
     /**
      * This Integer holds the number of total uniques assigned.
      */
-    private int iTotalUniqueAssigned = 0;
+    private int iTotalUniqueAssigned;
     /**
      * This String holds the process start time.
      */
-    private String iProcStartTime = "";
+    private String iProcStartTime = null;
     /**
      * This String holds the process version.
      */
-    private String iProcVersion = "";
+    private String iProcVersion = null;
     /**
      * This String holds the quality values.
      */
-    private String iQualityValues = "";
+    private String iQualityValues = null;
     /**
      * This Integer holds the input model number.
      */
-    private int iInputModelNumber = 0;
+    private int iInputModelNumber;
     /**
      * This Integer holds the input spectra number.
      */
-    private int iInputSpectraNumber = 0;
+    private int iInputSpectraNumber;
     /**
      * This Integer holds the partial cleavage number.
      */
-    private int iPartialCleavageNumber = 0;
+    private int iPartialCleavageNumber;
     /**
      * This Integer holds the point mutations number.
      */
-    private int iPointMutationsNumber = 0;
+    private int iPointMutationsNumber;
     /**
      * This Integer holds the potential c-terminal number.
      */
-    private int iPotentialC_termNumber = 0;
+    private int iPotentialC_termNumber;
     /**
      * This Integer holds the potential n-terminal number.
      */
-    private int iPotentialN_termNumber = 0;
+    private int iPotentialN_termNumber;
     /**
      * This Integer holds the unanticipated cleavage number.
      */
-    private int iUnanticipatedCleavageNumber = 0;
+    private int iUnanticipatedCleavageNumber;
     /**
      * This double holds the initial model total timing.
      */
-    private double iInitModelTotalTiming = 0;
+    private double iInitModelTotalTiming;
     /**
      * This double holds the initial model spectrum timing.
      */
-    private double iInitModelSpecTiming = 0;
+    private double iInitModelSpecTiming;
     /**
      * This double holds the load sequence models timing.
      */
-    private double iLoadSeqModelsTiming = 0;
+    private double iLoadSeqModelsTiming;
     /**
      * This double holds the refinement timing.
      */
-    private double iRefinementTiming = 0;
+    private double iRefinementTiming;
 
     /**
      * The constructor gets a hash map containing all the performance parameters.
