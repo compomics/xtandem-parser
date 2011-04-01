@@ -1,6 +1,5 @@
 package de.proteinms.xtandemparser.xtandem;
 
-import de.proteinms.xtandemparser.interfaces.Ion;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +60,7 @@ public class PeptideMap implements Serializable {
                 while (aRawPeptideMap.get("s" + i + "_p" + pCount) != null) {
 
                     // The peptide id is consists of s + spectrum# + _p + peptide#
-                    String peptideID = ("s" + i + "_p" + pCount).toString();                    
+                    String peptideID = ("s" + i + "_p" + pCount).toString();
                     int peptideStart = Integer.parseInt(aRawPeptideMap.get("start" + "_s" + i + "_p" + pCount).toString());
                     int peptideEnd = Integer.parseInt(aRawPeptideMap.get("end" + "_s" + i + "_p" + pCount).toString());
                     String sequence = aRawPeptideMap.get("seq" + "_s" + i + "_p" + pCount).toString().trim();
@@ -70,6 +69,10 @@ public class PeptideMap implements Serializable {
                     Peptide peptide = new Peptide(peptideID, peptideStart, peptideEnd, sequence);
                     // Set the domain values
                     peptide.setSpectrumNumber(i);
+                    // set the fasta filename
+                    if (aRawPeptideMap.get("URL" + pCount) != null) {
+                        peptide.setFastaFilePath(aRawPeptideMap.get("URL" + pCount).toString());
+                    }
 
                     // The counter for the domains
                     int dCount = 1;
@@ -93,10 +96,10 @@ public class PeptideMap implements Serializable {
                         domainList.add(domain);
                         dCount++;
                     }
-                   
+
                     // Set the domains for the peptide
                     peptide.setDomains(domainList);
-                    
+
                     // Put the peptide into the map, value is the domain id.
                     iPeptideMap.put(peptideID, peptide);
                     pCount++;
@@ -125,8 +128,8 @@ public class PeptideMap implements Serializable {
     public ArrayList<Peptide> getAllPeptides(int aSpectrumNumber) {
         ArrayList<Peptide> peptideList = new ArrayList<Peptide>();
         HashMap<String, Peptide> peptideMap = iSpectrumAndPeptideMap.get("s" + aSpectrumNumber);
-        int pCount = 1;       
-        while (peptideMap.get("s" + aSpectrumNumber + "_p" + pCount) != null) { 
+        int pCount = 1;
+        while (peptideMap.get("s" + aSpectrumNumber + "_p" + pCount) != null) {
             peptideList.add(peptideMap.get("s" + aSpectrumNumber + "_p" + pCount));
             pCount++;
         }

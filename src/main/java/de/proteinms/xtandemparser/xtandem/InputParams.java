@@ -1,6 +1,7 @@
 package de.proteinms.xtandemparser.xtandem;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -55,14 +56,14 @@ public class InputParams implements Serializable {
     private String iResiduePotModMass = null;
     private String iResiduePotModMotiv = null;
     private boolean iScoring_aIons = false;
-    private boolean iScoring_bIons = false;
+    private boolean iScoring_bIons = true;
     private boolean iScoring_cIons = false;
     private boolean iScoringCyclicPerm = false;
     private boolean iScoringIncReverse = false;
     private int iScoringMissCleavageSites;
     private int iScoringMinIonCount;
     private boolean iScoring_xIons = false;
-    private boolean iScoring_yIons = false;
+    private boolean iScoring_yIons = true;
     private boolean iScoring_zIons = false;
     private boolean iScoringPlugScoring = false;
     private double iSpectrumDynRange;
@@ -83,6 +84,18 @@ public class InputParams implements Serializable {
     private int iSpectrumThreads;
     private int iSpectrumTotalPeakNumber;
     private boolean iSpectrumUseNoiseCompression = false;
+    /**
+     * Holds the values of residue, modification mass [1-n]
+     */
+    private ArrayList<String> residueModificationMass = new ArrayList<String>();
+    /**
+     * Holds the values of refine, potential modification mass [1-n]
+     */
+    private ArrayList<String> refinePotentialModificationMass = new ArrayList<String>();
+    /**
+     * Holds the values of refine, potential modification motif [1-n]
+     */
+    private ArrayList<String> refinePotentialModificationMotif = new ArrayList<String>();
 
     /**
      * ToDo: JavaDoc missing...
@@ -192,8 +205,24 @@ public class InputParams implements Serializable {
         if (map.get("POTMODMASS") != null) {
             iRefinePotModMass = map.get("POTMODMASS").toString();
         }
+        for (int i = 1; i < 100; i++) {
+            // break at the first motif that doesn't exist
+            if (map.get("POTMODMASS_" + i) == null) {
+                break;
+            }
+
+            refinePotentialModificationMass.add(map.get("POTMODMASS_" + i).toString());
+        }
         if (map.get("POTMODMOTIF") != null) {
             iRefinePotModMotif = map.get("POTMODMOTIF").toString();
+        }
+        for (int i = 1; i < 100; i++) {
+            // break at the first motif that doesn't exist
+            if (map.get("POTMODMOTIF_" + i) == null) {
+                break;
+            }
+
+            refinePotentialModificationMotif.add(map.get("POTMODMOTIF_" + i).toString());
         }
         if (map.get("REFINESEQPATH") != null) {
             iRefineSequencePath = map.get("REFINESEQPATH").toString();
@@ -212,6 +241,14 @@ public class InputParams implements Serializable {
         }
         if (map.get("RESIDUEMODMASS") != null) {
             iResidueModMass = map.get("RESIDUEMODMASS").toString();
+        }
+        for (int i = 1; i < 100; i++) {
+            // break a the first motif that doesn't exist
+            if (map.get("RESIDUEMODMASS_" + i) == null) {
+                break;
+            }
+
+            refinePotentialModificationMotif.add(map.get("RESIDUEMODMASS_" + i).toString());
         }
         if (map.get("RESIDUEPOTMODMASS") != null) {
             iResiduePotModMass = map.get("RESIDUEPOTMODMASS").toString();
@@ -895,5 +932,51 @@ public class InputParams implements Serializable {
 
     public void setSpectrumUseNoiseCompression(boolean spectrumUseNoiseCompression) {
         iSpectrumUseNoiseCompression = spectrumUseNoiseCompression;
+    }
+
+    /**
+     * Returns the values of "residue, modification mass [1-n]"
+     * as an ArrayList of Strings. The zero-based index in the
+     * ArrayList corresponds to the 1-based index in the file
+     * (f.e. "residue, modification mass 2" is at position 1)
+     *
+     * @return An ArrayList of modification mass values
+     */
+    public ArrayList<String> getResidueModificationMass() {
+        return residueModificationMass;
+    }
+
+    public void setResidueModificationMass(ArrayList<String> residueModificationMass) {
+        this.residueModificationMass = residueModificationMass;
+    }
+
+    /**
+     * Returns the values of "refine, potential modification mass [1-n]"
+     * as an ArrayList of Strings. The zero-based index in the
+     * ArrayList corresponds to the 1-based index in the file
+     * 
+     * @return An ArrayList of potential modification mass values
+     */
+    public ArrayList<String> getRefinePotentialModificationMass() {
+        return refinePotentialModificationMass;
+    }
+
+    public void setRefinePotentialModificationMass(ArrayList<String> refinePotentialModificationMass) {
+        this.refinePotentialModificationMass = refinePotentialModificationMass;
+    }
+
+    /**
+     * Returns the values of "refine, potential modification motif [1-n]"
+     * as an ArrayList of Strings. The zero-based index in the
+     * ArrayList corresponds to the 1-based index in the file
+     * 
+     * @return An ArrayList of potential modification motifs
+     */
+    public ArrayList<String> getRefinePotentialModificationMotif() {
+        return refinePotentialModificationMotif;
+    }
+
+    public void setRefinePotentialModificationMotif(ArrayList<String> refinePotentialModificationMotif) {
+        this.refinePotentialModificationMotif = refinePotentialModificationMotif;
     }
 }

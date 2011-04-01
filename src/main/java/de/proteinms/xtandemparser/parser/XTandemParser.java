@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,6 +26,12 @@ import org.xml.sax.SAXException;
  */
 public class XTandemParser implements Serializable {
 
+    /**
+     * Pattern to extract the modification mass number if multiple modification masses are given
+     */
+    private static Pattern resModificationMassPattern = Pattern.compile("label=\"residue, modification mass (\\d+)\"");
+    private static Pattern refPotModificationMassPattern = Pattern.compile("label=\"refine, potential modification mass (\\d+)\"");
+    private static Pattern refPotModificationMotifPattern = Pattern.compile("label=\"refine, potential modification motif (\\d+)\"");
     /**
      * This variable holds the total number of spectra in the xtandem file
      */
@@ -143,8 +151,8 @@ public class XTandemParser implements Serializable {
                 if (nodes.item(i).getAttributes() != null) {
                     if (nodes.item(i).getAttributes().getNamedItem("type") != null) {
                         // Parse the input parameters
-                        if (nodes.item(i).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("parameters") &&
-                                (nodes.item(i).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("input parameters")
+                        if (nodes.item(i).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("parameters")
+                                && (nodes.item(i).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("input parameters")
                                 || nodes.item(i).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("unused input parameters"))) {
                             parameterNodes = nodes.item(i).getChildNodes();
 
@@ -356,10 +364,30 @@ public class XTandemParser implements Serializable {
                                             iInputParamMap.put("POTMODMASS", parameterNodes.item(m).getTextContent());
                                         }
                                     }
+                                    // parse refine, potential modification mass [1-n]
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().toLowerCase().startsWith(
+                                            "label=\"refine, potential modification mass ")) {
+                                        // get the mod number
+                                        Matcher matcher = refPotModificationMassPattern.matcher(parameterNodes.item(m).getAttributes().getNamedItem("label").toString().toLowerCase());
+
+                                        if (matcher.find() && !parameterNodes.item(m).getTextContent().equals("")) {
+                                            iInputParamMap.put("POTMODMASS_" + matcher.group(1), parameterNodes.item(m).getTextContent());
+                                        }
+                                    }
                                     if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
                                             "label=\"refine, potential modification motif\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("POTMODMOTIF", parameterNodes.item(m).getTextContent());
+                                        }
+                                    }
+                                    // parse refine, potential modification motif [1-n]
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().toLowerCase().startsWith(
+                                            "label=\"refine, potential modification motif ")) {
+                                        // get the mod number
+                                        Matcher matcher = refPotModificationMotifPattern.matcher(parameterNodes.item(m).getAttributes().getNamedItem("label").toString().toLowerCase());
+
+                                        if (matcher.find() && !parameterNodes.item(m).getTextContent().equals("")) {
+                                            iInputParamMap.put("POTMODMOTIF_" + matcher.group(1), parameterNodes.item(m).getTextContent());
                                         }
                                     }
                                     if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
@@ -396,6 +424,16 @@ public class XTandemParser implements Serializable {
                                             "label=\"residue, modification mass\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("RESIDUEMODMASS", parameterNodes.item(m).getTextContent());
+                                        }
+                                    }
+                                    // parse residue, modification mass [1-n]
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().toLowerCase().startsWith(
+                                            "label=\"residue, modification mass ")) {
+                                        // get the mod number
+                                        Matcher matcher = resModificationMassPattern.matcher(parameterNodes.item(m).getAttributes().getNamedItem("label").toString().toLowerCase());
+
+                                        if (matcher.find() && !parameterNodes.item(m).getTextContent().equals("")) {
+                                            iInputParamMap.put("RESIDUEMODMASS_" + matcher.group(1), parameterNodes.item(m).getTextContent());
                                         }
                                     }
                                     if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
@@ -602,8 +640,8 @@ public class XTandemParser implements Serializable {
                             }
                         }
                         // Parse the performance parameters
-                        if (nodes.item(i).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("parameters") &&
-                                nodes.item(i).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("performance parameters")) {
+                        if (nodes.item(i).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("parameters")
+                                && nodes.item(i).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("performance parameters")) {
                             parameterNodes = nodes.item(i).getChildNodes();
 
                             // Iterate over all the parameter nodes
@@ -886,7 +924,7 @@ public class XTandemParser implements Serializable {
 
                                         iRawPeptideMap.put("domainid" + "_s" + spectraCounter + "_p"
                                                 + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("id").getNodeValue());
-                                        
+
                                         // the start position of the peptide
                                         iRawPeptideMap.put("domainstart" + "_s" + spectraCounter + "_p"
                                                 + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("start").getNodeValue());
