@@ -13,13 +13,9 @@ import java.util.List;
 public class PeptideMap implements Serializable {
 
     /**
-     * This variable holds the second dimension hash map for the peptide object as value.
-     */
-    private HashMap<String, Peptide> iPeptideMap = null;
-    /**
      * This variable holds the first dimension hash map for the peptide hash map as value.
      */
-    private HashMap<String, HashMap> iSpectrumAndPeptideMap = null;
+    private HashMap<String, HashMap<String, Peptide>> iSpectrumAndPeptideMap = null;
 
     /**
      * Builds the peptide map
@@ -47,11 +43,11 @@ public class PeptideMap implements Serializable {
         // First dimension of the map, which contains the spectra as key and the peptide hash maps as values
         iSpectrumAndPeptideMap = new HashMap(aNumberOfSpectra);
 
-        // Hashmap for the peptide objects
-        iPeptideMap = new HashMap<String, Peptide>();
-
         if (aRawPeptideMap != null) {
             for (int i = 1; i <= aNumberOfSpectra; i++) {
+
+        // Hashmap for the peptide objects
+        HashMap<String, Peptide> lPeptideMap = new HashMap<String, Peptide>();
 
                 // The counter for the peptides
                 int pCount = 1;
@@ -101,10 +97,10 @@ public class PeptideMap implements Serializable {
                     peptide.setDomains(domainList);
 
                     // Put the peptide into the map, value is the domain id.
-                    iPeptideMap.put(peptideID, peptide);
+                    lPeptideMap.put(peptideID, peptide);
                     pCount++;
                 }
-                iSpectrumAndPeptideMap.put("s" + i, iPeptideMap);
+                iSpectrumAndPeptideMap.put("s" + i, lPeptideMap);
             }
         }
         return iSpectrumAndPeptideMap;
@@ -115,7 +111,7 @@ public class PeptideMap implements Serializable {
      *
      * @return iSpectrumAndPeptideMap HashMap
      */
-    public HashMap<String, HashMap> getSpectrumAndPeptideMap() {
+    public HashMap<String, HashMap<String, Peptide>> getSpectrumAndPeptideMap() {
         return iSpectrumAndPeptideMap;
     }
 
@@ -126,14 +122,7 @@ public class PeptideMap implements Serializable {
      * @return peptideList ArrayList
      */
     public ArrayList<Peptide> getAllPeptides(int aSpectrumNumber) {
-        ArrayList<Peptide> peptideList = new ArrayList<Peptide>();
-        HashMap<String, Peptide> peptideMap = iSpectrumAndPeptideMap.get("s" + aSpectrumNumber);
-        int pCount = 1;
-        while (peptideMap.get("s" + aSpectrumNumber + "_p" + pCount) != null) {
-            peptideList.add(peptideMap.get("s" + aSpectrumNumber + "_p" + pCount));
-            pCount++;
-        }
-        return peptideList;
+        return new ArrayList<Peptide>(iSpectrumAndPeptideMap.get("s" + aSpectrumNumber).values());
     }
 
     /**
@@ -159,6 +148,6 @@ public class PeptideMap implements Serializable {
      * @return The total number of peptides
      */
     public int getNumberOfPeptides(int aSpectrumNumber) {
-        return this.getAllPeptides(aSpectrumNumber).size();
+        return iSpectrumAndPeptideMap.get("s" + aSpectrumNumber).size();
     }
 }
