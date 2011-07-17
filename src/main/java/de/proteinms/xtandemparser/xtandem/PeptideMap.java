@@ -56,7 +56,7 @@ public class PeptideMap implements Serializable {
                 while (aRawPeptideMap.get("s" + i + "_p" + pCount) != null) {
 
                     // The peptide id is consists of s + spectrum# + _p + peptide#
-                    String peptideID = ("s" + i + "_p" + pCount).toString();
+                    String peptideID = ("s" + i + "_p" + pCount);
                     int peptideStart = Integer.parseInt(aRawPeptideMap.get("start" + "_s" + i + "_p" + pCount).toString());
                     int peptideEnd = Integer.parseInt(aRawPeptideMap.get("end" + "_s" + i + "_p" + pCount).toString());
                     String sequence = aRawPeptideMap.get("seq" + "_s" + i + "_p" + pCount).toString().trim();
@@ -116,7 +116,7 @@ public class PeptideMap implements Serializable {
     }
 
     /**
-     * Retrieve all possible peptide objects for a given spectrum.
+     * Retrieve all possible peptide objects for a given spectrum. /!\ This list is not indexed according to the index of the peptide!
      *
      * @param aSpectrumNumber
      * @return peptideList ArrayList
@@ -128,17 +128,12 @@ public class PeptideMap implements Serializable {
     /**
      * Returns a specific peptide by an index.
      *
-     * @param aSpectrumNumber
-     * @param index
-     * @return peptide Peptide
+     * @param aSpectrumNumber   the spectrum number
+     * @param index             the index at which the peptide occurs in the xml file
+     * @return peptide Peptide  the desired peptide
      */
     public Peptide getPeptideByIndex(int aSpectrumNumber, int index) {
-        ArrayList<Peptide> peptideList = this.getAllPeptides(aSpectrumNumber);
-        Peptide peptide = null;
-        if (peptideList.get(index - 1) != null) {
-            peptide = peptideList.get(index - 1);
-        }
-        return peptide;
+        return iSpectrumAndPeptideMap.get("s" + aSpectrumNumber).get("s" + aSpectrumNumber + "_p" + index);
     }
 
     /**

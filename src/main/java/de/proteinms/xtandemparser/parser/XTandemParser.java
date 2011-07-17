@@ -1043,17 +1043,17 @@ public class XTandemParser implements Serializable {
                                                 // use the old calculation with domainStart!
                                                 //modificationMap.getNamedItem("at").getNodeValue()) - domainStart + 1)
                                                 iRawModMap.put("at" + "_s" + spectraCounter + "_p"
-                                                        + p_counter + "_m" + modCounter, modificationMap.getNamedItem("at").getNodeValue());
+                                                        + p_counter + "_d" + dCount + "_m" + modCounter, modificationMap.getNamedItem("at").getNodeValue());
 
                                                 // modified is the residue mass change caused by the modification
                                                 modificationMass = Double.parseDouble(modificationMap.getNamedItem("modified").getNodeValue());
                                                 iRawModMap.put("modified" + "_s" + spectraCounter + "_p"
-                                                        + p_counter + "_m" + modCounter, modificationMap.getNamedItem("modified").getNodeValue());
+                                                        + p_counter + "_d" + dCount + "_m" + modCounter, modificationMap.getNamedItem("modified").getNodeValue());
 
                                                 modificationName = modificationMass + "@" + modificationName;
 
                                                 // type is the single letter abbreviation for the modified residue
-                                                iRawModMap.put("name" + "_s" + spectraCounter + "_p" + p_counter + "_m" + modCounter, modificationName);
+                                                iRawModMap.put("name" + "_s" + spectraCounter + "_p" + p_counter + "_d" + dCount + "_m" + modCounter, modificationName);
                                             }
                                         }
                                     }

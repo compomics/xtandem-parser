@@ -62,23 +62,24 @@ public class ModificationMap implements Serializable {
             for (int i = 1; i <= numberOfSpectra; i++) {
 
                 for (int j = 1; j <= peptideMap.getNumberOfPeptides(i); j++) {
-                    // The counter for the peptides
-                    int m_counter = 1;
-                    int m_counter_variable = 1;
-                    int m_counter_fixed = 1;
 
-                    while (rawModMap.get("name" + "_s" + i + "_p" + j + "_m" + m_counter) != null) {
+                    // Get the domainID
+                    List<Domain> domainList = peptideMap.getPeptideByIndex(i, j).getDomains();
+                    for (int d = 1; d <= domainList.size(); d++) {
+                        // The counter for the peptides
+                        int m_counter = 1;
+                        int m_counter_variable = 1;
+                        int m_counter_fixed = 1;
+                        String domainID = domainList.get(d - 1).getDomainID();
+                        String modKey = "_s" + i + "_p" + j + "_d" + d + "_m" + m_counter;
 
+                        while (rawModMap.get("name" + modKey) != null) {
 
-                        // Get the specific parameters for the modification
-                        String modName = rawModMap.get("name" + "_s" + i + "_p" + j + "_m" + m_counter).toString();
-                        double modMass = Double.parseDouble(rawModMap.get("modified" + "_s" + i + "_p" + j + "_m" + m_counter).toString());
-                        String modLocation = rawModMap.get("at" + "_s" + i + "_p" + j + "_m" + m_counter).toString();
+                            // Get the specific parameters for the modification
+                            String modName = rawModMap.get("name" + modKey).toString();
+                            double modMass = Double.parseDouble(rawModMap.get("modified" + modKey).toString());
+                            String modLocation = rawModMap.get("at" + modKey).toString();
 
-                        // Get the domainID
-                        List<Domain> domainList = peptideMap.getPeptideByIndex(i, j).getDomains();
-                        for (Domain domain : domainList) {
-                            String domainID = domain.getDomainID();
 
                             // Check for fixed modification
                             if (isFixedModificationInput(modMass)) {
@@ -118,6 +119,7 @@ public class ModificationMap implements Serializable {
                                 m_counter_variable++;
                             }
                             m_counter++;
+                            modKey = "_s" + i + "_p" + j + "_d" + d + "_m" + m_counter;
                         }
 
                     }
