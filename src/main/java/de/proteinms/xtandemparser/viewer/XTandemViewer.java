@@ -825,7 +825,6 @@ public class XTandemViewer extends JFrame {
                                 ionsMap.put(domain.getDomainID() + "_" + i, ions);
                             }
                         }
-
                     }
 
                     // Get the support data for each spectrum.

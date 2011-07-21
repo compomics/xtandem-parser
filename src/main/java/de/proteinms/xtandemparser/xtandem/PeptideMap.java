@@ -122,7 +122,14 @@ public class PeptideMap implements Serializable {
      * @return peptideList ArrayList
      */
     public ArrayList<Peptide> getAllPeptides(int aSpectrumNumber) {
-        return new ArrayList<Peptide>(iSpectrumAndPeptideMap.get("s" + aSpectrumNumber).values());
+        
+        ArrayList<Peptide> arrayList = new ArrayList<Peptide>();
+        
+        if (iSpectrumAndPeptideMap.get("s" + aSpectrumNumber) != null) {
+            arrayList = new ArrayList<Peptide>(iSpectrumAndPeptideMap.get("s" + aSpectrumNumber).values());
+        }
+        
+        return arrayList;
     }
 
     /**
