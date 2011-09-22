@@ -301,7 +301,7 @@ public class InputParams implements Serializable {
         if (map.get("SPECMONOISOMASSERRORUNITS") != null) {
             iSpectrumMonoIsoMassErrorUnits = map.get("SPECMONOISOMASSERRORUNITS").toString();
         }
-        if (map.get("SPECFRAGMASSTYPE") != null) {
+        if (map.get("SPECMAXPRECURSORCHANGE") != null) {
             iSpectrumMaxPrecursorCharge = Integer.parseInt(map.get("SPECMAXPRECURSORCHANGE").toString());
         }
         if (map.get("SPECMINFRAGMZ") != null) {
