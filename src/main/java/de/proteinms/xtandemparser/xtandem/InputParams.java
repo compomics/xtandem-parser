@@ -41,7 +41,7 @@ public class InputParams implements Serializable {
     private String iProteinTaxon = null;
     private boolean iRefine = false;
     private double iRefineMaxValidExpectValue;
-    private double iRefineModMass;
+
     private boolean iPointMutations = false;
     private String iRefinePotC_termMods = null;
     private String iRefinePotN_termMods = null;
@@ -98,7 +98,12 @@ public class InputParams implements Serializable {
     private ArrayList<String> refinePotentialModificationMotif = new ArrayList<String>();
 
     /**
-     * ToDo: JavaDoc missing...
+     * Holds the values of residue, modification mass.
+     */
+    private String refineModificationMass;
+
+    /**
+     * Constructor for the input parameters section.
      *
      * @param map
      */
@@ -191,7 +196,7 @@ public class InputParams implements Serializable {
             iRefineMaxValidExpectValue = Double.parseDouble(map.get("REFINEMAXVALIDEXPECT").toString());
         }
         if (map.get("REFINEMODMASS") != null) {
-            iRefineModMass = Double.parseDouble(map.get("REFINEMODMASS").toString());
+            refineModificationMass = map.get("REFINEMODMASS").toString();
         }
         if (map.get("POINTMUTATIONS") != null) {
             iPointMutations = convertStringToBool(map.get("POINTMUTATIONS").toString());
@@ -592,12 +597,12 @@ public class InputParams implements Serializable {
         iRefineMaxValidExpectValue = refineMaxValidExpectValue;
     }
 
-    public double getRefineModMass() {
-        return iRefineModMass;
+    public String getRefineModMass() {
+        return refineModificationMass;
     }
 
-    public void setRefineModMass(double refineModMass) {
-        iRefineModMass = refineModMass;
+    public void setRefineModMass(String refineModificationMass) {
+        this.refineModificationMass = refineModificationMass;
     }
 
     public boolean isPointMutations() {

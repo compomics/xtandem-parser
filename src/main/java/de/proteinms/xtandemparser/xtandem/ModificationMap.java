@@ -138,6 +138,7 @@ public class ModificationMap implements Serializable {
         BigDecimal modMass = new BigDecimal(aModMass);
         modMass = modMass.setScale(2, BigDecimal.ROUND_HALF_UP);
         String modificationMasses = iInputParams.getResidueModMass();
+        String refineModificationMasses = iInputParams.getRefineModMass();
 
         if (modificationMasses != null) {
 
@@ -145,6 +146,20 @@ public class ModificationMap implements Serializable {
 
             while (tokenizer.hasMoreTokens()) {
                 String[] tokens = tokenizer.nextToken().split("@");
+                BigDecimal inputMass = new BigDecimal(new Double(tokens[0]));
+                inputMass = inputMass.setScale(2, BigDecimal.ROUND_HALF_UP);
+                if (modMass.equals(inputMass)) {
+                    return true;
+                }
+            }
+        }
+
+        if (refineModificationMasses != null) {
+
+            StringTokenizer tokenizer2 = new StringTokenizer(refineModificationMasses, ",");
+
+            while (tokenizer2.hasMoreTokens()) {
+                String[] tokens = tokenizer2.nextToken().split("@");
                 BigDecimal inputMass = new BigDecimal(new Double(tokens[0]));
                 inputMass = inputMass.setScale(2, BigDecimal.ROUND_HALF_UP);
                 if (modMass.equals(inputMass)) {
