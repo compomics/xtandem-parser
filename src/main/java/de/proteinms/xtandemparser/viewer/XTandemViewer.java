@@ -1721,8 +1721,8 @@ public class XTandemViewer extends JFrame {
                         }
 
                         // add ion coverage to peptide sequence
-                        int[][] ionCoverage = new int[sequence.length()][2];
-
+                       int[][] ionCoverage = new int[sequence.length() + 1][12];
+                        
                         for (int i = 0; i < 12; i++) {
                             FragmentIon[] ions = ionsMap.get(domain.getDomainID() + "_" + i);
                             for (FragmentIon ion : ions) {
@@ -1735,31 +1735,80 @@ public class XTandemViewer extends JFrame {
                                 } else {
                                     color = Color.BLACK;
                                 }
-                                if (ionType == FragmentIon.B_ION || ionType == FragmentIon.BH2O_ION || ionType == FragmentIon.BNH3_ION) {
-                                    ionCoverage[ionNumber][0]++;
-                                }
-                                if (ionType == FragmentIon.Y_ION || ionType == FragmentIon.YH2O_ION || ionType == FragmentIon.YNH3_ION) {
-                                    ionCoverage[ionNumber][1]++;
-                                }
+
+                            if (ionType == FragmentIon.A_ION) {                                
+                                ionCoverage[ionNumber][0]++;
+                            }
+                            if (ionType == FragmentIon.AH2O_ION) {
+                                ionCoverage[ionNumber][1]++;
+                            }
+                            if (ionType == FragmentIon.ANH3_ION) {
+                                ionCoverage[ionNumber][2]++;
+                            }
+                            if (ionType == FragmentIon.B_ION) {
+                                ionCoverage[ionNumber][3]++;
+                            }
+                            if (ionType == FragmentIon.BH2O_ION) {
+                                ionCoverage[ionNumber][4]++;
+                            }
+                            if (ionType == FragmentIon.BNH3_ION) {
+                                ionCoverage[ionNumber][5]++;
+                            }
+                            if (ionType == FragmentIon.C_ION) {
+                                ionCoverage[ionNumber][6]++;
+                            }
+                            if (ionType == FragmentIon.X_ION) {
+                                ionCoverage[ionNumber][7]++;
+                            }
+                            if (ionType == FragmentIon.Y_ION) {
+                                ionCoverage[ionNumber][8]++;
+                            }
+                            if (ionType == FragmentIon.YH2O_ION) {
+                                ionCoverage[ionNumber][9]++;
+                            }
+                            if (ionType == FragmentIon.YNH3_ION) {
+                                ionCoverage[ionNumber][10]++;
+                            }
+                            if (ionType == FragmentIon.Z_ION) {
+                                ionCoverage[ionNumber][11]++;
+                            }
                             }
                         }
 
-                        // add the ion coverage to the modified sequence
-                        int[][] ionCoverageProcessed = new int[sequence.length()][2];
+                         // add the ion coverage to the modified sequence
+                    int[][] ionCoverageProcessed = new int[sequence.length()][2];
 
-                        for (int i = 1; i < ionCoverage.length; i++) {
-                            if (ionCoverage[i][0] > 0 && ionCoverage[i - 1][0] > 0) {
-                                ionCoverageProcessed[i][0] = 1;
-                            } else {
-                                ionCoverageProcessed[i][0] = 0;
-                            }
+                    // Process termini.
+                    // B1 ion (N-terminal residue)
+                    if (ionCoverage[1][3] > 0 || ionCoverage[1][4] > 0 || ionCoverage[1][5] > 0) {
+                        ionCoverageProcessed[0][0] = 1;
+                    }
+                    // Y1 ion (C-terminal residue)
+                    if (ionCoverage[1][8] > 0 || ionCoverage[1][9] > 0 || ionCoverage[1][10] > 0) {
+                        ionCoverageProcessed[ionCoverage.length - 2][1] = 1;
+                    }
+                    // Last B-ion (C-terminal residue)
+                    if (ionCoverage[ionCoverage.length - 1][3] > 0 || ionCoverage[ionCoverage.length - 1][4] > 0 || ionCoverage[ionCoverage.length - 1][5] > 0) {
+                        ionCoverageProcessed[ionCoverage.length - 2][0] = 1;
+                    }
+                    // Last Y-ion (N-terminal residue)
+                    if (ionCoverage[ionCoverage.length - 1][8] > 0 || ionCoverage[ionCoverage.length - 1][9] > 0 || ionCoverage[ionCoverage.length - 1][10] > 0) {
+                        ionCoverageProcessed[0][1] = 1;
+                    }
 
-                            if (ionCoverage[i][1] > 0 && ionCoverage[i - 1][1] > 0) {
-                                ionCoverageProcessed[ionCoverage.length - 1 - i][1] = 1;
-                            } else {
-                                ionCoverageProcessed[ionCoverage.length - 1 - i][1] = 0;
-                            }
+                    for (int i = 2; i < ionCoverage.length - 1; i++) {
+                        if (ionCoverage[i][3] > 0 && ionCoverage[i - 1][3] > 0 || ionCoverage[i][4] > 0 && ionCoverage[i - 1][4] > 0 || ionCoverage[i][5] > 0 && ionCoverage[i - 1][5] > 0) {
+                            ionCoverageProcessed[i - 1][0] = 1;
+                        } else {
+                            ionCoverageProcessed[i - 1][0] = 0;
                         }
+
+                        if (ionCoverage[i][8] > 0 && ionCoverage[i - 1][8] > 0 || ionCoverage[i][9] > 0 && ionCoverage[i - 1][9] > 0 || ionCoverage[i][10] > 0 && ionCoverage[i - 1][10] > 0) {
+                            ionCoverageProcessed[ionCoverage.length - 1 - i][1] = 1;
+                        } else {
+                            ionCoverageProcessed[ionCoverage.length - 1 - i][1] = 0;
+                        }
+                    }
 
                         String modifiedSequenceColorCoded = "<html>";
 
