@@ -27,7 +27,8 @@
         <developer>
             <name>Thilo Muth</name>
             <id>thilo</id>
-            <email>Thilo.Muth@uni-jena.de</email>
+            <email>muth@mpi-magdeburg.mpg.de</email>
+            <organization>Max Planck Institute for Dynamics of Complex Technical Systems, Magdeburg, Germany</organization>
         </developer>
         <developer>
             <name>Harald Barsnes</name>
