@@ -34,7 +34,7 @@ public class XTandemViewerStarter {
         try {
             PlasticLookAndFeel.setPlasticTheme(new SkyKrupp());
             UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
-        } catch (UnsupportedLookAndFeelException e) {
+        } catch (Exception e) {
             // ignore exception
         }
 
@@ -44,7 +44,7 @@ public class XTandemViewerStarter {
             e.printStackTrace();
         }
     }
-
+    
     /**
      * Starts the file by launching the jar file on the JVM.
      *
