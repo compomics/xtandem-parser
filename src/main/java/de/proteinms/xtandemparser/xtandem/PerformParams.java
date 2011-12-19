@@ -36,31 +36,31 @@ public class PerformParams {
     /**
      * Holds the number of estimated false positives.
      */
-    private int iEstFalsePositives;
+    private long iEstFalsePositives;
     /**
      * This double holds the spectrum noise suppression ratio.
      */
     private double iSpectrumNoiseSuppressionRatio;
     /**
-     * This Integer holds the number of total peptides used.
+     * This Long holds the number of total peptides used.
      */
-    private int iTotalPeptidesUsed;
+    private long iTotalPeptidesUsed;
     /**
-     * This Integer holds the number of total proteins used.
+     * This Long holds the number of total proteins used.
      */
-    private int iTotalProteinsUsed;
+    private long iTotalProteinsUsed;
     /**
-     * This Integer holds the number of total spectra assigned.
+     * This Long holds the number of total spectra assigned.
      */
-    private int iTotalSpectraAssigned;
+    private long iTotalSpectraAssigned;
     /**
-     * This Integer holds the total number of spectra used.
+     * This Long holds the total number of spectra used.
      */
-    private int iTotalSpectraUsed;
+    private long iTotalSpectraUsed;
     /**
-     * This Integer holds the number of total uniques assigned.
+     * This Long holds the number of total uniques assigned.
      */
-    private int iTotalUniqueAssigned;
+    private long iTotalUniqueAssigned;
     /**
      * This String holds the process start time.
      */
@@ -144,25 +144,25 @@ public class PerformParams {
             iSequenceSourceDescription_3 = map.get("SEQSRCDESC3").toString();
         }
         if (map.get("ESTFP") != null) {
-            iEstFalsePositives = Integer.parseInt(map.get("ESTFP").toString());
+            iEstFalsePositives = Long.parseLong(map.get("ESTFP").toString());
         }
         if (map.get("NOISESUPP") != null) {
             iSpectrumNoiseSuppressionRatio = Double.parseDouble(map.get("NOISESUPP").toString());
         }
         if (map.get("TOTALPEPUSED") != null) {
-            iTotalPeptidesUsed = Integer.parseInt(map.get("TOTALPEPUSED").toString());
+            iTotalPeptidesUsed = Long.parseLong(map.get("TOTALPEPUSED").toString());
         }
         if (map.get("TOTALPROTUSED") != null) {
-            iTotalProteinsUsed = Integer.parseInt(map.get("TOTALPROTUSED").toString());
+            iTotalProteinsUsed = Long.parseLong(map.get("TOTALPROTUSED").toString());
         }
         if (map.get("TOTALSPECASS") != null) {
-            iTotalSpectraAssigned = Integer.parseInt(map.get("TOTALSPECASS").toString());
+            iTotalSpectraAssigned = Long.parseLong(map.get("TOTALSPECASS").toString());
         }
         if (map.get("TOTALSPECUSED") != null) {
-            iTotalSpectraUsed = Integer.parseInt(map.get("TOTALSPECUSED").toString());
+            iTotalSpectraUsed = Long.parseLong(map.get("TOTALSPECUSED").toString());
         }
         if (map.get("TOTALUNIQUEASS") != null) {
-            iTotalUniqueAssigned = Integer.parseInt(map.get("TOTALUNIQUEASS").toString());
+            iTotalUniqueAssigned = Long.parseLong(map.get("TOTALUNIQUEASS").toString());
         }
         if (map.get("PROCSTART") != null) {
             iProcStartTime = map.get("PROCSTART").toString();
@@ -256,11 +256,11 @@ public class PerformParams {
         this.iSequenceSourceDescription_3 = sequenceSourceDescription_3;
     }
 
-    public int getEstFalsePositives() {
+    public long getEstFalsePositives() {
         return iEstFalsePositives;
     }
 
-    public void setEstFalsePositives(int estFalsePositives) {
+    public void setEstFalsePositives(long estFalsePositives) {
         this.iEstFalsePositives = estFalsePositives;
     }
 
@@ -273,43 +273,43 @@ public class PerformParams {
         this.iSpectrumNoiseSuppressionRatio = spectrumNoiseSuppressionRatio;
     }
 
-    public int getTotalPeptidesUsed() {
+    public long getTotalPeptidesUsed() {
         return iTotalPeptidesUsed;
     }
 
-    public void setTotalPeptidesUsed(int totalPeptidesUsed) {
+    public void setTotalPeptidesUsed(long totalPeptidesUsed) {
         this.iTotalPeptidesUsed = totalPeptidesUsed;
     }
 
-    public int getTotalProteinsUsed() {
+    public long getTotalProteinsUsed() {
         return iTotalProteinsUsed;
     }
 
-    public void setTotalProteinsUsed(int totalProteinsUsed) {
+    public void setTotalProteinsUsed(long totalProteinsUsed) {
         this.iTotalProteinsUsed = totalProteinsUsed;
     }
 
-    public int getTotalSpectraAssigned() {
+    public long getTotalSpectraAssigned() {
         return iTotalSpectraAssigned;
     }
 
-    public void setTotalSpectraAssigned(int totalSpectraAssigned) {
+    public void setTotalSpectraAssigned(long totalSpectraAssigned) {
         this.iTotalSpectraAssigned = totalSpectraAssigned;
     }
 
-    public int getTotalSpectraUsed() {
+    public long getTotalSpectraUsed() {
         return iTotalSpectraUsed;
     }
 
-    public void setTotalSpectraUsed(int totalSpectraUsed) {
+    public void setTotalSpectraUsed(long totalSpectraUsed) {
         this.iTotalSpectraUsed = totalSpectraUsed;
     }
 
-    public int getTotalUniqueAssigned() {
+    public long getTotalUniqueAssigned() {
         return iTotalUniqueAssigned;
     }
 
-    public void setTotalUniqueAssigned(int totalUniqueAssigned) {
+    public void setTotalUniqueAssigned(long totalUniqueAssigned) {
         this.iTotalUniqueAssigned = totalUniqueAssigned;
     }
 
