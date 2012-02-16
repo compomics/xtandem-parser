@@ -7,7 +7,7 @@ import java.io.InputStream;
  * This class contains the properties that are used during the use of the tool,
  * but that are not stored between each run of the program.
  *
- * @author  Harald Barsnes
+ * @author Harald Barsnes
  */
 public class Properties {
 
@@ -28,7 +28,7 @@ public class Properties {
 
         try {
             InputStream is = this.getClass().getClassLoader().getResourceAsStream("xtandem-parser.properties");
-            p.load( is );
+            p.load(is);
         } catch (IOException e) {
             e.printStackTrace();
         }

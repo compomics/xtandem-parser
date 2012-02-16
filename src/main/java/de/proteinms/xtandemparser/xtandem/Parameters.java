@@ -8,7 +8,8 @@ package de.proteinms.xtandemparser.xtandem;
 public class Parameters {
 
     /**
-     * The fragment mass error used in the matching of theoretical and experimental spectra.
+     * The fragment mass error used in the matching of theoretical and
+     * experimental spectra.
      */
     public final static double FRAGMENTMASSERROR = 0.3;
 }

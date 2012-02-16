@@ -6,7 +6,6 @@ import com.jgoodies.looks.plastic.theme.SkyKrupp;
 import java.io.*;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * This bootstrap class is used to start the jar file with memory options
@@ -44,7 +43,7 @@ public class XTandemViewerStarter {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Starts the file by launching the jar file on the JVM.
      *
@@ -93,11 +92,11 @@ public class XTandemViewerStarter {
 
         String quote = "";
 
-        if(System.getProperty("os.name").lastIndexOf("Windows") != -1){
+        if (System.getProperty("os.name").lastIndexOf("Windows") != -1) {
             quote = "\"";
         }
 
-        String cmdLine = javaHome + "java " + options + " -cp " +  quote
+        String cmdLine = javaHome + "java " + options + " -cp " + quote
                 + new File(file, filename).getAbsolutePath() + quote
                 + " de.proteinms.xtandemparser.viewer.FileSelector";
 
@@ -107,7 +106,6 @@ public class XTandemViewerStarter {
             InputStream stderr = p.getErrorStream();
             InputStreamReader isr = new InputStreamReader(stderr);
             BufferedReader br = new BufferedReader(isr);
-            String line = null;
 
             String errorMessage = "<ERROR>\n\n";
 
@@ -115,7 +113,7 @@ public class XTandemViewerStarter {
                 System.out.println("<ERROR>");
             }
 
-            line = br.readLine();
+            String line = br.readLine();
 
             boolean error = false;
 
@@ -145,22 +143,22 @@ public class XTandemViewerStarter {
 
             if (error) {
 
-                File logFile = new File(System.getProperty("user.home") +
-                        File.separator + "xtandem_viewer.log");
+                File logFile = new File(System.getProperty("user.home")
+                        + File.separator + "xtandem_viewer.log");
 
                 FileWriter f = new FileWriter(logFile);
                 f.write(errorMessage);
                 f.close();
 
                 javax.swing.JOptionPane.showMessageDialog(null,
-                        "Failed to start XTandemViewer.\n\n" +
-                        "Make sure that XTandemViewer is installed in a path not containing special\n" +
-                        "characters. On Linux it has to be run from a path without spaces.\n\n" +
-                        "The upper memory limit used may be too high for your computer to handle.\n" +
-                        "Try reducing it (see Properties\\JavaOptions.txt) and see if this helps.\n\n" +
-                        "For more details see:\n" +
-                        System.getProperty("user.home") +
-                        File.separator + "xtandem_viewer.log",
+                        "Failed to start XTandemViewer.\n\n"
+                        + "Make sure that XTandemViewer is installed in a path not containing special\n"
+                        + "characters. On Linux it has to be run from a path without spaces.\n\n"
+                        + "The upper memory limit used may be too high for your computer to handle.\n"
+                        + "Try reducing it (see Properties\\JavaOptions.txt) and see if this helps.\n\n"
+                        + "For more details see:\n"
+                        + System.getProperty("user.home")
+                        + File.separator + "xtandem_viewer.log",
                         "XTandemViewer - Startup Failed", JOptionPane.OK_OPTION);
 
                 System.exit(0);

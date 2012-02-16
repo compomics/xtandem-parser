@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 import java.util.*;
 
 /**
- * In this class the fixed and variable modifications are sorted out
- * and lists for these modifications are build.
+ * In this class the fixed and variable modifications are sorted out and lists
+ * for these modifications are build.
  *
  * @author Thilo Muth
  */
@@ -32,7 +32,8 @@ public class ModificationMap implements Serializable {
     private InputParams iInputParams;
 
     /**
-     * The constructor builds the fixed and variable modification maps from the given raw mod map and the input parameters.
+     * The constructor builds the fixed and variable modification maps from the
+     * given raw mod map and the input parameters.
      *
      * @param aRawModMap The raw modification map from the parser
      * @param aPeptideMap The peptide map
@@ -46,10 +47,11 @@ public class ModificationMap implements Serializable {
     }
 
     /**
-     * This method checks for fixed or variable modifications and builds the maps.
+     * This method checks for fixed or variable modifications and builds the
+     * maps.
      *
      * @param rawModMap The raw modification map from the parser
-     * @param peptideMap The peptide map 
+     * @param peptideMap The peptide map
      * @param numberOfSpectra The total number of spectra
      */
     private void buildModificationMaps(HashMap rawModMap, PeptideMap peptideMap, int numberOfSpectra) {
@@ -129,8 +131,9 @@ public class ModificationMap implements Serializable {
     }
 
     /**
-     * Checks if a given modification mass is given in the fixed modification input parameter section:
-     * --> label="residue, modification mass">
+     * Checks if a given modification mass is given in the fixed modification
+     * input parameter section: --> label="residue, modification mass">
+     *
      * @param aModMass
      * @return boolean
      */
@@ -171,8 +174,10 @@ public class ModificationMap implements Serializable {
     }
 
     /**
-     * Checks if a given modification mass is given in the variable modification input parameter section:
-     * --> label="residue, potential modification mass">
+     * Checks if a given modification mass is given in the variable modification
+     * input parameter section: --> label="residue, potential modification
+     * mass">
+     *
      * @param aModMass
      * @return boolean
      */
@@ -216,6 +221,7 @@ public class ModificationMap implements Serializable {
 
     /**
      * Returns an arrayList of all the fixed modifications in the file.
+     *
      * @return fixedModList
      */
     public ArrayList<Modification> getAllFixedModifications() {
@@ -228,6 +234,7 @@ public class ModificationMap implements Serializable {
 
     /**
      * Returns an arrayList of all the variable modifications in the file.
+     *
      * @return varModList ArrayList<Modification>
      */
     public ArrayList<Modification> getAllVariableModifications() {

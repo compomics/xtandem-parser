@@ -23,7 +23,7 @@ public interface Peak {
 
     /**
      * Returns charge information for this peak.
-     * 
+     *
      * @return int
      */
     public int getCharge();

@@ -13,7 +13,7 @@ import javax.swing.event.HyperlinkEvent;
 /**
  * The help frame gives the user the possibility to retrieve helpful information
  * about the X!Tandem Viewer. It displays a given html-sheet.
- * 
+ *
  * @author Thilo Muth
  */
 public class HelpFrame extends JFrame {

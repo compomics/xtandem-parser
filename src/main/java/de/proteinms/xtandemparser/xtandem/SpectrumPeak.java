@@ -3,7 +3,8 @@ package de.proteinms.xtandemparser.xtandem;
 import de.proteinms.xtandemparser.interfaces.Peak;
 
 /**
- * This class is an implementation of Peak and is used for the fragment ion calculation.
+ * This class is an implementation of Peak and is used for the fragment ion
+ * calculation.
  *
  * @author Thilo Muth
  */

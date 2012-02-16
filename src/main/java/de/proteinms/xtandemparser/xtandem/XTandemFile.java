@@ -15,9 +15,10 @@ import java.util.Vector;
 import org.xml.sax.SAXException;
 
 /**
- * This class represents the xtandem file object as the starting point which provides 
- * all the methods to use the information which are parsed by the Xtandem parser.
- * 
+ * This class represents the xtandem file object as the starting point which
+ * provides all the methods to use the information which are parsed by the
+ * Xtandem parser.
+ *
  * @author Thilo Muth
  */
 public class XTandemFile implements Serializable {
@@ -43,7 +44,7 @@ public class XTandemFile implements Serializable {
      */
     private ModificationMap iModMap = null;
     /**
-     * Private variable iXTParser as an instance of XTandemParser.     *
+     * Private variable iXTParser as an instance of XTandemParser. *
      */
     private XTandemParser iXTParser = null;
     /**
@@ -51,11 +52,11 @@ public class XTandemFile implements Serializable {
      */
     private HashMap<String, Integer> iIdToNumberMap;
     /**
-     *  This is an instance of the InputParams object.
+     * This is an instance of the InputParams object.
      */
     private InputParams iInputParams = null;
     /**
-     *  This is an instance of the PerformParams object.
+     * This is an instance of the PerformParams object.
      */
     private PerformParams iPerformParams = null;
     private String iRawFile = null;
@@ -70,7 +71,8 @@ public class XTandemFile implements Serializable {
     private HashMap<Integer, Peaklist> iRawFileMap;
 
     /**
-     * Constructor of XTandemFile gets a string to an existing path and filename of the xtandem file.
+     * Constructor of XTandemFile gets a string to an existing path and filename
+     * of the xtandem file.
      *
      * @param aXTandemFile The given XTandem file.
      * @throws SAXException SAX parsing exception thrown.
@@ -83,7 +85,7 @@ public class XTandemFile implements Serializable {
             }
             iXTParser = new XTandemParser(inputFile);
             setFileName(aXTandemFile);
-            iSpectraList = this.getSpectraList();
+            iSpectraList = getSpectraList();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -172,6 +174,7 @@ public class XTandemFile implements Serializable {
      * Returns a vector with two arrays of b ions and y ions respectively.
      *
      * @param peptide The given peptide
+     * @param domain The domain
      * @return Vector The vector containing b ions and y ions
      */
     public Vector getFragmentIonsForPeptide(Peptide peptide, Domain domain) {
@@ -295,7 +298,7 @@ public class XTandemFile implements Serializable {
         fragIons.add(matchXIons);
         fragIons.add(matchYIons);
         fragIons.add(matchYH2OIons);
-        fragIons.add(matchYNH3Ions);  
+        fragIons.add(matchYNH3Ions);
         fragIons.add(matchZIons);
         return fragIons;
     }
@@ -331,7 +334,7 @@ public class XTandemFile implements Serializable {
      *
      * @return iSpectraList ArrayList<Spectrum>
      */
-   public ArrayList<Spectrum> getSpectraList() {
+    public ArrayList<Spectrum> getSpectraList() {
         if (iSpectraList == null) {
 
             iSpectraNumber = iXTParser.getNumberOfSpectra();
@@ -382,7 +385,7 @@ public class XTandemFile implements Serializable {
      * @param aSpectrumNumber The spectrum number
      * @return Spectrum
      */
-   public Spectrum getSpectrum(final int aSpectrumNumber) {
+    public Spectrum getSpectrum(final int aSpectrumNumber) {
         return getSpectraList().get(aSpectrumNumber - 1);
     }
 
@@ -445,7 +448,7 @@ public class XTandemFile implements Serializable {
      *
      * @param aFileName The name of the X!Tandem file
      */
-    void setFileName(String aFileName) {
+    private void setFileName(String aFileName) {
         iFileName = aFileName;
     }
 
@@ -460,7 +463,7 @@ public class XTandemFile implements Serializable {
 
     /**
      * Returns the total number of spectra.
-     * 
+     *
      * @return iSpectraNumber
      */
     public int getSpectraNumber() {

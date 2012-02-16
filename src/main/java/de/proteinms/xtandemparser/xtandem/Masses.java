@@ -1,7 +1,8 @@
 package de.proteinms.xtandemparser.xtandem;
 
 /**
- * This class holds all the masses used for the calculation of theoretical masses.
+ * This class holds all the masses used for the calculation of theoretical
+ * masses.
  *
  * @author Thilo Muth
  */
@@ -9,8 +10,7 @@ public class Masses {
 
     // The masses for all the amino acids including empty values for non-amino acid letters
     // Update on 05/25/10: Using NEW mono isotopic reference masses due to wrong values. 
-
-    //public static final double A = 71.037110;
+    
     public static final double A = 71.037110;
     public static final double B = 114.534930;
     //public static final double C = 160.030649;
@@ -26,10 +26,9 @@ public class Masses {
     //public static final double H = 137.058910;
     public static final double H = 137.058912;
     //public static final double I = 113.084060;
-    public static final double I = 113.084064;    
+    public static final double I = 113.084064;
     public static final double J = 0.000000;
     public static final double K = 128.094963;
-    
     //public static final double L = 113.084060;
     public static final double L = 113.084064;
     //public static final double M = 131.040490;
@@ -56,7 +55,6 @@ public class Masses {
     //public static final double Y = 163.063330;
     public static final double Y = 163.06332;
     public static final double Z = 128.550590;
-
     /**
      * The mass of Hydrogen
      */

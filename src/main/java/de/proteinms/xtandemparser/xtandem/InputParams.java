@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 /**
  * This class holds information of the given input parameters.
- * 
+ *
  * @author Thilo Muth
  */
 public class InputParams implements Serializable {
@@ -41,7 +41,6 @@ public class InputParams implements Serializable {
     private String iProteinTaxon = null;
     private boolean iRefine = false;
     private double iRefineMaxValidExpectValue;
-
     private boolean iPointMutations = false;
     private String iRefinePotC_termMods = null;
     private String iRefinePotN_termMods = null;
@@ -96,7 +95,6 @@ public class InputParams implements Serializable {
      * Holds the values of refine, potential modification motif [1-n]
      */
     private ArrayList<String> refinePotentialModificationMotif = new ArrayList<String>();
-
     /**
      * Holds the values of residue, modification mass.
      */
@@ -353,7 +351,7 @@ public class InputParams implements Serializable {
      * @param aString
      * @return flag
      */
-    public boolean convertStringToBool(String aString) {
+    private boolean convertStringToBool(String aString) {
         boolean flag = false;
         if (aString.equalsIgnoreCase("yes")) {
             flag = true;
@@ -940,10 +938,10 @@ public class InputParams implements Serializable {
     }
 
     /**
-     * Returns the values of "residue, modification mass [1-n]"
-     * as an ArrayList of Strings. The zero-based index in the
-     * ArrayList corresponds to the 1-based index in the file
-     * (f.e. "residue, modification mass 2" is at position 1)
+     * Returns the values of "residue, modification mass [1-n]" as an ArrayList
+     * of Strings. The zero-based index in the ArrayList corresponds to the
+     * 1-based index in the file (f.e. "residue, modification mass 2" is at
+     * position 1)
      *
      * @return An ArrayList of modification mass values
      */
@@ -956,10 +954,10 @@ public class InputParams implements Serializable {
     }
 
     /**
-     * Returns the values of "refine, potential modification mass [1-n]"
-     * as an ArrayList of Strings. The zero-based index in the
-     * ArrayList corresponds to the 1-based index in the file
-     * 
+     * Returns the values of "refine, potential modification mass [1-n]" as an
+     * ArrayList of Strings. The zero-based index in the ArrayList corresponds
+     * to the 1-based index in the file
+     *
      * @return An ArrayList of potential modification mass values
      */
     public ArrayList<String> getRefinePotentialModificationMass() {
@@ -971,10 +969,10 @@ public class InputParams implements Serializable {
     }
 
     /**
-     * Returns the values of "refine, potential modification motif [1-n]"
-     * as an ArrayList of Strings. The zero-based index in the
-     * ArrayList corresponds to the 1-based index in the file
-     * 
+     * Returns the values of "refine, potential modification motif [1-n]" as an
+     * ArrayList of Strings. The zero-based index in the ArrayList corresponds
+     * to the 1-based index in the file
+     *
      * @return An ArrayList of potential modification motifs
      */
     public ArrayList<String> getRefinePotentialModificationMotif() {

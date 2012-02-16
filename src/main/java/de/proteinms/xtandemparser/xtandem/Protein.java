@@ -10,28 +10,34 @@ import java.io.Serializable;
 public class Protein implements Serializable {
 
     /**
-     * This variable holds the log10-value of the expectation value of the protein.
+     * This variable holds the log10-value of the expectation value of the
+     * protein.
      */
     private double iExpectValue = 0;
     /**
-     *This variable presents the identifier for this particular identification (spectrum#).(id#).
+     * This variable presents the identifier for this particular identification
+     * (spectrum#).(id#).
      */
     private String iID = null;
     /**
-     * This variable holds a unique number for this protein, calculated by the search engine.
+     * This variable holds a unique number for this protein, calculated by the
+     * search engine.
      */
     private String iUID = null;
     /**
-     * This variable holds the label which is the description line from the FASTA file.
+     * This variable holds the label which is the description line from the
+     * FASTA file.
      */
     private String iLabel = null;
     /**
-     * This variable presents the sum of all the fragment ions that identify this protein.
+     * This variable presents the sum of all the fragment ions that identify
+     * this protein.
      */
     private double iSummedScore = 0;
 
     /**
-     * The constructor get id, uid, label, expect value and summed score to build a protein object.
+     * The constructor get id, uid, label, expect value and summed score to
+     * build a protein object.
      *
      * @param aID
      * @param aUID
@@ -130,7 +136,7 @@ public class Protein implements Serializable {
 
     /**
      * Sets the summed score of the protein.
-     * 
+     *
      * @param aSummedScore
      */
     public void setSummedScore(double aSummedScore) {

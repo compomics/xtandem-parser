@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- * This class is used to do a calculation for the theoretical masses of
- * a, b, c, x, y and z ions (plus double charged ones) and do the matching
- * of experimental and theoretical masses.
+ * This class is used to do a calculation for the theoretical masses of a, b, c,
+ * x, y and z ions (plus double charged ones) and do the matching of
+ * experimental and theoretical masses.
  *
  * @author Thilo Muth
  */
@@ -96,23 +96,24 @@ public class InSilicoDigester {
      * The peptide charge
      */
     private final int iPeptideCharge;
-
     /**
      * The modification map
      */
     private final ModificationMap iModMap;
-
     /**
      * The domain (identification) variable.
      */
     private Domain iDomain;
 
     /**
-     * Constructor get a peptide object, the modification map, the input parameters and the masses map.
+     * Constructor get a peptide object, the modification map, the input
+     * parameters and the masses map.
      *
      * @param aPeptide A peptide object which should be "in silico" digested.
-     * @param aModMap  Modification map to know where have been modifications on the peptide.
-     * @param aMasses  Masses map to know which amino acid has which mass.
+     * @param aDomain The domain.
+     * @param aModMap Modification map to know where have been modifications on
+     * the peptide.
+     * @param aMasses Masses map to know which amino acid has which mass.
      * @param aCharge The charge of the given peptide.
      */
     public InSilicoDigester(Peptide aPeptide, Domain aDomain, ModificationMap aModMap, HashMap aMasses, int aCharge) {
@@ -143,10 +144,12 @@ public class InSilicoDigester {
     }
 
     /**
-     * This method calculates the masses of the peptide, including the masses of the aminoacids plus
-     * the masses of the modifications (fixed/variable and N- resp. C-term included)
+     * This method calculates the masses of the peptide, including the masses of
+     * the aminoacids plus the masses of the modifications (fixed/variable and
+     * N- resp. C-term included)
      *
-     * @return double[] Contains the mass of the part of the sequence. The amino acid position is the index.
+     * @return double[] Contains the mass of the part of the sequence. The amino
+     * acid position is the index.
      */
     double[] calculatePeptideMasses() {
         double mass;
@@ -188,7 +191,8 @@ public class InSilicoDigester {
 
     /**
      * This method calculates the theoretical masses of the ions of the peptide.
-     * The fragment ion are stored as objects, for example yIons[0] is the y1 ion.
+     * The fragment ion are stored as objects, for example yIons[0] is the y1
+     * ion.
      */
     private void calculateIons() {
         double[] peptideMasses = calculatePeptideMasses();
@@ -223,7 +227,7 @@ public class InSilicoDigester {
                     iAIons[cptb] = new FragmentIon((bMass - oxygenMass - carbonMass + charge * hydrogenMass) / charge, FragmentIon.A_ION, i + 1, charge, iFragmentMassError);
                     iANH3Ions[cptb] = new FragmentIon((bMass - oxygenMass - carbonMass - nitrogenMass - 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.ANH3_ION, i + 1, charge, iFragmentMassError);
                     iAH2OIons[cptb] = new FragmentIon((bMass - 2 * oxygenMass - carbonMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.AH2O_ION, i + 1, charge, iFragmentMassError);
-                    iBIons[cptb] = new FragmentIon((bMass + charge * hydrogenMass) / charge, FragmentIon.B_ION, i + 1, charge, iFragmentMassError);      
+                    iBIons[cptb] = new FragmentIon((bMass + charge * hydrogenMass) / charge, FragmentIon.B_ION, i + 1, charge, iFragmentMassError);
                     iBNH3Ions[cptb] = new FragmentIon((bMass - nitrogenMass - 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.BNH3_ION, i + 1, charge, iFragmentMassError);
                     iBH2OIons[cptb] = new FragmentIon((bMass - oxygenMass - 2 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.BH2O_ION, i + 1, charge, iFragmentMassError);
                     iCIons[cptb] = new FragmentIon((bMass + nitrogenMass + 3 * hydrogenMass + charge * hydrogenMass) / charge, FragmentIon.C_ION, i + 1, charge, iFragmentMassError);
@@ -253,7 +257,7 @@ public class InSilicoDigester {
      * masses of the experimental peaks.
      *
      * @param ionType The ion type.
-     * @param aPeaks  The experimental peaks.
+     * @param aPeaks The experimental peaks.
      * @return matchedIons A Vector containing all the matched fragment ions.
      */
     public Vector getMatchedIons(int ionType, Peak[] aPeaks) {

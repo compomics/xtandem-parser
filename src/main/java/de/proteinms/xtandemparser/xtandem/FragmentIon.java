@@ -19,7 +19,8 @@ public class FragmentIon implements Ion {
      */
     private double iIntensity = 0.0;
     /**
-     * The number of the fragment ion. For example: b1 ion has the number 1, b4 has number 4 etc.
+     * The number of the fragment ion. For example: b1 ion has the number 1, b4
+     * has number 4 etc.
      */
     private int iNumber = 0;
     /**
@@ -31,7 +32,8 @@ public class FragmentIon implements Ion {
      */
     private int iType;
     /**
-     * The error margin of the fragment ion. Is needed later for the spectrum panel.
+     * The error margin of the fragment ion. Is needed later for the spectrum
+     * panel.
      */
     private double iErrorMargin = 0.0;
     /**
@@ -43,14 +45,14 @@ public class FragmentIon implements Ion {
      */
     private int iCharge;
 
-
     /**
      * Constructor gets all the parameters to create an fragment ion object.
      *
-     * @param aMz          The m/z value of the fragment ion.
-     * @param aType        The type of the fragment ion as defined in the ion interface.
-     * @param aNumber      The number of the fragment ion.
-     * @param aCharge      The charge of the fragment ion.
+     * @param aMz The m/z value of the fragment ion.
+     * @param aType The type of the fragment ion as defined in the ion
+     * interface.
+     * @param aNumber The number of the fragment ion.
+     * @param aCharge The charge of the fragment ion.
      * @param aErrorMargin The error margin of the fragment ion.
      */
     public FragmentIon(double aMz, int aType, int aNumber, int aCharge, double aErrorMargin) {
@@ -64,11 +66,12 @@ public class FragmentIon implements Ion {
     /**
      * The same constructor as above but with the intensity.
      *
-     * @param aMz          The m/z value of the fragment ion.
-     * @param aIntensity   The intensity of the fragment ion.
-     * @param aType        The type of the fragment ion as defined in the ion interface.
-     * @param aNumber      The number of the fragment ion.
-     * @param aCharge      The charge of the fragment ion.
+     * @param aMz The m/z value of the fragment ion.
+     * @param aIntensity The intensity of the fragment ion.
+     * @param aType The type of the fragment ion as defined in the ion
+     * interface.
+     * @param aNumber The number of the fragment ion.
+     * @param aCharge The charge of the fragment ion.
      * @param aErrorMargin The error margin of the fragment ion.
      */
     public FragmentIon(double aMz, double aIntensity, int aType, int aNumber, int aCharge, double aErrorMargin) {
@@ -82,11 +85,11 @@ public class FragmentIon implements Ion {
     }
 
     /**
-     * This method compares the theoretical mass peak with the experimental one and tells
-     * if it's a match using a specific mass error tolerance and calculating the theoretical/
-     * experimental mass error.
+     * This method compares the theoretical mass peak with the experimental one
+     * and tells if it's a match using a specific mass error tolerance and
+     * calculating the theoretical/ experimental mass error.
      *
-     * @param aPeaks     The mass peak array
+     * @param aPeaks The mass peak array
      * @param aMassError The mass error
      * @return matchFlag boolean
      */
@@ -219,5 +222,4 @@ public class FragmentIon implements Ion {
         return null;
 
     }
-
 }

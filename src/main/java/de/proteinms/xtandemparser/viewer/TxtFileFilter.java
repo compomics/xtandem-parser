@@ -26,8 +26,8 @@ public class TxtFileFilter extends FileFilter {
 
         String extension = getExtension(f);
         if (extension != null) {
-            if (extension.equals(this.txt) ||
-                    extension.equals(this.TXT)) {
+            if (extension.equals(TxtFileFilter.txt) ||
+                    extension.equals(TxtFileFilter.TXT)) {
                 return true;
             } else {
                 return false;

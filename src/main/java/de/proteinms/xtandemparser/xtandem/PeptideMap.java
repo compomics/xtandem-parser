@@ -7,13 +7,14 @@ import java.util.List;
 
 /**
  * This class holds the peptide informatin in a map.
- * 
+ *
  * @author Thilo Muth
  */
 public class PeptideMap implements Serializable {
 
     /**
-     * This variable holds the first dimension hash map for the peptide hash map as value.
+     * This variable holds the first dimension hash map for the peptide hash map
+     * as value.
      */
     private HashMap<String, HashMap<String, Peptide>> iSpectrumAndPeptideMap = null;
 
@@ -29,9 +30,10 @@ public class PeptideMap implements Serializable {
     }
 
     /**
-     * Constructs the 2-dim hashmap, the first dimension is the map with the spectrum-number 
-     * as key and another hash map as value. The second dimension has the peptideID (e.g.
-     * s171_p2 for spectrum number 171 and the second peptide) and the peptide object as value.
+     * Constructs the 2-dim hashmap, the first dimension is the map with the
+     * spectrum-number as key and another hash map as value. The second
+     * dimension has the peptideID (e.g. s171_p2 for spectrum number 171 and the
+     * second peptide) and the peptide object as value.
      *
      * @param aRawPeptideMap
      * @param aProteinMap
@@ -46,8 +48,8 @@ public class PeptideMap implements Serializable {
         if (aRawPeptideMap != null) {
             for (int i = 1; i <= aNumberOfSpectra; i++) {
 
-        // Hashmap for the peptide objects
-        HashMap<String, Peptide> lPeptideMap = new HashMap<String, Peptide>();
+                // Hashmap for the peptide objects
+                HashMap<String, Peptide> lPeptideMap = new HashMap<String, Peptide>();
 
                 // The counter for the peptides
                 int pCount = 1;
@@ -116,28 +118,29 @@ public class PeptideMap implements Serializable {
     }
 
     /**
-     * Retrieve all possible peptide objects for a given spectrum. /!\ This list is not indexed according to the index of the peptide!
+     * Retrieve all possible peptide objects for a given spectrum. /!\ This list
+     * is not indexed according to the index of the peptide!
      *
      * @param aSpectrumNumber
      * @return peptideList ArrayList
      */
     public ArrayList<Peptide> getAllPeptides(int aSpectrumNumber) {
-        
+
         ArrayList<Peptide> arrayList = new ArrayList<Peptide>();
-        
+
         if (iSpectrumAndPeptideMap.get("s" + aSpectrumNumber) != null) {
             arrayList = new ArrayList<Peptide>(iSpectrumAndPeptideMap.get("s" + aSpectrumNumber).values());
         }
-        
+
         return arrayList;
     }
 
     /**
      * Returns a specific peptide by an index.
      *
-     * @param aSpectrumNumber   the spectrum number
-     * @param index             the index at which the peptide occurs in the xml file
-     * @return peptide Peptide  the desired peptide
+     * @param aSpectrumNumber the spectrum number
+     * @param index the index at which the peptide occurs in the xml file
+     * @return peptide Peptide the desired peptide
      */
     public Peptide getPeptideByIndex(int aSpectrumNumber, int index) {
         return iSpectrumAndPeptideMap.get("s" + aSpectrumNumber).get("s" + aSpectrumNumber + "_p" + index);

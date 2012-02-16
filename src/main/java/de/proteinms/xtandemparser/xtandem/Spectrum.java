@@ -11,13 +11,14 @@ import java.util.ArrayList;
 public class Spectrum implements Serializable {
 
     /**
-     * This variable holds the spectrum id, which is the number associated with the 
-     * mass spectrum that was identified. The number usually represents the 1-based
-     * position of this spectrum in the original data file.
+     * This variable holds the spectrum id, which is the number associated with
+     * the mass spectrum that was identified. The number usually represents the
+     * 1-based position of this spectrum in the original data file.
      */
     private int iSpectrumId = 0;
     /**
-     * This variable represents the precursor ion mass (plus a proton) from the spectrum.
+     * This variable represents the precursor ion mass (plus a proton) from the
+     * spectrum.
      */
     private double iPrecursorMh = 0;
     /**
@@ -25,16 +26,18 @@ public class Spectrum implements Serializable {
      */
     private int iPrecursorCharge = 0;
     /**
-     * This variable holds the expectation value for the top ranked protein identfied with this spectrum.
+     * This variable holds the expectation value for the top ranked protein
+     * identfied with this spectrum.
      */
     private double iExpectValue = 0;
     /**
-     * This variable holds the label that is the text from the protein sequence FASTA file description
-     * line for the top ranked protein identified.
+     * This variable holds the label that is the text from the protein sequence
+     * FASTA file description line for the top ranked protein identified.
      */
     private String iLabel = null;
     /**
-     * This variable holds the log10-value of the sum of all the fragment ion intensities.
+     * This variable holds the log10-value of the sum of all the fragment ion
+     * intensities.
      */
     private double iSummedScore = 0;
     /**
@@ -42,13 +45,13 @@ public class Spectrum implements Serializable {
      */
     private double iMaxFragIonIntensity = 0;
     /**
-     * This variable represents a multiplier to convert the normalized spectrum contained in this
-     * group back to the original intensity values.
+     * This variable represents a multiplier to convert the normalized spectrum
+     * contained in this group back to the original intensity values.
      */
     private double iIntensityMultiplier = 0;
     /**
-     * The list holds the double values of the expectation value, the summed score, the maximum 
-     * fragment ion intensity and the intensity multiplier.
+     * The list holds the double values of the expectation value, the summed
+     * score, the maximum fragment ion intensity and the intensity multiplier.
      */
     private ArrayList<Double> iSpectrumValues = null;
     /**
@@ -63,13 +66,8 @@ public class Spectrum implements Serializable {
     }
 
     /**
-     * Constructor with all given parameters:
-     * 1) spectrumID
-     * 2) precorsor mh
-     * 3) precursor charge
-     * 4) spectrum values
-     * 5) label
-     * 6) spectrum number
+     * Constructor with all given parameters: 1) spectrumID 2) precorsor mh 3)
+     * precursor charge 4) spectrum values 5) label 6) spectrum number
      *
      * @param aSpectrumID
      * @param aPrecursorMh
@@ -78,7 +76,7 @@ public class Spectrum implements Serializable {
      * @param aLabel
      * @param aSpectrumNumber
      */
-    public Spectrum(int aSpectrumID, double aPrecursorMh, int aPrecursorCharge, 
+    public Spectrum(int aSpectrumID, double aPrecursorMh, int aPrecursorCharge,
             ArrayList<Double> aSpectrumValues, String aLabel, int aSpectrumNumber) {
 
         iSpectrumId = aSpectrumID;
@@ -265,7 +263,7 @@ public class Spectrum implements Serializable {
 
     /**
      * Sets the number of the spectrum.
-     * 
+     *
      * @param aSpectrumNumber
      */
     public void setSpectrumNumber(int aSpectrumNumber) {

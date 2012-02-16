@@ -27,8 +27,8 @@ import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 import com.jgoodies.looks.plastic.theme.SkyKrupp;
 
 /**
- * This class represents the file selection frame.
- * The user can load the X!Tandem Output XML file here.
+ * This class represents the file selection frame. The user can load the
+ * X!Tandem Output XML file here.
  *
  * @author Thilo Muth
  */
@@ -55,7 +55,7 @@ public class FileSelector extends JFrame {
 
         // Initialize frame.
         super(title);
-        
+
         iParent = aParent;
 
         // GUI construction
@@ -166,7 +166,8 @@ public class FileSelector extends JFrame {
     }
 
     /**
-     * This method is called when ok button is pressed. It loads the xtandemviewer.
+     * This method is called when ok button is pressed. It loads the
+     * xtandemviewer.
      */
     private void okButtonActionPerformed() {
         this.setVisible(false);

@@ -13,7 +13,7 @@ import javax.swing.WindowConstants;
 /**
  * This dialog show information about the progress of the file parsing.
  *
- * @author  Thilo Muth
+ * @author Thilo Muth
  */
 public class ProgressDialog extends JDialog {
 
@@ -24,7 +24,7 @@ public class ProgressDialog extends JDialog {
 
     /**
      * Constructor for a progress dialog with a frame as parent.
-     * 
+     *
      * @param aParent The parent frame.
      */
     public ProgressDialog(Frame aParent) {
@@ -65,8 +65,8 @@ public class ProgressDialog extends JDialog {
 
     /**
      * Sets the progress bar value.
-     * 
-     * @param value 
+     *
+     * @param value
      */
     public void setValue(final int value) {
 
@@ -80,7 +80,7 @@ public class ProgressDialog extends JDialog {
 
     /**
      * Sets the maximum value of the progress bar
-     * 
+     *
      * @param maxvalue
      */
     public void setMaxValue(final int maxvalue) {
@@ -95,7 +95,7 @@ public class ProgressDialog extends JDialog {
 
     /**
      * Sets the dialog indeterminate.
-     * 
+     *
      * @param indeterminate
      */
     public void setIndeterminate(final boolean indeterminate) {
@@ -111,7 +111,7 @@ public class ProgressDialog extends JDialog {
 
     /**
      * Sets the filename string in the progressbar.
-     * 
+     *
      * @param fileName
      */
     public void setFileName(final String fileName) {
@@ -127,7 +127,7 @@ public class ProgressDialog extends JDialog {
 
     /**
      * This method closes the dialog, if possible.
-     * 
+     *
      * @param event
      */
     private void closeDialog(WindowEvent event) {

@@ -1,7 +1,8 @@
 package de.proteinms.xtandemparser.interfaces;
 
 /**
- * Modification interface implemented by FixedModification and VariableModification.
+ * Modification interface implemented by FixedModification and
+ * VariableModification.
  *
  * @author Thilo Muth
  */

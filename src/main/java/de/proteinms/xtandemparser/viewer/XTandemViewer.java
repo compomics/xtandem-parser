@@ -839,7 +839,7 @@ public class XTandemViewer extends JFrame {
                     int precursorCharge = spectrum.getPrecursorCharge();
                     double precursorMh = spectrum.getPrecursorMh();
                     String accession = spectrum.getLabel();
-                    boolean identified = false;
+                    boolean identified;
                     if (pepList.isEmpty()) {
                         identified = false;
                     } else {
@@ -1047,7 +1047,7 @@ public class XTandemViewer extends JFrame {
 
     /**
      * Update the tables based on the spectrum selected.
-     * 
+     *
      * @param evt
      */
     private void spectraJXTableMouseClicked(MouseEvent evt) {
@@ -1126,303 +1126,303 @@ public class XTandemViewer extends JFrame {
                     Peptide peptide = (Peptide) pepIter.next();
                     List<Domain> domainList = peptide.getDomains();
 
-                    for (Domain domain : domainList){
-                               String sequence = domain.getDomainSequence();
+                    for (Domain domain : domainList) {
+                        String sequence = domain.getDomainSequence();
 
-                    String[] modifications = new String[sequence.length()];
-                    for (int i = 0; i < modifications.length; i++) {
-                        modifications[i] = "";
-                    }
-                    String modifiedSequence = "";
-                    String nTerminal = "";
-                    String cTerminal = "";
+                        String[] modifications = new String[sequence.length()];
+                        for (int i = 0; i < modifications.length; i++) {
+                            modifications[i] = "";
+                        }
+                        String modifiedSequence = "";
+                        String nTerminal = "";
+                        String cTerminal = "";
 
-                    ArrayList<Modification> fixedModList = allFixMods.get(domain.getDomainID());
-                    ArrayList<Modification> varModList = allVarMods.get(domain.getDomainID());
+                        ArrayList<Modification> fixedModList = allFixMods.get(domain.getDomainID());
+                        ArrayList<Modification> varModList = allVarMods.get(domain.getDomainID());
 
-                    // Handle fixed modifications
-                    if (fixedModList != null) {
-                        for (int i = 0; i < fixedModList.size(); i++) {
-                            FixedModification fixMod = (FixedModification) fixedModList.get(i);
-                            int[] modRes = new int[domain.getDomainSequence().length()];
-                            int modIndex = Integer.parseInt(fixMod.getLocation()) - domain.getDomainStart();
-                            modRes[modIndex] = fixMod.getNumber();
+                        // Handle fixed modifications
+                        if (fixedModList != null) {
+                            for (int i = 0; i < fixedModList.size(); i++) {
+                                FixedModification fixMod = (FixedModification) fixedModList.get(i);
+                                int[] modRes = new int[domain.getDomainSequence().length()];
+                                int modIndex = Integer.parseInt(fixMod.getLocation()) - domain.getDomainStart();
+                                modRes[modIndex] = fixMod.getNumber();
 
-                            for (int j = 0; j < modRes.length; j++) {
-                                if (modRes[j] > 0) {
-                                    modifications[j] += "<" + "M" + modRes[j] + "*" + ">";
+                                for (int j = 0; j < modRes.length; j++) {
+                                    if (modRes[j] > 0) {
+                                        modifications[j] += "<" + "M" + modRes[j] + "*" + ">";
+                                    }
                                 }
                             }
                         }
-                    }
-                    //Handle variable modifications
-                    if (varModList != null) {
-                        for (int i = 0; i < varModList.size(); i++) {
-                            VariableModification varMod = (VariableModification) varModList.get(i);
-                            int[] modRes = new int[domain.getDomainSequence().length()];
+                        //Handle variable modifications
+                        if (varModList != null) {
+                            for (int i = 0; i < varModList.size(); i++) {
+                                VariableModification varMod = (VariableModification) varModList.get(i);
+                                int[] modRes = new int[domain.getDomainSequence().length()];
 
-                            int modIndex = Integer.parseInt(varMod.getLocation()) - domain.getDomainStart();
-                            modRes[modIndex] = varMod.getNumber();
+                                int modIndex = Integer.parseInt(varMod.getLocation()) - domain.getDomainStart();
+                                modRes[modIndex] = varMod.getNumber();
 
-                            for (int j = 0; j < modRes.length; j++) {
-                                if (modRes[j] > 0) {
-                                    modifications[j] += "<" + "M" + modRes[j] + "°" + ">";
+                                for (int j = 0; j < modRes.length; j++) {
+                                    if (modRes[j] > 0) {
+                                        modifications[j] += "<" + "M" + modRes[j] + "°" + ">";
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    // Cycle through all the modifications and extract the modification type if possible
-                    for (int i = 0; i < modifications.length; i++) {
-                        // Add the amino acid itself to the sequence
-                        modifiedSequence += sequence.substring(i, i + 1);
+                        // Cycle through all the modifications and extract the modification type if possible
+                        for (int i = 0; i < modifications.length; i++) {
+                            // Add the amino acid itself to the sequence
+                            modifiedSequence += sequence.substring(i, i + 1);
 
-                        if (!modifications[i].equalsIgnoreCase("")) {
-                            String[] residues = modifications[i].split(">");
-                            for (int j = 0; j < residues.length; j++) {
-                                String currentMod = residues[j] + ">";
-                                int fixModIndex = 0;
-                                int varModIndex = 0;
-                                if (currentMod.length() > 0) {
-                                    if (currentMod.contains("*")) {
-                                        fixModIndex = (Integer.parseInt(currentMod.substring(2, 3)) - 1);
-                                    } else if (currentMod.contains("°")) {
-                                        varModIndex = (Integer.parseInt(currentMod.substring(2, 3)) - 1);
+                            if (!modifications[i].equalsIgnoreCase("")) {
+                                String[] residues = modifications[i].split(">");
+                                for (int j = 0; j < residues.length; j++) {
+                                    String currentMod = residues[j] + ">";
+                                    int fixModIndex = 0;
+                                    int varModIndex = 0;
+                                    if (currentMod.length() > 0) {
+                                        if (currentMod.contains("*")) {
+                                            fixModIndex = (Integer.parseInt(currentMod.substring(2, 3)) - 1);
+                                        } else if (currentMod.contains("°")) {
+                                            varModIndex = (Integer.parseInt(currentMod.substring(2, 3)) - 1);
+                                        }
+                                    }
+
+                                    if (modificationDetails.lastIndexOf(currentMod) == -1) {
+                                        if (fixedModList.size() > 0 && currentMod.contains("*")) {
+                                            modificationDetails += currentMod + " " + fixedModList.get(fixModIndex).getName() + ", ";
+                                        } else if (varModList.size() > 0 && currentMod.contains("°")) {
+                                            modificationDetails += currentMod + " " + varModList.get(varModIndex).getName() + ", ";
+                                        }
+                                        modifiedSequence += currentMod;
+                                    } else {
+                                        modifiedSequence += currentMod;
                                     }
                                 }
+                            }
+                        }
 
-                                if (modificationDetails.lastIndexOf(currentMod) == -1) {
-                                    if (fixedModList.size() > 0 && currentMod.contains("*")) {
-                                        modificationDetails += currentMod + " " + fixedModList.get(fixModIndex).getName() + ", ";
-                                    } else if (varModList.size() > 0 && currentMod.contains("°")) {
-                                        modificationDetails += currentMod + " " + varModList.get(varModIndex).getName() + ", ";
-                                    }
-                                    modifiedSequence += currentMod;
+                        // N-Terminal
+                        if (nTerminal.length() == 0) {
+                            nTerminal = "NH2-";
+                        } else {
+                            nTerminal += "-";
+                        }
+
+                        // C-Terminal
+                        if (cTerminal.length() == 0) {
+                            cTerminal = "-COOH";
+                        } else {
+                            cTerminal = "-" + cTerminal;
+                        }
+
+                        int[][] ionCoverage = new int[sequence.length() + 1][12];
+
+                        Vector<DefaultSpectrumAnnotation> currentAnnotations = new Vector();
+                        for (int i = 0; i < 12; i++) {
+                            FragmentIon[] ions = ionsMap.get(domain.getDomainID() + "_" + i);
+                            for (FragmentIon ion : ions) {
+                                int ionNumber = ion.getNumber();
+                                int ionType = ion.getType();
+                                double mzValue = ion.getMZ();
+                                Color color;
+                                if (i % 2 == 0) {
+                                    color = Color.BLUE;
                                 } else {
-                                    modifiedSequence += currentMod;
+                                    color = Color.BLACK;
                                 }
+                                if (ionType == FragmentIon.A_ION) {
+                                    ionCoverage[ionNumber][0]++;
+                                }
+                                if (ionType == FragmentIon.AH2O_ION) {
+                                    ionCoverage[ionNumber][1]++;
+                                }
+                                if (ionType == FragmentIon.ANH3_ION) {
+                                    ionCoverage[ionNumber][2]++;
+                                }
+                                if (ionType == FragmentIon.B_ION) {
+                                    ionCoverage[ionNumber][3]++;
+                                }
+                                if (ionType == FragmentIon.BH2O_ION) {
+                                    ionCoverage[ionNumber][4]++;
+                                }
+                                if (ionType == FragmentIon.BNH3_ION) {
+                                    ionCoverage[ionNumber][5]++;
+                                }
+                                if (ionType == FragmentIon.C_ION) {
+                                    ionCoverage[ionNumber][6]++;
+                                }
+                                if (ionType == FragmentIon.X_ION) {
+                                    ionCoverage[ionNumber][7]++;
+                                }
+                                if (ionType == FragmentIon.Y_ION) {
+                                    ionCoverage[ionNumber][8]++;
+                                }
+                                if (ionType == FragmentIon.YH2O_ION) {
+                                    ionCoverage[ionNumber][9]++;
+                                }
+                                if (ionType == FragmentIon.YNH3_ION) {
+                                    ionCoverage[ionNumber][10]++;
+                                }
+                                if (ionType == FragmentIon.Z_ION) {
+                                    ionCoverage[ionNumber][11]++;
+                                }
+                                // Use standard ion type names, such as y5++
+                                String ionDesc = ion.getLetter();
+                                if (ionNumber > 0) {
+                                    ionDesc += ionNumber;
+                                }
+                                if (ion.getCharge() > 1) {
+                                    for (int j = 0; j < ion.getCharge(); j++) {
+                                        ionDesc += "+";
+                                    }
+                                }
+                                currentAnnotations.add(new DefaultSpectrumAnnotation(mzValue, ionCoverageErrorMargin, color, ionDesc));
                             }
                         }
-                    }
 
-                    // N-Terminal
-                    if (nTerminal.length() == 0) {
-                        nTerminal = "NH2-";
-                    } else {
-                        nTerminal += "-";
-                    }
+                        allAnnotations.put((sequence + "_" + domain.getDomainExpect()), currentAnnotations);
 
-                    // C-Terminal
-                    if (cTerminal.length() == 0) {
-                        cTerminal = "-COOH";
-                    } else {
-                        cTerminal = "-" + cTerminal;
-                    }
+                        // only add the annotations for the first identification
+                        if (allAnnotations.size() == 1) {
+                            // add the ion coverage annotations to the spectrum panel
+                            spectrumPanel.setAnnotations(filterAnnotations(currentAnnotations));
+                            spectrumPanel.validate();
+                            spectrumPanel.repaint();
+                        }
 
-                    int[][] ionCoverage = new int[sequence.length() + 1][12];
+                        // add the ion coverage to the modified sequence
+                        int[][] ionCoverageProcessed = new int[sequence.length()][2];
 
-                    Vector<DefaultSpectrumAnnotation> currentAnnotations = new Vector();
-                    for (int i = 0; i < 12; i++) {
-                        FragmentIon[] ions = ionsMap.get(domain.getDomainID() + "_" + i);
-                        for (FragmentIon ion : ions) {
-                            int ionNumber = ion.getNumber();
-                            int ionType = ion.getType();
-                            double mzValue = ion.getMZ();
-                            Color color;
-                            if (i % 2 == 0) {
-                                color = Color.BLUE;
+                        // Process termini.
+                        // B1 ion (N-terminal residue)
+                        if (ionCoverage[1][3] > 0 || ionCoverage[1][4] > 0 || ionCoverage[1][5] > 0) {
+                            ionCoverageProcessed[0][0] = 1;
+                        }
+                        // Y1 ion (C-terminal residue)
+                        if (ionCoverage[1][8] > 0 || ionCoverage[1][9] > 0 || ionCoverage[1][10] > 0) {
+                            ionCoverageProcessed[ionCoverage.length - 2][1] = 1;
+                        }
+                        // Last B-ion (C-terminal residue)
+                        if (ionCoverage[ionCoverage.length - 1][3] > 0 || ionCoverage[ionCoverage.length - 1][4] > 0 || ionCoverage[ionCoverage.length - 1][5] > 0) {
+                            ionCoverageProcessed[ionCoverage.length - 2][0] = 1;
+                        }
+                        // Last Y-ion (N-terminal residue)
+                        if (ionCoverage[ionCoverage.length - 1][8] > 0 || ionCoverage[ionCoverage.length - 1][9] > 0 || ionCoverage[ionCoverage.length - 1][10] > 0) {
+                            ionCoverageProcessed[0][1] = 1;
+                        }
+
+                        for (int i = 2; i < ionCoverage.length - 1; i++) {
+                            if (ionCoverage[i][3] > 0 && ionCoverage[i - 1][3] > 0 || ionCoverage[i][4] > 0 && ionCoverage[i - 1][4] > 0 || ionCoverage[i][5] > 0 && ionCoverage[i - 1][5] > 0) {
+                                ionCoverageProcessed[i - 1][0] = 1;
                             } else {
-                                color = Color.BLACK;
+                                ionCoverageProcessed[i - 1][0] = 0;
                             }
-                            if (ionType == FragmentIon.A_ION) {
-                                ionCoverage[ionNumber][0]++;
+
+                            if (ionCoverage[i][8] > 0 && ionCoverage[i - 1][8] > 0 || ionCoverage[i][9] > 0 && ionCoverage[i - 1][9] > 0 || ionCoverage[i][10] > 0 && ionCoverage[i - 1][10] > 0) {
+                                ionCoverageProcessed[ionCoverage.length - 1 - i][1] = 1;
+                            } else {
+                                ionCoverageProcessed[ionCoverage.length - 1 - i][1] = 0;
                             }
-                            if (ionType == FragmentIon.AH2O_ION) {
-                                ionCoverage[ionNumber][1]++;
-                            }
-                            if (ionType == FragmentIon.ANH3_ION) {
-                                ionCoverage[ionNumber][2]++;
-                            }
-                            if (ionType == FragmentIon.B_ION) {
-                                ionCoverage[ionNumber][3]++;
-                            }
-                            if (ionType == FragmentIon.BH2O_ION) {
-                                ionCoverage[ionNumber][4]++;
-                            }
-                            if (ionType == FragmentIon.BNH3_ION) {
-                                ionCoverage[ionNumber][5]++;
-                            }
-                            if (ionType == FragmentIon.C_ION) {
-                                ionCoverage[ionNumber][6]++;
-                            }
-                            if (ionType == FragmentIon.X_ION) {
-                                ionCoverage[ionNumber][7]++;
-                            }
-                            if (ionType == FragmentIon.Y_ION) {
-                                ionCoverage[ionNumber][8]++;
-                            }
-                            if (ionType == FragmentIon.YH2O_ION) {
-                                ionCoverage[ionNumber][9]++;
-                            }
-                            if (ionType == FragmentIon.YNH3_ION) {
-                                ionCoverage[ionNumber][10]++;
-                            }
-                            if (ionType == FragmentIon.Z_ION) {
-                                ionCoverage[ionNumber][11]++;
-                            }
-                            // Use standard ion type names, such as y5++
-                            String ionDesc = ion.getLetter();
-                            if (ionNumber > 0) {
-                                ionDesc += ionNumber;
-                            }
-                            if (ion.getCharge() > 1) {
-                                for (int j = 0; j < ion.getCharge(); j++) {
-                                    ionDesc += "+";
-                                }
-                            }
-                            currentAnnotations.add(new DefaultSpectrumAnnotation(mzValue, ionCoverageErrorMargin, color, ionDesc));
                         }
-                    }
+                        String modifiedSequenceColorCoded = "<html>";
 
-                    allAnnotations.put((sequence + "_" + domain.getDomainExpect()), currentAnnotations);
-
-                    // only add the annotations for the first identification
-                    if (allAnnotations.size() == 1) {
-                        // add the ion coverage annotations to the spectrum panel
-                        spectrumPanel.setAnnotations(filterAnnotations(currentAnnotations));
-                        spectrumPanel.validate();
-                        spectrumPanel.repaint();
-                    }
-
-                    // add the ion coverage to the modified sequence
-                    int[][] ionCoverageProcessed = new int[sequence.length()][2];
-
-                    // Process termini.
-                    // B1 ion (N-terminal residue)
-                    if (ionCoverage[1][3] > 0 || ionCoverage[1][4] > 0 || ionCoverage[1][5] > 0) {
-                        ionCoverageProcessed[0][0] = 1;
-                    }
-                    // Y1 ion (C-terminal residue)
-                    if (ionCoverage[1][8] > 0 || ionCoverage[1][9] > 0 || ionCoverage[1][10] > 0) {
-                        ionCoverageProcessed[ionCoverage.length - 2][1] = 1;
-                    }
-                    // Last B-ion (C-terminal residue)
-                    if (ionCoverage[ionCoverage.length - 1][3] > 0 || ionCoverage[ionCoverage.length - 1][4] > 0 || ionCoverage[ionCoverage.length - 1][5] > 0) {
-                        ionCoverageProcessed[ionCoverage.length - 2][0] = 1;
-                    }
-                    // Last Y-ion (N-terminal residue)
-                    if (ionCoverage[ionCoverage.length - 1][8] > 0 || ionCoverage[ionCoverage.length - 1][9] > 0 || ionCoverage[ionCoverage.length - 1][10] > 0) {
-                        ionCoverageProcessed[0][1] = 1;
-                    }
-
-                    for (int i = 2; i < ionCoverage.length - 1; i++) {
-                        if (ionCoverage[i][3] > 0 && ionCoverage[i - 1][3] > 0 || ionCoverage[i][4] > 0 && ionCoverage[i - 1][4] > 0 || ionCoverage[i][5] > 0 && ionCoverage[i - 1][5] > 0) {
-                            ionCoverageProcessed[i - 1][0] = 1;
+                        // add nTerminal
+                        if (!nTerminal.startsWith("<")) {
+                            modifiedSequenceColorCoded += nTerminal;
                         } else {
-                            ionCoverageProcessed[i - 1][0] = 0;
-                        }
-
-                        if (ionCoverage[i][8] > 0 && ionCoverage[i - 1][8] > 0 || ionCoverage[i][9] > 0 && ionCoverage[i - 1][9] > 0 || ionCoverage[i][10] > 0 && ionCoverage[i - 1][10] > 0) {
-                            ionCoverageProcessed[ionCoverage.length - 1 - i][1] = 1;
-                        } else {
-                            ionCoverageProcessed[ionCoverage.length - 1 - i][1] = 0;
-                        }
-                    }
-                    String modifiedSequenceColorCoded = "<html>";
-
-                    // add nTerminal
-                    if (!nTerminal.startsWith("<")) {
-                        modifiedSequenceColorCoded += nTerminal;
-                    } else {
-                        modifiedSequenceColorCoded += "&lt;";
-                        modifiedSequenceColorCoded += nTerminal.substring(1, nTerminal.length() - 2);
-                        modifiedSequenceColorCoded += "&gt;-";
-                    }
-
-                    int aminoAcidCounter = 0;
-
-                    for (int i = 0; i < modifiedSequence.length(); i++) {
-
-                        if (modifiedSequence.charAt(i) == '<') {
-                            if (ionCoverageProcessed[aminoAcidCounter - 1][0] > 0) {
-                                // b ions
-                                modifiedSequenceColorCoded += "<u>";
-                            }
-
-                            if (ionCoverageProcessed[aminoAcidCounter - 1][1] > 0) {
-                                // y ions
-                                modifiedSequenceColorCoded += "<font color=\"red\">";
-                            }
-
                             modifiedSequenceColorCoded += "&lt;";
-                            i++;
-                            while (modifiedSequence.charAt(i) != '>') {
-                                modifiedSequenceColorCoded += modifiedSequence.charAt(i++);
-                            }
-                            modifiedSequenceColorCoded += "&gt;";
-                            if (ionCoverageProcessed[aminoAcidCounter - 1][0] > 0) {
-                                // b ions
-                                modifiedSequenceColorCoded += "</u>";
-                            }
-                            if (ionCoverageProcessed[aminoAcidCounter - 1][1] > 0) {
-                                // y ions
-                                modifiedSequenceColorCoded += "</font>";
-                            }
-                        } else {
-                            if (ionCoverageProcessed[aminoAcidCounter][0] > 0) {
-                                // b ions
-                                modifiedSequenceColorCoded += "<u>";
-                            }
-                            if (ionCoverageProcessed[aminoAcidCounter][1] > 0) {
-                                // y ions
-                                modifiedSequenceColorCoded += "<font color=\"red\">";
-                            }
-                            modifiedSequenceColorCoded += modifiedSequence.charAt(i);
-                            if (ionCoverageProcessed[aminoAcidCounter][0] > 0) {
-                                // b ions
-                                modifiedSequenceColorCoded += "</u>";
-                            }
-                            if (ionCoverageProcessed[aminoAcidCounter][1] > 0) {
-                                // y ions
-                                modifiedSequenceColorCoded += "</font>";
-                            }
-
-                            aminoAcidCounter++;
+                            modifiedSequenceColorCoded += nTerminal.substring(1, nTerminal.length() - 2);
+                            modifiedSequenceColorCoded += "&gt;-";
                         }
-                        modifiedSequenceColorCoded += "<font color=\"black\">";
+
+                        int aminoAcidCounter = 0;
+
+                        for (int i = 0; i < modifiedSequence.length(); i++) {
+
+                            if (modifiedSequence.charAt(i) == '<') {
+                                if (ionCoverageProcessed[aminoAcidCounter - 1][0] > 0) {
+                                    // b ions
+                                    modifiedSequenceColorCoded += "<u>";
+                                }
+
+                                if (ionCoverageProcessed[aminoAcidCounter - 1][1] > 0) {
+                                    // y ions
+                                    modifiedSequenceColorCoded += "<font color=\"red\">";
+                                }
+
+                                modifiedSequenceColorCoded += "&lt;";
+                                i++;
+                                while (modifiedSequence.charAt(i) != '>') {
+                                    modifiedSequenceColorCoded += modifiedSequence.charAt(i++);
+                                }
+                                modifiedSequenceColorCoded += "&gt;";
+                                if (ionCoverageProcessed[aminoAcidCounter - 1][0] > 0) {
+                                    // b ions
+                                    modifiedSequenceColorCoded += "</u>";
+                                }
+                                if (ionCoverageProcessed[aminoAcidCounter - 1][1] > 0) {
+                                    // y ions
+                                    modifiedSequenceColorCoded += "</font>";
+                                }
+                            } else {
+                                if (ionCoverageProcessed[aminoAcidCounter][0] > 0) {
+                                    // b ions
+                                    modifiedSequenceColorCoded += "<u>";
+                                }
+                                if (ionCoverageProcessed[aminoAcidCounter][1] > 0) {
+                                    // y ions
+                                    modifiedSequenceColorCoded += "<font color=\"red\">";
+                                }
+                                modifiedSequenceColorCoded += modifiedSequence.charAt(i);
+                                if (ionCoverageProcessed[aminoAcidCounter][0] > 0) {
+                                    // b ions
+                                    modifiedSequenceColorCoded += "</u>";
+                                }
+                                if (ionCoverageProcessed[aminoAcidCounter][1] > 0) {
+                                    // y ions
+                                    modifiedSequenceColorCoded += "</font>";
+                                }
+
+                                aminoAcidCounter++;
+                            }
+                            modifiedSequenceColorCoded += "<font color=\"black\">";
+                        }
+
+                        // add cTerminal
+                        if (!cTerminal.startsWith("-<")) {
+                            modifiedSequenceColorCoded += cTerminal;
+                        } else {
+                            modifiedSequenceColorCoded += "-&lt;";
+                            modifiedSequenceColorCoded += cTerminal.substring(2, cTerminal.length() - 1);
+                            modifiedSequenceColorCoded += "&gt;";
+                        }
+                        modifiedSequenceColorCoded += "</html>";
+
+                        // Calculate the theoretical mass of the domain
+                        double theoMass = (domain.getDomainMh() + domain.getDomainDeltaMh());
+
+                        // parse the header
+                        Header header = Header.parseFromFASTA(proteinLabelMap.get(domain.getDomainID()));
+                        String accession = header.getAccession();
+                        String description = header.getDescription();
+
+                        ((DefaultTableModel) identificationsTable.getModel()).addRow(new Object[]{
+                                    (Integer) spectraTable.getValueAt(row, 0),
+                                    sequence,
+                                    modifiedSequenceColorCoded,
+                                    domain.getDomainStart(),
+                                    domain.getDomainEnd(),
+                                    new Double(domain.getDomainMh()),
+                                    new Double(theoMass),
+                                    new Float(domain.getDomainExpect()),
+                                    accession,
+                                    description});
                     }
-
-                    // add cTerminal
-                    if (!cTerminal.startsWith("-<")) {
-                        modifiedSequenceColorCoded += cTerminal;
-                    } else {
-                        modifiedSequenceColorCoded += "-&lt;";
-                        modifiedSequenceColorCoded += cTerminal.substring(2, cTerminal.length() - 1);
-                        modifiedSequenceColorCoded += "&gt;";
-                    }
-                    modifiedSequenceColorCoded += "</html>";
-
-                    // Calculate the theoretical mass of the domain
-                    double theoMass = (domain.getDomainMh() + domain.getDomainDeltaMh());
-
-                    // parse the header
-                    Header header = Header.parseFromFASTA(proteinLabelMap.get(domain.getDomainID()));
-                    String accession = header.getAccession();
-                    String description = header.getDescription();
-
-                    ((DefaultTableModel) identificationsTable.getModel()).addRow(new Object[]{
-                                (Integer) spectraTable.getValueAt(row, 0),
-                                sequence,
-                                modifiedSequenceColorCoded,
-                                domain.getDomainStart(),
-                                domain.getDomainEnd(),
-                                new Double(domain.getDomainMh()),
-                                new Double(theoMass),
-                                new Float(domain.getDomainExpect()),
-                                accession,
-                                description});
                 }
-                    }
 
                 if (modificationDetails.endsWith(", ")) {
                     modificationDetails = modificationDetails.substring(0, modificationDetails.length() - 2);
@@ -1635,281 +1635,281 @@ public class XTandemViewer extends JFrame {
                     for (Peptide peptide : pepList) {
 
                         List<Domain> domainList = peptide.getDomains();
-                        for(Domain domain: domainList){
-                                  String sequence = domain.getDomainSequence();
+                        for (Domain domain : domainList) {
+                            String sequence = domain.getDomainSequence();
 
-                        String[] modifications = new String[sequence.length()];
-                        for (int i = 0; i < modifications.length; i++) {
-                            modifications[i] = "";
-                        }
-                        String modifiedSequence = "";
-                        String nTerminal = "";
-                        String cTerminal = "";
-
-                        ArrayList<Modification> fixedModList = allFixMods.get(domain.getDomainID());
-                        ArrayList<Modification> varModList = allVarMods.get(domain.getDomainID());
-
-                        // Handle fixed modifications
-                        if (fixedModList != null) {
-                            for (int i = 0; i < fixedModList.size(); i++) {
-                                FixedModification fixMod = (FixedModification) fixedModList.get(i);
-                                int[] modRes = new int[domain.getDomainSequence().length()];
-                                int modIndex = Integer.parseInt(fixMod.getLocation()) - domain.getDomainStart();
-                                modRes[modIndex] = fixMod.getNumber();
-
-                                for (int j = 0; j < modRes.length; j++) {
-                                    if (modRes[j] > 0) {
-                                        modifications[j] += "<" + "M" + modRes[j] + "*" + ">";
-                                    }
-                                }
+                            String[] modifications = new String[sequence.length()];
+                            for (int i = 0; i < modifications.length; i++) {
+                                modifications[i] = "";
                             }
-                        }
-                        // Handle variable modifications
-                        if (varModList != null) {
-                            for (int i = 0; i < varModList.size(); i++) {
-                                VariableModification varMod = (VariableModification) varModList.get(i);
-                                int[] modRes = new int[domain.getDomainSequence().length()];
+                            String modifiedSequence = "";
+                            String nTerminal = "";
+                            String cTerminal = "";
 
-                                int modIndex = Integer.parseInt(varMod.getLocation()) - domain.getDomainStart();
-                                modRes[modIndex] = varMod.getNumber();
+                            ArrayList<Modification> fixedModList = allFixMods.get(domain.getDomainID());
+                            ArrayList<Modification> varModList = allVarMods.get(domain.getDomainID());
 
-                                for (int j = 0; j < modRes.length; j++) {
-                                    if (modRes[j] > 0) {
-                                        modifications[j] += "<" + "M" + modRes[j] + "*" + ">";
-                                    }
-                                }
-                            }
-                        }
+                            // Handle fixed modifications
+                            if (fixedModList != null) {
+                                for (int i = 0; i < fixedModList.size(); i++) {
+                                    FixedModification fixMod = (FixedModification) fixedModList.get(i);
+                                    int[] modRes = new int[domain.getDomainSequence().length()];
+                                    int modIndex = Integer.parseInt(fixMod.getLocation()) - domain.getDomainStart();
+                                    modRes[modIndex] = fixMod.getNumber();
 
-                        // Cycle through all the modifications and extract the modification type if possible
-                        for (int i = 0; i < modifications.length; i++) {
-                            // Add the amino acid itself to the sequence
-                            modifiedSequence += sequence.substring(i, i + 1);
-
-                            if (!modifications[i].equalsIgnoreCase("")) {
-                                String[] residues = modifications[i].split(">");
-                                for (int j = 0; j < residues.length; j++) {
-
-                                    String currentMod = residues[j] + ">";
-                                    if (modificationDetails.lastIndexOf(currentMod) == -1) {
-                                        if (fixedModList.size() > 0) {
-                                            modificationDetails += currentMod + " " + fixedModList.get(j).getName() + ", ";
-                                        } else if (varModList.size() > 0) {
-                                            modificationDetails += currentMod + " " + varModList.get(j).getName() + ", ";
+                                    for (int j = 0; j < modRes.length; j++) {
+                                        if (modRes[j] > 0) {
+                                            modifications[j] += "<" + "M" + modRes[j] + "*" + ">";
                                         }
-
-                                        modifiedSequence += currentMod;
-                                    } else {
-                                        modifiedSequence += currentMod;
                                     }
                                 }
                             }
-                        }
+                            // Handle variable modifications
+                            if (varModList != null) {
+                                for (int i = 0; i < varModList.size(); i++) {
+                                    VariableModification varMod = (VariableModification) varModList.get(i);
+                                    int[] modRes = new int[domain.getDomainSequence().length()];
 
-                        // N-Terminal
-                        if (nTerminal.length() == 0) {
-                            nTerminal = "NH2-";
-                        } else {
-                            nTerminal += "-";
-                        }
+                                    int modIndex = Integer.parseInt(varMod.getLocation()) - domain.getDomainStart();
+                                    modRes[modIndex] = varMod.getNumber();
 
-                        // C-Terminal
-                        if (cTerminal.length() == 0) {
-                            cTerminal = "-COOH";
-                        } else {
-                            cTerminal = "-" + cTerminal;
-                        }
-
-                        // add ion coverage to peptide sequence
-                       int[][] ionCoverage = new int[sequence.length() + 1][12];
-                        
-                        for (int i = 0; i < 12; i++) {
-                            FragmentIon[] ions = ionsMap.get(domain.getDomainID() + "_" + i);
-                            for (FragmentIon ion : ions) {
-                                int ionNumber = ion.getNumber();
-                                int ionType = ion.getType();
-                                double mzValue = ion.getMZ();
-                                Color color;
-                                if (i % 2 == 0) {
-                                    color = Color.BLUE;
-                                } else {
-                                    color = Color.BLACK;
+                                    for (int j = 0; j < modRes.length; j++) {
+                                        if (modRes[j] > 0) {
+                                            modifications[j] += "<" + "M" + modRes[j] + "*" + ">";
+                                        }
+                                    }
                                 }
+                            }
 
-                            if (ionType == FragmentIon.A_ION) {                                
-                                ionCoverage[ionNumber][0]++;
-                            }
-                            if (ionType == FragmentIon.AH2O_ION) {
-                                ionCoverage[ionNumber][1]++;
-                            }
-                            if (ionType == FragmentIon.ANH3_ION) {
-                                ionCoverage[ionNumber][2]++;
-                            }
-                            if (ionType == FragmentIon.B_ION) {
-                                ionCoverage[ionNumber][3]++;
-                            }
-                            if (ionType == FragmentIon.BH2O_ION) {
-                                ionCoverage[ionNumber][4]++;
-                            }
-                            if (ionType == FragmentIon.BNH3_ION) {
-                                ionCoverage[ionNumber][5]++;
-                            }
-                            if (ionType == FragmentIon.C_ION) {
-                                ionCoverage[ionNumber][6]++;
-                            }
-                            if (ionType == FragmentIon.X_ION) {
-                                ionCoverage[ionNumber][7]++;
-                            }
-                            if (ionType == FragmentIon.Y_ION) {
-                                ionCoverage[ionNumber][8]++;
-                            }
-                            if (ionType == FragmentIon.YH2O_ION) {
-                                ionCoverage[ionNumber][9]++;
-                            }
-                            if (ionType == FragmentIon.YNH3_ION) {
-                                ionCoverage[ionNumber][10]++;
-                            }
-                            if (ionType == FragmentIon.Z_ION) {
-                                ionCoverage[ionNumber][11]++;
-                            }
-                            }
-                        }
+                            // Cycle through all the modifications and extract the modification type if possible
+                            for (int i = 0; i < modifications.length; i++) {
+                                // Add the amino acid itself to the sequence
+                                modifiedSequence += sequence.substring(i, i + 1);
 
-                         // add the ion coverage to the modified sequence
-                    int[][] ionCoverageProcessed = new int[sequence.length()][2];
+                                if (!modifications[i].equalsIgnoreCase("")) {
+                                    String[] residues = modifications[i].split(">");
+                                    for (int j = 0; j < residues.length; j++) {
 
-                    // Process termini.
-                    // B1 ion (N-terminal residue)
-                    if (ionCoverage[1][3] > 0 || ionCoverage[1][4] > 0 || ionCoverage[1][5] > 0) {
-                        ionCoverageProcessed[0][0] = 1;
-                    }
-                    // Y1 ion (C-terminal residue)
-                    if (ionCoverage[1][8] > 0 || ionCoverage[1][9] > 0 || ionCoverage[1][10] > 0) {
-                        ionCoverageProcessed[ionCoverage.length - 2][1] = 1;
-                    }
-                    // Last B-ion (C-terminal residue)
-                    if (ionCoverage[ionCoverage.length - 1][3] > 0 || ionCoverage[ionCoverage.length - 1][4] > 0 || ionCoverage[ionCoverage.length - 1][5] > 0) {
-                        ionCoverageProcessed[ionCoverage.length - 2][0] = 1;
-                    }
-                    // Last Y-ion (N-terminal residue)
-                    if (ionCoverage[ionCoverage.length - 1][8] > 0 || ionCoverage[ionCoverage.length - 1][9] > 0 || ionCoverage[ionCoverage.length - 1][10] > 0) {
-                        ionCoverageProcessed[0][1] = 1;
-                    }
+                                        String currentMod = residues[j] + ">";
+                                        if (modificationDetails.lastIndexOf(currentMod) == -1) {
+                                            if (fixedModList.size() > 0) {
+                                                modificationDetails += currentMod + " " + fixedModList.get(j).getName() + ", ";
+                                            } else if (varModList.size() > 0) {
+                                                modificationDetails += currentMod + " " + varModList.get(j).getName() + ", ";
+                                            }
 
-                    for (int i = 2; i < ionCoverage.length - 1; i++) {
-                        if (ionCoverage[i][3] > 0 && ionCoverage[i - 1][3] > 0 || ionCoverage[i][4] > 0 && ionCoverage[i - 1][4] > 0 || ionCoverage[i][5] > 0 && ionCoverage[i - 1][5] > 0) {
-                            ionCoverageProcessed[i - 1][0] = 1;
-                        } else {
-                            ionCoverageProcessed[i - 1][0] = 0;
-                        }
-
-                        if (ionCoverage[i][8] > 0 && ionCoverage[i - 1][8] > 0 || ionCoverage[i][9] > 0 && ionCoverage[i - 1][9] > 0 || ionCoverage[i][10] > 0 && ionCoverage[i - 1][10] > 0) {
-                            ionCoverageProcessed[ionCoverage.length - 1 - i][1] = 1;
-                        } else {
-                            ionCoverageProcessed[ionCoverage.length - 1 - i][1] = 0;
-                        }
-                    }
-
-                        String modifiedSequenceColorCoded = "<html>";
-
-                        // add nTerminal
-                        if (!nTerminal.startsWith("<")) {
-                            modifiedSequenceColorCoded += nTerminal;
-                        } else {
-                            modifiedSequenceColorCoded += "&lt;";
-                            modifiedSequenceColorCoded += nTerminal.substring(1, nTerminal.length() - 2);
-                            modifiedSequenceColorCoded += "&gt;-";
-                        }
-
-                        int aminoAcidCounter = 0;
-
-                        for (int i = 0; i < modifiedSequence.length(); i++) {
-
-                            if (modifiedSequence.charAt(i) == '<') {
-
-                                if (ionCoverageProcessed[aminoAcidCounter - 1][0] > 0) {
-                                    // b ions
-                                    modifiedSequenceColorCoded += "<u>";
+                                            modifiedSequence += currentMod;
+                                        } else {
+                                            modifiedSequence += currentMod;
+                                        }
+                                    }
                                 }
+                            }
 
-                                if (ionCoverageProcessed[aminoAcidCounter - 1][1] > 0) {
-                                    // y ions
-                                    modifiedSequenceColorCoded += "<font color=\"red\">";
-                                }
-
-                                modifiedSequenceColorCoded += "&lt;";
-                                i++;
-
-                                while (modifiedSequence.charAt(i) != '>') {
-                                    modifiedSequenceColorCoded += modifiedSequence.charAt(i++);
-                                }
-
-                                modifiedSequenceColorCoded += "&gt;";
-
-                                if (ionCoverageProcessed[aminoAcidCounter - 1][0] > 0) {
-                                    // b ions
-                                    modifiedSequenceColorCoded += "</u>";
-                                }
-                                if (ionCoverageProcessed[aminoAcidCounter - 1][1] > 0) {
-                                    // y ions
-                                    modifiedSequenceColorCoded += "</font>";
-                                }
+                            // N-Terminal
+                            if (nTerminal.length() == 0) {
+                                nTerminal = "NH2-";
                             } else {
-
-                                if (ionCoverageProcessed[aminoAcidCounter][0] > 0) {
-                                    // b ions
-                                    modifiedSequenceColorCoded += "<u>";
-                                }
-                                if (ionCoverageProcessed[aminoAcidCounter][1] > 0) {
-                                    // y ions
-                                    modifiedSequenceColorCoded += "<font color=\"red\">";
-                                }
-
-                                modifiedSequenceColorCoded += modifiedSequence.charAt(i);
-
-                                if (ionCoverageProcessed[aminoAcidCounter][0] > 0) {
-                                    // b ions
-                                    modifiedSequenceColorCoded += "</u>";
-                                }
-                                if (ionCoverageProcessed[aminoAcidCounter][1] > 0) {
-                                    // y ions
-                                    modifiedSequenceColorCoded += "</font>";
-                                }
-
-                                aminoAcidCounter++;
+                                nTerminal += "-";
                             }
 
-                            modifiedSequenceColorCoded += "<font color=\"black\">";
+                            // C-Terminal
+                            if (cTerminal.length() == 0) {
+                                cTerminal = "-COOH";
+                            } else {
+                                cTerminal = "-" + cTerminal;
+                            }
+
+                            // add ion coverage to peptide sequence
+                            int[][] ionCoverage = new int[sequence.length() + 1][12];
+
+                            for (int i = 0; i < 12; i++) {
+                                FragmentIon[] ions = ionsMap.get(domain.getDomainID() + "_" + i);
+                                for (FragmentIon ion : ions) {
+                                    int ionNumber = ion.getNumber();
+                                    int ionType = ion.getType();
+                                    double mzValue = ion.getMZ();
+                                    Color color;
+                                    if (i % 2 == 0) {
+                                        color = Color.BLUE;
+                                    } else {
+                                        color = Color.BLACK;
+                                    }
+
+                                    if (ionType == FragmentIon.A_ION) {
+                                        ionCoverage[ionNumber][0]++;
+                                    }
+                                    if (ionType == FragmentIon.AH2O_ION) {
+                                        ionCoverage[ionNumber][1]++;
+                                    }
+                                    if (ionType == FragmentIon.ANH3_ION) {
+                                        ionCoverage[ionNumber][2]++;
+                                    }
+                                    if (ionType == FragmentIon.B_ION) {
+                                        ionCoverage[ionNumber][3]++;
+                                    }
+                                    if (ionType == FragmentIon.BH2O_ION) {
+                                        ionCoverage[ionNumber][4]++;
+                                    }
+                                    if (ionType == FragmentIon.BNH3_ION) {
+                                        ionCoverage[ionNumber][5]++;
+                                    }
+                                    if (ionType == FragmentIon.C_ION) {
+                                        ionCoverage[ionNumber][6]++;
+                                    }
+                                    if (ionType == FragmentIon.X_ION) {
+                                        ionCoverage[ionNumber][7]++;
+                                    }
+                                    if (ionType == FragmentIon.Y_ION) {
+                                        ionCoverage[ionNumber][8]++;
+                                    }
+                                    if (ionType == FragmentIon.YH2O_ION) {
+                                        ionCoverage[ionNumber][9]++;
+                                    }
+                                    if (ionType == FragmentIon.YNH3_ION) {
+                                        ionCoverage[ionNumber][10]++;
+                                    }
+                                    if (ionType == FragmentIon.Z_ION) {
+                                        ionCoverage[ionNumber][11]++;
+                                    }
+                                }
+                            }
+
+                            // add the ion coverage to the modified sequence
+                            int[][] ionCoverageProcessed = new int[sequence.length()][2];
+
+                            // Process termini.
+                            // B1 ion (N-terminal residue)
+                            if (ionCoverage[1][3] > 0 || ionCoverage[1][4] > 0 || ionCoverage[1][5] > 0) {
+                                ionCoverageProcessed[0][0] = 1;
+                            }
+                            // Y1 ion (C-terminal residue)
+                            if (ionCoverage[1][8] > 0 || ionCoverage[1][9] > 0 || ionCoverage[1][10] > 0) {
+                                ionCoverageProcessed[ionCoverage.length - 2][1] = 1;
+                            }
+                            // Last B-ion (C-terminal residue)
+                            if (ionCoverage[ionCoverage.length - 1][3] > 0 || ionCoverage[ionCoverage.length - 1][4] > 0 || ionCoverage[ionCoverage.length - 1][5] > 0) {
+                                ionCoverageProcessed[ionCoverage.length - 2][0] = 1;
+                            }
+                            // Last Y-ion (N-terminal residue)
+                            if (ionCoverage[ionCoverage.length - 1][8] > 0 || ionCoverage[ionCoverage.length - 1][9] > 0 || ionCoverage[ionCoverage.length - 1][10] > 0) {
+                                ionCoverageProcessed[0][1] = 1;
+                            }
+
+                            for (int i = 2; i < ionCoverage.length - 1; i++) {
+                                if (ionCoverage[i][3] > 0 && ionCoverage[i - 1][3] > 0 || ionCoverage[i][4] > 0 && ionCoverage[i - 1][4] > 0 || ionCoverage[i][5] > 0 && ionCoverage[i - 1][5] > 0) {
+                                    ionCoverageProcessed[i - 1][0] = 1;
+                                } else {
+                                    ionCoverageProcessed[i - 1][0] = 0;
+                                }
+
+                                if (ionCoverage[i][8] > 0 && ionCoverage[i - 1][8] > 0 || ionCoverage[i][9] > 0 && ionCoverage[i - 1][9] > 0 || ionCoverage[i][10] > 0 && ionCoverage[i - 1][10] > 0) {
+                                    ionCoverageProcessed[ionCoverage.length - 1 - i][1] = 1;
+                                } else {
+                                    ionCoverageProcessed[ionCoverage.length - 1 - i][1] = 0;
+                                }
+                            }
+
+                            String modifiedSequenceColorCoded = "<html>";
+
+                            // add nTerminal
+                            if (!nTerminal.startsWith("<")) {
+                                modifiedSequenceColorCoded += nTerminal;
+                            } else {
+                                modifiedSequenceColorCoded += "&lt;";
+                                modifiedSequenceColorCoded += nTerminal.substring(1, nTerminal.length() - 2);
+                                modifiedSequenceColorCoded += "&gt;-";
+                            }
+
+                            int aminoAcidCounter = 0;
+
+                            for (int i = 0; i < modifiedSequence.length(); i++) {
+
+                                if (modifiedSequence.charAt(i) == '<') {
+
+                                    if (ionCoverageProcessed[aminoAcidCounter - 1][0] > 0) {
+                                        // b ions
+                                        modifiedSequenceColorCoded += "<u>";
+                                    }
+
+                                    if (ionCoverageProcessed[aminoAcidCounter - 1][1] > 0) {
+                                        // y ions
+                                        modifiedSequenceColorCoded += "<font color=\"red\">";
+                                    }
+
+                                    modifiedSequenceColorCoded += "&lt;";
+                                    i++;
+
+                                    while (modifiedSequence.charAt(i) != '>') {
+                                        modifiedSequenceColorCoded += modifiedSequence.charAt(i++);
+                                    }
+
+                                    modifiedSequenceColorCoded += "&gt;";
+
+                                    if (ionCoverageProcessed[aminoAcidCounter - 1][0] > 0) {
+                                        // b ions
+                                        modifiedSequenceColorCoded += "</u>";
+                                    }
+                                    if (ionCoverageProcessed[aminoAcidCounter - 1][1] > 0) {
+                                        // y ions
+                                        modifiedSequenceColorCoded += "</font>";
+                                    }
+                                } else {
+
+                                    if (ionCoverageProcessed[aminoAcidCounter][0] > 0) {
+                                        // b ions
+                                        modifiedSequenceColorCoded += "<u>";
+                                    }
+                                    if (ionCoverageProcessed[aminoAcidCounter][1] > 0) {
+                                        // y ions
+                                        modifiedSequenceColorCoded += "<font color=\"red\">";
+                                    }
+
+                                    modifiedSequenceColorCoded += modifiedSequence.charAt(i);
+
+                                    if (ionCoverageProcessed[aminoAcidCounter][0] > 0) {
+                                        // b ions
+                                        modifiedSequenceColorCoded += "</u>";
+                                    }
+                                    if (ionCoverageProcessed[aminoAcidCounter][1] > 0) {
+                                        // y ions
+                                        modifiedSequenceColorCoded += "</font>";
+                                    }
+
+                                    aminoAcidCounter++;
+                                }
+
+                                modifiedSequenceColorCoded += "<font color=\"black\">";
+                            }
+
+                            // add cTerminal
+                            if (!cTerminal.startsWith("-<")) {
+                                modifiedSequenceColorCoded += cTerminal;
+                            } else {
+                                modifiedSequenceColorCoded += "-&lt;";
+                                modifiedSequenceColorCoded += cTerminal.substring(2, cTerminal.length() - 1);
+                                modifiedSequenceColorCoded += "&gt;";
+                            }
+
+                            modifiedSequenceColorCoded += "</html>";
+
+                            modifiedSequence = nTerminal + modifiedSequence + cTerminal;
+
+                            double theoMass = (domain.getDomainMh() + domain.getDomainDeltaMh());
+                            String accession = proteinLabelMap.get(domain.getDomainID());
+
+                            f.write(peptide.getSpectrumNumber() + "\t"
+                                    + sequence + "\t"
+                                    + modifiedSequence + "\t"
+                                    + modifiedSequenceColorCoded + "\t"
+                                    + domain.getDomainStart() + "\t"
+                                    + domain.getDomainEnd() + "\t"
+                                    + new Double(domain.getDomainMh()) + "\t"
+                                    + theoMass + "\t"
+                                    + new Float(domain.getDomainExpect()) + "\t"
+                                    + accession + "\n");
                         }
-
-                        // add cTerminal
-                        if (!cTerminal.startsWith("-<")) {
-                            modifiedSequenceColorCoded += cTerminal;
-                        } else {
-                            modifiedSequenceColorCoded += "-&lt;";
-                            modifiedSequenceColorCoded += cTerminal.substring(2, cTerminal.length() - 1);
-                            modifiedSequenceColorCoded += "&gt;";
-                        }
-
-                        modifiedSequenceColorCoded += "</html>";
-
-                        modifiedSequence = nTerminal + modifiedSequence + cTerminal;
-
-                        double theoMass = (domain.getDomainMh() + domain.getDomainDeltaMh());
-                        String accession = proteinLabelMap.get(domain.getDomainID());
-
-                        f.write(peptide.getSpectrumNumber() + "\t"
-                                + sequence + "\t"
-                                + modifiedSequence + "\t"
-                                + modifiedSequenceColorCoded + "\t"
-                                + domain.getDomainStart() + "\t"
-                                + domain.getDomainEnd() + "\t"
-                                + new Double(domain.getDomainMh()) + "\t"
-                                + theoMass + "\t"
-                                + new Float(domain.getDomainExpect()) + "\t"
-                                + accession + "\n");
                     }
-                        }
 
                 }
 

@@ -4,7 +4,8 @@ import de.proteinms.xtandemparser.interfaces.Modification;
 import java.io.Serializable;
 
 /**
- * This class implements modification and represents a variable modification object.
+ * This class implements modification and represents a variable modification
+ * object.
  *
  * @author Thilo Muth
  */
@@ -22,12 +23,10 @@ public class VariableModification implements Modification, Serializable {
      * This variable contains the location of the modification.
      */
     private String iLocation;
-    
     /**
      * This variable holds number of the modification from one peptide.
      */
     private int iNumber;
-
     /**
      * This variables holds the modified residue.
      */
@@ -116,7 +115,7 @@ public class VariableModification implements Modification, Serializable {
      *
      * @return the number of modifcation
      */
-    public int getNumber(){
+    public int getNumber() {
         return iNumber;
     }
 
@@ -131,7 +130,7 @@ public class VariableModification implements Modification, Serializable {
 
     /**
      * Returns the modified residue (a peptide letter).
-     * 
+     *
      * @return iModifiedResidue
      */
     public String getModifiedResidue() {

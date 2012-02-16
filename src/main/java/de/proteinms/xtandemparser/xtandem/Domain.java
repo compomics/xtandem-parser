@@ -1,14 +1,13 @@
 package de.proteinms.xtandemparser.xtandem;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Thilo Muth
- * Date: 31.03.2011
- * Time: 12:56:24
- * To change this template use File | Settings | File Templates.
+ * Domain object.
+ *
+ * @author Thilo Mut
  */
 public class Domain {
-     /**
+
+    /**
      * This String contains the domain identifier (spectrum#).(i#).(domain#)
      */
     private String iDomainID = null;

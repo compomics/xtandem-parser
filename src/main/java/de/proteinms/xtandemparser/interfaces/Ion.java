@@ -1,11 +1,9 @@
 package de.proteinms.xtandemparser.interfaces;
 
 /**
- * This class represents an Ion object. It holds the ion number,
- * the ion score and the 6 different types of ions:
- * 1) a-c ions
- * 2) x-z ions
- * 
+ * This class represents an Ion object. It holds the ion number, the ion score
+ * and the 6 different types of ions: 1) a-c ions 2) x-z ions
+ *
  * @author Thilo Muth
  */
 public interface Ion {
@@ -58,15 +56,15 @@ public interface Ion {
      * This int is the identifier for a z ion.
      */
     public final static int Z_ION = 11;
-     /**
+    /**
      * This int is the identifier for an MH ion.
      */
     public final static int MH_ION = 12;
-     /**
+    /**
      * This int is the identifier for an MH-NH3 ion.
      */
     public final static int MHNH3_ION = 13;
-     /**
+    /**
      * This int is the identifier for an MH-H2O ion.
      */
     public final static int MHH2O_ION = 14;

@@ -1,14 +1,12 @@
 package de.proteinms.xtandemparser.xtandem;
 
-import de.proteinms.xtandemparser.interfaces.Ion;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * The peptide object contains all the information about itself and its
  * identifications, which are called "domains".
- * 
+ *
  * @author Thilo Muth
  */
 public class Peptide implements Serializable {
@@ -18,11 +16,13 @@ public class Peptide implements Serializable {
      */
     private String iPeptideID;
     /**
-     * Contains the start position of the peptide == beginning of the protein's peptide sequence
+     * Contains the start position of the peptide == beginning of the protein's
+     * peptide sequence
      */
     private int iStart = 0;
     /**
-     * Contains the end position of the peptide == end ot the protein's peptide sequence
+     * Contains the end position of the peptide == end ot the protein's peptide
+     * sequence
      */
     private int iEnd = 0;
     /**
@@ -33,26 +33,25 @@ public class Peptide implements Serializable {
      * This String contains the original FASTA file path
      */
     private String iFastaFilePath = null;
-
     /**
      * Contains the spectrum number.
      */
     private int iSpectrumNumber;
-
     /**
      * The domain list.
      */
     private List<Domain> domains;
 
     /**
-     * The Peptide constructor gets the peptide id the start + end position and the sequences as string.
+     * The Peptide constructor gets the peptide id the start + end position and
+     * the sequences as string.
      *
      * @param aPeptideID
      * @param aStart
      * @param aEnd
      * @param aSequence
      */
-    public Peptide(String aPeptideID, int aStart, int aEnd, String aSequence) {        
+    public Peptide(String aPeptideID, int aStart, int aEnd, String aSequence) {
         iPeptideID = aPeptideID;
         iStart = aStart;
         iEnd = aEnd;
@@ -61,17 +60,19 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the domains
+     *
      * @return List<Domain> domains
      */
-    public List<Domain> getDomains(){
+    public List<Domain> getDomains() {
         return domains;
     }
 
     /**
      * Sets the domains.
+     *
      * @param domains
      */
-    public void setDomains(List<Domain> domains){
+    public void setDomains(List<Domain> domains) {
         this.domains = domains;
     }
 
@@ -167,7 +168,7 @@ public class Peptide implements Serializable {
 
     /**
      * Returns the peptide id as string.
-     * 
+     *
      * @return iPeptideID
      */
     public String getPeptideID() {
@@ -176,9 +177,10 @@ public class Peptide implements Serializable {
 
     /**
      * Overwritten toString()-method.
+     *
      * @return String
      */
-    public String toString(){
+    public String toString() {
         return "PeptideID: " + iPeptideID + "\nSequence:\n" + iSequence;
     }
 }

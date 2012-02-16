@@ -27,7 +27,8 @@ import org.xml.sax.SAXException;
 public class XTandemParser implements Serializable {
 
     /**
-     * Pattern to extract the modification mass number if multiple modification masses are given
+     * Pattern to extract the modification mass number if multiple modification
+     * masses are given
      */
     private static Pattern resModificationMassPattern = Pattern.compile("label=\"residue, modification mass (\\d+)\"");
     private static Pattern refPotModificationMassPattern = Pattern.compile("label=\"refine, potential modification mass (\\d+)\"");
@@ -1498,7 +1499,7 @@ public class XTandemParser implements Serializable {
 
     /**
      * Returns the title2spectrum id map.
-     * 
+     *
      * @return iTitle2SpectrumIDMap.
      */
     public HashMap<String, Integer> getTitle2SpectrumIDMap() {

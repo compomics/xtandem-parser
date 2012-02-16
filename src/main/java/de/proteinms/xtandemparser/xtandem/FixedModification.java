@@ -4,7 +4,8 @@ import de.proteinms.xtandemparser.interfaces.Modification;
 import java.io.Serializable;
 
 /**
- * This class implements modification and represents a fixed modification object.
+ * This class implements modification and represents a fixed modification
+ * object.
  *
  * @author Thilo Muth
  */
@@ -23,8 +24,8 @@ public class FixedModification implements Modification, Serializable {
      */
     private String iLocation;
     /**
-    * This variable holds number of the modification from one peptide.
-    */
+     * This variable holds number of the modification from one peptide.
+     */
     private int iNumber;
     /**
      * This variables holds the modified residue.
@@ -109,12 +110,12 @@ public class FixedModification implements Modification, Serializable {
         return true;
     }
 
-        /**
+    /**
      * Returns the domain id.
      *
      * @return the number of modifcation
      */
-    public int getNumber(){
+    public int getNumber() {
         return iNumber;
     }
 
@@ -129,7 +130,7 @@ public class FixedModification implements Modification, Serializable {
 
     /**
      * Returns the modified residue (a peptide letter).
-     * 
+     *
      * @return iModifiedResidue
      */
     public String getModifiedResidue() {

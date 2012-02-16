@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * This class holds the information about the supporting data:
- * 1) Hyperscore expectation function
- * 2) Convolution survival function
- * 3) Ion histograms (a,b,c + x,y,z ions)
- * 4) fragment ion mass spectrum: m/z and intensity
+ * This class holds the information about the supporting data: 1) Hyperscore
+ * expectation function 2) Convolution survival function 3) Ion histograms
+ * (a,b,c + x,y,z ions) 4) fragment ion mass spectrum: m/z and intensity
  *
  * @author Thilo Muth
  */
@@ -407,13 +405,13 @@ public class SupportData implements Serializable {
     }
 
     /**
-     * Splits a given number string into a separate Integer values,
-     * which are stored in an array list.
+     * Splits a given number string into a separate Integer values, which are
+     * stored in an array list.
      *
      * @param aNumberString Number string
      * @return NumberList
      */
-    ArrayList<Integer> splitStringToIntegerList(String aNumberString) {
+    private ArrayList<Integer> splitStringToIntegerList(String aNumberString) {
         ArrayList<Integer> NumberList = new ArrayList<Integer>();
         String[] temp;
         aNumberString = aNumberString.trim();
@@ -421,21 +419,21 @@ public class SupportData implements Serializable {
         temp = aNumberString.split(" ");
 
         for (String string : temp) {
-            if(string.length()>0){
+            if (string.length() > 0) {
                 NumberList.add(Integer.parseInt((string)));
-            }            
+            }
         }
         return NumberList;
     }
 
     /**
-     * Splits a given number string into a separate Double values,
-     * which are stored in an array list.
-     * 
+     * Splits a given number string into a separate Double values, which are
+     * stored in an array list.
+     *
      * @param aNumberString Number string
      * @return NumberList
      */
-    ArrayList<Double> splitStringToDoubleList(String aNumberString) {
+    private ArrayList<Double> splitStringToDoubleList(String aNumberString) {
         ArrayList<Double> NumberList = new ArrayList<Double>();
         String[] temp;
         aNumberString = aNumberString.trim();

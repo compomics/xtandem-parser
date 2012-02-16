@@ -119,7 +119,8 @@ public class PerformParams {
     private double iRefinementTiming;
 
     /**
-     * The constructor gets a hash map containing all the performance parameters.
+     * The constructor gets a hash map containing all the performance
+     * parameters.
      *
      * @param map
      */

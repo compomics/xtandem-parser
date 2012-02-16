@@ -17,10 +17,8 @@ public interface Peaklist {
     public ArrayList getPeaks();
 
     /**
-     * This method returns a string which gives information about the MS type used, for example
-     * 1.) MS
-     * 2.) MS/MS (MS^2)
-     * 3.) MS/MS/MS (MS^3)
+     * This method returns a string which gives information about the MS type
+     * used, for example 1.) MS 2.) MS/MS (MS^2) 3.) MS/MS/MS (MS^3)
      *
      * @return String
      */

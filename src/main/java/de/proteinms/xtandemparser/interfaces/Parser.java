@@ -3,7 +3,8 @@ package de.proteinms.xtandemparser.interfaces;
 import java.util.HashMap;
 
 /**
- * Interface for the parser, which has only the method to retrieve the peak list hash map.
+ * Interface for the parser, which has only the method to retrieve the peak list
+ * hash map.
  *
  * @author Thilo Muth
  */
