@@ -48,8 +48,16 @@ public class ProteinMap implements Serializable {
                 // Get the rest of the protein parameters for the protein map.
                 String proteinUID = aProteinMap.get("uid" + proteinID).toString();
                 String proteinLabel = aProteinMap.get("label" + proteinID).toString();
-                double expectValue = Double.parseDouble(aProteinMap.get("expect" + proteinID).toString());
-                double summedScore = Double.parseDouble(aProteinMap.get("sumI" + proteinID).toString());
+                
+                Double expectValue;
+                
+                try {
+                    expectValue = Double.parseDouble(aProteinMap.get("expect" + proteinID).toString());
+                } catch (NumberFormatException e) {
+                    expectValue = null;
+                }
+                
+                Double summedScore = Double.parseDouble(aProteinMap.get("sumI" + proteinID).toString());
 
                 // Create an instance of a protein.
                 Protein protein = new Protein(proteinID, proteinUID, proteinLabel, expectValue, summedScore);

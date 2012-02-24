@@ -6,14 +6,16 @@ import java.io.Serializable;
  * This class contains all the parsed data from a xtandem file protein.
  *
  * @author Thilo Muth
+ * @author Harald Barsnes
  */
 public class Protein implements Serializable {
 
     /**
      * This variable holds the log10-value of the expectation value of the
-     * protein.
+     * protein. Note: returns a null object if the protein expected score cannot
+     * be estimated.
      */
-    private double iExpectValue = 0;
+    private Double iExpectValue = 0.0;
     /**
      * This variable presents the identifier for this particular identification
      * (spectrum#).(id#).
@@ -33,7 +35,7 @@ public class Protein implements Serializable {
      * This variable presents the sum of all the fragment ions that identify
      * this protein.
      */
-    private double iSummedScore = 0;
+    private Double iSummedScore = 0.0;
 
     /**
      * The constructor get id, uid, label, expect value and summed score to
@@ -45,7 +47,7 @@ public class Protein implements Serializable {
      * @param aExpectValue
      * @param aSummedScore
      */
-    public Protein(String aID, String aUID, String aLabel, double aExpectValue, double aSummedScore) {
+    public Protein(String aID, String aUID, String aLabel, Double aExpectValue, Double aSummedScore) {
         iID = aID;
         iUID = aUID;
         iLabel = aLabel;
@@ -54,11 +56,12 @@ public class Protein implements Serializable {
     }
 
     /**
-     * Returns the expect value for the protein.
+     * Returns the expect value for the protein. Note: returns a null object if
+     * the protein expected score cannot be estimated.
      *
-     * @return iExpectValue
+     * @return iExpectValue - can be null
      */
-    public double getExpectValue() {
+    public Double getExpectValue() {
         return iExpectValue;
     }
 
@@ -67,7 +70,7 @@ public class Protein implements Serializable {
      *
      * @param aExpectValue
      */
-    public void setExpectValue(double aExpectValue) {
+    public void setExpectValue(Double aExpectValue) {
         iExpectValue = aExpectValue;
     }
 
@@ -130,7 +133,7 @@ public class Protein implements Serializable {
      *
      * @return iSummedScore
      */
-    public double getSummedScore() {
+    public Double getSummedScore() {
         return iSummedScore;
     }
 
@@ -139,7 +142,7 @@ public class Protein implements Serializable {
      *
      * @param aSummedScore
      */
-    public void setSummedScore(double aSummedScore) {
+    public void setSummedScore(Double aSummedScore) {
         iSummedScore = aSummedScore;
     }
 }
