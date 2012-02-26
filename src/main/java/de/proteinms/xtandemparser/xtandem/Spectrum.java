@@ -22,9 +22,13 @@ public class Spectrum implements Serializable {
      */
     private double iPrecursorMh = 0;
     /**
-     * This variable hold the precursor ion charge from the spectrum.
+     * This variable holds the precursor ion charge from the spectrum.
      */
     private int iPrecursorCharge = 0;
+    /**
+     * This variable holds the precursor retention time from the spectrum.
+     */
+    private String iPrecursorRetentionTime = "";
     /**
      * This variable holds the expectation value for the top ranked protein
      * identfied with this spectrum.
@@ -67,21 +71,23 @@ public class Spectrum implements Serializable {
 
     /**
      * Constructor with all given parameters: 1) spectrumID 2) precorsor mh 3)
-     * precursor charge 4) spectrum values 5) label 6) spectrum number
+     * precursor charge 4) spectrum values 5) label 6) spectrum number.
      *
      * @param aSpectrumID
      * @param aPrecursorMh
      * @param aPrecursorCharge
+     * @param aPrecursorRetentionTime 
      * @param aSpectrumValues
      * @param aLabel
      * @param aSpectrumNumber
      */
-    public Spectrum(int aSpectrumID, double aPrecursorMh, int aPrecursorCharge,
+    public Spectrum(int aSpectrumID, double aPrecursorMh, int aPrecursorCharge, String aPrecursorRetentionTime,
             ArrayList<Double> aSpectrumValues, String aLabel, int aSpectrumNumber) {
 
         iSpectrumId = aSpectrumID;
         iPrecursorMh = aPrecursorMh;
         iPrecursorCharge = aPrecursorCharge;
+        iPrecursorRetentionTime = aPrecursorRetentionTime;
         iExpectValue = aSpectrumValues.get(0);
         iLabel = aLabel;
         iSummedScore = aSpectrumValues.get(1);
@@ -142,6 +148,24 @@ public class Spectrum implements Serializable {
      */
     public void setPrecursorCharge(int aPrecursorCharge) {
         this.iPrecursorCharge = aPrecursorCharge;
+    }
+    
+    /**
+     * Returns the precursor retention time.
+     *
+     * @return iPrecursorCharge
+     */
+    public String getPrecursorRetentionTime() {
+        return iPrecursorRetentionTime;
+    }
+
+    /**
+     * Sets the precursor retention time.
+     *
+     * @param aPrecursorRetentionTime
+     */
+    public void setPrecursorRetentionTime(String aPrecursorRetentionTime) {
+        this.iPrecursorRetentionTime = aPrecursorRetentionTime;
     }
 
     /**

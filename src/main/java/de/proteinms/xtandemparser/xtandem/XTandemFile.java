@@ -356,6 +356,9 @@ public class XTandemFile implements Serializable {
 
                 // Precursor charge
                 int precursorCharge = Integer.parseInt(spectrumSection.get("z" + i));
+                
+                // Precursor retention time
+                String precursorRetentionTime = spectrumSection.get("rt" + i);
 
                 // valueList contains exspectValue, summedScore, maxFragIonIntensity and intensityMultiplier
                 ArrayList<Double> valueList = new ArrayList<Double>();
@@ -373,7 +376,7 @@ public class XTandemFile implements Serializable {
                 String label = spectrumSection.get("label" + i);
 
                 // Add all the spectra parameters to the list
-                iSpectraList.add(new Spectrum(spectrumID, precursorMh, precursorCharge, valueList, label, i));
+                iSpectraList.add(new Spectrum(spectrumID, precursorMh, precursorCharge, precursorRetentionTime, valueList, label, i));
             }
         }
         return iSpectraList;

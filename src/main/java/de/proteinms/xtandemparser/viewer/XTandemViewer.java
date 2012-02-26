@@ -72,7 +72,7 @@ public class XTandemViewer extends JFrame {
     public XTandemViewer(String aXTandemXmlFile, String lastSelectedFolder) {
 
         // set up the error log
-        if (useErrorLog) {
+        if (useErrorLog && !getJarFilePath().equalsIgnoreCase(".")) {
             try {
                 String path = "" + this.getClass().getProtectionDomain().getCodeSource().getLocation();
                 path = path.substring(5, path.lastIndexOf("/"));
@@ -165,6 +165,24 @@ public class XTandemViewer extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         insertFiles(aXTandemXmlFile, lastSelectedFolder);
+    }
+    
+    /**
+     * Returns the path to the jar file.
+     *
+     * @return the path to the jar file
+     */
+    private String getJarFilePath() {
+        String path = this.getClass().getResource("XTandemViewer.class").getPath();
+
+        if (path.lastIndexOf("/xtandem-parser-") != -1) {
+            path = path.substring(5, path.lastIndexOf("/xtandem-parser-"));
+            path = path.replace("%20", " ");
+        } else {
+            path = ".";
+        }
+
+        return path;
     }
 
     /**
@@ -1059,8 +1077,8 @@ public class XTandemViewer extends JFrame {
 
         // Condition if one row is selected.
         if (row != -1) {
-            List<Double> mzValues = allMzValues.get(spectraTable.getValueAt(row, 0));
-            List<Double> intensityValues = allIntensityValues.get(spectraTable.getValueAt(row, 0));
+            List<Double> mzValues = allMzValues.get((Integer) spectraTable.getValueAt(row, 0));
+            List<Double> intensityValues = allIntensityValues.get((Integer) spectraTable.getValueAt(row, 0));
 
             // Empty the spectrum table.
             while (spectrumJXTable.getRowCount() > 0) {
@@ -1115,8 +1133,8 @@ public class XTandemViewer extends JFrame {
             modificationDetailsJLabel.setText("");
 
             // Iterate over all the peptides as identifications (domains)
-            if (peptideMap.get(spectraTable.getValueAt(row, 0)) != null) {
-                ArrayList<Peptide> pepList = peptideMap.get(spectraTable.getValueAt(row, 0));
+            if (peptideMap.get((Integer) spectraTable.getValueAt(row, 0)) != null) {
+                ArrayList<Peptide> pepList = peptideMap.get((Integer) spectraTable.getValueAt(row, 0));
                 Iterator pepIter = pepList.iterator();
 
                 String modificationDetails = "";
@@ -2053,8 +2071,8 @@ public class XTandemViewer extends JFrame {
 
             for (int j = 0; j < spectraTable.getRowCount(); j++) {
 
-                List<Double> mzValues = allMzValues.get(spectraTable.getValueAt(j, 0));
-                List<Double> intensityValues = allIntensityValues.get(spectraTable.getValueAt(j, 0));
+                List<Double> mzValues = allMzValues.get((Integer) spectraTable.getValueAt(j, 0));
+                List<Double> intensityValues = allIntensityValues.get((Integer) spectraTable.getValueAt(j, 0));
                 File currentFile;
                 String spectrum = spectraTable.getValueAt(j, 1).toString();
                 if (spectrum.contains(".")) {

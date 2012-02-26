@@ -838,6 +838,10 @@ public class XTandemParser implements Serializable {
                             if (nodes.item(i).getAttributes().getNamedItem("z") != null) {
                                 iRawSpectrumMap.put("z" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("z").getNodeValue());
                             }
+                            // rt is the parent/precursor retention time
+                            if (nodes.item(i).getAttributes().getNamedItem("rt") != null) {
+                                iRawSpectrumMap.put("rt" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("rt").getNodeValue());
+                            }
                             // expect is the expectation value for the top ranked protein identfied with this spectrum
                             if (nodes.item(i).getAttributes().getNamedItem("expect") != null) {
                                 iRawSpectrumMap.put("expect" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("expect").getNodeValue());
