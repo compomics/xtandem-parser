@@ -68,8 +68,8 @@ public class PeptideMap implements Serializable {
                     // Set the domain values
                     peptide.setSpectrumNumber(i);
                     // set the fasta filename
-                    if (aRawPeptideMap.get("URL" + pCount) != null) {
-                        peptide.setFastaFilePath(aRawPeptideMap.get("URL" + pCount).toString());
+                    if (aRawPeptideMap.get("URL" + "_s" + i + "_p" + pCount) != null) {
+                        peptide.setFastaFilePath(aRawPeptideMap.get("URL" + "_s" + i + "_p" + pCount).toString());
                     }
 
                     // The counter for the domains

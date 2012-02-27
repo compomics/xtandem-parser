@@ -900,7 +900,7 @@ public class XTandemParser implements Serializable {
                         for (int k = 0; k < proteinNodes.getLength(); k++) {
                             if (proteinNodes.item(k).getNodeName().equalsIgnoreCase("file")) {
                                 // the path used to the original fasta file
-                                iRawPeptideMap.put("URL" + p_counter, proteinNodes.item(k).getAttributes().getNamedItem("URL").getNodeValue());
+                                iRawPeptideMap.put("URL" + "_s" + spectraCounter + "_p" + p_counter, proteinNodes.item(k).getAttributes().getNamedItem("URL").getNodeValue());
                             }
 
                             // the the sum of all the fragment ions that identify this protein
