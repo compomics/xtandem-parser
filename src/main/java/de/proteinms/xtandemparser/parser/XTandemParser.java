@@ -536,6 +536,12 @@ public class XTandemParser implements Serializable {
                                         }
                                     }
                                     if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                    		"label=\"scoring, algorithm\"")) {
+                                    	if (!parameterNodes.item(m).getTextContent().equals("")) {
+                                            iInputParamMap.put("SCORING_ALGORITHM", parameterNodes.item(m).getTextContent());
+                                        }
+                                    }
+                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
                                             "label=\"spectrum, dynamic range\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECDYNRANGE", parameterNodes.item(m).getTextContent());
