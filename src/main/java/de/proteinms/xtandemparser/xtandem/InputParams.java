@@ -67,6 +67,7 @@ public class InputParams implements Serializable {
     private boolean iScoringPlugScoring = false;
     private double iSpectrumDynRange;
     private String iSpectrumFragMassType = null;
+    private String iScoringAlgorithm = null;
     private double iSpectrumMonoIsoMassError;
     private String iSpectrumMonoIsoMassErrorUnits = null;
     private int iSpectrumMaxPrecursorCharge;
@@ -291,6 +292,9 @@ public class InputParams implements Serializable {
         }
         if (map.get("SCORINGPLUGSCORING") != null) {
             iScoringPlugScoring = convertStringToBool(map.get("SCORINGPLUGSCORING").toString());
+        }
+        if (map.get("SCORING_ALGORITHM") != null) {
+            iScoringAlgorithm = map.get("SCORING_ALGORITHM").toString();
         }
         if (map.get("SPECDYNRANGE") != null) {
             iSpectrumDynRange = Double.parseDouble(map.get("SPECDYNRANGE").toString());
@@ -810,6 +814,14 @@ public class InputParams implements Serializable {
 
     public void setSpectrumFragMassType(String spectrumFragMassType) {
         iSpectrumFragMassType = spectrumFragMassType;
+    }
+    
+    public String getScoringAlgorithm() {
+        return iScoringAlgorithm;
+    }
+
+    public void setScoringAlgorithm(String scoringAlgorithm) {
+        iScoringAlgorithm = scoringAlgorithm;
     }
 
     public double getSpectrumMonoIsoMassError() {
