@@ -967,11 +967,11 @@ public class XTandemParser implements Serializable {
                                         if (xIonFlag) {
                                             // the x score
                                             iRawPeptideMap.put("x_score" + "_s" + spectraCounter + "_p"
-                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("x_score").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("y_score").getNodeValue());
 
                                             // the x ion number
                                             iRawPeptideMap.put("x_ions" + "_s" + spectraCounter + "_p"
-                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("x_ions").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("y_ions").getNodeValue());
                                         }
 
                                         if (yIonFlag) {
@@ -987,21 +987,21 @@ public class XTandemParser implements Serializable {
                                         if (zIonFlag) {
                                             // the z score
                                             iRawPeptideMap.put("z_score" + "_s" + spectraCounter + "_p"
-                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("z_score").getNodeValue());
-
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("y_score").getNodeValue());
+                                                
                                             // the z ion number
                                             iRawPeptideMap.put("z_ions" + "_s" + spectraCounter + "_p"
-                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("z_ions").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("y_ions").getNodeValue());
                                         }
 
                                         if (aIonFlag) {
                                             // the a score
                                             iRawPeptideMap.put("a_score" + "_s" + spectraCounter + "_p"
-                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("a_score").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("b_score").getNodeValue());
 
                                             // the a ion number
                                             iRawPeptideMap.put("a_ions" + "_s" + spectraCounter + "_p"
-                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("a_ions").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("b_ions").getNodeValue());
                                         }
 
                                         if (bIonFlag) {
@@ -1017,11 +1017,11 @@ public class XTandemParser implements Serializable {
                                         if (cIonFlag) {
                                             // the c score
                                             iRawPeptideMap.put("c_score" + "_s" + spectraCounter + "_p"
-                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("c_score").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("b_score").getNodeValue());
 
                                             // the c ion number
                                             iRawPeptideMap.put("c_ions" + "_s" + spectraCounter + "_p"
-                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("c_ions").getNodeValue());
+                                                    + p_counter + "_d" + dCount, peptideNodes.item(m).getAttributes().getNamedItem("b_ions").getNodeValue());
                                         }
 
                                         // the upstream flanking sequence
@@ -1154,7 +1154,7 @@ public class XTandemParser implements Serializable {
 
                                     // Parse the a ion histogram values
                                     if (aIonFlag) {
-                                        if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("a ion histogram")) {
+                                        if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("b ion histogram")) {
                                             iSupportDataMap.put("A_IONLABEL" + "_s" + spectraCounter,
                                                     supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
                                             supportDataNodes.item(a).getChildNodes();
@@ -1223,7 +1223,7 @@ public class XTandemParser implements Serializable {
 
                                     // Parse the c ion histogram values
                                     if (cIonFlag) {
-                                        if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("c ion histogram")) {
+                                        if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("b ion histogram")) {
                                             iSupportDataMap.put("C_IONLABEL" + "_s" + spectraCounter,
                                                     supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
                                             supportDataNodes.item(a).getChildNodes();
@@ -1258,7 +1258,7 @@ public class XTandemParser implements Serializable {
 
                                     if (xIonFlag) {
                                         // Parse the x ion histogram values
-                                        if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equals("x ion histogram")) {
+                                        if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equals("y ion histogram")) {
                                             iSupportDataMap.put("X_IONLABEL" + "_s" + spectraCounter,
                                                     supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
                                             supportDataNodes.item(a).getChildNodes();
@@ -1326,7 +1326,7 @@ public class XTandemParser implements Serializable {
 
                                     if (zIonFlag) {
                                         // Parse the x ion histogram values
-                                        if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equals("z ion histogram")) {
+                                        if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equals("y ion histogram")) {
                                             iSupportDataMap.put("Z_IONLABEL" + "_s" + spectraCounter,
                                                     supportDataNodes.item(a).getAttributes().getNamedItem("label").getNodeValue());
                                             supportDataNodes.item(a).getChildNodes();
