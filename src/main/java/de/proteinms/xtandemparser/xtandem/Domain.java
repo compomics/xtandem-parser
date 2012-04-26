@@ -3,12 +3,13 @@ package de.proteinms.xtandemparser.xtandem;
 /**
  * Domain object.
  *
- * @author Thilo Mut
+ * @author Thilo Muth
  */
 public class Domain {
 
     /**
-     * This String contains the domain identifier (spectrum#).(i#).(domain#) as present in the X!Tandem file. This might not be unique.
+     * This String contains the domain identifier (spectrum#).(i#).(domain#) as
+     * present in the X!Tandem file. <b>Note: This might not be unique!</b>
      */
     private String iDomainID = null;
     /**
