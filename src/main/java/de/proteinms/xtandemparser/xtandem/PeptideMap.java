@@ -81,6 +81,7 @@ public class PeptideMap implements Serializable {
                         Domain domain = new Domain();
                         String domainKey = "s" + i + "_p" + pCount + "_d" + dCount;
                         domain.setDomainKey(domainKey);
+                        domain.setProteinKey(aRawPeptideMap.get("proteinkey" + "_s" + i + "_p" + pCount + "_d" + dCount).toString());
                         domain.setDomainID(aRawPeptideMap.get("domainid" + "_s" + i + "_p" + pCount + "_d" + dCount).toString());
                         domain.setDomainStart(Integer.parseInt(aRawPeptideMap.get("domainstart" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
                         domain.setDomainEnd(Integer.parseInt(aRawPeptideMap.get("domainend" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));

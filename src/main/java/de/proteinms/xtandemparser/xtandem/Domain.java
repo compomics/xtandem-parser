@@ -13,6 +13,10 @@ public class Domain {
      */
     private String iDomainID = null;
     /**
+     * The protein key
+     */
+    private String proteinKey;
+    /**
      * The domain key (unique)
      */
     private String domainKey;
@@ -293,5 +297,21 @@ public class Domain {
      */
     public void setMissedCleavages(int aMissedCleavages) {
         this.iMissedCleavages = aMissedCleavages;
+    }
+    
+    /**
+     * Sets the protein key
+     * @param proteinKey the protein key
+     */
+    public void setProteinKey(String proteinKey) {
+        this.proteinKey = proteinKey;
+    }
+    
+    /**
+     * Returns the protein key
+     * @return the protein key
+     */
+    public String getProteinKey() {
+        return proteinKey;
     }
 }

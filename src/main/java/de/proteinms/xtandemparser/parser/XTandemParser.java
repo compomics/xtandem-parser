@@ -68,7 +68,7 @@ public class XTandemParser implements Serializable {
     /**
      * This list contains a list with all the protein ids.
      */
-    private ArrayList<String> iProteinIDList = null;
+    private ArrayList<String> iProteinKeyList = null;
     private HashMap<String, Integer> iTitle2SpectrumIDMap;
 
     /**
@@ -137,7 +137,7 @@ public class XTandemParser implements Serializable {
             iTitle2SpectrumIDMap = new HashMap<String, Integer>();
 
             // List of all the protein ids
-            iProteinIDList = new ArrayList<String>();
+            iProteinKeyList = new ArrayList<String>();
             boolean aIonFlag = false;
             boolean bIonFlag = false;
             boolean cIonFlag = false;
@@ -886,19 +886,22 @@ public class XTandemParser implements Serializable {
                         p_counter++;
                         // the identifier of this particular identification (spectrum#).(id#)
                         String protID = idNodes.item(j).getAttributes().getNamedItem("id").getNodeValue();
-                        iProteinIDList.add(protID);
+                        
+                        // Since the ID is not unique to the protein, we will use the label to reference it. That will be dirty for some files.
+                        String proteinKey = idNodes.item(j).getAttributes().getNamedItem("label").getNodeValue();
+                        iProteinKeyList.add(proteinKey);
 
-                        // a unique number of this protein, calculated by the search engine
-                        iRawProteinMap.put("uid" + protID, idNodes.item(j).getAttributes().getNamedItem("uid").getNodeValue());
+                        // a unique number of this protein, calculated by the search engine. Well unique. Most often yes.
+                        iRawProteinMap.put("uid" + proteinKey, idNodes.item(j).getAttributes().getNamedItem("uid").getNodeValue());
 
                         // the log10 value of the expection value of the protein
-                        iRawProteinMap.put("expect" + protID, idNodes.item(j).getAttributes().getNamedItem("expect").getNodeValue());
+                        iRawProteinMap.put("expect" + proteinKey, idNodes.item(j).getAttributes().getNamedItem("expect").getNodeValue());
 
                         // the description line from the FASTA file
-                        iRawProteinMap.put("label" + protID, idNodes.item(j).getAttributes().getNamedItem("label").getNodeValue());
+                        iRawProteinMap.put("label" + proteinKey, idNodes.item(j).getAttributes().getNamedItem("label").getNodeValue());
 
                         // the sum of all of the fragment ions that identify this protein
-                        iRawProteinMap.put("sumI" + protID, idNodes.item(j).getAttributes().getNamedItem("sumI").getNodeValue());
+                        iRawProteinMap.put("sumI" + proteinKey, idNodes.item(j).getAttributes().getNamedItem("sumI").getNodeValue());
 
                         proteinNodes = idNodes.item(j).getChildNodes();
 
@@ -933,6 +936,9 @@ public class XTandemParser implements Serializable {
                                         }
                                         // Get the domainid
                                         String domainKey = "s" + spectraCounter + "_p" + p_counter + "_d" + dCount;
+                                        
+                                        // Store the protein key à la Thilo. There should be only one protein key per domain.
+                                        iRawPeptideMap.put("proteinkey" + "_" + domainKey, proteinKey);
 
                                         iRawPeptideMap.put("domainid" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("id").getNodeValue());
 
@@ -1443,7 +1449,7 @@ public class XTandemParser implements Serializable {
      * @return iProteinIDList ArrayList<String>
      */
     public ArrayList<String> getProteinIDList() {
-        return iProteinIDList;
+        return iProteinKeyList;
     }
 
     /**
