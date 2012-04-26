@@ -158,7 +158,7 @@ public class InSilicoDigester {
             mass = 0.0;
 
             // Add the fixed modifications masses (N and C term included)
-            List<Modification> fixModList = iModMap.getFixedModifications(iDomain.getDomainID());
+            List<Modification> fixModList = iModMap.getFixedModifications(iDomain.getDomainKey());
             if (fixModList.size() > 0) {
                 for (Modification fixMod : fixModList) {
                     int modIndex = (Integer.parseInt(fixMod.getLocation()) - iDomain.getDomainStart());
@@ -169,7 +169,7 @@ public class InSilicoDigester {
             }
 
             // Add the the variable modification masses (N and C term included)
-            List<Modification> varModList = iModMap.getVariableModifications(iDomain.getDomainID());
+            List<Modification> varModList = iModMap.getVariableModifications(iDomain.getDomainKey());
             if (varModList.size() > 0) {
                 for (Modification varMod : varModList) {
                     int modIndex = (Integer.parseInt(varMod.getLocation()) - iDomain.getDomainStart());

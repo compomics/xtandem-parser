@@ -8,9 +8,13 @@ package de.proteinms.xtandemparser.xtandem;
 public class Domain {
 
     /**
-     * This String contains the domain identifier (spectrum#).(i#).(domain#)
+     * This String contains the domain identifier (spectrum#).(i#).(domain#) as present in the X!Tandem file. This might not be unique.
      */
     private String iDomainID = null;
+    /**
+     * The domain key (unique)
+     */
+    private String domainKey;
     /**
      * Contains the domain start position == first residue of the domain
      */
@@ -72,6 +76,24 @@ public class Domain {
      */
     public void setDomainID(String domainID) {
         iDomainID = domainID;
+    }
+
+    /**
+     * Returns the domain key of the peptide.
+     *
+     * @return domainKey
+     */
+    public String getDomainKey() {
+        return domainKey;
+    }
+
+    /**
+     * Sets the domain key of the peptide.
+     *
+     * @param domainKey
+     */
+    public void setDomainKey(String domainKey) {
+        this.domainKey = domainKey;
     }
 
     /**

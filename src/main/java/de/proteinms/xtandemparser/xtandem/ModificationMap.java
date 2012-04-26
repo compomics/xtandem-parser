@@ -72,7 +72,7 @@ public class ModificationMap implements Serializable {
                         int m_counter = 1;
                         int m_counter_variable = 1;
                         int m_counter_fixed = 1;
-                        String domainID = domainList.get(d - 1).getDomainID();
+                        String domainID = domainList.get(d - 1).getDomainKey();
                         String modKey = "_s" + i + "_p" + j + "_d" + d + "_m" + m_counter;
 
                         while (rawModMap.get("name" + modKey) != null) {
@@ -204,15 +204,15 @@ public class ModificationMap implements Serializable {
     /**
      * Returns the fixed modifications as list.
      *
-     * @param aDomainID The domainID of the identification
+     * @param aDomainKey The domainKey of the identification
      * @return modificationsList The fixed modification list
      */
-    public ArrayList<Modification> getFixedModifications(String aDomainID) {
+    public ArrayList<Modification> getFixedModifications(String aDomainKey) {
         ArrayList<Modification> modificationList = new ArrayList<Modification>();
         if (iFixedModificationMap != null) {
             int modCount = 1;
-            while (iFixedModificationMap.get(aDomainID + "_m" + modCount) != null) {
-                modificationList.add(iFixedModificationMap.get(aDomainID + "_m" + modCount));
+            while (iFixedModificationMap.get(aDomainKey + "_m" + modCount) != null) {
+                modificationList.add(iFixedModificationMap.get(aDomainKey + "_m" + modCount));
                 modCount++;
             }
         }
@@ -248,15 +248,15 @@ public class ModificationMap implements Serializable {
     /**
      * Returns the variable modifications as list.
      *
-     * @param aDomainID The domainID of the identification
+     * @param aDomainKey The domainID of the identification
      * @return modificationsList The variable modification list
      */
-    public ArrayList<Modification> getVariableModifications(String aDomainID) {
+    public ArrayList<Modification> getVariableModifications(String aDomainKey) {
         ArrayList<Modification> modificationList = new ArrayList<Modification>();
         if (iVarModificationMap != null) {
             int modCount = 1;
-            while (iVarModificationMap.get(aDomainID + "_m" + modCount) != null) {
-                modificationList.add(iVarModificationMap.get(aDomainID + "_m" + modCount));
+            while (iVarModificationMap.get(aDomainKey + "_m" + modCount) != null) {
+                modificationList.add(iVarModificationMap.get(aDomainKey + "_m" + modCount));
                 modCount++;
             }
         }

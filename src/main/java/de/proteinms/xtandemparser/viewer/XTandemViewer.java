@@ -825,14 +825,14 @@ public class XTandemViewer extends JFrame {
                             Protein protein = protMap.getProteinWithPeptideID(domain.getDomainID());
                             if (protein != null) {
                                 String protAccession = protein.getLabel();
-                                proteinLabelMap.put(domain.getDomainID(), protAccession);
+                                proteinLabelMap.put(domain.getDomainKey(), protAccession);
                             }
 
                             // Do the modifications
-                            ArrayList<Modification> fixModList = iXTandemFile.getModificationMap().getFixedModifications(domain.getDomainID());
-                            ArrayList<Modification> varModList = iXTandemFile.getModificationMap().getVariableModifications(domain.getDomainID());
-                            allFixMods.put(domain.getDomainID(), fixModList);
-                            allVarMods.put(domain.getDomainID(), varModList);
+                            ArrayList<Modification> fixModList = iXTandemFile.getModificationMap().getFixedModifications(domain.getDomainKey());
+                            ArrayList<Modification> varModList = iXTandemFile.getModificationMap().getVariableModifications(domain.getDomainKey());
+                            allFixMods.put(domain.getDomainKey(), fixModList);
+                            allVarMods.put(domain.getDomainKey(), varModList);
 
                             // Get the fragment ions
                             Vector IonVector = iXTandemFile.getFragmentIonsForPeptide(peptide, domain);
@@ -840,7 +840,7 @@ public class XTandemViewer extends JFrame {
                             // Get all the ion types from the vector
                             for (int i = 0; i < IonVector.size(); i++) {
                                 FragmentIon[] ions = (FragmentIon[]) IonVector.get(i);
-                                ionsMap.put(domain.getDomainID() + "_" + i, ions);
+                                ionsMap.put(domain.getDomainKey() + "_" + i, ions);
                             }
                         }
                     }
@@ -1155,8 +1155,8 @@ public class XTandemViewer extends JFrame {
                         String nTerminal = "";
                         String cTerminal = "";
 
-                        ArrayList<Modification> fixedModList = allFixMods.get(domain.getDomainID());
-                        ArrayList<Modification> varModList = allVarMods.get(domain.getDomainID());
+                        ArrayList<Modification> fixedModList = allFixMods.get(domain.getDomainKey());
+                        ArrayList<Modification> varModList = allVarMods.get(domain.getDomainKey());
 
                         // Handle fixed modifications
                         if (fixedModList != null) {
@@ -1241,7 +1241,7 @@ public class XTandemViewer extends JFrame {
 
                         Vector<DefaultSpectrumAnnotation> currentAnnotations = new Vector();
                         for (int i = 0; i < 12; i++) {
-                            FragmentIon[] ions = ionsMap.get(domain.getDomainID() + "_" + i);
+                            FragmentIon[] ions = ionsMap.get(domain.getDomainKey() + "_" + i);
                             for (FragmentIon ion : ions) {
                                 int ionNumber = ion.getNumber();
                                 int ionType = ion.getType();
@@ -1424,7 +1424,7 @@ public class XTandemViewer extends JFrame {
                         double theoMass = (domain.getDomainMh() + domain.getDomainDeltaMh());
 
                         // parse the header
-                        Header header = Header.parseFromFASTA(proteinLabelMap.get(domain.getDomainID()));
+                        Header header = Header.parseFromFASTA(proteinLabelMap.get(domain.getDomainKey()));
                         String accession = header.getAccession();
                         String description = header.getDescription();
 
@@ -1664,8 +1664,8 @@ public class XTandemViewer extends JFrame {
                             String nTerminal = "";
                             String cTerminal = "";
 
-                            ArrayList<Modification> fixedModList = allFixMods.get(domain.getDomainID());
-                            ArrayList<Modification> varModList = allVarMods.get(domain.getDomainID());
+                            ArrayList<Modification> fixedModList = allFixMods.get(domain.getDomainKey());
+                            ArrayList<Modification> varModList = allVarMods.get(domain.getDomainKey());
 
                             // Handle fixed modifications
                             if (fixedModList != null) {
@@ -1742,7 +1742,7 @@ public class XTandemViewer extends JFrame {
                             int[][] ionCoverage = new int[sequence.length() + 1][12];
 
                             for (int i = 0; i < 12; i++) {
-                                FragmentIon[] ions = ionsMap.get(domain.getDomainID() + "_" + i);
+                                FragmentIon[] ions = ionsMap.get(domain.getDomainKey() + "_" + i);
                                 for (FragmentIon ion : ions) {
                                     int ionNumber = ion.getNumber();
                                     int ionType = ion.getType();
@@ -1914,7 +1914,7 @@ public class XTandemViewer extends JFrame {
                             modifiedSequence = nTerminal + modifiedSequence + cTerminal;
 
                             double theoMass = (domain.getDomainMh() + domain.getDomainDeltaMh());
-                            String accession = proteinLabelMap.get(domain.getDomainID());
+                            String accession = proteinLabelMap.get(domain.getDomainKey());
 
                             f.write(peptide.getSpectrumNumber() + "\t"
                                     + sequence + "\t"
