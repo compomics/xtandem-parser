@@ -164,7 +164,7 @@ public class InputParams implements Serializable {
         if (map.get("OUTPUTSXSLPATH") != null) {
             iOutputXslPath = map.get("OUTPUTSXSLPATH").toString();
         }
-        if (map.get("OUTPUTSXSLPATH") != null) {
+        if (map.get("C_TERMRESMODMASS") != null) {
             iProteinC_termResModMass = Double.parseDouble(map.get("C_TERMRESMODMASS").toString());
         }
         if (map.get("N_TERMRESMODMASS") != null) {
