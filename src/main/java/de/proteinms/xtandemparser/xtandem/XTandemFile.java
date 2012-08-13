@@ -159,7 +159,7 @@ public class XTandemFile implements Serializable {
     }
 
     /**
-     * This method returns the modification hash map
+     * This method returns the modification hash map.
      *
      * @return iModMap ModificationMap
      */

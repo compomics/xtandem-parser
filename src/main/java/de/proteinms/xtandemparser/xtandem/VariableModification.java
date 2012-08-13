@@ -31,6 +31,15 @@ public class VariableModification implements Modification, Serializable {
      * This variables holds the modified residue.
      */
     private String iModifiedResidue;
+    /**
+     * True if the modification is a substitution.
+     */
+    private boolean isSubstitution;
+    /**
+     * The subsitutted amino acid (if any). Null if the modification is not a 
+     * substitution.
+     */
+    private String substitutedAminoAcid;
 
     /**
      * Constructor for building a variable modification.
@@ -39,12 +48,17 @@ public class VariableModification implements Modification, Serializable {
      * @param aMass The modification mass
      * @param aLocation The modification location
      * @param aNumber The number of the modification
+     * @param aIsSubstitution If the modification is a substitution or not
+     * @param aSubstitutedAminoAcid  The subsitutted amino acid (if any). Null if the modification is not a substitution.
      */
-    public VariableModification(String aName, double aMass, String aLocation, int aNumber) {
+    public VariableModification(String aName, double aMass, String aLocation, int aNumber,
+            boolean aIsSubstitution, String aSubstitutedAminoAcid) {
         iName = aName;
         iMass = aMass;
         iLocation = aLocation;
         iNumber = aNumber;
+        isSubstitution = aIsSubstitution;
+        substitutedAminoAcid = aSubstitutedAminoAcid;
     }
 
     /**
@@ -127,7 +141,7 @@ public class VariableModification implements Modification, Serializable {
     public void setNumber(int aNumber) {
         iNumber = aNumber;
     }
-
+    
     /**
      * Returns the modified residue (a peptide letter).
      *
@@ -137,5 +151,31 @@ public class VariableModification implements Modification, Serializable {
         String[] values = iName.split("@");
         iModifiedResidue = values[1];
         return iModifiedResidue;
+    }
+    
+    public boolean isSubstitution() {
+        return isSubstitution;
+    }
+
+    public String getSubstitutedAminoAcid() {
+        return substitutedAminoAcid;
+    }
+
+    /**
+     * Set if the modification is a substitution or not.
+     * 
+     * @param isSubstitution if the modification is a substitution or not
+     */
+    public void setIsSubstitution(boolean isSubstitution) {
+        this.isSubstitution = isSubstitution;
+    }
+
+    /**
+     * Set the subsituted amino acid.
+     * 
+     * @param substitutedAminoAcid the subsituted amino acid
+     */
+    public void setSubstitutedAminoAcid(String substitutedAminoAcid) {
+        this.substitutedAminoAcid = substitutedAminoAcid;
     }
 }

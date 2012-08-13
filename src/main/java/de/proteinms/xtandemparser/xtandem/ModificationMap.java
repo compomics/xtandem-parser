@@ -81,7 +81,11 @@ public class ModificationMap implements Serializable {
                             String modName = rawModMap.get("name" + modKey).toString();
                             double modMass = Double.parseDouble(rawModMap.get("modified" + modKey).toString());
                             String modLocation = rawModMap.get("at" + modKey).toString();
+                            String aminoAcidSubstituted = null;
 
+                            if (rawModMap.get("pm" + modKey) != null) {
+                                aminoAcidSubstituted = rawModMap.get("pm" + modKey).toString();
+                            }
 
                             // Check for fixed modification
                             if (isFixedModificationInput(modMass)) {
@@ -90,7 +94,8 @@ public class ModificationMap implements Serializable {
                                 String modID = (domainID + "_m" + m_counter_fixed);
 
                                 // Create an instance of a fixed modification.
-                                FixedModification fixedMod = new FixedModification(modName, modMass, modLocation, m_counter_fixed);
+                                FixedModification fixedMod = new FixedModification(modName, modMass, modLocation, m_counter_fixed, 
+                                        aminoAcidSubstituted != null, aminoAcidSubstituted);
 
                                 // Put the modification into the map, value is the mod id.
                                 iFixedModificationMap.put(modID, fixedMod);
@@ -102,7 +107,8 @@ public class ModificationMap implements Serializable {
                                 String modID = (domainID + "_m" + m_counter_variable);
 
                                 // The rest will be assumed to be variable modifications.
-                                VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter_variable);
+                                VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter_variable, 
+                                        aminoAcidSubstituted != null, aminoAcidSubstituted);
 
                                 // Put the modification into the map, value is the mod id.
                                 iVarModificationMap.put(modID, varMod);
@@ -114,12 +120,14 @@ public class ModificationMap implements Serializable {
                                 String modID = (domainID + "_m" + m_counter_variable);
 
                                 // The rest will be assumed to be variable modifications.
-                                VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter_variable);
+                                VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter_variable, 
+                                        aminoAcidSubstituted != null, aminoAcidSubstituted);
 
                                 // Put the modification into the map, value is the mod id.
                                 iVarModificationMap.put(modID, varMod);
                                 m_counter_variable++;
                             }
+
                             m_counter++;
                             modKey = "_s" + i + "_p" + j + "_d" + d + "_m" + m_counter;
                         }

@@ -1211,9 +1211,21 @@ public class XTandemViewer extends JFrame {
 
                                     if (modificationDetails.lastIndexOf(currentMod) == -1) {
                                         if (fixedModList.size() > 0 && currentMod.contains("*")) {
-                                            modificationDetails += currentMod + " " + fixedModList.get(fixModIndex).getName() + ", ";
+                                            modificationDetails += currentMod + " " + fixedModList.get(fixModIndex).getName();
+                                            
+                                            if (fixedModList.get(fixModIndex).isSubstitution()) {
+                                                modificationDetails += " Sub. (orignal AA): " + fixedModList.get(fixModIndex).getSubstitutedAminoAcid();
+                                            }
+                                            
+                                            modificationDetails +=  ", ";
                                         } else if (varModList.size() > 0 && currentMod.contains("°")) {
-                                            modificationDetails += currentMod + " " + varModList.get(varModIndex).getName() + ", ";
+                                            modificationDetails += currentMod + " " + varModList.get(varModIndex).getName();
+                                            
+                                            if (varModList.get(varModIndex).isSubstitution()) {
+                                                modificationDetails += " Sub. (orignal AA): " + varModList.get(varModIndex).getSubstitutedAminoAcid();
+                                            }
+                                            
+                                            modificationDetails +=  ", ";
                                         }
                                         modifiedSequence += currentMod;
                                     } else {

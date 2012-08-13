@@ -1046,6 +1046,11 @@ public class XTandemParser implements Serializable {
 
                                                 // type is the single letter abbreviation for the modified residue
                                                 iRawModMap.put("name" + "_" + domainKey + "_m" + modCounter, modificationName);
+                                                
+                                                // get the substituted amino acid (if any)
+                                                if (modificationMap.getNamedItem("pm") != null) {
+                                                    iRawModMap.put("pm" + "_" + domainKey + "_m" + modCounter, modificationMap.getNamedItem("pm").getNodeValue());
+                                                }
                                             }
                                         }
                                     }

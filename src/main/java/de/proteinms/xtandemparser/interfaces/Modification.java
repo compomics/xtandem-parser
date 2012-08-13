@@ -42,4 +42,22 @@ public interface Modification {
      * @return int
      */
     int getNumber();
+    
+    /**
+     * Returns true if the modification is a amino acid substitution. This is 
+     * detected if the modification contains 'pm="X"' where 'X' is then the 
+     * subsituted amino acid.
+     * 
+     * @return boolean
+     */
+    boolean isSubstitution();
+    
+    /**
+     * Returns the subsituted amino acid (if any). This is detected if the 
+     * modification contains 'pm="X"' where 'X' is then the subsituted amino 
+     * acid. If the modification is not a subsitution null is returned.
+     * 
+     * @return the subsituted amino acid, or null if not a substutition
+     */
+    String getSubstitutedAminoAcid();
 }
