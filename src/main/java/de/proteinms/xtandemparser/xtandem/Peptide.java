@@ -17,20 +17,20 @@ public class Peptide implements Serializable {
     private String iPeptideID;
     /**
      * Contains the start position of the peptide == beginning of the protein's
-     * peptide sequence
+     * peptide sequence.
      */
     private int iStart = 0;
     /**
      * Contains the end position of the peptide == end ot the protein's peptide
-     * sequence
+     * sequence.
      */
     private int iEnd = 0;
     /**
-     * This String contains the peptide sequence
+     * This String contains the peptide sequence.
      */
     private String iSequence = null;
     /**
-     * This String contains the original FASTA file path
+     * This String contains the original FASTA file path.
      */
     private String iFastaFilePath = null;
     /**
@@ -59,7 +59,7 @@ public class Peptide implements Serializable {
     }
 
     /**
-     * Returns the domains
+     * Returns the domains.
      *
      * @return List<Domain> domains
      */
@@ -77,7 +77,7 @@ public class Peptide implements Serializable {
     }
 
     /**
-     * This method gets the start position of the peptide
+     * This method gets the start position of the peptide.
      *
      * @return int iStart
      */
@@ -86,7 +86,7 @@ public class Peptide implements Serializable {
     }
 
     /**
-     * This method sets the start position of the peptide
+     * This method sets the start position of the peptide.
      *
      * @param aStart
      */
@@ -95,7 +95,7 @@ public class Peptide implements Serializable {
     }
 
     /**
-     * This method gets the end position of the peptide
+     * This method gets the end position of the peptide.
      *
      * @return int iEnd
      */
@@ -104,7 +104,7 @@ public class Peptide implements Serializable {
     }
 
     /**
-     * This method sets the end position of the peptide
+     * This method sets the end position of the peptide.
      *
      * @param aEnd
      */
@@ -113,7 +113,7 @@ public class Peptide implements Serializable {
     }
 
     /**
-     * This method returns the corrisponding spectrum number for the peptide
+     * This method returns the corrisponding spectrum number for the peptide.
      *
      * @return iSpectrumNumber
      */

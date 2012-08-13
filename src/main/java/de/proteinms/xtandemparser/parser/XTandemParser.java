@@ -886,7 +886,7 @@ public class XTandemParser implements Serializable {
                         p_counter++;
                         // the identifier of this particular identification (spectrum#).(id#)
                         String protID = idNodes.item(j).getAttributes().getNamedItem("id").getNodeValue();
-                        
+
                         // Since the ID is not unique to the protein, we will use the label to reference it. That will be dirty for some files.
                         String proteinKey = idNodes.item(j).getAttributes().getNamedItem("label").getNodeValue();
                         iProteinKeyList.add(proteinKey);
@@ -929,14 +929,18 @@ public class XTandemParser implements Serializable {
 
                                 // Iterate over all the peptide nodes
                                 for (int m = 0; m < peptideNodes.getLength(); m++) {
+
                                     // Get the domain entries
                                     if (peptideNodes.item(m).getNodeName().equalsIgnoreCase("domain")) {
-                                        while (iRawPeptideMap.containsKey("s" + spectraCounter + "_p" + p_counter + "_d" + dCount)) {
-                                            dCount++;
-                                        }
+
                                         // Get the domainid
                                         String domainKey = "s" + spectraCounter + "_p" + p_counter + "_d" + dCount;
-                                        
+
+                                        // verify that the same domain key is not already in use!
+                                        while (iRawPeptideMap.containsKey("proteinkey" + "_" + domainKey)) {
+                                            domainKey = "s" + spectraCounter + "_p" + p_counter + "_d" + ++dCount;
+                                        }
+
                                         // Store the protein key à la Thilo. There should be only one protein key per domain.
                                         iRawPeptideMap.put("proteinkey" + "_" + domainKey, proteinKey);
 
@@ -1046,7 +1050,7 @@ public class XTandemParser implements Serializable {
 
                                                 // type is the single letter abbreviation for the modified residue
                                                 iRawModMap.put("name" + "_" + domainKey + "_m" + modCounter, modificationName);
-                                                
+
                                                 // get the substituted amino acid (if any)
                                                 if (modificationMap.getNamedItem("pm") != null) {
                                                     iRawModMap.put("pm" + "_" + domainKey + "_m" + modCounter, modificationMap.getNamedItem("pm").getNodeValue());
