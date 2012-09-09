@@ -10,7 +10,7 @@
 
     <!-- Set the version number for the whole project -->
     <properties>
-        <version.number>1.5.0</version.number>
+        <version.number>1.5.1</version.number>
     </properties>
 
     <!-- License -->
@@ -68,9 +68,16 @@
             </resource>
         </resources>
 
+        <!-- Extensions -->
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+            <artifactId>wagon-ssh</artifactId>
+                <version>1.0-beta-2</version>
+            </extension>
+        </extensions>
 
         <plugins>
-
             <!-- Compiler plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -159,14 +166,6 @@
 
    <!-- Repositores -->
     <repositories>
-        <!-- UGent Genesis Maven 1 repository -->
-        <repository>
-            <id>genesis-maven-repository</id>
-            <name>Genesis repository</name>
-            <url>http://genesis.UGent.be/maven</url>
-            <layout>legacy</layout>
-        </repository>
-
         <!-- UGent Genesis Maven 2 repository -->
         <repository>
             <id>genesis-maven2-repository</id>
@@ -185,6 +184,7 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>3.8.1</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.jgoodies</groupId>
@@ -194,7 +194,7 @@
         <dependency>
             <groupId>com.compomics</groupId>
             <artifactId>utilities</artifactId>
-            <version>3.0.46</version>
+            <version>3.8.7</version>
             <type>jar</type>
             <exclusions>
                 <exclusion>
