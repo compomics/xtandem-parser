@@ -220,32 +220,15 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
         ArrayList<Modification> foundFixedModifications = modificationMap.getFixedModifications(domain.getDomainKey());
         ArrayList<ModificationMatch> foundModifications = new ArrayList<ModificationMatch>();
 
+        // add the fixed mods
         for (Modification currentModification : foundFixedModifications) {
-
-            String modificationName = currentModification.getName();
-            String[] parsedName = modificationName.split("@");
-            String aa = parsedName[1].toUpperCase();
-
-            if (aa.equals("[")) {
-                foundModifications.add(new ModificationMatch(modificationName, false, 0));
-            } else if (aa.equals("]")) {
-                foundModifications.add(new ModificationMatch(modificationName, false, sequence.length() - 1));
-            } else {
-                String tempSequence = "#" + sequence + "#";
-                String[] sequenceFragments = tempSequence.split(aa);
-
-                if (sequenceFragments.length > 0) {
-                    int cpt = 0;
-                    for (int f = 0; f < sequenceFragments.length - 1; f++) {
-                        cpt += sequenceFragments[f].length() + 1;
-                        foundModifications.add(new ModificationMatch(modificationName, false, cpt - 1));
-                    }
-                }
-            }
+            int location = new Integer(currentModification.getLocation()) - domain.getDomainStart() + 1;
+            foundModifications.add(new ModificationMatch(currentModification.getName(), false, location));
         }
 
         ArrayList<de.proteinms.xtandemparser.interfaces.Modification> foundVariableModifications = modificationMap.getVariableModifications(domain.getDomainKey());
 
+        // add the variable mods
         for (Modification currentModification : foundVariableModifications) {
             int location = new Integer(currentModification.getLocation()) - domain.getDomainStart() + 1;
             foundModifications.add(new ModificationMatch(currentModification.getName(), true, location));
