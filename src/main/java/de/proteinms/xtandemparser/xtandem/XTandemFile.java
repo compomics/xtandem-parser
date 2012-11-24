@@ -420,15 +420,13 @@ public class XTandemFile implements Serializable {
     }
 
     /**
-     * This method returns the support data hash map
+     * This method returns the support data hash map.
      *
      * @return iProteinMap ProteinMap
      */
     public ProteinMap getProteinMap() {
         if (iProteinMap == null) {
-
             iProteinMap = new ProteinMap(iXTParser.getProteinIDList(), iXTParser.getRawProteinMap());
-
         }
         return iProteinMap;
     }
