@@ -181,6 +181,8 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
     /**
      * Returns a utilities peptide assumption from an X!Tandem peptide.
      *
+     * Warning: the fixed modifications are not implemented and need to be added subsequently. That can be done using the compomics utilities PTMFactory (https://code.google.com/p/compomics-utilities/source/browse/trunk/src/main/java/com/compomics/util/experiment/biology/PTMFactory.java).
+     *
      * @param domain the domain of the X!Tandem peptide
      * @param charge the charge of the precursor of the inspected spectrum
      * @param rank the rank of the peptide hit
@@ -217,16 +219,10 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
 
         proteins.add(accession);
 
-        ArrayList<Modification> foundFixedModifications = modificationMap.getFixedModifications(domain.getDomainKey());
         ArrayList<ModificationMatch> foundModifications = new ArrayList<ModificationMatch>();
-
-        // add the fixed mods
-        for (Modification currentModification : foundFixedModifications) {
-            int location = new Integer(currentModification.getLocation()) - domain.getDomainStart() + 1;
-            foundModifications.add(new ModificationMatch(currentModification.getName(), false, location));
-        }
-
+        
         ArrayList<de.proteinms.xtandemparser.interfaces.Modification> foundVariableModifications = modificationMap.getVariableModifications(domain.getDomainKey());
+
 
         // add the variable mods
         for (Modification currentModification : foundVariableModifications) {
