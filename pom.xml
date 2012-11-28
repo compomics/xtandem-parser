@@ -4,7 +4,7 @@
     <groupId>de.proteinms.xtandemparser</groupId>
     <artifactId>xtandem-parser</artifactId>
     <name>xtandem-parser</name>
-    <version>1.5.7</version>
+    <version>1.5.8</version>
     <description>XTandem Parser is a Java based parser for extracting information from X!Tandem output XML files.</description>
     <url>http://xtandem-parser.googlecode.com/</url>
 
@@ -357,6 +357,18 @@
                     <artifactId>jmzml</artifactId>
                     <groupId>uk.ac.ebi.jmzml</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>xpp3</artifactId>
+                    <groupId>xpp3</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>ssj</artifactId>
+                    <groupId>umontreal.iro.lecuyer.gof</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>servlet-api</artifactId>
+                    <groupId>javax.servlet</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -368,6 +380,12 @@
             <groupId>org.swinglabs</groupId>
             <artifactId>swingx</artifactId>
             <version>0.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>xpp3</groupId>
+            <artifactId>xpp3</artifactId>
+            <version>1.1.4c</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
 
