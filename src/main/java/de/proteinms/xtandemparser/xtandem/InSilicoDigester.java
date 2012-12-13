@@ -181,6 +181,11 @@ public class InSilicoDigester {
 
             // For each amino acid add the specific mass
             String aa = String.valueOf(iSequence.charAt(i));
+
+            if (!iMasses.containsKey(aa)) {
+                throw new IllegalArgumentException("\'" + aa + "\' is an unknown amino acid! Complete peptide sequence: \'" + iSequence + "\'. Please check your X!Tandem file.");
+            }
+
             mass += iMasses.get(aa);
 
             // Add each specific mass to the array
