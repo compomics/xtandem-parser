@@ -28,9 +28,20 @@ public class Protein implements Serializable {
     private String iUID = null;
     /**
      * This variable holds the label which is the description line from the
-     * FASTA file.
+     * FASTA file. Note that the information is often identical to the content
+     * of iDescription, but that iLabel can be shortened. It is therefore
+     * recommended to use iDescription instead of iLabel.
      */
     private String iLabel = null;
+    /**
+     * This variable holds the label which is the description line from the
+     * FASTA file, stored as a note for the protein, e.g., &ltnote
+     * label="description"&gttr|F1RRZ6|F1RRZ6_PIG Uncharacterized protein
+     * (Fragment) OS=Sus scrofa GN=SH3PXD2B PE=4 SV=1:reversed&lt/note&gt. Note
+     * that the information is often identical to the content of iLabel, but
+     * that iLabel can be shortened.
+     */
+    private String iDescription = null;
     /**
      * This variable presents the sum of all the fragment ions that identify
      * this protein.
@@ -38,19 +49,21 @@ public class Protein implements Serializable {
     private Double iSummedScore = 0.0;
 
     /**
-     * The constructor get id, uid, label, expect value and summed score to
-     * build a protein object.
+     * The constructor get id, uid, label, description, expect value and summed
+     * score to build a protein object.
      *
      * @param aID
      * @param aUID
      * @param aLabel
+     * @param aDescription
      * @param aExpectValue
      * @param aSummedScore
      */
-    public Protein(String aID, String aUID, String aLabel, Double aExpectValue, Double aSummedScore) {
+    public Protein(String aID, String aUID, String aLabel, String aDescription, Double aExpectValue, Double aSummedScore) {
         iID = aID;
         iUID = aUID;
         iLabel = aLabel;
+        iDescription = aDescription;
         iExpectValue = aExpectValue;
         iSummedScore = aSummedScore;
     }
@@ -111,7 +124,10 @@ public class Protein implements Serializable {
     }
 
     /**
-     * Returns the label of the protein.
+     * Returns the label of the protein. Note that the information is often
+     * identical to the content of iDescription, but that iLabel can be
+     * shortened. It is therefore recommended to use iDescription instead of
+     * iLabel.
      *
      * @return iLabel
      */
@@ -126,6 +142,27 @@ public class Protein implements Serializable {
      */
     public void setLabel(String aLabel) {
         iLabel = aLabel;
+    }
+
+    /**
+     * Returns the description of the protein. Note that the information is
+     * often identical to the content of iLabel, but that iLabel can be
+     * shortened. It is therefore recommended to use iDescription instead of
+     * iLabel.
+     *
+     * @return iDescription
+     */
+    public String getDescription() {
+        return iDescription;
+    }
+
+    /**
+     * Sets the description of the protein.
+     *
+     * @param aDescription
+     */
+    public void setDescription(String aDescription) {
+        iDescription = aDescription;
     }
 
     /**

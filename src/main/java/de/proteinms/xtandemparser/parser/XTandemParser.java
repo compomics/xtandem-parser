@@ -912,6 +912,12 @@ public class XTandemParser implements Serializable {
                                 iRawPeptideMap.put("URL" + "_s" + spectraCounter + "_p" + p_counter, proteinNodes.item(k).getAttributes().getNamedItem("URL").getNodeValue());
                             }
 
+                            if (proteinNodes.item(k).getNodeName().equalsIgnoreCase("note") && proteinNodes.item(k).getAttributes().getNamedItem("label") != null
+                                    &&  proteinNodes.item(k).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("description")) {
+                                // the protein description (xml tag: note label="description")
+                                iRawProteinMap.put("description" + proteinKey, proteinNodes.item(k).getTextContent());
+                            }
+
                             // the the sum of all the fragment ions that identify this protein
                             if (proteinNodes.item(k).getNodeName().equalsIgnoreCase("peptide")) {
                                 iRawPeptideMap.put("s" + spectraCounter + "_p" + p_counter, protID);

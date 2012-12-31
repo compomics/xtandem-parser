@@ -181,7 +181,9 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
     /**
      * Returns a utilities peptide assumption from an X!Tandem peptide.
      *
-     * Warning: the fixed modifications are not implemented and need to be added subsequently. That can be done using the compomics utilities PTMFactory (https://code.google.com/p/compomics-utilities/source/browse/trunk/src/main/java/com/compomics/util/experiment/biology/PTMFactory.java).
+     * Warning: the fixed modifications are not implemented and need to be added
+     * subsequently. That can be done using the compomics utilities PTMFactory
+     * (https://code.google.com/p/compomics-utilities/source/browse/trunk/src/main/java/com/compomics/util/experiment/biology/PTMFactory.java).
      *
      * @param domain the domain of the X!Tandem peptide
      * @param charge the charge of the precursor of the inspected spectrum
@@ -192,7 +194,13 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
 
         ArrayList<String> proteins = new ArrayList<String>();
         String sequence = domain.getDomainSequence();
-        String description = proteinMap.getProtein(domain.getProteinKey()).getLabel();
+        String description;
+        if (proteinMap.getProtein(domain.getProteinKey()).getDescription() != null) {
+            description = proteinMap.getProtein(domain.getProteinKey()).getDescription();
+        } else {
+            description = proteinMap.getProtein(domain.getProteinKey()).getLabel();
+        }
+        
         String accession;
 
         try {
@@ -220,9 +228,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
         proteins.add(accession);
 
         ArrayList<ModificationMatch> foundModifications = new ArrayList<ModificationMatch>();
-        
         ArrayList<de.proteinms.xtandemparser.interfaces.Modification> foundVariableModifications = modificationMap.getVariableModifications(domain.getDomainKey());
-
 
         // add the variable mods
         for (Modification currentModification : foundVariableModifications) {
@@ -253,7 +259,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
 
         // a special fix for mgf files with titles containing \\ instead of \
         //spectrumTitle = spectrumTitle.replaceAll("\\\\\\\\", "\\\\");  // @TODO: only needed for omssa???
-        
+
         return spectrumTitle;
     }
 

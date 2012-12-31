@@ -824,7 +824,12 @@ public class XTandemViewer extends JFrame {
                         for (Domain domain : domainList) {
                             Protein protein = protMap.getProtein(domain.getProteinKey());
                             if (protein != null) {
-                                String protAccession = protein.getLabel();
+                                String protAccession;
+                                if (protein.getDescription() != null) {
+                                    protAccession = protein.getDescription();
+                                } else {
+                                    protAccession = protein.getLabel();
+                                }
                                 proteinLabelMap.put(domain.getDomainKey(), protAccession);
                             }
 
