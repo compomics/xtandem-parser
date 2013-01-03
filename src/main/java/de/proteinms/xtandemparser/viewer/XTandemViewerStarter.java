@@ -52,7 +52,12 @@ public class XTandemViewerStarter {
     private void start() throws Exception {
 
         String path = this.getClass().getResource("XTandemViewerStarter.class").getPath();
-        path = path.substring(5, path.indexOf(filename));
+        // remove starting 'file:' tag if there
+        if (path.startsWith("file:")) {
+            path = path.substring("file:".length(), path.indexOf(filename));
+        } else {
+            path = path.substring(0, path.indexOf(filename));
+        }
         path = path.replace("%20", " ");
 
         File javaOptions = new File(path + "Properties/JavaOptions.txt");

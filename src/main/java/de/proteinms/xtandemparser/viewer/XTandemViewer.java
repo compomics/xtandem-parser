@@ -75,7 +75,10 @@ public class XTandemViewer extends JFrame {
         if (useErrorLog && !getJarFilePath().equalsIgnoreCase(".")) {
             try {
                 String path = "" + this.getClass().getProtectionDomain().getCodeSource().getLocation();
-                path = path.substring(5, path.lastIndexOf("/"));
+                // remove starting 'file:' tag if there
+                if (path.startsWith("file:")) {
+                    path = path.substring("file:".length(), path.lastIndexOf("/"));
+                }
                 path = path + "/Properties/ErrorLog.txt";
                 path = path.replace("%20", " ");
 
@@ -176,7 +179,12 @@ public class XTandemViewer extends JFrame {
         String path = this.getClass().getResource("XTandemViewer.class").getPath();
 
         if (path.lastIndexOf("/xtandem-parser-") != -1) {
-            path = path.substring(5, path.lastIndexOf("/xtandem-parser-"));
+            // remove starting 'file:' tag if there
+            if (path.startsWith("file:")) {
+                path = path.substring("file:".length(), path.lastIndexOf("/xtandem-parser-"));
+            } else {
+                path = path.substring(0, path.lastIndexOf("/xtandem-parser-"));
+            }
             path = path.replace("%20", " ");
         } else {
             path = ".";
