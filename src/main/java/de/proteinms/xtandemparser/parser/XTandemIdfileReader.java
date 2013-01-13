@@ -88,12 +88,11 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
 
         HashSet<SpectrumMatch> foundPeptides = new HashSet<SpectrumMatch>();
 
-        Iterator<Spectrum> spectraIt = xTandemFile.getSpectraIterator();
-
         if (waitingHandler != null) {
             waitingHandler.setMaxSecondaryProgressValue(xTandemFile.getSpectraNumber());
         }
-        PeptideAssumption newAssumption;
+
+        Iterator<Spectrum> spectraIt = xTandemFile.getSpectraIterator();
 
         while (spectraIt.hasNext()) {
             Spectrum currentSpectrum = spectraIt.next();
@@ -132,13 +131,13 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
 
                 ArrayList<Double> eValues = new ArrayList<Double>(hitMap.keySet());
                 Collections.sort(eValues);
-                int rankIncrease, rank = 1;
-                boolean found;
+                int rank = 1;
+
                 for (Double eValue : eValues) {
-                    rankIncrease = 0;
+                    int rankIncrease = 0;
                     for (Domain domain : hitMap.get(eValue)) {
-                        newAssumption = getPeptideAssumption(domain, charge.value, rank);
-                        found = false;
+                        PeptideAssumption newAssumption = getPeptideAssumption(domain, charge.value, rank);
+                        boolean found = false;
                         for (PeptideAssumption loadedAssumption : currentMatch.getAllAssumptions()) {
                             if (loadedAssumption.getPeptide().isSameAs(newAssumption.getPeptide())) {
                                 for (String protein : newAssumption.getPeptide().getParentProteins()) {
