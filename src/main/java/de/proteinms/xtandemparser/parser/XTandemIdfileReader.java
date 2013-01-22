@@ -17,6 +17,8 @@ import java.io.IOException;
 import org.xml.sax.SAXException;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -248,12 +250,12 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
     private String fixMgfTitle(String spectrumTitle) {
 
         // a special fix for mgf files with titles containing url encoding, e.g.: %3b instead of ;
-//        try {
-//            spectrumTitle = URLDecoder.decode(spectrumTitle, "utf-8"); // @TODO: only needed for mascot???
-//        } catch (UnsupportedEncodingException e) {
-//            System.out.println("An exception was thrown when trying to decode an mgf tile!");
-//            e.printStackTrace();
-//        }
+        try {
+            spectrumTitle = URLDecoder.decode(spectrumTitle, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("An exception was thrown when trying to decode an mgf tile!");
+            e.printStackTrace();
+        }
 
 
         // a special fix for mgf files with titles containing \\ instead of \
