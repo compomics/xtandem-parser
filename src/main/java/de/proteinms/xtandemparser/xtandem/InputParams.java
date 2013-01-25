@@ -247,12 +247,12 @@ public class InputParams implements Serializable {
             iResidueModMass = map.get("RESIDUEMODMASS").toString();
         }
         for (int i = 1; i < 100; i++) {
-            // break a the first motif that doesn't exist
+            // break at the first motif that doesn't exist
             if (map.get("RESIDUEMODMASS_" + i) == null) {
                 break;
             }
 
-            refinePotentialModificationMotif.add(map.get("RESIDUEMODMASS_" + i).toString());
+            residueModificationMass.add(map.get("RESIDUEMODMASS_" + i).toString());
         }
         if (map.get("RESIDUEPOTMODMASS") != null) {
             iResiduePotModMass = map.get("RESIDUEPOTMODMASS").toString();

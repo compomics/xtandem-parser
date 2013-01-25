@@ -94,7 +94,7 @@ public class ModificationMap implements Serializable {
                                 String modID = (domainID + "_m" + m_counter_fixed);
 
                                 // Create an instance of a fixed modification.
-                                FixedModification fixedMod = new FixedModification(modName, modMass, modLocation, m_counter_fixed, 
+                                FixedModification fixedMod = new FixedModification(modName, modMass, modLocation, m_counter_fixed,
                                         aminoAcidSubstituted != null, aminoAcidSubstituted);
 
                                 // Put the modification into the map, value is the mod id.
@@ -107,7 +107,7 @@ public class ModificationMap implements Serializable {
                                 String modID = (domainID + "_m" + m_counter_variable);
 
                                 // The rest will be assumed to be variable modifications.
-                                VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter_variable, 
+                                VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter_variable,
                                         aminoAcidSubstituted != null, aminoAcidSubstituted);
 
                                 // Put the modification into the map, value is the mod id.
@@ -116,11 +116,13 @@ public class ModificationMap implements Serializable {
 
                             } else {
 
+                                // not found as fixed or variable, assumed variable. means that it's in the residue, modification mass [1-n]
+
                                 // Get a specific id for the modification (domainID)_m(modifcation#)
                                 String modID = (domainID + "_m" + m_counter_variable);
 
                                 // The rest will be assumed to be variable modifications.
-                                VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter_variable, 
+                                VariableModification varMod = new VariableModification(modName, modMass, modLocation, m_counter_variable,
                                         aminoAcidSubstituted != null, aminoAcidSubstituted);
 
                                 // Put the modification into the map, value is the mod id.
@@ -131,7 +133,6 @@ public class ModificationMap implements Serializable {
                             m_counter++;
                             modKey = "_s" + i + "_p" + j + "_d" + d + "_m" + m_counter;
                         }
-
                     }
                 }
             }
@@ -146,10 +147,10 @@ public class ModificationMap implements Serializable {
      * @return boolean
      */
     private boolean isFixedModificationInput(double aModMass) {
+
         BigDecimal modMass = new BigDecimal(aModMass);
         modMass = modMass.setScale(2, BigDecimal.ROUND_HALF_UP);
         String modificationMasses = iInputParams.getResidueModMass();
-        String refineModificationMasses = iInputParams.getRefineModMass();
 
         if (modificationMasses != null) {
 
@@ -159,6 +160,37 @@ public class ModificationMap implements Serializable {
                 String[] tokens = tokenizer.nextToken().split("@");
                 BigDecimal inputMass = new BigDecimal(new Double(tokens[0]));
                 inputMass = inputMass.setScale(2, BigDecimal.ROUND_HALF_UP);
+                if (modMass.equals(inputMass)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if a given modification mass is given in the variable modification
+     * input parameter section: --> label="residue, potential modification
+     * mass", or in the refine section: label="refine, potential modification mass"
+     *
+     * @param aModMass
+     * @return boolean
+     */
+    private boolean isVariableModificationInput(double aModMass) {
+
+        BigDecimal modMass = new BigDecimal(aModMass);
+        modMass = modMass.setScale(3, BigDecimal.ROUND_HALF_UP);
+        String modificationMasses = iInputParams.getResiduePotModMass();
+        String refineModificationMasses = iInputParams.getRefineModMass();
+
+        if (modificationMasses != null) {
+
+            StringTokenizer tokenizer = new StringTokenizer(modificationMasses, ",");
+            while (tokenizer.hasMoreTokens()) {
+                String[] tokens = tokenizer.nextToken().split("@");
+                BigDecimal inputMass = new BigDecimal(new Double(tokens[0]));
+                inputMass = inputMass.setScale(3, BigDecimal.ROUND_HALF_UP);
                 if (modMass.equals(inputMass)) {
                     return true;
                 }
@@ -178,34 +210,7 @@ public class ModificationMap implements Serializable {
                 }
             }
         }
-        return false;
-    }
 
-    /**
-     * Checks if a given modification mass is given in the variable modification
-     * input parameter section: --> label="residue, potential modification
-     * mass">
-     *
-     * @param aModMass
-     * @return boolean
-     */
-    private boolean isVariableModificationInput(double aModMass) {
-        BigDecimal modMass = new BigDecimal(aModMass);
-        modMass = modMass.setScale(3, BigDecimal.ROUND_HALF_UP);
-        String modificationMasses = iInputParams.getResiduePotModMass();
-
-        if (modificationMasses != null) {
-
-            StringTokenizer tokenizer = new StringTokenizer(modificationMasses, ",");
-            while (tokenizer.hasMoreTokens()) {
-                String[] tokens = tokenizer.nextToken().split("@");
-                BigDecimal inputMass = new BigDecimal(new Double(tokens[0]));
-                inputMass = inputMass.setScale(3, BigDecimal.ROUND_HALF_UP);
-                if (modMass.equals(inputMass)) {
-                    return true;
-                }
-            }
-        }
         return false;
     }
 

@@ -27,7 +27,7 @@ import java.util.Iterator;
 import javax.swing.JOptionPane;
 
 /**
- * This reader will import identifications from an X!Tandem xml result file.
+ * This reader will import identifications from an X!Tandem XML result file.
  * <p/>
  * @author Marc Vaudel
  */
@@ -196,6 +196,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
         ArrayList<String> proteins = new ArrayList<String>();
         String sequence = domain.getDomainSequence();
         String description;
+
         if (proteinMap.getProtein(domain.getProteinKey()).getDescription() != null) {
             description = proteinMap.getProtein(domain.getProteinKey()).getDescription();
         } else {

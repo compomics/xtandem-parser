@@ -36,7 +36,7 @@ public class FixedModification implements Modification, Serializable {
      */
     private boolean isSubstitution;
     /**
-     * The subsitutted amino acid (if any). Null if the modification is not a 
+     * The substituted amino acid (if any). Null if the modification is not a 
      * substitution.
      */
     private String substitutedAminoAcid;
@@ -49,7 +49,7 @@ public class FixedModification implements Modification, Serializable {
      * @param aLocation The modification location
      * @param aNumber aNumber The number of the modification
      * @param aIsSubstitution If the modification is a substitution or not
-     * @param aSubstitutedAminoAcid  The subsitutted amino acid (if any). Null if the modification is not a substitution.
+     * @param aSubstitutedAminoAcid  The substituted amino acid (if any). Null if the modification is not a substitution.
      */
     public FixedModification(String aName, double aMass, String aLocation, int aNumber, 
             boolean aIsSubstitution, String aSubstitutedAminoAcid) {
@@ -171,9 +171,9 @@ public class FixedModification implements Modification, Serializable {
     }
 
     /**
-     * Set the subsituted amino acid.
+     * Set the substituted amino acid.
      * 
-     * @param substitutedAminoAcid the subsituted amino acid
+     * @param substitutedAminoAcid the substituted amino acid
      */
     public void setSubstitutedAminoAcid(String substitutedAminoAcid) {
         this.substitutedAminoAcid = substitutedAminoAcid;
