@@ -46,7 +46,7 @@
     </developers>
 
 
-     <!-- Build -->
+    <!-- Build -->
     <build>
 
         <!-- Resources -->
@@ -72,7 +72,7 @@
         <extensions>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
-            <artifactId>wagon-ssh</artifactId>
+                <artifactId>wagon-ssh</artifactId>
                 <version>1.0-beta-2</version>
             </extension>
         </extensions>
@@ -194,7 +194,7 @@
                 </executions>
             </plugin>
             
-             <!-- Zip the jar file and the dependencies -->
+            <!-- Zip the jar file and the dependencies -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.3</version>
@@ -221,7 +221,7 @@
     </build>
 
 
-   <!-- Repositores -->
+    <!-- Repositores -->
     <repositories>
         <!-- UGent Genesis Maven 2 repository -->
         <repository>
@@ -234,7 +234,7 @@
     </repositories>
 
 
-  <!-- Dependencies -->
+    <!-- Dependencies -->
     <dependencies>
         <!-- This project depends on the junit JAR file.-->
         <dependency>
