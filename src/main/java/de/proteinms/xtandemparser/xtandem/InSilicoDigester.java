@@ -37,7 +37,7 @@ public class InSilicoDigester {
      */
     private final FragmentIon[] iANH3Ions;
     /**
-     * The a° ions.
+     * The a ions with H2O loss.
      */
     private final FragmentIon[] iAH2OIons;
     /**
@@ -49,7 +49,7 @@ public class InSilicoDigester {
      */
     private final FragmentIon[] iBNH3Ions;
     /**
-     * The b° ions.
+     * The b ions with H2O loss.
      */
     private final FragmentIon[] iBH2OIons;
     /**
@@ -69,7 +69,7 @@ public class InSilicoDigester {
      */
     private final FragmentIon[] iYNH3Ions;
     /**
-     * The y° ions.
+     * The y ions with H2O loss.
      */
     private final FragmentIon[] iYH2OIons;
     /**

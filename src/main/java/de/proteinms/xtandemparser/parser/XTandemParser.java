@@ -947,7 +947,7 @@ public class XTandemParser implements Serializable {
                                             domainKey = "s" + spectraCounter + "_p" + p_counter + "_d" + ++dCount;
                                         }
 
-                                        // Store the protein key à la Thilo. There should be only one protein key per domain.
+                                        // Store the protein key a la Thilo. There should be only one protein key per domain.
                                         iRawPeptideMap.put("proteinkey" + "_" + domainKey, proteinKey);
 
                                         iRawPeptideMap.put("domainid" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("id").getNodeValue());

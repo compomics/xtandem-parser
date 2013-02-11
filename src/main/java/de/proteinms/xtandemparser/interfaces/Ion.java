@@ -17,7 +17,7 @@ public interface Ion {
      */
     public final static int ANH3_ION = 1;
     /**
-     * This int is the identifier for an a° ion.
+     * This int is the identifier for an a ion with H2O loss.
      */
     public final static int AH2O_ION = 2;
     /**
@@ -29,7 +29,7 @@ public interface Ion {
      */
     public final static int BNH3_ION = 4;
     /**
-     * This int is the identifier for a b° ion.
+     * This int is the identifier for a b ion  with H2O loss.
      */
     public final static int BH2O_ION = 5;
     /**
@@ -49,7 +49,7 @@ public interface Ion {
      */
     public final static int YNH3_ION = 9;
     /**
-     * This int is the identifier for a y° ion.
+     * This int is the identifier for a y ion with H2O loss.
      */
     public final static int YH2O_ION = 10;
     /**
