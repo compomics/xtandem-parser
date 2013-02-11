@@ -59,6 +59,9 @@ public class XTandemFile implements Serializable {
      * This is an instance of the PerformParams object.
      */
     private PerformParams iPerformParams = null;
+    /**
+     * This string holds the raw file name.
+     */
     private String iRawFile = null;
     /**
      * This string holds the raw file type.

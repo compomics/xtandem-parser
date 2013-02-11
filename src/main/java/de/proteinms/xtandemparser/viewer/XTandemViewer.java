@@ -896,8 +896,8 @@ public class XTandemViewer extends JFrame {
                     intensityValues = supportData.getYValuesFragIonMass2Charge();
 
                     // Fill the maps
-                    allMzValues.put(new Integer(spectrumNumber), mzValues);
-                    allIntensityValues.put(new Integer(spectrumNumber), intensityValues);
+                    allMzValues.put(Integer.valueOf(spectrumNumber), mzValues);
+                    allIntensityValues.put(Integer.valueOf(spectrumNumber), intensityValues);
                 }
                 spectraTable.setSortable(true);
                 progressDialog.setVisible(false);
@@ -1112,7 +1112,7 @@ public class XTandemViewer extends JFrame {
             for (int i = 0; i < mzValues.size(); i++) {
 
                 ((DefaultTableModel) spectrumJXTable.getModel()).addRow(new Object[]{
-                            new Integer(i + 1),
+                            Integer.valueOf(i + 1),
                             mzValues.get(i),
                             intensityValues.get(i)
                         });
