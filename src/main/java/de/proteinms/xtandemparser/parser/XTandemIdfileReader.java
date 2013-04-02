@@ -110,6 +110,14 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
 
             String spectrumName = fixMgfTitle(tempName);
 
+            // try to remove the retention time as added by xtandem...
+            if (spectrumName.indexOf("RTINSECONDS=") != -1) {
+                spectrumName = spectrumName.substring(0, spectrumName.indexOf("RTINSECONDS="));
+            }
+
+            // remove white space
+            spectrumName = spectrumName.trim();
+
             ArrayList<Peptide> spectrumPeptides = peptideMap.getAllPeptides(currentSpectrum.getSpectrumNumber());
 
             if (spectrumPeptides.size() > 0) {
@@ -202,7 +210,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
         } else {
             description = proteinMap.getProtein(domain.getProteinKey()).getLabel();
         }
-        
+
         String accession;
 
         try {
