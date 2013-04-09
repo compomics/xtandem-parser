@@ -57,7 +57,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
     }
 
     /**
-     * Xonstructor for the reader.
+     * Constructor for the reader.
      *
      * @param aFile the inspected file
      * @throws SAXException
