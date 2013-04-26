@@ -64,7 +64,7 @@ public class XTandemViewer extends JFrame {
     private XTandemFile iXTandemFile;
 
     /**
-     * Constructor gets the xml output result file.
+     * Constructor gets the XML output result file.
      *
      * @param aXTandemXmlFile
      * @param lastSelectedFolder
@@ -79,7 +79,7 @@ public class XTandemViewer extends JFrame {
                 if (path.startsWith("file:")) {
                     path = path.substring("file:".length(), path.lastIndexOf("/"));
                 }
-                path = path + "/Properties/ErrorLog.txt";
+                path = path + "/resources/conf/ErrorLog.txt";
                 path = path.replace("%20", " ");
 
                 File file = new File(path);
@@ -99,7 +99,7 @@ public class XTandemViewer extends JFrame {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(
                         null, "An error occured when trying to create the ErrorLog."
-                        + "See ../Properties/ErrorLog.txt for more details.",
+                        + "See ../resources/conf/ErrorLog.txt for more details.",
                         "Error Creating ErrorLog", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
             }
