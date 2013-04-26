@@ -142,9 +142,6 @@
                             <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>src/main/resources/props</directory>
-                                </resource>
-                                <resource>
                                     <directory>./</directory>
                                     <includes>
                                         <include>resources/</include>
@@ -368,6 +365,22 @@
                 <exclusion>
                     <artifactId>servlet-api</artifactId>
                     <groupId>javax.servlet</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>xsdlib</artifactId>
+                    <groupId>msv</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>relaxngDatatype</artifactId>
+                    <groupId>msv</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>msv</artifactId>
+                    <groupId>msv</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>isorelax</artifactId>
+                    <groupId>msv</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
