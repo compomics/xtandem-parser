@@ -798,7 +798,7 @@ public class XTandemViewer extends JFrame {
                     System.exit(0);
                 }
 
-                ionCoverageErrorMargin = Parameters.FRAGMENTMASSERROR;
+                ionCoverageErrorMargin = Parameters.FRAGMENTMASSERROR; // @TODO: this should not be hard coded but set in the gui!!!
 
                 // Set up the hash maps
                 peptideMap = new HashMap<Integer, ArrayList<Peptide>>();
@@ -848,7 +848,7 @@ public class XTandemViewer extends JFrame {
                             allVarMods.put(domain.getDomainKey(), varModList);
 
                             // Get the fragment ions
-                            Vector IonVector = iXTandemFile.getFragmentIonsForPeptide(peptide, domain);
+                            Vector IonVector = iXTandemFile.getFragmentIonsForPeptide(peptide, domain, ionCoverageErrorMargin);
 
                             // Get all the ion types from the vector
                             for (int i = 0; i < IonVector.size(); i++) {

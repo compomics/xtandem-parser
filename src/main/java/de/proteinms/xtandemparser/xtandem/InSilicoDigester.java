@@ -115,8 +115,9 @@ public class InSilicoDigester {
      * the peptide.
      * @param aMasses Masses map to know which amino acid has which mass.
      * @param aCharge The charge of the given peptide.
+     * @param aFragmentMassError the fragment ion annotation accuracy 
      */
-    public InSilicoDigester(Peptide aPeptide, Domain aDomain, ModificationMap aModMap, HashMap aMasses, int aCharge) {
+    public InSilicoDigester(Peptide aPeptide, Domain aDomain, ModificationMap aModMap, HashMap aMasses, int aCharge, double aFragmentMassError) {
         iPeptide = aPeptide;
         iDomain = aDomain;
         iSequence = aDomain.getDomainSequence();
@@ -139,7 +140,7 @@ public class InSilicoDigester {
         iMH = new FragmentIon[iPeptideCharge];
         iMHNH3 = new FragmentIon[iPeptideCharge];
         iMHH2O = new FragmentIon[iPeptideCharge];
-        iFragmentMassError = Parameters.FRAGMENTMASSERROR;
+        iFragmentMassError = aFragmentMassError;
         calculateIons();
     }
 
