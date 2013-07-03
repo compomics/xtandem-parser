@@ -39,7 +39,7 @@ public class XTandemViewer extends JFrame {
     private final static String MODIFICATIONSLEGEND = "  |  <M *> are fixed and <M $> are variable modifications.";
     private String lastSelectedFolder = "user.home";
     private SpectrumPanel spectrumPanel;
-    private String iXTandemFileString;
+    private String xTandemFile;
     private HashMap<Integer, ArrayList<Peptide>> peptideMap;
     private HashMap<String, String> proteinLabelMap;
     private HashMap<Integer, ArrayList<Double>> allMzValues, allIntensityValues;
@@ -57,11 +57,12 @@ public class XTandemViewer extends JFrame {
     private JSeparator jSeparator1, jSeparator2;
     private JXTable identificationsTable, spectraTable, spectrumJXTable;
     private JPanel jPanel1, jPanel2, jPanel3, jPanel4, spectrumJPanel;
-    private double ionCoverageErrorMargin = 0.0;
+    private double fragmentIonMassAccuracy = Parameters.FRAGMENTIONMASSACCURACY;
     private ProgressDialog progressDialog;
     private JMenuItem openMenuItem, exitMenuItem, aboutMenuItem, helpMenuItem, exportSpectraTableMenuItem,
             exportAllIdentificationsMenuItem, exportAllSpectraMenuItem, exportSelectedSpectrumMenuItem;
     private XTandemFile iXTandemFile;
+    private JMenuItem fragmentIonMassAccuracyMenuItem;
 
     /**
      * Constructor gets the XML output result file.
@@ -207,14 +208,14 @@ public class XTandemViewer extends JFrame {
         fileMenu.setMnemonic('F');
         JMenu exportMenu = new JMenu("Export");
         exportMenu.setMnemonic('E');
-//        JMenu parameterMenu = new JMenu("Parameters");
-//        parameterMenu.setMnemonic('P');
+        JMenu parameterMenu = new JMenu("Parameters");
+        parameterMenu.setMnemonic('P');
         JMenu helpMenu = new JMenu("Help");
         helpMenu.setMnemonic('H');
 
         menuBar.add(fileMenu);
         menuBar.add(exportMenu);
-//      menuBar.add(parameterMenu);
+        menuBar.add(parameterMenu);
         menuBar.add(helpMenu);
 
         // The menu items
@@ -227,16 +228,16 @@ public class XTandemViewer extends JFrame {
 
         exportAllSpectraMenuItem = new JMenuItem();
         exportSelectedSpectrumMenuItem = new JMenuItem();
-//        inputParameterMenuItem = new JMenuItem();
-//        inputParameterMenuItem.setMnemonic('I');
-//        inputParameterMenuItem.setText("Input Parameters");
-//        inputParameterMenuItem.setToolTipText("Show Input Parameters");
-//        inputParameterMenuItem.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent evt) {
-//                inputParameterMenuItemActionPerformed(evt);
-//            }
-//        });
-//        parameterMenu.add(inputParameterMenuItem);
+        fragmentIonMassAccuracyMenuItem = new JMenuItem();
+        fragmentIonMassAccuracyMenuItem.setMnemonic('I');
+        fragmentIonMassAccuracyMenuItem.setText("Fragment Ion Mass Accuracy");
+        fragmentIonMassAccuracyMenuItem.setToolTipText("Set the fragment ion mass accuracy");
+        fragmentIonMassAccuracyMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                fragmentIonMassAccuracyMenuItemActionPerformed(evt);
+            }
+        });
+        parameterMenu.add(fragmentIonMassAccuracyMenuItem);
 //
 //        performanceParameterMenuItem = new JMenuItem();
 //        performanceParameterMenuItem.setMnemonic('P');
@@ -338,6 +339,13 @@ public class XTandemViewer extends JFrame {
         });
         fileMenu.add(exitMenuItem);
         setJMenuBar(menuBar);
+    }
+
+    /**
+     * The method
+     */
+    private void fragmentIonMassAccuracyMenuItemActionPerformed(ActionEvent evt) {
+        new ParametersDialog(this, true);
     }
 
     /**
@@ -725,14 +733,14 @@ public class XTandemViewer extends JFrame {
      */
     void insertFiles(String aXTandemFile, String lastSelectedFolder) {
 
-        iXTandemFileString = aXTandemFile;
+        xTandemFile = aXTandemFile;
         progressDialog = new ProgressDialog(this);
 
         // Set the last selected folder
         this.lastSelectedFolder = lastSelectedFolder;
 
         // Set the title of the application
-        setTitle(APPTITLE + " " + new Properties().getVersion() + "  ---  " + new File(iXTandemFileString).getPath());
+        setTitle(APPTITLE + " " + new Properties().getVersion() + "  ---  " + new File(xTandemFile).getPath());
 
         // Thread for the progress dialog.
         final Thread t = new Thread(new Runnable() {
@@ -776,7 +784,7 @@ public class XTandemViewer extends JFrame {
 
                 // Parse the X!Tandem file.
                 try {
-                    iXTandemFile = new XTandemFile(iXTandemFileString);
+                    iXTandemFile = new XTandemFile(xTandemFile);
 
                 } catch (OutOfMemoryError error) {
                     Runtime.getRuntime().gc();
@@ -797,8 +805,6 @@ public class XTandemViewer extends JFrame {
                             JOptionPane.ERROR_MESSAGE);
                     System.exit(0);
                 }
-
-                ionCoverageErrorMargin = Parameters.FRAGMENTMASSERROR; // @TODO: this should not be hard coded but set in the gui!!!
 
                 // Set up the hash maps
                 peptideMap = new HashMap<Integer, ArrayList<Peptide>>();
@@ -848,7 +854,7 @@ public class XTandemViewer extends JFrame {
                             allVarMods.put(domain.getDomainKey(), varModList);
 
                             // Get the fragment ions
-                            Vector IonVector = iXTandemFile.getFragmentIonsForPeptide(peptide, domain, ionCoverageErrorMargin);
+                            Vector IonVector = iXTandemFile.getFragmentIonsForPeptide(peptide, domain, fragmentIonMassAccuracy);
 
                             // Get all the ion types from the vector
                             for (int i = 0; i < IonVector.size(); i++) {
@@ -1323,7 +1329,7 @@ public class XTandemViewer extends JFrame {
                                         ionDesc += "+";
                                     }
                                 }
-                                currentAnnotations.add(new DefaultSpectrumAnnotation(mzValue, ionCoverageErrorMargin, color, ionDesc));
+                                currentAnnotations.add(new DefaultSpectrumAnnotation(mzValue, fragmentIonMassAccuracy, color, ionDesc));
                             }
                         }
 
@@ -2144,5 +2150,28 @@ public class XTandemViewer extends JFrame {
             }
             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
+    }
+
+    /**
+     * Returns the fragment ion mass accuracy.
+     * @return The fragment ion mass accuracy.
+     */
+    public double getFragmentIonMassAccuracy() {
+        return fragmentIonMassAccuracy;
+    }
+
+    /**
+     * Sets the fragment ion mass accuracy.
+     * @param fragmentIonMassAccuracy The fragment ion mass accuracy.
+     */
+    public void setFragmentIonMassAccuracy(double fragmentIonMassAccuracy) {
+        this.fragmentIonMassAccuracy = fragmentIonMassAccuracy;
+    }
+
+    /**
+     * Returns the X!TandemFile string.
+     */
+    public String getXTandemFile() {
+        return xTandemFile;
     }
 }

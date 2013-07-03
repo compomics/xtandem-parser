@@ -46,10 +46,10 @@ public class FileSelector extends JFrame {
     private JFrame iParent = null;
 
     /**
-     * Constructor gets a title string
+     * FileSelector sets up the X!Tandem Viewer application.
      *
-     * @param aParent
-     * @param title
+     * @param aParent Parent frame.
+     * @param title Title of the application.
      */
     public FileSelector(JFrame aParent, String title) {
 
@@ -195,9 +195,9 @@ public class FileSelector extends JFrame {
     }
 
     /**
-     * ToDo: JavaDoc missing...
+     * This method opens a file chosen by the user.
      *
-     * @return
+     * @return Open file action.
      */
     private Action openFileAction() {
         filename = System.getProperty("user.dir") + File.separator;
@@ -239,7 +239,7 @@ public class FileSelector extends JFrame {
     }
 
     /**
-     * ToDo: JavaDoc missing...
+     * File filter class which validates XML file input.
      */
     private static class InnerXmlFileFilter extends javax.swing.filechooser.FileFilter {
 
