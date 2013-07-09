@@ -8,8 +8,8 @@ import com.compomics.util.experiment.identification.matches.SpectrumMatch;
 import com.compomics.util.experiment.io.identifications.IdfileReader;
 import com.compomics.util.experiment.massspectrometry.*;
 import com.compomics.util.experiment.personalization.ExperimentObject;
-import com.compomics.util.gui.waiting.WaitingHandler;
 import com.compomics.util.protein.Header;
+import com.compomics.util.waiting.WaitingHandler;
 import de.proteinms.xtandemparser.interfaces.Modification;
 import de.proteinms.xtandemparser.xtandem.*;
 import de.proteinms.xtandemparser.xtandem.Spectrum;
@@ -91,7 +91,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
         HashSet<SpectrumMatch> foundPeptides = new HashSet<SpectrumMatch>();
 
         if (waitingHandler != null) {
-            waitingHandler.setMaxSecondaryProgressValue(xTandemFile.getSpectraNumber());
+            waitingHandler.setMaxSecondaryProgressCounter(xTandemFile.getSpectraNumber());
         }
 
         Iterator<Spectrum> spectraIt = xTandemFile.getSpectraIterator();
@@ -180,7 +180,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
                 if (waitingHandler.isRunCanceled()) {
                     break;
                 }
-                waitingHandler.increaseSecondaryProgressValue();
+                waitingHandler.increaseSecondaryProgressCounter();
             }
         }
 
