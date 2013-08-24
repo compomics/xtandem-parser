@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
@@ -60,18 +61,9 @@ public class XTandemFile implements Serializable {
      */
     private PerformParams iPerformParams = null;
     /**
-     * This string holds the raw file name.
-     */
-    private String iRawFile = null;
-    /**
-     * This string holds the raw file type.
-     */
-    private String iRawFileType = null;
-    /**
      * This variable holds the number of spectra.
      */
     private int iSpectraNumber = 0;
-    private HashMap<Integer, Peaklist> iRawFileMap;
 
     /**
      * Constructor of XTandemFile gets a string to an existing path and filename
@@ -80,15 +72,31 @@ public class XTandemFile implements Serializable {
      * @param aXTandemFile The given XTandem file.
      * @throws SAXException SAX parsing exception thrown.
      */
-    public XTandemFile(String aXTandemFile) throws SAXException {
+    public XTandemFile(String aXTandemFile) throws SAXException, ParserConfigurationException {
+        this(aXTandemFile, false);
+    }
+
+    /**
+     * Constructor of XTandemFile gets a string to an existing path and filename
+     * of the xtandem file.
+     *
+     * @param aXTandemFile The given XTandem file.
+     * @param skipDetails if true only the spectrum identifiers, the peptides
+     * sequences, modifications and matches e-values will be loaded.
+     *
+     * @throws SAXException SAX parsing exception thrown.
+     */
+    public XTandemFile(String aXTandemFile, boolean skipDetails) throws SAXException, ParserConfigurationException {
         try {
             File inputFile = new File(aXTandemFile);
             if (!inputFile.exists()) {
                 throw new IllegalArgumentException("XTandem xml-file " + aXTandemFile + " doesn't exist.");
             }
-            iXTParser = new XTandemParser(inputFile);
+            iXTParser = new XTandemParser(inputFile, skipDetails);
             setFileName(aXTandemFile);
-            iSpectraList = getSpectraList();
+            if (!skipDetails) {
+                iSpectraList = getSpectraList();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -360,7 +368,7 @@ public class XTandemFile implements Serializable {
 
                 // Precursor charge
                 int precursorCharge = Integer.parseInt(spectrumSection.get("z" + i));
-                
+
                 // Precursor retention time
                 String precursorRetentionTime = spectrumSection.get("rt" + i);
 

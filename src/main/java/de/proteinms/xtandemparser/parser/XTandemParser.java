@@ -69,27 +69,51 @@ public class XTandemParser implements Serializable {
      * This list contains a list with all the protein ids.
      */
     private ArrayList<String> iProteinKeyList = null;
+    /**
+     * spectrum title to X!Tandem id map
+     */
     private HashMap<String, Integer> iTitle2SpectrumIDMap;
+    /**
+     * X!Tandem id to spectrum title map
+     */
+    private HashMap<Integer, String> idToSpectrumMap;
 
     /**
      * Constructor for parsing a result file stored locally.
      *
      * @param aFile The input XML file.
+     *
      * @exception IOException
      * @exception SAXException
      */
-    public XTandemParser(File aFile) throws IOException, SAXException {
-        this.parseXTandemFile(aFile);
+    public XTandemParser(File aFile) throws IOException, SAXException, ParserConfigurationException {
+        this(aFile, false);
+    }
+
+    /**
+     * Constructor for parsing a result file stored locally.
+     *
+     * @param aFile The input XML file.
+     * @param skipDetails if true only the spectrum identifiers, the peptides
+     * sequences, modifications and matches e-values will be loaded.
+     *
+     * @exception IOException
+     * @exception SAXException
+     */
+    public XTandemParser(File aFile, boolean skipDetails) throws IOException, SAXException, ParserConfigurationException {
+        this.parseXTandemFile(aFile, skipDetails);
     }
 
     /**
      * In this method the X!Tandem file gets parsed.
      *
      * @param aInputFile The file which will be parsed.
+     * @param skipDetails if true only the spectrum identifiers, the peptides
+     * sequences, modifications and matches e-values will be loaded.
      * @exception IOException
      * @exception SAXException
      */
-    private void parseXTandemFile(File aInputFile) throws IOException, SAXException {
+    private void parseXTandemFile(File aInputFile, boolean skipDetails) throws IOException, SAXException, ParserConfigurationException {
 
         NodeList idNodes, proteinNodes, peptideNodes, nodes, parameterNodes, supportDataNodes, xDataNodes, yDataNodes;
         NodeList hyperNodes, convolNodes, aIonNodes, bIonNodes, cIonNodes, xIonNodes, yIonNodes, zIonNodes, fragIonNodes;
@@ -104,62 +128,71 @@ public class XTandemParser implements Serializable {
         double modificationMass;
         NamedNodeMap modificationMap;
 
-        try {
+        // Get the document builder factory
+        dbf = DocumentBuilderFactory.newInstance();
 
-            // Get the document builder factory
-            dbf = DocumentBuilderFactory.newInstance();
+        dbf.setValidating(false);
+        dbf.setAttribute("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+        dbf.setAttribute("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+        dbf.setAttribute("http://xml.org/sax/features/validation", false);
 
-            dbf.setValidating(false);
-            dbf.setAttribute("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
-            dbf.setAttribute("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-            dbf.setAttribute("http://xml.org/sax/features/validation", false);
+        // Using factory to get an instance of document builder
+        db = dbf.newDocumentBuilder();
 
-            // Using factory to get an instance of document builder
-            db = dbf.newDocumentBuilder();
+        // Parse using builder to get DOM representation of the XML file
+        dom = db.parse(aInputFile);
 
-            // Parse using builder to get DOM representation of the XML file
-            dom = db.parse(aInputFile);
+        // Get the root elememt
+        docEle = dom.getDocumentElement();
 
-            // Get the root elememt
-            docEle = dom.getDocumentElement();
+        // Get all the nodes
+        nodes = docEle.getChildNodes();
 
-            // Get all the nodes
-            nodes = docEle.getChildNodes();
+        // Initialize the maps
+        iInputParamMap = new HashMap<String, String>();
+        iPerformParamMap = new HashMap<String, String>();
+        iRawModMap = new HashMap<String, String>();
+        iRawSpectrumMap = new HashMap<String, String>();
+        iRawPeptideMap = new HashMap<String, String>();
+        iRawProteinMap = new HashMap<String, String>();
+        iSupportDataMap = new HashMap<String, String>();
+        iTitle2SpectrumIDMap = new HashMap<String, Integer>();
+        idToSpectrumMap = new HashMap<Integer, String>();
 
-            // Initialize the maps
-            iInputParamMap = new HashMap<String, String>();
-            iPerformParamMap = new HashMap<String, String>();
-            iRawModMap = new HashMap<String, String>();
-            iRawSpectrumMap = new HashMap<String, String>();
-            iRawPeptideMap = new HashMap<String, String>();
-            iRawProteinMap = new HashMap<String, String>();
-            iSupportDataMap = new HashMap<String, String>();
-            iTitle2SpectrumIDMap = new HashMap<String, Integer>();
+        // List of all the protein ids
+        iProteinKeyList = new ArrayList<String>();
+        boolean aIonFlag = false;
+        boolean bIonFlag = false;
+        boolean cIonFlag = false;
+        boolean xIonFlag = false;
+        boolean yIonFlag = false;
+        boolean zIonFlag = false;
 
-            // List of all the protein ids
-            iProteinKeyList = new ArrayList<String>();
-            boolean aIonFlag = false;
-            boolean bIonFlag = false;
-            boolean cIonFlag = false;
-            boolean xIonFlag = false;
-            boolean yIonFlag = false;
-            boolean zIonFlag = false;
+        int spectraCounter = 0;
+        boolean needBreak = false;
 
-            int spectraCounter = 0;
+        // Parse the parameters first
+        for (int i = 0; i < nodes.getLength(); i++) {
+            if (nodes.item(i).getAttributes() != null) {
+                if (nodes.item(i).getAttributes().getNamedItem("type") != null) {
+                    // Parse the input parameters
+                    if (nodes.item(i).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("parameters")
+                            && (nodes.item(i).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("input parameters")
+                            || nodes.item(i).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("unused input parameters"))) {
+                        parameterNodes = nodes.item(i).getChildNodes();
 
-            // Parse the parameters first
-            for (int i = 0; i < nodes.getLength(); i++) {
-                if (nodes.item(i).getAttributes() != null) {
-                    if (nodes.item(i).getAttributes().getNamedItem("type") != null) {
-                        // Parse the input parameters
-                        if (nodes.item(i).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("parameters")
-                                && (nodes.item(i).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("input parameters")
-                                || nodes.item(i).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("unused input parameters"))) {
-                            parameterNodes = nodes.item(i).getChildNodes();
-
-                            // Iterate over all the parameter nodes
-                            for (int m = 0; m < parameterNodes.getLength(); m++) {
-                                if (parameterNodes.item(m).getAttributes() != null) {
+                        // Iterate over all the parameter nodes
+                        for (int m = 0; m < parameterNodes.getLength(); m++) {
+                            if (parameterNodes.item(m).getAttributes() != null) {
+                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
+                                        "label=\"spectrum, path\"")) {
+                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
+                                        iInputParamMap.put("SPECTRUMPATH", parameterNodes.item(m).getTextContent());
+                                        needBreak = true;
+                                        break;
+                                    }
+                                }
+                                if (!skipDetails) {
                                     if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
                                             "label=\"list path, default parameters\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
@@ -614,12 +647,6 @@ public class XTandemParser implements Serializable {
                                         }
                                     }
                                     if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                            "label=\"spectrum, path\"")) {
-                                        if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                            iInputParamMap.put("SPECTRUMPATH", parameterNodes.item(m).getTextContent());
-                                        }
-                                    }
-                                    if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
                                             "label=\"spectrum, sequence batch size\"")) {
                                         if (!parameterNodes.item(m).getTextContent().equals("")) {
                                             iInputParamMap.put("SPECBATCHSIZE", parameterNodes.item(m).getTextContent());
@@ -646,6 +673,11 @@ public class XTandemParser implements Serializable {
                                 }
                             }
                         }
+                    }
+                    if (needBreak) {
+                        break;
+                    }
+                    if (!skipDetails) {
                         // Parse the performance parameters
                         if (nodes.item(i).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("parameters")
                                 && nodes.item(i).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("performance parameters")) {
@@ -822,35 +854,37 @@ public class XTandemParser implements Serializable {
                     }
                 }
             }
+        }
 
-            // Iterate over all the nodes
-            for (int i = 0; i < nodes.getLength(); i++) {
-                if (nodes.item(i).getAttributes() != null) {
-                    if (nodes.item(i).getAttributes().getNamedItem("type") != null) {
+        // Iterate over all the nodes
+        for (int i = 0; i < nodes.getLength(); i++) {
+            if (nodes.item(i).getAttributes() != null) {
+                if (nodes.item(i).getAttributes().getNamedItem("type") != null) {
 
-                        // The model group contains all information about a single peptide identification
-                        if (nodes.item(i).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("model")) {
-                            spectraCounter++;
+                    // The model group contains all information about a single peptide identification
+                    if (nodes.item(i).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("model")) {
+                        spectraCounter++;
 
-                            // id is the number associated with the mass spectrum that was identified
-                            if (nodes.item(i).getAttributes().getNamedItem("id") != null) {
-                                iRawSpectrumMap.put("id" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("id").getNodeValue());
+                        // id is the number associated with the mass spectrum that was identified
+                        if (nodes.item(i).getAttributes().getNamedItem("id") != null) {
+                            iRawSpectrumMap.put("id" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("id").getNodeValue());
+                        }
+                            // z is the parent/precursor ion charge
+                            if (nodes.item(i).getAttributes().getNamedItem("z") != null) {
+                                iRawSpectrumMap.put("z" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("z").getNodeValue());
+                            }
+                        if (!skipDetails) {
+                            // expect is the expectation value for the top ranked protein identfied with this spectrum
+                            if (nodes.item(i).getAttributes().getNamedItem("expect") != null) {
+                                iRawSpectrumMap.put("expect" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("expect").getNodeValue());
                             }
                             // mh is the parent/precursor ion mass from the spectrum
                             if (nodes.item(i).getAttributes().getNamedItem("mh") != null) {
                                 iRawSpectrumMap.put("mh" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("mh").getNodeValue());
                             }
-                            // z is the parent/precursor ion charge
-                            if (nodes.item(i).getAttributes().getNamedItem("z") != null) {
-                                iRawSpectrumMap.put("z" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("z").getNodeValue());
-                            }
                             // rt is the parent/precursor retention time
                             if (nodes.item(i).getAttributes().getNamedItem("rt") != null) {
                                 iRawSpectrumMap.put("rt" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("rt").getNodeValue());
-                            }
-                            // expect is the expectation value for the top ranked protein identfied with this spectrum
-                            if (nodes.item(i).getAttributes().getNamedItem("expect") != null) {
-                                iRawSpectrumMap.put("expect" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("expect").getNodeValue());
                             }
                             // label is the text from the protein sequence FASTA file description line for the top ranked protein identified
                             if (nodes.item(i).getAttributes().getNamedItem("label") != null) {
@@ -871,24 +905,26 @@ public class XTandemParser implements Serializable {
                         }
                     }
                 }
+            }
 
-                // Calculate the number of spectra.
-                iNumberOfSpectra = spectraCounter;
+            // the number of spectra.
+            iNumberOfSpectra = spectraCounter;
 
-                // Get the identifications
-                idNodes = nodes.item(i).getChildNodes();
+            // Get the identifications
+            idNodes = nodes.item(i).getChildNodes();
 
-                int p_counter = 0;
-                // Iterate over all the child nodes
-                for (int j = 0; j < idNodes.getLength(); j++) {
+            int p_counter = 0;
+            // Iterate over all the child nodes
+            for (int j = 0; j < idNodes.getLength(); j++) {
 
-                    if (idNodes.item(j).getNodeName().equalsIgnoreCase("protein")) {
-                        p_counter++;
-                        // the identifier of this particular identification (spectrum#).(id#)
-                        String protID = idNodes.item(j).getAttributes().getNamedItem("id").getNodeValue();
+                if (idNodes.item(j).getNodeName().equalsIgnoreCase("protein")) {
+                    p_counter++;
+                    // the identifier of this particular identification (spectrum#).(id#)
+                    String protID = idNodes.item(j).getAttributes().getNamedItem("id").getNodeValue();
 
-                        // Since the ID is not unique to the protein, we will use the label to reference it. That will be dirty for some files.
-                        String proteinKey = idNodes.item(j).getAttributes().getNamedItem("label").getNodeValue();
+                    // Since the ID is not unique to the protein, we will use the label to reference it. That will be dirty for some files.
+                    String proteinKey = idNodes.item(j).getAttributes().getNamedItem("label").getNodeValue();
+                    if (!skipDetails) {
                         iProteinKeyList.add(proteinKey);
 
                         // a unique number of this protein, calculated by the search engine. Well unique. Most often yes.
@@ -902,64 +938,69 @@ public class XTandemParser implements Serializable {
 
                         // the sum of all of the fragment ions that identify this protein
                         iRawProteinMap.put("sumI" + proteinKey, idNodes.item(j).getAttributes().getNamedItem("sumI").getNodeValue());
+                    }
 
-                        proteinNodes = idNodes.item(j).getChildNodes();
+                    proteinNodes = idNodes.item(j).getChildNodes();
 
-                        // Iterate over all the protein nodes
-                        for (int k = 0; k < proteinNodes.getLength(); k++) {
+                    // Iterate over all the protein nodes
+                    for (int k = 0; k < proteinNodes.getLength(); k++) {
+                        if (!skipDetails) {
                             if (proteinNodes.item(k).getNodeName().equalsIgnoreCase("file")) {
                                 // the path used to the original fasta file
                                 iRawPeptideMap.put("URL" + "_s" + spectraCounter + "_p" + p_counter, proteinNodes.item(k).getAttributes().getNamedItem("URL").getNodeValue());
                             }
 
                             if (proteinNodes.item(k).getNodeName().equalsIgnoreCase("note") && proteinNodes.item(k).getAttributes().getNamedItem("label") != null
-                                    &&  proteinNodes.item(k).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("description")) {
+                                    && proteinNodes.item(k).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("description")) {
                                 // the protein description (xml tag: note label="description")
-                                iRawProteinMap.put("description" + proteinKey, proteinNodes.item(k).getTextContent());
+                                String test = proteinNodes.item(k).getTextContent();
+                                iRawProteinMap.put("description" + proteinKey, test);
                             }
 
-                            // the the sum of all the fragment ions that identify this protein
-                            if (proteinNodes.item(k).getNodeName().equalsIgnoreCase("peptide")) {
-                                iRawPeptideMap.put("s" + spectraCounter + "_p" + p_counter, protID);
+                        }
+                        // the the sum of all the fragment ions that identify this protein
+                        if (proteinNodes.item(k).getNodeName().equalsIgnoreCase("peptide")) {
+                            iRawPeptideMap.put("s" + spectraCounter + "_p" + p_counter, protID);
+                            if (!skipDetails) {
                                 iRawPeptideMap.put("start" + "_s" + spectraCounter + "_p"
                                         + p_counter, proteinNodes.item(k).getAttributes().getNamedItem("start").getNodeValue());
                                 iRawPeptideMap.put("end" + "_s" + spectraCounter + "_p"
                                         + p_counter, proteinNodes.item(k).getAttributes().getNamedItem("end").getNodeValue());
                                 iRawPeptideMap.put("seq" + "_s" + spectraCounter + "_p"
                                         + p_counter, proteinNodes.item(k).getTextContent());
+                            }
 
-                                peptideNodes = proteinNodes.item(k).getChildNodes();
+                            peptideNodes = proteinNodes.item(k).getChildNodes();
 
-                                // Domain counter
-                                int dCount = 1;
+                            // Domain counter
+                            int dCount = 1;
 
-                                // Iterate over all the peptide nodes
-                                for (int m = 0; m < peptideNodes.getLength(); m++) {
+                            // Iterate over all the peptide nodes
+                            for (int m = 0; m < peptideNodes.getLength(); m++) {
 
-                                    // Get the domain entries
-                                    if (peptideNodes.item(m).getNodeName().equalsIgnoreCase("domain")) {
+                                // Get the domain entries
+                                if (peptideNodes.item(m).getNodeName().equalsIgnoreCase("domain")) {
 
-                                        // Get the domainid
-                                        String domainKey = "s" + spectraCounter + "_p" + p_counter + "_d" + dCount;
+                                    // Get the domainid
+                                    String domainKey = "s" + spectraCounter + "_p" + p_counter + "_d" + dCount;
 
-                                        // verify that the same domain key is not already in use!
-                                        while (iRawPeptideMap.containsKey("proteinkey" + "_" + domainKey)) {
-                                            domainKey = "s" + spectraCounter + "_p" + p_counter + "_d" + ++dCount;
-                                        }
+                                    // verify that the same domain key is not already in use
+                                    while (iRawPeptideMap.containsKey("proteinkey" + "_" + domainKey)) {
+                                        domainKey = "s" + spectraCounter + "_p" + p_counter + "_d" + ++dCount;
+                                    }
 
-                                        // Store the protein key a la Thilo. There should be only one protein key per domain.
+                                    iRawPeptideMap.put("domainid" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("id").getNodeValue());
+
+                                    if (!skipDetails) {
+
+                                        // Store the protein key à la Thilo. There should be only one protein key per domain.
                                         iRawPeptideMap.put("proteinkey" + "_" + domainKey, proteinKey);
-
-                                        iRawPeptideMap.put("domainid" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("id").getNodeValue());
 
                                         // the start position of the peptide
                                         iRawPeptideMap.put("domainstart" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("start").getNodeValue());
 
                                         // the end position of the peptide
                                         iRawPeptideMap.put("domainend" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("end").getNodeValue());
-
-                                        // the expect value
-                                        iRawPeptideMap.put("expect" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("expect").getNodeValue());
 
                                         // the mass + a proton
                                         iRawPeptideMap.put("mh" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("mh").getNodeValue());
@@ -1027,40 +1068,44 @@ public class XTandemParser implements Serializable {
                                         // the downstream flanking sequence
                                         iRawPeptideMap.put("post" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("post").getNodeValue());
 
-                                        // the domain sequence
-                                        iRawPeptideMap.put("domainseq" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("seq").getNodeValue());
-
                                         // the number of missed cleavages
                                         iRawPeptideMap.put("missed_cleavages" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("missed_cleavages").getNodeValue());
+                                    }
 
-                                        int modCounter = 0;
-                                        for (int n = 0; n < peptideNodes.item(m).getChildNodes().getLength(); n++) {
+                                    // the expectation value
+                                    iRawPeptideMap.put("expect" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("expect").getNodeValue());
 
-                                            // Get the specific modifications (aa)
-                                            if (peptideNodes.item(m).getChildNodes().item(n).getNodeName().equalsIgnoreCase("aa")) {
-                                                modCounter++;
-
-                                                modificationMap = peptideNodes.item(m).getChildNodes().item(n).getAttributes();
-                                                modificationName = modificationMap.getNamedItem("type").getNodeValue();
+                                    // the domain sequence
+                                    iRawPeptideMap.put("domainseq" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("seq").getNodeValue());
 
 
-                                                // use the old calculation with domainStart!
-                                                //modificationMap.getNamedItem("at").getNodeValue()) - domainStart + 1)
-                                                iRawModMap.put("at" + "_" + domainKey + "_m" + modCounter, modificationMap.getNamedItem("at").getNodeValue());
+                                    int modCounter = 0;
+                                    for (int n = 0; n < peptideNodes.item(m).getChildNodes().getLength(); n++) {
 
-                                                // modified is the residue mass change caused by the modification
-                                                modificationMass = Double.parseDouble(modificationMap.getNamedItem("modified").getNodeValue());
-                                                iRawModMap.put("modified" + "_" + domainKey + "_m" + modCounter, modificationMap.getNamedItem("modified").getNodeValue());
+                                        // Get the specific modifications (aa)
+                                        if (peptideNodes.item(m).getChildNodes().item(n).getNodeName().equalsIgnoreCase("aa")) {
+                                            modCounter++;
 
-                                                modificationName = modificationMass + "@" + modificationName;
+                                            modificationMap = peptideNodes.item(m).getChildNodes().item(n).getAttributes();
+                                            modificationName = modificationMap.getNamedItem("type").getNodeValue();
 
-                                                // type is the single letter abbreviation for the modified residue
-                                                iRawModMap.put("name" + "_" + domainKey + "_m" + modCounter, modificationName);
 
-                                                // get the substituted amino acid (if any)
-                                                if (modificationMap.getNamedItem("pm") != null) {
-                                                    iRawModMap.put("pm" + "_" + domainKey + "_m" + modCounter, modificationMap.getNamedItem("pm").getNodeValue());
-                                                }
+                                            // use the old calculation with domainStart!
+                                            //modificationMap.getNamedItem("at").getNodeValue()) - domainStart + 1)
+                                            iRawModMap.put("at" + "_" + domainKey + "_m" + modCounter, modificationMap.getNamedItem("at").getNodeValue());
+
+                                            // modified is the residue mass change caused by the modification
+                                            modificationMass = Double.parseDouble(modificationMap.getNamedItem("modified").getNodeValue());
+                                            iRawModMap.put("modified" + "_" + domainKey + "_m" + modCounter, modificationMap.getNamedItem("modified").getNodeValue());
+
+                                            modificationName = modificationMass + "@" + modificationName;
+
+                                            // type is the single letter abbreviation for the modified residue
+                                            iRawModMap.put("name" + "_" + domainKey + "_m" + modCounter, modificationName);
+
+                                            // get the substituted amino acid (if any)
+                                            if (modificationMap.getNamedItem("pm") != null) {
+                                                iRawModMap.put("pm" + "_" + domainKey + "_m" + modCounter, modificationMap.getNamedItem("pm").getNodeValue());
                                             }
                                         }
                                     }
@@ -1068,9 +1113,11 @@ public class XTandemParser implements Serializable {
                             }
                         }
                     }
+                }
 
-                    // Go to the group node inside the other group node (support)
-                    if (idNodes.item(j).getNodeName().equalsIgnoreCase("group")) {
+                // Go to the group node inside the other group node (support)
+                if (idNodes.item(j).getNodeName().equalsIgnoreCase("group")) {
+                    if (!skipDetails) {
                         // Start parsing the support data part (GAML histograms)
                         if (idNodes.item(j).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("supporting data")) {
                             supportDataNodes = idNodes.item(j).getChildNodes();
@@ -1356,15 +1403,23 @@ public class XTandemParser implements Serializable {
                                 }
                             }
                         }
-                        if (idNodes.item(j).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("fragment ion mass spectrum")) {
+                    }
+                    if (idNodes.item(j).getAttributes().getNamedItem("label").getNodeValue().equalsIgnoreCase("fragment ion mass spectrum")) {
 
-                            supportDataNodes = idNodes.item(j).getChildNodes();
-                            // Iterate over all the support data nodes
-                            for (int a = 0; a < supportDataNodes.getLength(); a++) {
-                                if (supportDataNodes.item(a).getNodeName().equalsIgnoreCase("note")) {
-                                    iSupportDataMap.put("FRAGIONSPECDESC" + "_s" + spectraCounter, supportDataNodes.item(a).getTextContent().trim());
-                                    iTitle2SpectrumIDMap.put(supportDataNodes.item(a).getTextContent().trim(), spectraCounter);
+                        supportDataNodes = idNodes.item(j).getChildNodes();
+                        // Iterate over all the support data nodes
+                        for (int a = 0; a < supportDataNodes.getLength(); a++) {
+                            if (supportDataNodes.item(a).getNodeName().equalsIgnoreCase("note")) {
+                                String title = supportDataNodes.item(a).getTextContent().trim();
+                                idToSpectrumMap.put(spectraCounter, title);
+                                if (!skipDetails) {
+                                    iSupportDataMap.put("FRAGIONSPECDESC" + "_s" + spectraCounter, title);
+                                    iTitle2SpectrumIDMap.put(title, spectraCounter);
+                                } else {
+                                    break;
                                 }
+                            }
+                            if (!skipDetails) {
                                 if (supportDataNodes.item(a).getNodeName().equalsIgnoreCase("GAML:trace")) {
                                     // Parse the tandem mass spectrum values
                                     if (supportDataNodes.item(a).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("tandem mass spectrum")) {
@@ -1415,10 +1470,6 @@ public class XTandemParser implements Serializable {
                     }
                 }
             }
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
         }
     }
 
@@ -1510,5 +1561,14 @@ public class XTandemParser implements Serializable {
      */
     public HashMap<String, Integer> getTitle2SpectrumIDMap() {
         return iTitle2SpectrumIDMap;
+    }
+
+    /**
+     * Returns the X!Tandem id to spectrum title map.
+     * 
+     * @return X!Tandem id to spectrum title map
+     */
+    public HashMap<Integer, String> getIdToSpectrumMap() {
+        return idToSpectrumMap;
     }
 }

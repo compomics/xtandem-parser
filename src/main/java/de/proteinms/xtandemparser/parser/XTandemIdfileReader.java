@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
+import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * This reader will import identifications from an X!Tandem XML result file.
@@ -42,10 +43,6 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
      */
     private ModificationMap modificationMap;
     /**
-     * The protein map.
-     */
-    private ProteinMap proteinMap;
-    /**
      * The peptide map.
      */
     private PeptideMap peptideMap;
@@ -62,13 +59,10 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
      * @param aFile the inspected file
      * @throws SAXException
      */
-    public XTandemIdfileReader(File aFile) throws SAXException {
-        if (!aFile.getName().endsWith("mods.xml") || !aFile.getName().endsWith("usermods.xml")) {
-            xTandemFile = new XTandemFile(aFile.getPath());
-            modificationMap = xTandemFile.getModificationMap();
-            proteinMap = xTandemFile.getProteinMap();
+    public XTandemIdfileReader(File aFile) throws SAXException, ParserConfigurationException {
+            xTandemFile = new XTandemFile(aFile.getPath(), true);
             peptideMap = xTandemFile.getPeptideMap();
-        }
+            modificationMap = xTandemFile.getModificationMap();
     }
 
     public String getExtension() {
@@ -93,22 +87,14 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
         if (waitingHandler != null) {
             waitingHandler.setMaxSecondaryProgressCounter(xTandemFile.getSpectraNumber());
         }
+        
+        HashMap<Integer, String> idToSpectrumTitleMap = xTandemFile.getXTandemParser().getIdToSpectrumMap();
 
-        Iterator<Spectrum> spectraIt = xTandemFile.getSpectraIterator();
-
-        while (spectraIt.hasNext()) {
-            Spectrum currentSpectrum = spectraIt.next();
-            // spectrumId is the spectrum id in the X!Tandem file and spectrumNumber the id in the parser. If anyone could write a simpler parser, would be just great.
-            int spectrumId = currentSpectrum.getSpectrumId();
-            int spectrumNumber = currentSpectrum.getSpectrumNumber();
-            SupportData supportData = xTandemFile.getSupportData(spectrumNumber);
-
-            String tempName = spectrumId + "";
-            if (supportData.getFragIonSpectrumDescription() != null) {
-                tempName = supportData.getFragIonSpectrumDescription();
-            }
-
-            String spectrumName = fixMgfTitle(tempName);
+        for (String id : peptideMap.getSpectrumAndPeptideMap().keySet()) {
+            
+            Integer spectrumNumber = new Integer(id.substring(1));
+            String tempTitle = idToSpectrumTitleMap.get(spectrumNumber);
+            String spectrumName = fixMgfTitle(tempTitle);
 
             // try to remove the retention time as added by xtandem...
             if (spectrumName.indexOf("RTINSECONDS=") != -1) {
@@ -118,16 +104,17 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
             // remove white space
             spectrumName = spectrumName.trim();
 
-            ArrayList<Peptide> spectrumPeptides = peptideMap.getAllPeptides(currentSpectrum.getSpectrumNumber());
+            ArrayList<Peptide> spectrumPeptides = peptideMap.getAllPeptides(spectrumNumber);
 
             if (spectrumPeptides.size() > 0) {
 
                 String tempFile = xTandemFile.getInputParameters().getSpectrumPath();
                 String filename = Util.getFileName(tempFile);
-                Charge charge = new Charge(Charge.PLUS, currentSpectrum.getPrecursorCharge());
+                Integer parsedCharge = new Integer(xTandemFile.getXTandemParser().getRawSpectrumMap().get("z" + spectrumNumber));
+                Charge charge = new Charge(Charge.PLUS, parsedCharge);
                 String spectrumKey = com.compomics.util.experiment.massspectrometry.Spectrum.getSpectrumKey(filename, spectrumName);
                 SpectrumMatch currentMatch = new SpectrumMatch(spectrumKey);
-                currentMatch.setSpectrumNumber(spectrumId); //@TODO: verify that this work when sorting spectra according to proteins
+                currentMatch.setSpectrumNumber(spectrumNumber); //@TODO: verify that this work when sorting spectra according to proteins
                 HashMap<Double, ArrayList<Domain>> hitMap = new HashMap<Double, ArrayList<Domain>>();
 
                 for (Peptide peptide : spectrumPeptides) {
@@ -201,41 +188,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
      */
     private PeptideAssumption getPeptideAssumption(Domain domain, int charge, int rank) {
 
-        ArrayList<String> proteins = new ArrayList<String>();
         String sequence = domain.getDomainSequence();
-        String description;
-
-        if (proteinMap.getProtein(domain.getProteinKey()).getDescription() != null) {
-            description = proteinMap.getProtein(domain.getProteinKey()).getDescription();
-        } else {
-            description = proteinMap.getProtein(domain.getProteinKey()).getLabel();
-        }
-
-        String accession;
-
-        try {
-            Header fastaHeader = Header.parseFromFASTA(description);
-            accession = fastaHeader.getAccession();
-            if (accession == null) {
-                accession = fastaHeader.getRest();
-            }
-        } catch (Exception e) {
-            accession = description;
-        }
-
-        // final test to check that the accession number was correctly parsed
-        if (accession == null) {
-            JOptionPane.showMessageDialog(null, "Unable to extract the accession number from protein description: \n"
-                    + "\'" + description + "\'"
-                    + "\n\nVerify your FASTA file!", "Unknown Protein!", JOptionPane.ERROR_MESSAGE);
-
-            throw new IllegalArgumentException(
-                    "Unable to extract the accession number from protein description: \n"
-                    + "\'" + description + "\'.\n"
-                    + "Please verify your FASTA file!");
-        }
-
-        proteins.add(accession);
 
         ArrayList<ModificationMatch> foundModifications = new ArrayList<ModificationMatch>();
         ArrayList<de.proteinms.xtandemparser.interfaces.Modification> foundVariableModifications = modificationMap.getVariableModifications(domain.getDomainKey());
@@ -246,7 +199,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
             foundModifications.add(new ModificationMatch(currentModification.getName(), true, location));
         }
 
-        com.compomics.util.experiment.biology.Peptide peptide = new com.compomics.util.experiment.biology.Peptide(sequence, proteins, foundModifications);
+        com.compomics.util.experiment.biology.Peptide peptide = new com.compomics.util.experiment.biology.Peptide(sequence, foundModifications);
         return new PeptideAssumption(peptide, rank, Advocate.XTANDEM, new Charge(Charge.PLUS, charge), domain.getDomainExpect(), getFileName());
     }
 

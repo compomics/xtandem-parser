@@ -59,11 +59,23 @@ public class PeptideMap implements Serializable {
 
                     // The peptide id is consists of s + spectrum# + _p + peptide#
                     String peptideID = ("s" + i + "_p" + pCount);
-                    int peptideStart = Integer.parseInt(aRawPeptideMap.get("start" + "_s" + i + "_p" + pCount).toString());
-                    int peptideEnd = Integer.parseInt(aRawPeptideMap.get("end" + "_s" + i + "_p" + pCount).toString());
-                    String sequence = aRawPeptideMap.get("seq" + "_s" + i + "_p" + pCount).toString().trim();
+                    int peptideStart = 0,
+                            peptideEnd = 0;
+                    Object input = aRawPeptideMap.get("start" + "_s" + i + "_p" + pCount);
+                    if (input != null) {
+                        peptideStart = new Integer(input.toString());
+                    }
+                    input = aRawPeptideMap.get("start" + "_s" + i + "_p" + pCount);
+                    if (input != null) {
+                        peptideEnd = new Integer(input.toString());
+                    }
+                    input = aRawPeptideMap.get("seq" + "_s" + i + "_p" + pCount);
+                    String sequence = "";
+                    if (input != null) {
+                        sequence = aRawPeptideMap.get("seq" + "_s" + i + "_p" + pCount).toString().trim();
+                    }
 
-                    // Create an instance of a protein.
+                    // Create an instance of a peptide.
                     Peptide peptide = new Peptide(peptideID, peptideStart, peptideEnd, sequence);
                     // Set the domain values
                     peptide.setSpectrumNumber(i);
@@ -81,19 +93,55 @@ public class PeptideMap implements Serializable {
                         Domain domain = new Domain();
                         String domainKey = "s" + i + "_p" + pCount + "_d" + dCount;
                         domain.setDomainKey(domainKey);
-                        domain.setProteinKey(aRawPeptideMap.get("proteinkey" + "_s" + i + "_p" + pCount + "_d" + dCount).toString());
                         domain.setDomainID(aRawPeptideMap.get("domainid" + "_s" + i + "_p" + pCount + "_d" + dCount).toString());
-                        domain.setDomainStart(Integer.parseInt(aRawPeptideMap.get("domainstart" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
-                        domain.setDomainEnd(Integer.parseInt(aRawPeptideMap.get("domainend" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
-                        domain.setDomainExpect(Double.parseDouble(aRawPeptideMap.get("expect" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
-                        domain.setDomainMh(Double.parseDouble(aRawPeptideMap.get("mh" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
-                        domain.setDomainDeltaMh(Double.parseDouble(aRawPeptideMap.get("delta" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
-                        domain.setDomainHyperScore(Double.parseDouble(aRawPeptideMap.get("hyperscore" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
-                        domain.setDomainNextScore(Double.parseDouble(aRawPeptideMap.get("nextscore" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
-                        domain.setUpFlankSequence(aRawPeptideMap.get("pre" + "_s" + i + "_p" + pCount + "_d" + dCount).toString());
-                        domain.setDownFlankSequence(aRawPeptideMap.get("post" + "_s" + i + "_p" + pCount + "_d" + dCount).toString());
-                        domain.setDomainSequence(aRawPeptideMap.get("domainseq" + "_s" + i + "_p" + pCount + "_d" + dCount).toString());
-                        domain.setMissedCleavages(Integer.parseInt(aRawPeptideMap.get("missed_cleavages" + "_s" + i + "_p" + pCount + "_d" + dCount).toString()));
+                        input = aRawPeptideMap.get("proteinkey" + "_s" + i + "_p" + pCount + "_d" + dCount);
+                        if (input != null) {
+                            domain.setProteinKey(input.toString());
+                        }
+                        input = aRawPeptideMap.get("domainstart" + "_s" + i + "_p" + pCount + "_d" + dCount);
+                        if (input != null) {
+                            domain.setDomainStart(Integer.parseInt(input.toString()));
+                        }
+                        input = aRawPeptideMap.get("domainend" + "_s" + i + "_p" + pCount + "_d" + dCount);
+                        if (input != null) {
+                            domain.setDomainEnd(Integer.parseInt(input.toString()));
+                        }
+                        input = aRawPeptideMap.get("expect" + "_s" + i + "_p" + pCount + "_d" + dCount);
+                        if (input != null) {
+                            domain.setDomainExpect(Double.parseDouble(input.toString()));
+                        }
+                        input = aRawPeptideMap.get("mh" + "_s" + i + "_p" + pCount + "_d" + dCount);
+                        if (input != null) {
+                            domain.setDomainMh(Double.parseDouble(input.toString()));
+                        }
+                        input = aRawPeptideMap.get("delta" + "_s" + i + "_p" + pCount + "_d" + dCount);
+                        if (input != null) {
+                            domain.setDomainDeltaMh(Double.parseDouble(input.toString()));
+                        }
+                        input = aRawPeptideMap.get("hyperscore" + "_s" + i + "_p" + pCount + "_d" + dCount);
+                        if (input != null) {
+                            domain.setDomainHyperScore(Double.parseDouble(input.toString()));
+                        }
+                        input = aRawPeptideMap.get("nextscore" + "_s" + i + "_p" + pCount + "_d" + dCount);
+                        if (input != null) {
+                            domain.setDomainNextScore(Double.parseDouble(input.toString()));
+                        }
+                        input = aRawPeptideMap.get("pre" + "_s" + i + "_p" + pCount + "_d" + dCount);
+                        if (input != null) {
+                            domain.setUpFlankSequence(input.toString());
+                        }
+                        input = aRawPeptideMap.get("post" + "_s" + i + "_p" + pCount + "_d" + dCount);
+                        if (input != null) {
+                            domain.setDownFlankSequence(input.toString());
+                        }
+                        input = aRawPeptideMap.get("domainseq" + "_s" + i + "_p" + pCount + "_d" + dCount);
+                        if (input != null) {
+                            domain.setDomainSequence(input.toString());
+                        }
+                        input = aRawPeptideMap.get("missed_cleavages" + "_s" + i + "_p" + pCount + "_d" + dCount);
+                        if (input != null) {
+                            domain.setMissedCleavages(Integer.parseInt(input.toString()));
+                        }
                         domainList.add(domain);
                         dCount++;
                     }

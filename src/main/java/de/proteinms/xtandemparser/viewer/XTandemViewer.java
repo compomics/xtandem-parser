@@ -22,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.*;
 import java.util.List;
+import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * This class provides a basic viewer for the spectra.
@@ -770,7 +771,16 @@ public class XTandemViewer extends JFrame {
                     JOptionPane.showMessageDialog(null,
                             "Error during parsing the xml file!\n"
                             + saxException.getMessage() + "\n"
-                            + "Please load xml file in correct format...",
+                            + "Please verify the file format.",
+                            "Parser error",
+                            JOptionPane.ERROR_MESSAGE);
+                    System.exit(0);
+                } catch (ParserConfigurationException parserConfigurationException) {
+                    parserConfigurationException.getMessage();
+                    JOptionPane.showMessageDialog(null,
+                            "Error during parsing the xml file!\n"
+                            + parserConfigurationException.getMessage() + "\n"
+                            + "Please verify the file format.",
                             "Parser error",
                             JOptionPane.ERROR_MESSAGE);
                     System.exit(0);
