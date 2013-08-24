@@ -1002,7 +1002,7 @@ public class XTandemParser implements Serializable {
 
                                     if (!skipDetails) {
 
-                                        // Store the protein key à la Thilo. There should be only one protein key per domain.
+                                        // Store the protein key a la Thilo. There should be only one protein key per domain.
                                         iRawPeptideMap.put("proteinkey" + "_" + domainKey, proteinKey);
 
                                         // the start position of the peptide
