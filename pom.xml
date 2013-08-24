@@ -386,6 +386,10 @@
                     <artifactId>isorelax</artifactId>
                     <groupId>msv</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>sqlite-jdbc</artifactId>
+                    <groupId>org.xerial</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
