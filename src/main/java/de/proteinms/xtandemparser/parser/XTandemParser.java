@@ -1,7 +1,6 @@
 package de.proteinms.xtandemparser.parser;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,13 +27,21 @@ public class XTandemParser implements Serializable {
 
     /**
      * Pattern to extract the modification mass number if multiple modification
-     * masses are given
+     * masses are given.
      */
     private static Pattern resModificationMassPattern = Pattern.compile("label=\"residue, modification mass (\\d+)\"");
+    /**
+     * Pattern to extract the modification mass number if multiple modification
+     * masses are given.
+     */
     private static Pattern refPotModificationMassPattern = Pattern.compile("label=\"refine, potential modification mass (\\d+)\"");
+    /**
+     * Pattern to extract the modification mass number if multiple modification
+     * masses are given.
+     */
     private static Pattern refPotModificationMotifPattern = Pattern.compile("label=\"refine, potential modification motif (\\d+)\"");
     /**
-     * This variable holds the total number of spectra in the xtandem file
+     * This variable holds the total number of spectra in the xtandem file.
      */
     private int iNumberOfSpectra = 0;
     /**
@@ -70,7 +77,7 @@ public class XTandemParser implements Serializable {
      */
     private ArrayList<String> iProteinKeyList = null;
     /**
-     * spectrum title to X!Tandem id map
+     * Spectrum title to X!Tandem id map.
      */
     private HashMap<String, Integer> iTitle2SpectrumIDMap;
     /**
@@ -85,6 +92,7 @@ public class XTandemParser implements Serializable {
      *
      * @exception IOException
      * @exception SAXException
+     * @throws ParserConfigurationException  
      */
     public XTandemParser(File aFile) throws IOException, SAXException, ParserConfigurationException {
         this(aFile, false);
@@ -99,6 +107,7 @@ public class XTandemParser implements Serializable {
      *
      * @exception IOException
      * @exception SAXException
+     * @throws ParserConfigurationException  
      */
     public XTandemParser(File aFile, boolean skipDetails) throws IOException, SAXException, ParserConfigurationException {
         this.parseXTandemFile(aFile, skipDetails);
@@ -112,6 +121,7 @@ public class XTandemParser implements Serializable {
      * sequences, modifications and matches e-values will be loaded.
      * @exception IOException
      * @exception SAXException
+     * @throws ParserConfigurationException
      */
     private void parseXTandemFile(File aInputFile, boolean skipDetails) throws IOException, SAXException, ParserConfigurationException {
 
@@ -121,7 +131,6 @@ public class XTandemParser implements Serializable {
         DocumentBuilder db;
         Document dom;
         Element docEle;
-
 
         // Modifications: Specific to residues within a domain
         String modificationName;

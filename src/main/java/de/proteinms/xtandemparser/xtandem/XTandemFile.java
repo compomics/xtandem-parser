@@ -1,7 +1,6 @@
 package de.proteinms.xtandemparser.xtandem;
 
 import de.proteinms.xtandemparser.interfaces.Ion;
-import de.proteinms.xtandemparser.interfaces.Peaklist;
 import de.proteinms.xtandemparser.parser.XTandemParser;
 
 import java.io.File;
@@ -45,7 +44,7 @@ public class XTandemFile implements Serializable {
      */
     private ModificationMap iModMap = null;
     /**
-     * Private variable iXTParser as an instance of XTandemParser. *
+     * Private variable iXTParser as an instance of XTandemParser.
      */
     private XTandemParser iXTParser = null;
     /**
@@ -71,6 +70,7 @@ public class XTandemFile implements Serializable {
      *
      * @param aXTandemFile The given XTandem file.
      * @throws SAXException SAX parsing exception thrown.
+     * @throws ParserConfigurationException  
      */
     public XTandemFile(String aXTandemFile) throws SAXException, ParserConfigurationException {
         this(aXTandemFile, false);
@@ -83,8 +83,8 @@ public class XTandemFile implements Serializable {
      * @param aXTandemFile The given XTandem file.
      * @param skipDetails if true only the spectrum identifiers, the peptides
      * sequences, modifications and matches e-values will be loaded.
-     *
      * @throws SAXException SAX parsing exception thrown.
+     * @throws ParserConfigurationException  
      */
     public XTandemFile(String aXTandemFile, boolean skipDetails) throws SAXException, ParserConfigurationException {
         try {

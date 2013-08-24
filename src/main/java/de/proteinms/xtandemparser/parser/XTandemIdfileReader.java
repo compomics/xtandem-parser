@@ -8,11 +8,9 @@ import com.compomics.util.experiment.identification.matches.SpectrumMatch;
 import com.compomics.util.experiment.io.identifications.IdfileReader;
 import com.compomics.util.experiment.massspectrometry.*;
 import com.compomics.util.experiment.personalization.ExperimentObject;
-import com.compomics.util.protein.Header;
 import com.compomics.util.waiting.WaitingHandler;
 import de.proteinms.xtandemparser.interfaces.Modification;
 import de.proteinms.xtandemparser.xtandem.*;
-import de.proteinms.xtandemparser.xtandem.Spectrum;
 import java.io.IOException;
 import org.xml.sax.SAXException;
 
@@ -23,8 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 
 /**
@@ -58,11 +54,12 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
      *
      * @param aFile the inspected file
      * @throws SAXException
+     * @throws ParserConfigurationException
      */
     public XTandemIdfileReader(File aFile) throws SAXException, ParserConfigurationException {
-            xTandemFile = new XTandemFile(aFile.getPath(), true);
-            peptideMap = xTandemFile.getPeptideMap();
-            modificationMap = xTandemFile.getModificationMap();
+        xTandemFile = new XTandemFile(aFile.getPath(), true);
+        peptideMap = xTandemFile.getPeptideMap();
+        modificationMap = xTandemFile.getModificationMap();
     }
 
     public String getExtension() {
@@ -87,11 +84,11 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
         if (waitingHandler != null) {
             waitingHandler.setMaxSecondaryProgressCounter(xTandemFile.getSpectraNumber());
         }
-        
+
         HashMap<Integer, String> idToSpectrumTitleMap = xTandemFile.getXTandemParser().getIdToSpectrumMap();
 
         for (String id : peptideMap.getSpectrumAndPeptideMap().keySet()) {
-            
+
             Integer spectrumNumber = new Integer(id.substring(1));
             String tempTitle = idToSpectrumTitleMap.get(spectrumNumber);
             String spectrumName = fixMgfTitle(tempTitle);

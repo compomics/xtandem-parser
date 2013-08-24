@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * This class holds the peptide informatin in a map.
+ * This class holds the peptide information in a map.
  *
  * @author Thilo Muth
  */
@@ -19,7 +19,7 @@ public class PeptideMap implements Serializable {
     private HashMap<String, HashMap<String, Peptide>> iSpectrumAndPeptideMap = null;
 
     /**
-     * Builds the peptide map
+     * Builds the peptide map.
      *
      * @param aRawPeptideMap
      * @param aProteinMap
@@ -59,8 +59,7 @@ public class PeptideMap implements Serializable {
 
                     // The peptide id is consists of s + spectrum# + _p + peptide#
                     String peptideID = ("s" + i + "_p" + pCount);
-                    int peptideStart = 0,
-                            peptideEnd = 0;
+                    int peptideStart = 0, peptideEnd = 0;
                     Object input = aRawPeptideMap.get("start" + "_s" + i + "_p" + pCount);
                     if (input != null) {
                         peptideStart = new Integer(input.toString());
