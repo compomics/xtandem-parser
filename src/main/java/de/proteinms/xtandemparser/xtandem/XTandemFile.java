@@ -82,7 +82,8 @@ public class XTandemFile implements Serializable {
      *
      * @param aXTandemFile The given XTandem file.
      * @param skipDetails if true only the spectrum identifiers, the peptides
-     * sequences, modifications and matches e-values will be loaded.
+     * sequences, modifications and matches e-values will be loaded. Plus the 
+     * input and performance parameters.
      * @throws SAXException SAX parsing exception thrown.
      * @throws ParserConfigurationException  
      */
