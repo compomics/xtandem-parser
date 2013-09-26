@@ -134,16 +134,6 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
                         boolean found = false;
                         for (PeptideAssumption loadedAssumption : currentMatch.getAllAssumptions()) {
                             if (loadedAssumption.getPeptide().isSameAs(newAssumption.getPeptide())) {
-                                for (String protein : newAssumption.getPeptide().getParentProteins()) {
-                                    if (!loadedAssumption.getPeptide().getParentProteins().contains(protein)) {
-                                        loadedAssumption.getPeptide().getParentProteins().add(protein);
-                                    }
-                                }
-                                for (String protein : loadedAssumption.getPeptide().getParentProteins()) {
-                                    if (!newAssumption.getPeptide().getParentProteins().contains(protein)) {
-                                        newAssumption.getPeptide().getParentProteins().add(protein);
-                                    }
-                                }
                                 if (loadedAssumption.getPeptide().sameModificationsAs(newAssumption.getPeptide())) {
                                     found = true;
                                 }
