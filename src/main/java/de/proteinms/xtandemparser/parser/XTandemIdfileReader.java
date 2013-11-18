@@ -3,6 +3,7 @@ package de.proteinms.xtandemparser.parser;
 import com.compomics.util.Util;
 import com.compomics.util.experiment.identification.Advocate;
 import com.compomics.util.experiment.identification.PeptideAssumption;
+import com.compomics.util.experiment.identification.SpectrumIdentificationAssumption;
 import com.compomics.util.experiment.identification.matches.ModificationMatch;
 import com.compomics.util.experiment.identification.matches.SpectrumMatch;
 import com.compomics.util.experiment.io.identifications.IdfileReader;
@@ -132,9 +133,10 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
                     for (Domain domain : hitMap.get(eValue)) {
                         PeptideAssumption newAssumption = getPeptideAssumption(domain, charge.value, rank);
                         boolean found = false;
-                        for (PeptideAssumption loadedAssumption : currentMatch.getAllAssumptions()) {
-                            if (loadedAssumption.getPeptide().isSameAs(newAssumption.getPeptide())) {
-                                if (loadedAssumption.getPeptide().sameModificationsAs(newAssumption.getPeptide())) {
+                        for (SpectrumIdentificationAssumption loadedAssumption : currentMatch.getAllAssumptions()) {
+                            PeptideAssumption peptideAssumption = (PeptideAssumption) loadedAssumption;
+                            if (peptideAssumption.getPeptide().isSameAs(newAssumption.getPeptide())) {
+                                if (peptideAssumption.getPeptide().sameModificationsAs(newAssumption.getPeptide())) {
                                     found = true;
                                 }
                             }
