@@ -1,6 +1,7 @@
 package de.proteinms.xtandemparser.parser;
 
 import com.compomics.util.Util;
+import com.compomics.util.experiment.biology.AminoAcidPattern;
 import com.compomics.util.experiment.identification.Advocate;
 import com.compomics.util.experiment.identification.PeptideAssumption;
 import com.compomics.util.experiment.identification.SpectrumIdentificationAssumption;
@@ -135,7 +136,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
                         boolean found = false;
                         for (SpectrumIdentificationAssumption loadedAssumption : currentMatch.getAllAssumptions()) {
                             PeptideAssumption peptideAssumption = (PeptideAssumption) loadedAssumption;
-                            if (peptideAssumption.getPeptide().isSameAs(newAssumption.getPeptide())) {
+                            if (peptideAssumption.getPeptide().isSameSequenceAndModificationStatus(newAssumption.getPeptide(), AminoAcidPattern.MatchingType.string, Double.NaN)) {
                                 if (peptideAssumption.getPeptide().sameModificationsAs(newAssumption.getPeptide())) {
                                     found = true;
                                 }
