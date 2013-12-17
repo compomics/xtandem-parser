@@ -999,13 +999,13 @@ public class XTandemParser implements Serializable {
 
                                     iRawPeptideMap.put("domainid" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("id").getNodeValue());
 
+                                        // the start position of the peptide
+                                        iRawPeptideMap.put("domainstart" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("start").getNodeValue());
+
                                     if (!skipDetails) {
 
                                         // Store the protein key a la Thilo. There should be only one protein key per domain.
                                         iRawPeptideMap.put("proteinkey" + "_" + domainKey, proteinKey);
-
-                                        // the start position of the peptide
-                                        iRawPeptideMap.put("domainstart" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("start").getNodeValue());
 
                                         // the end position of the peptide
                                         iRawPeptideMap.put("domainend" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("end").getNodeValue());
