@@ -180,7 +180,6 @@ public class XTandemParser implements Serializable {
         boolean zIonFlag = false;
 
         int spectraCounter = 0;
-        boolean needBreak = false;
 
         // Parse the parameters first
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -199,7 +198,6 @@ public class XTandemParser implements Serializable {
                                         "label=\"spectrum, path\"")) {
                                     if (!parameterNodes.item(m).getTextContent().equals("")) {
                                         iInputParamMap.put("SPECTRUMPATH", parameterNodes.item(m).getTextContent());
-                                        needBreak = true;
                                         break;
                                     }
                                 }
@@ -682,9 +680,6 @@ public class XTandemParser implements Serializable {
                                 }
                             }
                         }
-                    }
-                    if (needBreak) {
-                        break;
                     }
 
                     // Parse the performance parameters

@@ -220,4 +220,9 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
     public void close() throws IOException {
         xTandemFile = null;
     }
+
+    @Override
+    public String getSoftwareVersion() {
+        return xTandemFile.getPerformParameters().getProcVersion();
+    }
 }
