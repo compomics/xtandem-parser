@@ -144,7 +144,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
                         }
                         if (!found) {
                             rankIncrease++;
-                            currentMatch.addHit(Advocate.XTandem.getIndex(), newAssumption, false);
+                            currentMatch.addHit(Advocate.xtandem.getIndex(), newAssumption, false);
                         }
                     }
                     rank += rankIncrease;
@@ -190,7 +190,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
         }
 
         com.compomics.util.experiment.biology.Peptide peptide = new com.compomics.util.experiment.biology.Peptide(sequence, foundModifications);
-        return new PeptideAssumption(peptide, rank, Advocate.XTandem.getIndex(), new Charge(Charge.PLUS, charge), domain.getDomainExpect(), getFileName());
+        return new PeptideAssumption(peptide, rank, Advocate.xtandem.getIndex(), new Charge(Charge.PLUS, charge), domain.getDomainExpect(), getFileName());
     }
 
     /**
@@ -224,5 +224,10 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
     @Override
     public String getSoftwareVersion() {
         return xTandemFile.getPerformParameters().getProcVersion();
+    }
+
+    @Override
+    public String getSoftware() {
+        return "X!Tandem";
     }
 }
