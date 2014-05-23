@@ -222,12 +222,11 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
     }
 
     @Override
-    public String getSoftwareVersion() {
-        return xTandemFile.getPerformParameters().getProcVersion();
-    }
-
-    @Override
-    public String getSoftware() {
-        return "X!Tandem";
+    public HashMap<String, ArrayList<String>> getSoftwareVersions() {
+        HashMap<String, ArrayList<String>> result = new HashMap<String, ArrayList<String>>();
+        ArrayList<String> versions = new ArrayList<String>();
+        versions.add(xTandemFile.getPerformParameters().getProcVersion());
+        result.put("X!Tandem", versions);
+        return result;
     }
 }
