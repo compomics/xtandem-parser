@@ -1,5 +1,6 @@
 package de.proteinms.xtandemparser.viewer;
 
+import com.compomics.util.gui.interfaces.SpectrumAnnotation;
 import com.jgoodies.looks.HeaderStyle;
 import com.jgoodies.looks.Options;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
@@ -49,7 +50,7 @@ public class XTandemViewer extends JFrame {
     private HashMap<Integer, String> accMap;
     private Vector spectraTableColToolTips, spectrumTableColToolTips, spectrumJXTableColToolTips,
             identificationsJXTableColumnToolTips;
-    private HashMap<String, Vector<DefaultSpectrumAnnotation>> allAnnotations;
+    private HashMap<String, Vector<SpectrumAnnotation>> allAnnotations;
     private JCheckBox aIonsJCheckBox, bIonsJCheckBox, cIonsJCheckBox, chargeOneJCheckBox,
             chargeTwoJCheckBox, chargeOverTwoJCheckBox, xIonsJCheckBox, yIonsJCheckBox, zIonsJCheckBox;
     private JLabel modificationDetailsJLabel;
@@ -904,9 +905,9 @@ public class XTandemViewer extends JFrame {
      * @param annotations the annotations to be filtered
      * @return the filtered annotations
      */
-    private Vector<DefaultSpectrumAnnotation> filterAnnotations(Vector<DefaultSpectrumAnnotation> annotations) {
+    private Vector<SpectrumAnnotation> filterAnnotations(Vector<SpectrumAnnotation> annotations) {
 
-        Vector<DefaultSpectrumAnnotation> filteredAnnotations = new Vector();
+        Vector<SpectrumAnnotation> filteredAnnotations = new Vector();
 
         for (int i = 0; i < annotations.size(); i++) {
             String currentLabel = annotations.get(i).getLabel();
@@ -1045,7 +1046,7 @@ public class XTandemViewer extends JFrame {
                 selectedRow = identificationsTable.getSelectedRow();
             }
 
-            Vector<DefaultSpectrumAnnotation> currentAnnotations = allAnnotations.get(
+            Vector<SpectrumAnnotation> currentAnnotations = allAnnotations.get(
                     identificationsTable.getValueAt(selectedRow, 1) + "_"
                     + identificationsTable.getValueAt(selectedRow, 7));
 
@@ -1250,7 +1251,7 @@ public class XTandemViewer extends JFrame {
 
                         int[][] ionCoverage = new int[sequence.length() + 1][12];
 
-                        Vector<DefaultSpectrumAnnotation> currentAnnotations = new Vector();
+                        Vector<SpectrumAnnotation> currentAnnotations = new Vector();
                         for (int i = 0; i < 12; i++) {
                             FragmentIon[] ions = ionsMap.get(domain.getDomainKey() + "_" + i);
                             for (FragmentIon ion : ions) {
