@@ -1,7 +1,6 @@
 package de.proteinms.xtandemparser.parser;
 
 import com.compomics.util.Util;
-import com.compomics.util.experiment.biology.AminoAcidPattern;
 import com.compomics.util.experiment.identification.Advocate;
 import com.compomics.util.experiment.identification.PeptideAssumption;
 import com.compomics.util.experiment.identification.SpectrumIdentificationAssumption;
