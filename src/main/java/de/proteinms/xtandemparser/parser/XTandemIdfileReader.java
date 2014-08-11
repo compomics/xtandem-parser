@@ -10,6 +10,7 @@ import com.compomics.util.experiment.identification.matches.SpectrumMatch;
 import com.compomics.util.experiment.io.identifications.IdfileReader;
 import com.compomics.util.experiment.massspectrometry.*;
 import com.compomics.util.experiment.personalization.ExperimentObject;
+import com.compomics.util.preferences.SequenceMatchingPreferences;
 import com.compomics.util.waiting.WaitingHandler;
 import de.proteinms.xtandemparser.interfaces.Modification;
 import de.proteinms.xtandemparser.xtandem.*;
@@ -136,7 +137,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
                         boolean found = false;
                         for (SpectrumIdentificationAssumption loadedAssumption : currentMatch.getAllAssumptions()) {
                             PeptideAssumption peptideAssumption = (PeptideAssumption) loadedAssumption;
-                            if (peptideAssumption.getPeptide().isSameSequenceAndModificationStatus(newAssumption.getPeptide(), AminoAcidPattern.MatchingType.string, Double.NaN)) {
+                            if (peptideAssumption.getPeptide().isSameSequenceAndModificationStatus(newAssumption.getPeptide(), SequenceMatchingPreferences.defaultStringMatching)) {
                                 if (peptideAssumption.getPeptide().sameModificationsAs(newAssumption.getPeptide())) {
                                     found = true;
                                 }
