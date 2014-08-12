@@ -48,11 +48,11 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
      */
     private PeptideMap peptideMap;
     /**
-     * A map of the peptides found in this file
+     * A map of the peptides found in this file.
      */
     private HashMap<String, LinkedList<com.compomics.util.experiment.biology.Peptide>> foundPeptidesMap;
     /**
-     * The length of the keys of the peptide map
+     * The length of the keys of the peptide map.
      */
     private int peptideMapKeyLength;
 
@@ -221,7 +221,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
             if (peptidesForTag == null) {
                 peptidesForTag = new LinkedList<com.compomics.util.experiment.biology.Peptide>();
                 foundPeptidesMap.put(subSequence, peptidesForTag);
-            foundPeptidesMap = new HashMap<String, LinkedList<com.compomics.util.experiment.biology.Peptide>>(1024);
+                foundPeptidesMap = new HashMap<String, LinkedList<com.compomics.util.experiment.biology.Peptide>>(1024);
             }
             peptidesForTag.add(peptide);
         }
