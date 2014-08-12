@@ -3,6 +3,7 @@ package de.proteinms.xtandemparser.parser;
 import com.compomics.util.Util;
 import com.compomics.util.experiment.identification.Advocate;
 import com.compomics.util.experiment.identification.PeptideAssumption;
+import com.compomics.util.experiment.identification.SequenceFactory;
 import com.compomics.util.experiment.identification.SpectrumIdentificationAssumption;
 import com.compomics.util.experiment.identification.matches.ModificationMatch;
 import com.compomics.util.experiment.identification.matches.SpectrumMatch;
@@ -19,10 +20,12 @@ import org.xml.sax.SAXException;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedList;
+import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
 /**
@@ -44,6 +47,14 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
      * The peptide map.
      */
     private PeptideMap peptideMap;
+    /**
+     * A map of the peptides found in this file
+     */
+    private HashMap<String, LinkedList<com.compomics.util.experiment.biology.Peptide>> foundPeptidesMap;
+    /**
+     * The length of the keys of the peptide map
+     */
+    private int peptideMapKeyLength;
 
     /**
      * Constructor for the reader.
@@ -79,9 +90,20 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
     }
 
     @Override
-    public HashSet<SpectrumMatch> getAllSpectrumMatches(WaitingHandler waitingHandler) throws IOException, IllegalArgumentException, Exception {
+    public LinkedList<SpectrumMatch> getAllSpectrumMatches(WaitingHandler waitingHandler) throws IOException, IllegalArgumentException, SQLException, ClassNotFoundException, InterruptedException, JAXBException {
+        return getAllSpectrumMatches(waitingHandler, true);
+    }
 
-        HashSet<SpectrumMatch> foundPeptides = new HashSet<SpectrumMatch>();
+    @Override
+    public LinkedList<SpectrumMatch> getAllSpectrumMatches(WaitingHandler waitingHandler, boolean secondaryMaps) throws IOException, IllegalArgumentException, SQLException, ClassNotFoundException, InterruptedException, JAXBException {
+
+        if (secondaryMaps) {
+            SequenceFactory sequenceFactory = SequenceFactory.getInstance();
+            peptideMapKeyLength = sequenceFactory.getDefaultProteinTree().getInitialTagSize();
+            foundPeptidesMap = new HashMap<String, LinkedList<com.compomics.util.experiment.biology.Peptide>>(1024);
+        }
+
+        LinkedList<SpectrumMatch> result = new LinkedList<SpectrumMatch>();
 
         if (waitingHandler != null) {
             waitingHandler.setMaxSecondaryProgressCounter(xTandemFile.getSpectraNumber());
@@ -132,7 +154,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
                 for (Double eValue : eValues) {
                     int rankIncrease = 0;
                     for (Domain domain : hitMap.get(eValue)) {
-                        PeptideAssumption newAssumption = getPeptideAssumption(domain, charge.value, rank);
+                        PeptideAssumption newAssumption = getPeptideAssumption(domain, charge.value, rank, secondaryMaps);
                         boolean found = false;
                         for (SpectrumIdentificationAssumption loadedAssumption : currentMatch.getAllAssumptions()) {
                             PeptideAssumption peptideAssumption = (PeptideAssumption) loadedAssumption;
@@ -150,7 +172,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
                     rank += rankIncrease;
                 }
 
-                foundPeptides.add(currentMatch);
+                result.add(currentMatch);
             }
 
             if (waitingHandler != null) {
@@ -161,7 +183,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
             }
         }
 
-        return foundPeptides;
+        return result;
     }
 
     /**
@@ -174,9 +196,11 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
      * @param domain the domain of the X!Tandem peptide
      * @param charge the charge of the precursor of the inspected spectrum
      * @param rank the rank of the peptide hit
+     * @param secondaryMaps if true the peptides and tags will be kept in maps
+     *
      * @return the corresponding peptide assumption
      */
-    private PeptideAssumption getPeptideAssumption(Domain domain, int charge, int rank) {
+    private PeptideAssumption getPeptideAssumption(Domain domain, int charge, int rank, boolean secondaryMaps) {
 
         String sequence = domain.getDomainSequence();
 
@@ -190,6 +214,18 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
         }
 
         com.compomics.util.experiment.biology.Peptide peptide = new com.compomics.util.experiment.biology.Peptide(sequence, foundModifications);
+
+        if (secondaryMaps) {
+            String subSequence = sequence.substring(0, peptideMapKeyLength);
+            LinkedList<com.compomics.util.experiment.biology.Peptide> peptidesForTag = foundPeptidesMap.get(subSequence);
+            if (peptidesForTag == null) {
+                peptidesForTag = new LinkedList<com.compomics.util.experiment.biology.Peptide>();
+                foundPeptidesMap.put(subSequence, peptidesForTag);
+            foundPeptidesMap = new HashMap<String, LinkedList<com.compomics.util.experiment.biology.Peptide>>(1024);
+            }
+            peptidesForTag.add(peptide);
+        }
+
         return new PeptideAssumption(peptide, rank, Advocate.xtandem.getIndex(), new Charge(Charge.PLUS, charge), domain.getDomainExpect(), getFileName());
     }
 
@@ -209,10 +245,8 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
             e.printStackTrace();
         }
 
-
         // a special fix for mgf files with titles containing \\ instead of \
         //spectrumTitle = spectrumTitle.replaceAll("\\\\\\\\", "\\\\");  // @TODO: only needed for omssa???
-
         return spectrumTitle;
     }
 
@@ -228,5 +262,20 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
         versions.add(xTandemFile.getPerformParameters().getProcVersion());
         result.put("X!Tandem", versions);
         return result;
+    }
+
+    @Override
+    public HashMap<String, LinkedList<com.compomics.util.experiment.biology.Peptide>> getPeptidesMap() {
+        return foundPeptidesMap;
+    }
+
+    @Override
+    public HashMap<String, LinkedList<SpectrumMatch>> getSimpleTagsMap() {
+        return new HashMap<String, LinkedList<SpectrumMatch>>();
+    }
+
+    @Override
+    public HashMap<String, LinkedList<SpectrumMatch>> getTagsMap() {
+        return new HashMap<String, LinkedList<SpectrumMatch>>();
     }
 }
