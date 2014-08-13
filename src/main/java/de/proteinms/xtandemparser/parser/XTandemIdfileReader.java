@@ -1,6 +1,7 @@
 package de.proteinms.xtandemparser.parser;
 
 import com.compomics.util.Util;
+import com.compomics.util.experiment.biology.AminoAcid;
 import com.compomics.util.experiment.identification.Advocate;
 import com.compomics.util.experiment.identification.PeptideAssumption;
 import com.compomics.util.experiment.identification.SequenceFactory;
@@ -91,13 +92,13 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
 
     @Override
     public LinkedList<SpectrumMatch> getAllSpectrumMatches(WaitingHandler waitingHandler) throws IOException, IllegalArgumentException, SQLException, ClassNotFoundException, InterruptedException, JAXBException {
-        return getAllSpectrumMatches(waitingHandler, true);
+        return getAllSpectrumMatches(waitingHandler, null);
     }
 
     @Override
-    public LinkedList<SpectrumMatch> getAllSpectrumMatches(WaitingHandler waitingHandler, boolean secondaryMaps) throws IOException, IllegalArgumentException, SQLException, ClassNotFoundException, InterruptedException, JAXBException {
+    public LinkedList<SpectrumMatch> getAllSpectrumMatches(WaitingHandler waitingHandler, SequenceMatchingPreferences sequenceMatchingPreferences) throws IOException, IllegalArgumentException, SQLException, ClassNotFoundException, InterruptedException, JAXBException {
 
-        if (secondaryMaps) {
+        if (sequenceMatchingPreferences != null) {
             SequenceFactory sequenceFactory = SequenceFactory.getInstance();
             peptideMapKeyLength = sequenceFactory.getDefaultProteinTree().getInitialTagSize();
             foundPeptidesMap = new HashMap<String, LinkedList<com.compomics.util.experiment.biology.Peptide>>(1024);
@@ -154,7 +155,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
                 for (Double eValue : eValues) {
                     int rankIncrease = 0;
                     for (Domain domain : hitMap.get(eValue)) {
-                        PeptideAssumption newAssumption = getPeptideAssumption(domain, charge.value, rank, secondaryMaps);
+                        PeptideAssumption newAssumption = getPeptideAssumption(domain, charge.value, rank, sequenceMatchingPreferences);
                         boolean found = false;
                         for (SpectrumIdentificationAssumption loadedAssumption : currentMatch.getAllAssumptions()) {
                             PeptideAssumption peptideAssumption = (PeptideAssumption) loadedAssumption;
@@ -196,11 +197,12 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
      * @param domain the domain of the X!Tandem peptide
      * @param charge the charge of the precursor of the inspected spectrum
      * @param rank the rank of the peptide hit
-     * @param secondaryMaps if true the peptides and tags will be kept in maps
+     * @param sequenceMatchingPreferences the sequence matching preferences to
+     * use to fill the secondary maps
      *
      * @return the corresponding peptide assumption
      */
-    private PeptideAssumption getPeptideAssumption(Domain domain, int charge, int rank, boolean secondaryMaps) {
+    private PeptideAssumption getPeptideAssumption(Domain domain, int charge, int rank, SequenceMatchingPreferences sequenceMatchingPreferences) {
 
         String sequence = domain.getDomainSequence();
 
@@ -215,13 +217,13 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
 
         com.compomics.util.experiment.biology.Peptide peptide = new com.compomics.util.experiment.biology.Peptide(sequence, foundModifications);
 
-        if (secondaryMaps) {
+        if (sequenceMatchingPreferences != null) {
             String subSequence = sequence.substring(0, peptideMapKeyLength);
+            subSequence = AminoAcid.getMatchingSequence(subSequence, sequenceMatchingPreferences);
             LinkedList<com.compomics.util.experiment.biology.Peptide> peptidesForTag = foundPeptidesMap.get(subSequence);
             if (peptidesForTag == null) {
                 peptidesForTag = new LinkedList<com.compomics.util.experiment.biology.Peptide>();
                 foundPeptidesMap.put(subSequence, peptidesForTag);
-                foundPeptidesMap = new HashMap<String, LinkedList<com.compomics.util.experiment.biology.Peptide>>(1024);
             }
             peptidesForTag.add(peptide);
         }
