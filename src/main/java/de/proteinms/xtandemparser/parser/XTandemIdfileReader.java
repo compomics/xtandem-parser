@@ -272,11 +272,6 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
     }
 
     @Override
-    public HashMap<String, LinkedList<SpectrumMatch>> getSimpleTagsMap() {
-        return new HashMap<String, LinkedList<SpectrumMatch>>();
-    }
-
-    @Override
     public HashMap<String, LinkedList<SpectrumMatch>> getTagsMap() {
         return new HashMap<String, LinkedList<SpectrumMatch>>();
     }
