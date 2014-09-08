@@ -2,6 +2,7 @@ package de.proteinms.xtandemparser.parser;
 
 import com.compomics.util.Util;
 import com.compomics.util.experiment.biology.AminoAcid;
+import com.compomics.util.experiment.biology.AminoAcidSequence;
 import com.compomics.util.experiment.identification.Advocate;
 import com.compomics.util.experiment.identification.PeptideAssumption;
 import com.compomics.util.experiment.identification.SequenceFactory;
@@ -92,11 +93,11 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
 
     @Override
     public LinkedList<SpectrumMatch> getAllSpectrumMatches(WaitingHandler waitingHandler) throws IOException, IllegalArgumentException, SQLException, ClassNotFoundException, InterruptedException, JAXBException {
-        return getAllSpectrumMatches(waitingHandler, null);
+        return getAllSpectrumMatches(waitingHandler, null, true);
     }
 
     @Override
-    public LinkedList<SpectrumMatch> getAllSpectrumMatches(WaitingHandler waitingHandler, SequenceMatchingPreferences sequenceMatchingPreferences) throws IOException, IllegalArgumentException, SQLException, ClassNotFoundException, InterruptedException, JAXBException {
+    public LinkedList<SpectrumMatch> getAllSpectrumMatches(WaitingHandler waitingHandler, SequenceMatchingPreferences sequenceMatchingPreferences, boolean expandAaCombinations) throws IOException, IllegalArgumentException, SQLException, ClassNotFoundException, InterruptedException, JAXBException {
 
         if (sequenceMatchingPreferences != null) {
             SequenceFactory sequenceFactory = SequenceFactory.getInstance();
@@ -155,19 +156,32 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
                 for (Double eValue : eValues) {
                     int rankIncrease = 0;
                     for (Domain domain : hitMap.get(eValue)) {
-                        PeptideAssumption newAssumption = getPeptideAssumption(domain, charge.value, rank, sequenceMatchingPreferences);
+                        PeptideAssumption peptideAssumption = getPeptideAssumption(domain, charge.value, rank, sequenceMatchingPreferences);
+                        com.compomics.util.experiment.biology.Peptide peptide = peptideAssumption.getPeptide();
                         boolean found = false;
                         for (SpectrumIdentificationAssumption loadedAssumption : currentMatch.getAllAssumptions()) {
-                            PeptideAssumption peptideAssumption = (PeptideAssumption) loadedAssumption;
-                            if (peptideAssumption.getPeptide().isSameSequenceAndModificationStatus(newAssumption.getPeptide(), SequenceMatchingPreferences.defaultStringMatching)) {
-                                if (peptideAssumption.getPeptide().sameModificationsAs(newAssumption.getPeptide())) {
+                            PeptideAssumption tempAssumption = (PeptideAssumption) loadedAssumption;
+                            if (tempAssumption.getPeptide().isSameSequenceAndModificationStatus(peptide, SequenceMatchingPreferences.defaultStringMatching)) {
+                                if (tempAssumption.getPeptide().sameModificationsAs(peptideAssumption.getPeptide())) {
                                     found = true;
                                 }
                             }
                         }
                         if (!found) {
                             rankIncrease++;
-                            currentMatch.addHit(Advocate.xtandem.getIndex(), newAssumption, false);
+                            if (expandAaCombinations && AminoAcidSequence.hasCombination(peptideAssumption.getPeptide().getSequence())) {
+                                for (StringBuilder expandedSequence : AminoAcidSequence.getCombinations(peptideAssumption.getPeptide().getSequence())) {
+                                    com.compomics.util.experiment.biology.Peptide newPeptide = new com.compomics.util.experiment.biology.Peptide(expandedSequence.toString(), peptide.getModificationMatches());
+                                    ArrayList<ModificationMatch> modificationMatches = peptide.getModificationMatches();
+                                    for (ModificationMatch modificationMatch : modificationMatches) {
+                                        newPeptide.addModificationMatch(new ModificationMatch(modificationMatch.getTheoreticPtm(), modificationMatch.isVariable(), modificationMatch.getModificationSite()));
+                                    }
+                                    PeptideAssumption newAssumption = new PeptideAssumption(newPeptide, peptideAssumption.getRank(), peptideAssumption.getAdvocate(), peptideAssumption.getIdentificationCharge(), peptideAssumption.getScore(), peptideAssumption.getIdentificationFile());
+                                    currentMatch.addHit(Advocate.xtandem.getIndex(), newAssumption, false);
+                                }
+                            } else {
+                                currentMatch.addHit(Advocate.xtandem.getIndex(), peptideAssumption, false);
+                            }
                         }
                     }
                     rank += rankIncrease;
@@ -274,5 +288,15 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
     @Override
     public HashMap<String, LinkedList<SpectrumMatch>> getTagsMap() {
         return new HashMap<String, LinkedList<SpectrumMatch>>();
+    }
+
+    @Override
+    public void clearTagsMap() {
+        // No tags here
+    }
+
+    @Override
+    public void clearPeptidesMap() {
+        foundPeptidesMap.clear();
     }
 }
