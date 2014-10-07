@@ -297,6 +297,8 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
 
     @Override
     public void clearPeptidesMap() {
-        foundPeptidesMap.clear();
+        if (foundPeptidesMap != null) {
+            foundPeptidesMap.clear();
+        }
     }
 }
