@@ -35,9 +35,9 @@ public class Protein implements Serializable {
     private String iLabel = null;
     /**
      * This variable holds the label which is the description line from the
-     * FASTA file, stored as a note for the protein, e.g., &ltnote
-     * label="description"&gttr|F1RRZ6|F1RRZ6_PIG Uncharacterized protein
-     * (Fragment) OS=Sus scrofa GN=SH3PXD2B PE=4 SV=1:reversed&lt/note&gt. Note
+     * FASTA file, stored as a note for the protein, e.g., &lt;note
+     * label="description"&gt;tr|F1RRZ6|F1RRZ6_PIG Uncharacterized protein
+     * (Fragment) OS=Sus scrofa GN=SH3PXD2B PE=4 SV=1:reversed&lt;note&gt;. Note
      * that the information is often identical to the content of iLabel, but
      * that iLabel can be shortened.
      */

@@ -345,7 +345,7 @@ public class XTandemFile implements Serializable {
     /**
      * This method returns a list of all the spectra.
      *
-     * @return iSpectraList ArrayList<Spectrum>
+     * @return iSpectraList all the spectra
      */
     public ArrayList<Spectrum> getSpectraList() {
         if (iSpectraList == null) {

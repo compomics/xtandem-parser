@@ -248,7 +248,7 @@ public class ModificationMap implements Serializable {
     /**
      * Returns an arrayList of all the variable modifications in the file.
      *
-     * @return varModList ArrayList<Modification>
+     * @return varModList ArrayList with the modifications
      */
     public ArrayList<Modification> getAllVariableModifications() {
         ArrayList<Modification> varModList = new ArrayList<Modification>();

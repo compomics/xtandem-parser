@@ -32,7 +32,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * This reader will import identifications from an X!Tandem XML result file.
- * <p/>
+ * <p>
  * @author Marc Vaudel
  */
 public class XTandemIdfileReader extends ExperimentObject implements IdfileReader {

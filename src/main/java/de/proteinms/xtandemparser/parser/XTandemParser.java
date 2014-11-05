@@ -1513,9 +1513,9 @@ public class XTandemParser implements Serializable {
     }
 
     /**
-     * Returns the protein id list
+     * Returns the protein id list.
      *
-     * @return iProteinIDList ArrayList<String>
+     * @return iProteinIDList ArrayList with the protein keys
      */
     public ArrayList<String> getProteinIDList() {
         return iProteinKeyList;

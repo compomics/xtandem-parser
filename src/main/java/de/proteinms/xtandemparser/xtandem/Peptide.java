@@ -61,7 +61,7 @@ public class Peptide implements Serializable {
     /**
      * Returns the domains.
      *
-     * @return List<Domain> domains
+     * @return the domains
      */
     public List<Domain> getDomains() {
         return domains;
