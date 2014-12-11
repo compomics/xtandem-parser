@@ -4,7 +4,7 @@
     <groupId>de.proteinms.xtandemparser</groupId>
     <artifactId>xtandem-parser</artifactId>
     <name>xtandem-parser</name>
-    <version>1.7.16</version>
+    <version>1.7.17</version>
     <description>Java based parser for X!Tandem output XML files</description>
     <url>http://xtandem-parser.googlecode.com/</url>
 
@@ -247,7 +247,7 @@
         <dependency>
             <groupId>com.compomics</groupId>
             <artifactId>utilities</artifactId>
-            <version>3.43.23</version>
+            <version>3.43.24</version>
             <type>jar</type>
             <exclusions>
                 <exclusion>

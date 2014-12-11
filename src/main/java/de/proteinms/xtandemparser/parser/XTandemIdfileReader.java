@@ -5,6 +5,7 @@ import com.compomics.util.experiment.biology.AminoAcid;
 import com.compomics.util.experiment.biology.AminoAcidSequence;
 import com.compomics.util.experiment.identification.Advocate;
 import com.compomics.util.experiment.identification.PeptideAssumption;
+import com.compomics.util.experiment.identification.SearchParameters;
 import com.compomics.util.experiment.identification.SequenceFactory;
 import com.compomics.util.experiment.identification.SpectrumIdentificationAssumption;
 import com.compomics.util.experiment.identification.matches.ModificationMatch;
@@ -92,12 +93,12 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
     }
 
     @Override
-    public LinkedList<SpectrumMatch> getAllSpectrumMatches(WaitingHandler waitingHandler) throws IOException, IllegalArgumentException, SQLException, ClassNotFoundException, InterruptedException, JAXBException {
-        return getAllSpectrumMatches(waitingHandler, null, true);
+    public LinkedList<SpectrumMatch> getAllSpectrumMatches(WaitingHandler waitingHandler, SearchParameters searchParameters) throws IOException, IllegalArgumentException, SQLException, ClassNotFoundException, InterruptedException, JAXBException {
+        return getAllSpectrumMatches(waitingHandler, searchParameters, null, true);
     }
 
     @Override
-    public LinkedList<SpectrumMatch> getAllSpectrumMatches(WaitingHandler waitingHandler, SequenceMatchingPreferences sequenceMatchingPreferences, boolean expandAaCombinations) throws IOException, IllegalArgumentException, SQLException, ClassNotFoundException, InterruptedException, JAXBException {
+    public LinkedList<SpectrumMatch> getAllSpectrumMatches(WaitingHandler waitingHandler, SearchParameters searchParameters, SequenceMatchingPreferences sequenceMatchingPreferences, boolean expandAaCombinations) throws IOException, IllegalArgumentException, SQLException, ClassNotFoundException, InterruptedException, JAXBException {
 
         if (sequenceMatchingPreferences != null) {
             SequenceFactory sequenceFactory = SequenceFactory.getInstance();
@@ -120,7 +121,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
             String spectrumName = fixMgfTitle(tempTitle);
 
             // try to remove the retention time as added by xtandem...
-            if (spectrumName.indexOf("RTINSECONDS=") != -1) {
+            if (spectrumName.contains("RTINSECONDS=")) {
                 spectrumName = spectrumName.substring(0, spectrumName.indexOf("RTINSECONDS="));
             }
 
