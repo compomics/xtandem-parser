@@ -159,11 +159,13 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
                         PeptideAssumption peptideAssumption = getPeptideAssumption(domain, charge.value, rank, sequenceMatchingPreferences);
                         com.compomics.util.experiment.biology.Peptide peptide = peptideAssumption.getPeptide();
                         boolean found = false;
-                        for (SpectrumIdentificationAssumption loadedAssumption : currentMatch.getAllAssumptions()) {
-                            PeptideAssumption tempAssumption = (PeptideAssumption) loadedAssumption;
-                            if (tempAssumption.getPeptide().isSameSequenceAndModificationStatus(peptide, SequenceMatchingPreferences.defaultStringMatching)) {
-                                if (tempAssumption.getPeptide().sameModificationsAs(peptideAssumption.getPeptide())) {
-                                    found = true;
+                        if (currentMatch.getAllAssumptions() != null) {
+                            for (SpectrumIdentificationAssumption loadedAssumption : currentMatch.getAllAssumptions()) {
+                                PeptideAssumption tempAssumption = (PeptideAssumption) loadedAssumption;
+                                if (tempAssumption.getPeptide().isSameSequenceAndModificationStatus(peptide, SequenceMatchingPreferences.defaultStringMatching)) {
+                                    if (tempAssumption.getPeptide().sameModificationsAs(peptideAssumption.getPeptide())) {
+                                        found = true;
+                                    }
                                 }
                             }
                         }
