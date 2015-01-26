@@ -21,24 +21,24 @@ public class PeptideMap implements Serializable {
     /**
      * Builds the peptide map.
      *
-     * @param aRawPeptideMap
-     * @param aProteinMap
-     * @param aNumberOfSpectra
+     * @param aRawPeptideMap the raw peptide map
+     * @param aProteinMap the protein map
+     * @param aNumberOfSpectra the number of spectra
      */
     public PeptideMap(HashMap aRawPeptideMap, ProteinMap aProteinMap, int aNumberOfSpectra) {
         buildPeptideMap(aRawPeptideMap, aProteinMap, aNumberOfSpectra);
     }
 
     /**
-     * Constructs the 2-dim hashmap, the first dimension is the map with the
+     * Constructs the 2-dim hash map, the first dimension is the map with the
      * spectrum-number as key and another hash map as value. The second
      * dimension has the peptideID (e.g. s171_p2 for spectrum number 171 and the
      * second peptide) and the peptide object as value.
      *
-     * @param aRawPeptideMap
-     * @param aProteinMap
-     * @param aNumberOfSpectra
-     * @return spectrumAndPeptideMap
+     * @param aRawPeptideMap the raw peptide map
+     * @param aProteinMap the protein map
+     * @param aNumberOfSpectra the number of spectra
+     * @return the spectrum and peptides map
      */
     private HashMap buildPeptideMap(HashMap aRawPeptideMap, ProteinMap aProteinMap, int aNumberOfSpectra) {
 
@@ -171,7 +171,7 @@ public class PeptideMap implements Serializable {
      * Retrieve all possible peptide objects for a given spectrum. /!\ This list
      * is not indexed according to the index of the peptide!
      *
-     * @param aSpectrumNumber
+     * @param aSpectrumNumber the spectrum number
      * @return peptideList ArrayList
      */
     public ArrayList<Peptide> getAllPeptides(int aSpectrumNumber) {
@@ -199,7 +199,7 @@ public class PeptideMap implements Serializable {
     /**
      * Returns the number of peptides for a given spectrum
      *
-     * @param aSpectrumNumber
+     * @param aSpectrumNumber the spectrum number
      * @return The total number of peptides
      */
     public int getNumberOfPeptides(int aSpectrumNumber) {

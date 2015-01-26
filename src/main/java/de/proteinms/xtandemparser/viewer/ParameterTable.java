@@ -17,7 +17,7 @@ public class ParameterTable extends JTable {
     /**
      * This constructor takes the input parameters
      *
-     * @param inputParams
+     * @param inputParams the input parameters
      */
     public ParameterTable(InputParams inputParams) {
         super();
@@ -27,7 +27,7 @@ public class ParameterTable extends JTable {
     /**
      * This constructor takes the performance parameters
      *
-     * @param performParams
+     * @param performParams the performance parameters
      */
     public ParameterTable(PerformParams performParams) {
         super();

@@ -109,13 +109,13 @@ public class InSilicoDigester {
      * Constructor get a peptide object, the modification map, the input
      * parameters and the masses map.
      *
-     * @param aPeptide A peptide object which should be "in silico" digested.
-     * @param aDomain The domain.
-     * @param aModMap Modification map to know where have been modifications on
-     * the peptide.
-     * @param aMasses Masses map to know which amino acid has which mass.
-     * @param aCharge The charge of the given peptide.
-     * @param aFragmentMassError the fragment ion annotation accuracy 
+     * @param aPeptide a peptide object which should be "in silico" digested
+     * @param aDomain the domain
+     * @param aModMap modification map to know where have been modifications on
+     * the peptide
+     * @param aMasses masses map to know which amino acid has which mass
+     * @param aCharge the charge of the given peptide
+     * @param aFragmentMassError the fragment ion annotation accuracy
      */
     public InSilicoDigester(Peptide aPeptide, Domain aDomain, ModificationMap aModMap, HashMap aMasses, int aCharge, double aFragmentMassError) {
         iPeptide = aPeptide;
@@ -262,9 +262,9 @@ public class InSilicoDigester {
      * This method tries to match the theoretical masses of the ions with the
      * masses of the experimental peaks.
      *
-     * @param ionType The ion type.
-     * @param aPeaks The experimental peaks.
-     * @return matchedIons A Vector containing all the matched fragment ions.
+     * @param ionType the ion type
+     * @param aPeaks the experimental peaks
+     * @return matchedIons vector containing all the matched fragment ions
      */
     public Vector getMatchedIons(int ionType, Peak[] aPeaks) {
         Vector<FragmentIon> matchedIons = new Vector<FragmentIon>();

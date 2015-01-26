@@ -68,9 +68,10 @@ public class XTandemFile implements Serializable {
      * Constructor of XTandemFile gets a string to an existing path and filename
      * of the xtandem file.
      *
-     * @param aXTandemFile The given XTandem file.
-     * @throws SAXException SAX parsing exception thrown.
-     * @throws ParserConfigurationException  
+     * @param aXTandemFile the given XTandem file
+     * @throws SAXException SAX parsing exception thrown
+     * @throws ParserConfigurationException if a ParserConfigurationException
+     * occurs
      */
     public XTandemFile(String aXTandemFile) throws SAXException, ParserConfigurationException {
         this(aXTandemFile, false);
@@ -80,12 +81,13 @@ public class XTandemFile implements Serializable {
      * Constructor of XTandemFile gets a string to an existing path and filename
      * of the xtandem file.
      *
-     * @param aXTandemFile The given XTandem file.
+     * @param aXTandemFile the given XTandem file.
      * @param skipDetails if true only the spectrum identifiers, the peptides
-     * sequences, modifications and matches e-values will be loaded. Plus the 
+     * sequences, modifications and matches e-values will be loaded. Plus the
      * input and performance parameters.
      * @throws SAXException SAX parsing exception thrown.
-     * @throws ParserConfigurationException  
+     * @throws ParserConfigurationException if a ParserConfigurationException
+     * occurs
      */
     public XTandemFile(String aXTandemFile, boolean skipDetails) throws SAXException, ParserConfigurationException {
         try {

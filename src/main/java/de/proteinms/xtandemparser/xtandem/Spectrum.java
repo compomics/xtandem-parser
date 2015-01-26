@@ -31,7 +31,7 @@ public class Spectrum implements Serializable {
     private String iPrecursorRetentionTime = "";
     /**
      * This variable holds the expectation value for the top ranked protein
-     * identfied with this spectrum.
+     * identified with this spectrum.
      */
     private double iExpectValue = 0;
     /**
@@ -70,16 +70,16 @@ public class Spectrum implements Serializable {
     }
 
     /**
-     * Constructor with all given parameters: 1) spectrumID 2) precorsor mh 3)
+     * Constructor with all given parameters: 1) spectrumID 2) precursor mh 3)
      * precursor charge 4) spectrum values 5) label 6) spectrum number.
      *
-     * @param aSpectrumID
-     * @param aPrecursorMh
-     * @param aPrecursorCharge
-     * @param aPrecursorRetentionTime 
-     * @param aSpectrumValues
-     * @param aLabel
-     * @param aSpectrumNumber
+     * @param aSpectrumID the spectrum ID
+     * @param aPrecursorMh the precursor mh
+     * @param aPrecursorCharge the precursor charge
+     * @param aPrecursorRetentionTime the precursor retention time
+     * @param aSpectrumValues the spectrum values
+     * @param aLabel the label
+     * @param aSpectrumNumber the spectrum number
      */
     public Spectrum(int aSpectrumID, double aPrecursorMh, int aPrecursorCharge, String aPrecursorRetentionTime,
             ArrayList<Double> aSpectrumValues, String aLabel, int aSpectrumNumber) {
@@ -108,7 +108,7 @@ public class Spectrum implements Serializable {
     /**
      * Sets the spectrum id.
      *
-     * @param aSpectrumId
+     * @param aSpectrumId the spectrum id
      */
     public void setSpectrumId(int aSpectrumId) {
         this.iSpectrumId = aSpectrumId;
@@ -126,7 +126,7 @@ public class Spectrum implements Serializable {
     /**
      * Sets the precursor mass.
      *
-     * @param aPrecursorMh
+     * @param aPrecursorMh he precursor mass
      */
     public void setPrecursorMh(double aPrecursorMh) {
         this.iPrecursorMh = aPrecursorMh;
@@ -144,7 +144,7 @@ public class Spectrum implements Serializable {
     /**
      * Sets the precursor charge.
      *
-     * @param aPrecursorCharge
+     * @param aPrecursorCharge the precursor charge
      */
     public void setPrecursorCharge(int aPrecursorCharge) {
         this.iPrecursorCharge = aPrecursorCharge;
@@ -162,7 +162,7 @@ public class Spectrum implements Serializable {
     /**
      * Sets the precursor retention time.
      *
-     * @param aPrecursorRetentionTime
+     * @param aPrecursorRetentionTime he precursor retention time
      */
     public void setPrecursorRetentionTime(String aPrecursorRetentionTime) {
         this.iPrecursorRetentionTime = aPrecursorRetentionTime;
@@ -178,9 +178,9 @@ public class Spectrum implements Serializable {
     }
 
     /**
-     * Sets the expect value
+     * Sets the expect value.
      *
-     * @param aExpectValue
+     * @param aExpectValue the expect value
      */
     public void setExpectValue(double aExpectValue) {
         this.iExpectValue = aExpectValue;
@@ -198,7 +198,7 @@ public class Spectrum implements Serializable {
     /**
      * Sets the label of the spectrum.
      *
-     * @param aLabel
+     * @param aLabel the label of the spectrum
      */
     public void setLabel(String aLabel) {
         this.iLabel = aLabel;
@@ -216,7 +216,7 @@ public class Spectrum implements Serializable {
     /**
      * Sets the summed score of the spectrum.
      *
-     * @param aSummedScore
+     * @param aSummedScore the summed score
      */
     public void setSummedScore(double aSummedScore) {
         this.iSummedScore = aSummedScore;
@@ -234,7 +234,7 @@ public class Spectrum implements Serializable {
     /**
      * Sets the maximum fragment ion intensity.
      *
-     * @param aMaxFragIonIntensity
+     * @param aMaxFragIonIntensity the maximum fragment ion intensity
      */
     public void setMaxFragIonIntensity(double aMaxFragIonIntensity) {
         this.iMaxFragIonIntensity = aMaxFragIonIntensity;
@@ -250,9 +250,9 @@ public class Spectrum implements Serializable {
     }
 
     /**
-     * Sets he intensity multiplier.
+     * Sets the intensity multiplier.
      *
-     * @param aIntensityMultiplier
+     * @param aIntensityMultiplier the intensity multiplier
      */
     public void setIntensityMultiplier(double aIntensityMultiplier) {
         this.iIntensityMultiplier = aIntensityMultiplier;
@@ -270,7 +270,7 @@ public class Spectrum implements Serializable {
     /**
      * Sets a double list of the spectrum values.
      *
-     * @param aSpectrumValues
+     * @param aSpectrumValues list of the spectrum values
      */
     public void setISpectrumValues(ArrayList<Double> aSpectrumValues) {
         iSpectrumValues = aSpectrumValues;
@@ -288,7 +288,7 @@ public class Spectrum implements Serializable {
     /**
      * Sets the number of the spectrum.
      *
-     * @param aSpectrumNumber
+     * @param aSpectrumNumber the number of the spectrum
      */
     public void setSpectrumNumber(int aSpectrumNumber) {
         this.iSpectrumNumber = aSpectrumNumber;

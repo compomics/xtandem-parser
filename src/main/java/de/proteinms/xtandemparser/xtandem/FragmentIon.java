@@ -11,7 +11,7 @@ import de.proteinms.xtandemparser.interfaces.Peak;
 public class FragmentIon implements Ion {
 
     /**
-     * The m/z of the frament ion.
+     * The m/z of the fragment ion.
      */
     private double iMz = 0.0;
     /**
@@ -41,19 +41,18 @@ public class FragmentIon implements Ion {
      */
     private double iTheoreticalExperimentalMassError;
     /*
-     * The charge of the ion
+     * The charge of the ion.
      */
     private int iCharge;
 
     /**
      * Constructor gets all the parameters to create an fragment ion object.
      *
-     * @param aMz The m/z value of the fragment ion.
-     * @param aType The type of the fragment ion as defined in the ion
-     * interface.
-     * @param aNumber The number of the fragment ion.
-     * @param aCharge The charge of the fragment ion.
-     * @param aErrorMargin The error margin of the fragment ion.
+     * @param aMz the m/z value of the fragment ion
+     * @param aType the type of the fragment ion as defined in the ion interface
+     * @param aNumber the number of the fragment ion
+     * @param aCharge the charge of the fragment ion
+     * @param aErrorMargin the error margin of the fragment ion
      */
     public FragmentIon(double aMz, int aType, int aNumber, int aCharge, double aErrorMargin) {
         iMz = aMz;
@@ -66,13 +65,12 @@ public class FragmentIon implements Ion {
     /**
      * The same constructor as above but with the intensity.
      *
-     * @param aMz The m/z value of the fragment ion.
-     * @param aIntensity The intensity of the fragment ion.
-     * @param aType The type of the fragment ion as defined in the ion
-     * interface.
-     * @param aNumber The number of the fragment ion.
-     * @param aCharge The charge of the fragment ion.
-     * @param aErrorMargin The error margin of the fragment ion.
+     * @param aMz the m/z value of the fragment ion
+     * @param aIntensity the intensity of the fragment ion
+     * @param aType the type of the fragment ion as defined in the ion interface
+     * @param aNumber the number of the fragment ion
+     * @param aCharge the charge of the fragment ion
+     * @param aErrorMargin The error margin of the fragment ion
      */
     public FragmentIon(double aMz, double aIntensity, int aType, int aNumber, int aCharge, double aErrorMargin) {
         iMz = aMz;
@@ -89,8 +87,8 @@ public class FragmentIon implements Ion {
      * and tells if it's a match using a specific mass error tolerance and
      * calculating the theoretical/ experimental mass error.
      *
-     * @param aPeaks The mass peak array
-     * @param aMassError The mass error
+     * @param aPeaks the mass peak array
+     * @param aMassError the mass error
      * @return matchFlag boolean
      */
     public boolean isMatch(Peak[] aPeaks, double aMassError) {
@@ -219,7 +217,7 @@ public class FragmentIon implements Ion {
             case FragmentIon.MHH2O_ION:
                 return "MH-H20";
         }
-        return null;
 
+        return null;
     }
 }

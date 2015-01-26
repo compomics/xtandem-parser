@@ -20,8 +20,8 @@ public class ProteinMap implements Serializable {
     /**
      * The constructor gets a raw protein map from the xtandem parser.
      *
-     * @param aProteinIDList
-     * @param aRawProteinMap
+     * @param aProteinIDList the protein ID list
+     * @param aRawProteinMap the raw protein map
      */
     public ProteinMap(ArrayList<String> aProteinIDList, HashMap aRawProteinMap) {
         if (aProteinIDList != null && aRawProteinMap != null) {
@@ -32,8 +32,8 @@ public class ProteinMap implements Serializable {
     /**
      * This method initializes the protein map from a given raw map.
      *
-     * @param aProteinIDList
-     * @param aProteinMap
+     * @param aProteinIDList the protein ID list
+     * @param aRawProteinMap the raw protein map
      */
     private void initMap(ArrayList<String> aProteinIDList, HashMap<String, String> aProteinMap) {
         iProteinMap = new HashMap<String, Protein>();

@@ -16,7 +16,7 @@ public class TxtFileFilter extends FileFilter {
     /**
      * Accept all directories, *.txt files.
      *
-     * @param f
+     * @param f the file
      * @return boolean
      */
     public boolean accept(File f) {
@@ -48,7 +48,7 @@ public class TxtFileFilter extends FileFilter {
     /**
      * Get the extension of a file.
      *
-     * @param f
+     * @param f the file
      * @return String - the extension of the file f
      */
     public static String getExtension(File f) {

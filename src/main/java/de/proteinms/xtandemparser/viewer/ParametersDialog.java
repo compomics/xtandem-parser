@@ -24,8 +24,8 @@ public class ParametersDialog extends JDialog {
      * Constructs a parameter dialog for setting the fragment
      * ion mass accuracy.
      *
-     * @param parent Parent frame.
-     * @param modal Modal state.
+     * @param parent parent frame
+     * @param modal modal state
      */
     public ParametersDialog(XTandemViewer parent, boolean modal) {
         this.parent = parent;

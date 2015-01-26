@@ -69,8 +69,8 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
      * Constructor for the reader.
      *
      * @param aFile the inspected file
-     * @throws SAXException
-     * @throws ParserConfigurationException
+     * @throws SAXException if a SAXException occurs
+     * @throws ParserConfigurationException if a ParserConfigurationException occurs
      */
     public XTandemIdfileReader(File aFile) throws SAXException, ParserConfigurationException {
         xTandemFile = new XTandemFile(aFile.getPath(), true);

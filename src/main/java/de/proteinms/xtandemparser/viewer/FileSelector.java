@@ -48,8 +48,8 @@ public class FileSelector extends JFrame {
     /**
      * FileSelector sets up the X!Tandem Viewer application.
      *
-     * @param aParent Parent frame.
-     * @param title Title of the application.
+     * @param aParent parent frame
+     * @param title title of the application
      */
     public FileSelector(JFrame aParent, String title) {
 
@@ -65,7 +65,7 @@ public class FileSelector extends JFrame {
     /**
      * Entry point to the XTandem-Parser application.
      *
-     * @param args
+     * @param args the arguments
      */
     public static void main(String[] args) {
         new FileSelector(null, "XTandem-Parser");

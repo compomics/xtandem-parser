@@ -36,7 +36,7 @@ public class VariableModification implements Modification, Serializable {
      */
     private boolean isSubstitution;
     /**
-     * The subsitutted amino acid (if any). Null if the modification is not a 
+     * The substituted amino acid (if any). Null if the modification is not a
      * substitution.
      */
     private String substitutedAminoAcid;
@@ -44,12 +44,13 @@ public class VariableModification implements Modification, Serializable {
     /**
      * Constructor for building a variable modification.
      *
-     * @param aName The modification name
-     * @param aMass The modification mass
-     * @param aLocation The modification location
-     * @param aNumber The number of the modification
-     * @param aIsSubstitution If the modification is a substitution or not
-     * @param aSubstitutedAminoAcid  The subsitutted amino acid (if any). Null if the modification is not a substitution.
+     * @param aName the modification name
+     * @param aMass the modification mass
+     * @param aLocation the modification location
+     * @param aNumber the number of the modification
+     * @param aIsSubstitution if the modification is a substitution or not
+     * @param aSubstitutedAminoAcid the substituted amino acid (if any), null if
+     * the modification is not a substitution
      */
     public VariableModification(String aName, double aMass, String aLocation, int aNumber,
             boolean aIsSubstitution, String aSubstitutedAminoAcid) {
@@ -127,7 +128,7 @@ public class VariableModification implements Modification, Serializable {
     /**
      * Returns the domain id.
      *
-     * @return the number of modifcation
+     * @return the number of modification
      */
     public int getNumber() {
         return iNumber;
@@ -141,7 +142,7 @@ public class VariableModification implements Modification, Serializable {
     public void setNumber(int aNumber) {
         iNumber = aNumber;
     }
-    
+
     /**
      * Returns the modified residue (a peptide letter).
      *
@@ -152,7 +153,7 @@ public class VariableModification implements Modification, Serializable {
         iModifiedResidue = values[1];
         return iModifiedResidue;
     }
-    
+
     public boolean isSubstitution() {
         return isSubstitution;
     }
@@ -163,7 +164,7 @@ public class VariableModification implements Modification, Serializable {
 
     /**
      * Set if the modification is a substitution or not.
-     * 
+     *
      * @param isSubstitution if the modification is a substitution or not
      */
     public void setIsSubstitution(boolean isSubstitution) {
@@ -171,9 +172,9 @@ public class VariableModification implements Modification, Serializable {
     }
 
     /**
-     * Set the subsituted amino acid.
-     * 
-     * @param substitutedAminoAcid the subsituted amino acid
+     * Set the substituted amino acid.
+     *
+     * @param substitutedAminoAcid the substituted amino acid
      */
     public void setSubstitutedAminoAcid(String substitutedAminoAcid) {
         this.substitutedAminoAcid = substitutedAminoAcid;

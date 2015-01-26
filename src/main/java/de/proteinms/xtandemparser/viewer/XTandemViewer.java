@@ -69,8 +69,8 @@ public class XTandemViewer extends JFrame {
     /**
      * Constructor gets the XML output result file.
      *
-     * @param aXTandemXmlFile
-     * @param lastSelectedFolder
+     * @param aXTandemXmlFile the X!Tandem results file
+     * @param lastSelectedFolder the last selected folder
      */
     public XTandemViewer(String aXTandemXmlFile, String lastSelectedFolder) {
 
@@ -2136,7 +2136,7 @@ public class XTandemViewer extends JFrame {
     /**
      * Returns the fragment ion mass accuracy.
      *
-     * @return The fragment ion mass accuracy.
+     * @return the fragment ion mass accuracy
      */
     public double getFragmentIonMassAccuracy() {
         return fragmentIonMassAccuracy;
@@ -2145,7 +2145,7 @@ public class XTandemViewer extends JFrame {
     /**
      * Sets the fragment ion mass accuracy.
      *
-     * @param fragmentIonMassAccuracy The fragment ion mass accuracy.
+     * @param fragmentIonMassAccuracy the fragment ion mass accuracy
      */
     public void setFragmentIonMassAccuracy(double fragmentIonMassAccuracy) {
         this.fragmentIonMassAccuracy = fragmentIonMassAccuracy;
@@ -2154,7 +2154,7 @@ public class XTandemViewer extends JFrame {
     /**
      * Returns the X!TandemFile string.
      * 
-     * @return the X!TandemFile strin
+     * @return the X!TandemFile string
      */
     public String getXTandemFile() {
         return xTandemFile;

@@ -49,8 +49,8 @@ public class SupportData implements Serializable {
     /**
      * Constructor gets the raw support map and the spectrum number.
      *
-     * @param map The raw support map
-     * @param spectrumNumber The spectrum number
+     * @param map the raw support map
+     * @param spectrumNumber the spectrum number
      */
     public SupportData(HashMap map, int spectrumNumber) {
         if (map.get("HYPERLABEL" + "_s" + spectrumNumber) != null) {

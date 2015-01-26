@@ -70,11 +70,11 @@ public interface Ion {
     public final static int MHH2O_ION = 14;
 
     /**
-     * This method checks whether the ion matched with a given set of peaks
+     * This method checks whether the ion matched with a given set of peaks.
      *
-     * @param peaks
-     * @param aMassError
-     * @return boolean
+     * @param peaks the peaks
+     * @param aMassError the mass error
+     * @return boolean true if the ion matched with the given set of peaks
      */
     public boolean isMatch(Peak[] peaks, double aMassError);
 

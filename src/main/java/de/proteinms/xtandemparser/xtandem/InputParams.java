@@ -85,15 +85,15 @@ public class InputParams implements Serializable {
     private int iSpectrumTotalPeakNumber;
     private boolean iSpectrumUseNoiseCompression = false;
     /**
-     * Holds the values of residue, modification mass [1-n]
+     * Holds the values of residue, modification mass [1-n].
      */
     private ArrayList<String> residueModificationMass = new ArrayList<String>();
     /**
-     * Holds the values of refine, potential modification mass [1-n]
+     * Holds the values of refine, potential modification mass [1-n].
      */
     private ArrayList<String> refinePotentialModificationMass = new ArrayList<String>();
     /**
-     * Holds the values of refine, potential modification motif [1-n]
+     * Holds the values of refine, potential modification motif [1-n].
      */
     private ArrayList<String> refinePotentialModificationMotif = new ArrayList<String>();
     /**
@@ -104,7 +104,7 @@ public class InputParams implements Serializable {
     /**
      * Constructor for the input parameters section.
      *
-     * @param map
+     * @param map the input map
      */
     public InputParams(HashMap map) {
         if (map.get("DEFAULTPARAMPATH") != null) {
@@ -350,7 +350,7 @@ public class InputParams implements Serializable {
     }
 
     /**
-     * Converts the "yes"/"no"-strings to the corresponding boolean value
+     * Converts the "yes"/"no"-strings to the corresponding boolean value.
      *
      * @param aString
      * @return flag
@@ -985,7 +985,7 @@ public class InputParams implements Serializable {
      * ArrayList of Strings. The zero-based index in the ArrayList corresponds
      * to the 1-based index in the file
      *
-     * @return An ArrayList of potential modification motifs
+     * @return an ArrayList of potential modification motifs
      */
     public ArrayList<String> getRefinePotentialModificationMotif() {
         return refinePotentialModificationMotif;

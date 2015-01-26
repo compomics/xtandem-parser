@@ -32,9 +32,9 @@ public class SpectrumPeak implements Peak {
     /**
      * Constructor gets the m/z, the intensity and the charge.
      *
-     * @param aMz
-     * @param aIntensity
-     * @param aCharge
+     * @param aMz the m/z
+     * @param aIntensity the intensity
+     * @param aCharge the charge
      */
     public SpectrumPeak(double aMz, double aIntensity, int aCharge) {
         iMz = aMz;
@@ -45,7 +45,7 @@ public class SpectrumPeak implements Peak {
     /**
      * Sets the charge.
      *
-     * @param aCharge
+     * @param aCharge the charge
      */
     public void setCharge(int aCharge) {
         iCharge = aCharge;
@@ -63,7 +63,7 @@ public class SpectrumPeak implements Peak {
     /**
      * Sets the intensity.
      *
-     * @param aIntensity
+     * @param aIntensity the intensity
      */
     public void setIntensity(double aIntensity) {
         iIntensity = aIntensity;
@@ -81,7 +81,7 @@ public class SpectrumPeak implements Peak {
     /**
      * Sets the m/z.
      *
-     * @param aMz
+     * @param aMz the m/z
      */
     public void setMz(double aMz) {
         iMz = aMz;

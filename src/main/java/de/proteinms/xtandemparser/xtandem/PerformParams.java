@@ -122,7 +122,7 @@ public class PerformParams {
      * The constructor gets a hash map containing all the performance
      * parameters.
      *
-     * @param map
+     * @param map the performance map
      */
     public PerformParams(HashMap map) {
 

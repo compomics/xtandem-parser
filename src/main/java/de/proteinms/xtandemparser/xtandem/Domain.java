@@ -77,7 +77,7 @@ public class Domain {
     /**
      * Sets the domain id of the peptide.
      *
-     * @param domainID
+     * @param domainID the domain ID
      */
     public void setDomainID(String domainID) {
         iDomainID = domainID;
@@ -86,7 +86,7 @@ public class Domain {
     /**
      * Returns the domain key of the peptide.
      *
-     * @return domainKey
+     * @return domainKey the domain key
      */
     public String getDomainKey() {
         return domainKey;
@@ -95,7 +95,7 @@ public class Domain {
     /**
      * Sets the domain key of the peptide.
      *
-     * @param domainKey
+     * @param domainKey the domain key
      */
     public void setDomainKey(String domainKey) {
         this.domainKey = domainKey;
@@ -104,7 +104,7 @@ public class Domain {
     /**
      * Returns the domains start location.
      *
-     * @return iDomainStart
+     * @return iDomainStart the domain start
      */
     public int getDomainStart() {
         return iDomainStart;
@@ -113,7 +113,7 @@ public class Domain {
     /**
      * Sets the domain start location.
      *
-     * @param domainStart
+     * @param domainStart the domain start
      */
     public void setDomainStart(int domainStart) {
         iDomainStart = domainStart;
@@ -122,7 +122,7 @@ public class Domain {
     /**
      * Returns the domain end location.
      *
-     * @return iDomainEnd
+     * @return iDomainEnd the domain end
      */
     public int getDomainEnd() {
         return iDomainEnd;
@@ -131,7 +131,7 @@ public class Domain {
     /**
      * Sets the domain end location.
      *
-     * @param domainEnd
+     * @param domainEnd the domain end
      */
     public void setDomainEnd(int domainEnd) {
         iDomainEnd = domainEnd;
@@ -140,7 +140,7 @@ public class Domain {
     /**
      * Returns the domain expect value.
      *
-     * @return iDomainExpect
+     * @return iDomainExpect the domain expect
      */
     public double getDomainExpect() {
         return iDomainExpect;
@@ -149,7 +149,7 @@ public class Domain {
     /**
      * Sets the domain expect value
      *
-     * @param domainExpect
+     * @param domainExpect the domain expect
      */
     public void setDomainExpect(double domainExpect) {
         iDomainExpect = domainExpect;
@@ -158,7 +158,7 @@ public class Domain {
     /**
      * Returns the domain mh/mz of the peptide.
      *
-     * @return iDomainMz
+     * @return iDomainMz the domain mh/mz
      */
     public double getDomainMh() {
         return iDomainMz;
@@ -167,7 +167,7 @@ public class Domain {
     /**
      * Sets the domain mh/mz for the peptide.
      *
-     * @param domainMh
+     * @param domainMh the domain mh/mz
      */
     public void setDomainMh(double domainMh) {
         this.iDomainMz = domainMh;
@@ -176,7 +176,7 @@ public class Domain {
     /**
      * Returns the domain delta mh/mz.
      *
-     * @return iDomainDeltaMz
+     * @return iDomainDeltaMz the domain delta mz
      */
     public double getDomainDeltaMh() {
         return iDomainDeltaMz;
@@ -185,43 +185,43 @@ public class Domain {
     /**
      * Sets the domain delta mh/mz.
      *
-     * @param domainDeltaMh
+     * @param domainDeltaMh the domain delta mh/mz
      */
     public void setDomainDeltaMh(double domainDeltaMh) {
         this.iDomainDeltaMz = domainDeltaMh;
     }
 
     /**
-     * Returns the domain hyperscore.
+     * Returns the domain hyper score.
      *
-     * @return iDomainHyperScore
+     * @return iDomainHyperScore the domain hyper score
      */
     public double getDomainHyperScore() {
         return iDomainHyperScore;
     }
 
     /**
-     * Sets the domain hyperscore
+     * Sets the domain hyper score.
      *
-     * @param domainHyperScore
+     * @param domainHyperScore the domain hyper score
      */
     public void setDomainHyperScore(double domainHyperScore) {
         this.iDomainHyperScore = domainHyperScore;
     }
 
     /**
-     * Returns the domain nextscore.
+     * Returns the domain next score.
      *
-     * @return iDomainNextScore
+     * @return iDomainNextScore the domain next score
      */
     public double getDomainNextScore() {
         return iDomainNextScore;
     }
 
     /**
-     * Sets the domain nextscore.
+     * Sets the domain next score.
      *
-     * @param domainNextScore
+     * @param domainNextScore the domain next score
      */
     public void setDomainNextScore(double domainNextScore) {
         this.iDomainNextScore = domainNextScore;
@@ -230,7 +230,7 @@ public class Domain {
     /**
      * Returns the upstream flanking sequence of the peptide.
      *
-     * @return iUpFlankSequence
+     * @return iUpFlankSequence the upstream flanking sequence
      */
     public String getUpFlankSequence() {
         return iUpFlankSequence;
@@ -239,7 +239,7 @@ public class Domain {
     /**
      * Sets the upstream flanking sequence of the peptide.
      *
-     * @param aUpFlankSequence
+     * @param aUpFlankSequence the upstream flanking sequence
      */
     public void setUpFlankSequence(String aUpFlankSequence) {
         this.iUpFlankSequence = aUpFlankSequence;
@@ -248,7 +248,7 @@ public class Domain {
     /**
      * Returns the downstream flanking sequence of the peptide.
      *
-     * @return iDownFlankSequence
+     * @return iDownFlankSequence the downstream flanking sequence
      */
     public String getDownFlankSequence() {
         return iDownFlankSequence;
@@ -257,7 +257,7 @@ public class Domain {
     /**
      * Sets the downstream flanking sequence of the peptide.
      *
-     * @param aDownFlankSequence
+     * @param aDownFlankSequence the downstream flanking sequence
      */
     public void setDownFlankSequence(String aDownFlankSequence) {
         this.iDownFlankSequence = aDownFlankSequence;
@@ -266,7 +266,7 @@ public class Domain {
     /**
      * Returns the domain sequence as a string.
      *
-     * @return iDomainSequence
+     * @return iDomainSequence the domain sequence
      */
     public String getDomainSequence() {
         return iDomainSequence;
@@ -275,7 +275,7 @@ public class Domain {
     /**
      * Sets the domain sequence of the peptide.
      *
-     * @param aDomainSequence
+     * @param aDomainSequence the domain sequence
      */
     public void setDomainSequence(String aDomainSequence) {
         this.iDomainSequence = aDomainSequence;
@@ -284,7 +284,7 @@ public class Domain {
     /**
      * Returns the number of missed cleavages.
      *
-     * @return iMissedCleavages
+     * @return iMissedCleavages the number of missed cleavages
      */
     public int getMissedCleavages() {
         return iMissedCleavages;
@@ -293,22 +293,24 @@ public class Domain {
     /**
      * Sets the number of missed cleavages.
      *
-     * @param aMissedCleavages
+     * @param aMissedCleavages the number of missed cleavages
      */
     public void setMissedCleavages(int aMissedCleavages) {
         this.iMissedCleavages = aMissedCleavages;
     }
-    
+
     /**
-     * Sets the protein key
+     * Sets the protein key.
+     *
      * @param proteinKey the protein key
      */
     public void setProteinKey(String proteinKey) {
         this.proteinKey = proteinKey;
     }
-    
+
     /**
-     * Returns the protein key
+     * Returns the protein key.
+     *
      * @return the protein key
      */
     public String getProteinKey() {

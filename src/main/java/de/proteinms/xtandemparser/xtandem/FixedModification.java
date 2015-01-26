@@ -36,7 +36,7 @@ public class FixedModification implements Modification, Serializable {
      */
     private boolean isSubstitution;
     /**
-     * The substituted amino acid (if any). Null if the modification is not a 
+     * The substituted amino acid (if any). Null if the modification is not a
      * substitution.
      */
     private String substitutedAminoAcid;
@@ -44,14 +44,15 @@ public class FixedModification implements Modification, Serializable {
     /**
      * Constructor for building a fixed modification.
      *
-     * @param aName The modification name
-     * @param aMass The modification mass
-     * @param aLocation The modification location
-     * @param aNumber aNumber The number of the modification
-     * @param aIsSubstitution If the modification is a substitution or not
-     * @param aSubstitutedAminoAcid  The substituted amino acid (if any). Null if the modification is not a substitution.
+     * @param aName the modification name
+     * @param aMass the modification mass
+     * @param aLocation the modification location
+     * @param aNumber aNumber the number of the modification
+     * @param aIsSubstitution if the modification is a substitution or not
+     * @param aSubstitutedAminoAcid the substituted amino acid (if any). Null if
+     * the modification is not a substitution.
      */
-    public FixedModification(String aName, double aMass, String aLocation, int aNumber, 
+    public FixedModification(String aName, double aMass, String aLocation, int aNumber,
             boolean aIsSubstitution, String aSubstitutedAminoAcid) {
         iName = aName;
         iMass = aMass;
@@ -73,7 +74,7 @@ public class FixedModification implements Modification, Serializable {
     /**
      * Sets the modification name.
      *
-     * @param aName The modification name
+     * @param aName the modification name
      */
     public void setName(String aName) {
         iName = aName;
@@ -91,7 +92,7 @@ public class FixedModification implements Modification, Serializable {
     /**
      * Sets the modification mass.
      *
-     * @param aMass The modification mass
+     * @param aMass the modification mass
      */
     public void setMass(double aMass) {
         iMass = aMass;
@@ -109,7 +110,7 @@ public class FixedModification implements Modification, Serializable {
     /**
      * Sets the modification location.
      *
-     * @param aLocation The modification location
+     * @param aLocation the modification location
      */
     public void setLocation(String aLocation) {
         iLocation = aLocation;
@@ -127,7 +128,7 @@ public class FixedModification implements Modification, Serializable {
     /**
      * Returns the domain id.
      *
-     * @return the number of modifcation
+     * @return the number of modification
      */
     public int getNumber() {
         return iNumber;
@@ -136,12 +137,12 @@ public class FixedModification implements Modification, Serializable {
     /**
      * Sets the domain id.
      *
-     * @param aNumber The number of the modification.
+     * @param aNumber the number of the modification
      */
     public void setNumber(int aNumber) {
         iNumber = aNumber;
     }
-    
+
     public boolean isSubstitution() {
         return isSubstitution;
     }
@@ -163,7 +164,7 @@ public class FixedModification implements Modification, Serializable {
 
     /**
      * Set if the modification is a substitution or not.
-     * 
+     *
      * @param isSubstitution if the modification is a substitution or not
      */
     public void setIsSubstitution(boolean isSubstitution) {
@@ -172,7 +173,7 @@ public class FixedModification implements Modification, Serializable {
 
     /**
      * Set the substituted amino acid.
-     * 
+     *
      * @param substitutedAminoAcid the substituted amino acid
      */
     public void setSubstitutedAminoAcid(String substitutedAminoAcid) {

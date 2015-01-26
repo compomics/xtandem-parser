@@ -52,12 +52,12 @@ public class Protein implements Serializable {
      * The constructor get id, uid, label, description, expect value and summed
      * score to build a protein object.
      *
-     * @param aID
-     * @param aUID
-     * @param aLabel
-     * @param aDescription
-     * @param aExpectValue
-     * @param aSummedScore
+     * @param aID the ID
+     * @param aUID the UID
+     * @param aLabel the label
+     * @param aDescription the description
+     * @param aExpectValue the expect value
+     * @param aSummedScore the summed score
      */
     public Protein(String aID, String aUID, String aLabel, String aDescription, Double aExpectValue, Double aSummedScore) {
         iID = aID;
@@ -81,7 +81,7 @@ public class Protein implements Serializable {
     /**
      * Sets the expect value for the protein.
      *
-     * @param aExpectValue
+     * @param aExpectValue the expect value
      */
     public void setExpectValue(Double aExpectValue) {
         iExpectValue = aExpectValue;
@@ -99,7 +99,7 @@ public class Protein implements Serializable {
     /**
      * Sets the id of the protein.
      *
-     * @param aId
+     * @param aId the id of the protein
      */
     public void setID(String aId) {
         iID = aId;
@@ -117,7 +117,7 @@ public class Protein implements Serializable {
     /**
      * Sets the uID of the protein.
      *
-     * @param aUid
+     * @param aUid the uID of the protein
      */
     public void setUID(String aUid) {
         iUID = aUid;
@@ -138,7 +138,7 @@ public class Protein implements Serializable {
     /**
      * Sets the label of the protein.
      *
-     * @param aLabel
+     * @param aLabel the label of the protein
      */
     public void setLabel(String aLabel) {
         iLabel = aLabel;
@@ -159,7 +159,7 @@ public class Protein implements Serializable {
     /**
      * Sets the description of the protein.
      *
-     * @param aDescription
+     * @param aDescription the description of the protein
      */
     public void setDescription(String aDescription) {
         iDescription = aDescription;
@@ -168,7 +168,7 @@ public class Protein implements Serializable {
     /**
      * Returns the summed score of the protein.
      *
-     * @return iSummedScore
+     * @return iSummedScore the summed score
      */
     public Double getSummedScore() {
         return iSummedScore;
@@ -177,7 +177,7 @@ public class Protein implements Serializable {
     /**
      * Sets the summed score of the protein.
      *
-     * @param aSummedScore
+     * @param aSummedScore the summed score
      */
     public void setSummedScore(Double aSummedScore) {
         iSummedScore = aSummedScore;

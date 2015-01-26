@@ -24,10 +24,10 @@ public class HelpFrame extends JFrame {
     private JScrollPane scrollPane;
 
     /**
-     * Constructor constructs the frame with an editorpane.
+     * Constructor constructs the frame with an editor pane.
      *
-     * @param parent
-     * @param aUrl
+     * @param parent the parent frame
+     * @param aUrl the URL
      */
     public HelpFrame(JFrame parent, URL aUrl) {
         // Sets icon image

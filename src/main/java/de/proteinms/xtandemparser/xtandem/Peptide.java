@@ -21,7 +21,7 @@ public class Peptide implements Serializable {
      */
     private int iStart = 0;
     /**
-     * Contains the end position of the peptide == end ot the protein's peptide
+     * Contains the end position of the peptide == end of the protein's peptide
      * sequence.
      */
     private int iEnd = 0;
@@ -46,10 +46,10 @@ public class Peptide implements Serializable {
      * The Peptide constructor gets the peptide id the start + end position and
      * the sequences as string.
      *
-     * @param aPeptideID
-     * @param aStart
-     * @param aEnd
-     * @param aSequence
+     * @param aPeptideID the peptide ID
+     * @param aStart the start position
+     * @param aEnd the end position
+     * @param aSequence the sequence
      */
     public Peptide(String aPeptideID, int aStart, int aEnd, String aSequence) {
         iPeptideID = aPeptideID;
@@ -70,7 +70,7 @@ public class Peptide implements Serializable {
     /**
      * Sets the domains.
      *
-     * @param domains
+     * @param domains the domains
      */
     public void setDomains(List<Domain> domains) {
         this.domains = domains;
@@ -88,7 +88,7 @@ public class Peptide implements Serializable {
     /**
      * This method sets the start position of the peptide.
      *
-     * @param aStart
+     * @param aStart the start position of the peptide
      */
     public void setStart(int aStart) {
         this.iStart = aStart;
@@ -106,14 +106,14 @@ public class Peptide implements Serializable {
     /**
      * This method sets the end position of the peptide.
      *
-     * @param aEnd
+     * @param aEnd the end position of the peptide
      */
     public void setEnd(int aEnd) {
         this.iEnd = aEnd;
     }
 
     /**
-     * This method returns the corrisponding spectrum number for the peptide.
+     * This method returns the corresponding spectrum number for the peptide.
      *
      * @return iSpectrumNumber
      */
@@ -124,7 +124,7 @@ public class Peptide implements Serializable {
     /**
      * Sets the spectrum number for the peptide.
      *
-     * @param aSpectrumNumber
+     * @param aSpectrumNumber the spectrum number for the peptide
      */
     public void setSpectrumNumber(int aSpectrumNumber) {
         iSpectrumNumber = aSpectrumNumber;
@@ -133,7 +133,7 @@ public class Peptide implements Serializable {
     /**
      * Returns the protein sequence of the peptide.
      *
-     * @return iSequence
+     * @return iSequence the protein sequence
      */
     public String getSequence() {
         return iSequence;
@@ -142,25 +142,25 @@ public class Peptide implements Serializable {
     /**
      * Sets the protein sequence of the peptide.
      *
-     * @param aSequence
+     * @param aSequence the protein sequence
      */
     public void setSequence(String aSequence) {
         this.iSequence = aSequence;
     }
 
     /**
-     * Returns the fasta file path.
+     * Returns the FASTA file path.
      *
-     * @return iFastaFilePath
+     * @return iFastaFilePath the FASTA file path
      */
     public String getFastaFilePath() {
         return iFastaFilePath;
     }
 
     /**
-     * Sets the fasta file path.
+     * Sets the FASTA file path.
      *
-     * @param aFastaFilePath
+     * @param aFastaFilePath the FASTA file path
      */
     public void setFastaFilePath(String aFastaFilePath) {
         iFastaFilePath = aFastaFilePath;
@@ -169,17 +169,13 @@ public class Peptide implements Serializable {
     /**
      * Returns the peptide id as string.
      *
-     * @return iPeptideID
+     * @return iPeptideID the peptide id
      */
     public String getPeptideID() {
         return iPeptideID;
     }
 
-    /**
-     * Overwritten toString()-method.
-     *
-     * @return String
-     */
+    @Override
     public String toString() {
         return "PeptideID: " + iPeptideID + "\nSequence:\n" + iSequence;
     }

@@ -48,7 +48,7 @@ public class XTandemViewerWrapper extends CompomicsWrapper {
     /**
      * Starts the main application. That's the main method for the jar file.
      *
-     * @param args
+     * @param args the arguments
      */
     public static void main(String[] args) {
         new XTandemViewerWrapper(args);

@@ -88,11 +88,12 @@ public class XTandemParser implements Serializable {
     /**
      * Constructor for parsing a result file stored locally.
      *
-     * @param aFile The input XML file.
+     * @param aFile the input XML file
      *
-     * @exception IOException
-     * @exception SAXException
-     * @throws ParserConfigurationException
+     * @exception IOException if an IOException occurs
+     * @exception SAXException if a SAXException occurs
+     * @throws ParserConfigurationException if a ParserConfigurationException
+     * occurs
      */
     public XTandemParser(File aFile) throws IOException, SAXException, ParserConfigurationException {
         this(aFile, false);
@@ -101,14 +102,15 @@ public class XTandemParser implements Serializable {
     /**
      * Constructor for parsing a result file stored locally.
      *
-     * @param aFile The input XML file.
+     * @param aFile the input XML file
      * @param skipDetails if true only the spectrum identifiers, the peptides
-     * sequences, modifications and matches e-values will be loaded. Plus the 
+     * sequences, modifications and matches e-values will be loaded. Plus the
      * input and performance parameters.
      *
-     * @exception IOException
-     * @exception SAXException
-     * @throws ParserConfigurationException
+     * @exception IOException if an IOException occurs
+     * @exception SAXException if a SAXException occurs
+     * @throws ParserConfigurationException if a ParserConfigurationException
+     * occurs
      */
     public XTandemParser(File aFile, boolean skipDetails) throws IOException, SAXException, ParserConfigurationException {
         this.parseXTandemFile(aFile, skipDetails);
@@ -117,13 +119,15 @@ public class XTandemParser implements Serializable {
     /**
      * In this method the X!Tandem file gets parsed.
      *
-     * @param aInputFile The file which will be parsed.
+     * @param aInputFile the file which will be parsed
      * @param skipDetails if true only the spectrum identifiers, the peptides
-     * sequences, modifications and matches e-values will be loaded. Plus the 
+     * sequences, modifications and matches e-values will be loaded. Plus the
      * input and performance parameters.
-     * @exception IOException
-     * @exception SAXException
-     * @throws ParserConfigurationException
+     *
+     * @exception IOException if an IOException occurs
+     * @exception SAXException if a SAXException occurs
+     * @throws ParserConfigurationException if a ParserConfigurationException
+     * occurs
      */
     private void parseXTandemFile(File aInputFile, boolean skipDetails) throws IOException, SAXException, ParserConfigurationException {
 
@@ -994,8 +998,8 @@ public class XTandemParser implements Serializable {
 
                                     iRawPeptideMap.put("domainid" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("id").getNodeValue());
 
-                                        // the start position of the peptide
-                                        iRawPeptideMap.put("domainstart" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("start").getNodeValue());
+                                    // the start position of the peptide
+                                    iRawPeptideMap.put("domainstart" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("start").getNodeValue());
 
                                     if (!skipDetails) {
 
@@ -1081,7 +1085,6 @@ public class XTandemParser implements Serializable {
                                     // the domain sequence
                                     iRawPeptideMap.put("domainseq" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("seq").getNodeValue());
 
-
                                     int modCounter = 0;
                                     for (int n = 0; n < peptideNodes.item(m).getChildNodes().getLength(); n++) {
 
@@ -1091,7 +1094,6 @@ public class XTandemParser implements Serializable {
 
                                             modificationMap = peptideNodes.item(m).getChildNodes().item(n).getAttributes();
                                             modificationName = modificationMap.getNamedItem("type").getNodeValue();
-
 
                                             // use the old calculation with domainStart!
                                             //modificationMap.getNamedItem("at").getNodeValue()) - domainStart + 1)

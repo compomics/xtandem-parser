@@ -25,7 +25,7 @@ public class ProgressDialog extends JDialog {
     /**
      * Constructor for a progress dialog with a frame as parent.
      *
-     * @param aParent The parent frame.
+     * @param aParent the parent frame
      */
     public ProgressDialog(Frame aParent) {
         super(aParent);
@@ -66,7 +66,7 @@ public class ProgressDialog extends JDialog {
     /**
      * Sets the progress bar value.
      *
-     * @param value
+     * @param value the value
      */
     public void setValue(final int value) {
 
@@ -81,14 +81,14 @@ public class ProgressDialog extends JDialog {
     /**
      * Sets the maximum value of the progress bar
      *
-     * @param maxvalue
+     * @param maxValue the max value
      */
-    public void setMaxValue(final int maxvalue) {
+    public void setMaxValue(final int maxValue) {
 
         SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
-                progressBar.setMaximum(maxvalue);
+                progressBar.setMaximum(maxValue);
             }
         });
     }
@@ -96,7 +96,7 @@ public class ProgressDialog extends JDialog {
     /**
      * Sets the dialog indeterminate.
      *
-     * @param indeterminate
+     * @param indeterminate indeterminate or not?
      */
     public void setIndeterminate(final boolean indeterminate) {
 
@@ -110,9 +110,9 @@ public class ProgressDialog extends JDialog {
     }
 
     /**
-     * Sets the filename string in the progressbar.
+     * Sets the filename string in the progress bar.
      *
-     * @param fileName
+     * @param fileName the file name
      */
     public void setFileName(final String fileName) {
 

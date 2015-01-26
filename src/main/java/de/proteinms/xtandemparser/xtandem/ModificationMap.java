@@ -27,7 +27,7 @@ public class ModificationMap implements Serializable {
      */
     private PeptideMap iPeptideMap;
     /**
-     * InputParams object
+     * InputParams object.
      */
     private InputParams iInputParams;
 
@@ -35,10 +35,10 @@ public class ModificationMap implements Serializable {
      * The constructor builds the fixed and variable modification maps from the
      * given raw mod map and the input parameters.
      *
-     * @param aRawModMap The raw modification map from the parser
-     * @param aPeptideMap The peptide map
-     * @param aInputParams The input parameters from the parser
-     * @param aNumberOfSpectra The total number of spectra
+     * @param aRawModMap the raw modification map from the parser
+     * @param aPeptideMap the peptide map
+     * @param aInputParams the input parameters from the parser
+     * @param aNumberOfSpectra the total number of spectra
      */
     public ModificationMap(HashMap aRawModMap, PeptideMap aPeptideMap, InputParams aInputParams, int aNumberOfSpectra) {
         iInputParams = aInputParams;
@@ -50,9 +50,9 @@ public class ModificationMap implements Serializable {
      * This method checks for fixed or variable modifications and builds the
      * maps.
      *
-     * @param rawModMap The raw modification map from the parser
-     * @param peptideMap The peptide map
-     * @param numberOfSpectra The total number of spectra
+     * @param rawModMap the raw modification map from the parser
+     * @param peptideMap the peptide map
+     * @param numberOfSpectra the total number of spectra
      */
     private void buildModificationMaps(HashMap rawModMap, PeptideMap peptideMap, int numberOfSpectra) {
 
@@ -73,6 +73,8 @@ public class ModificationMap implements Serializable {
                         int m_counter_variable = 1;
                         int m_counter_fixed = 1;
                         String domainID = domainList.get(d - 1).getDomainKey();
+                        int domainStart = domainList.get(d - 1).getDomainStart();
+                        int domainEnd = domainList.get(d - 1).getDomainEnd();
                         String modKey = "_s" + i + "_p" + j + "_d" + d + "_m" + m_counter;
 
                         while (rawModMap.get("name" + modKey) != null) {
@@ -83,12 +85,15 @@ public class ModificationMap implements Serializable {
                             String modLocation = rawModMap.get("at" + modKey).toString();
                             String aminoAcidSubstituted = null;
 
+                            String[] values = modName.split("@");
+                            String modifiedResidue = values[1];
+
                             if (rawModMap.get("pm" + modKey) != null) {
                                 aminoAcidSubstituted = rawModMap.get("pm" + modKey).toString();
                             }
 
                             // Check for fixed modification
-                            if (isFixedModificationInput(modMass)) {
+                            if (isFixedModificationInput(modMass, modifiedResidue, new Integer(modLocation) == domainStart, new Integer(modLocation) == domainEnd)) {
 
                                 // Get a specific id for the modification (domainID)_m(modifcation#)
                                 String modID = (domainID + "_m" + m_counter_fixed);
@@ -101,7 +106,7 @@ public class ModificationMap implements Serializable {
                                 iFixedModificationMap.put(modID, fixedMod);
                                 m_counter_fixed++;
 
-                            } else if (isVariableModificationInput(modMass)) {
+                            } else if (isVariableModificationInput(modMass, modifiedResidue, new Integer(modLocation) == domainStart, new Integer(modLocation) == domainEnd)) {
 
                                 // Get a specific id for the modification (domainID)_m(modifcation#)
                                 String modID = (domainID + "_m" + m_counter_variable);
@@ -117,7 +122,6 @@ public class ModificationMap implements Serializable {
                             } else {
 
                                 // not found as fixed or variable, assumed variable. means that it's in the residue, modification mass [1-n]
-
                                 // Get a specific id for the modification (domainID)_m(modifcation#)
                                 String modID = (domainID + "_m" + m_counter_variable);
 
@@ -143,10 +147,13 @@ public class ModificationMap implements Serializable {
      * Checks if a given modification mass is given in the fixed modification
      * input parameter section: --> label="residue, modification mass">
      *
-     * @param aModMass
-     * @return boolean
+     * @param aModMass the modification mass
+     * @param aaModified the amino acid modified
+     * @param nTerm if the modification is at the n term
+     * @param cTerm of the modification is at the c term
+     * @return true of the given modification mass is a fixed modification
      */
-    private boolean isFixedModificationInput(double aModMass) {
+    private boolean isFixedModificationInput(double aModMass, String aaModified, boolean nTerm, boolean cTerm) {
 
         BigDecimal modMass = new BigDecimal(aModMass);
         modMass = modMass.setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -160,7 +167,10 @@ public class ModificationMap implements Serializable {
                 String[] tokens = tokenizer.nextToken().split("@");
                 BigDecimal inputMass = new BigDecimal(new Double(tokens[0]));
                 inputMass = inputMass.setScale(2, BigDecimal.ROUND_HALF_UP);
-                if (modMass.equals(inputMass)) {
+                if (modMass.equals(inputMass)
+                        && (tokens[1].equalsIgnoreCase(aaModified)
+                        || (tokens[1].equalsIgnoreCase("[") && nTerm)
+                        || (tokens[1].equalsIgnoreCase("]") && cTerm))) {
                     return true;
                 }
             }
@@ -172,12 +182,16 @@ public class ModificationMap implements Serializable {
     /**
      * Checks if a given modification mass is given in the variable modification
      * input parameter section: --> label="residue, potential modification
-     * mass", or in the refine section: label="refine, potential modification mass"
+     * mass", or in the refine section: label="refine, potential modification
+     * mass"
      *
-     * @param aModMass
-     * @return boolean
+     * @param aModMass the modification mass
+     * @param aaModified the amino acid modified
+     * @param nTerm if the modification is at the n term
+     * @param cTerm of the modification is at the c term
+     * @return true of the given modification mass is a variable modification
      */
-    private boolean isVariableModificationInput(double aModMass) {
+    private boolean isVariableModificationInput(double aModMass, String aaModified, boolean nTerm, boolean cTerm) {
 
         BigDecimal modMass = new BigDecimal(aModMass);
         modMass = modMass.setScale(3, BigDecimal.ROUND_HALF_UP);
@@ -191,8 +205,10 @@ public class ModificationMap implements Serializable {
                 String[] tokens = tokenizer.nextToken().split("@");
                 BigDecimal inputMass = new BigDecimal(new Double(tokens[0]));
                 inputMass = inputMass.setScale(3, BigDecimal.ROUND_HALF_UP);
-                if (modMass.equals(inputMass)) {
-                    return true;
+                if (modMass.equals(inputMass)
+                        && (tokens[1].equalsIgnoreCase(aaModified)
+                        || (tokens[1].equalsIgnoreCase("[") && nTerm)
+                        || (tokens[1].equalsIgnoreCase("]") && cTerm))) {
                 }
             }
         }
@@ -205,8 +221,10 @@ public class ModificationMap implements Serializable {
                 String[] tokens = tokenizer2.nextToken().split("@");
                 BigDecimal inputMass = new BigDecimal(new Double(tokens[0]));
                 inputMass = inputMass.setScale(2, BigDecimal.ROUND_HALF_UP);
-                if (modMass.equals(inputMass)) {
-                    return true;
+                if (modMass.equals(inputMass)
+                        && (tokens[1].equalsIgnoreCase(aaModified)
+                        || (tokens[1].equalsIgnoreCase("[") && nTerm)
+                        || (tokens[1].equalsIgnoreCase("]") && cTerm))) {
                 }
             }
         }
@@ -217,7 +235,7 @@ public class ModificationMap implements Serializable {
     /**
      * Returns the fixed modifications as list.
      *
-     * @param aDomainKey The domainKey of the identification
+     * @param aDomainKey the domainKey of the identification
      * @return modificationsList The fixed modification list
      */
     public ArrayList<Modification> getFixedModifications(String aDomainKey) {
@@ -261,7 +279,7 @@ public class ModificationMap implements Serializable {
     /**
      * Returns the variable modifications as list.
      *
-     * @param aDomainKey The domainID of the identification
+     * @param aDomainKey the domainID of the identification
      * @return modificationsList The variable modification list
      */
     public ArrayList<Modification> getVariableModifications(String aDomainKey) {
