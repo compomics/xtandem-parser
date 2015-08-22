@@ -84,6 +84,6 @@ To visualize and analyze X!Tandem results we recommend the use of [PeptideShaker
 
 (Click on the screenshot to see the full size version)
 
-[![](https://github.com/compomics/xtandem-parser/wiki/images/screenshots/xTandemParser\_small.PNG)]https://github.com/compomics/xtandem-parser/wiki/images/screenshots/xTandemParser.PNG)
+[![](https://github.com/compomics/xtandem-parser/wiki/images/screenshots/xTandemParser\_small.PNG)](https://github.com/compomics/xtandem-parser/wiki/images/screenshots/xTandemParser.PNG)
 
 [Go to top of page](#xtandem-parser)
