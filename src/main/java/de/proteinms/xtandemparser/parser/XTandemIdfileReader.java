@@ -208,8 +208,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
      * Returns a utilities peptide assumption from an X!Tandem peptide.
      *
      * Warning: the fixed modifications are not implemented and need to be added
-     * subsequently. That can be done using the compomics utilities PTMFactory
-     * (https://code.google.com/p/compomics-utilities/source/browse/trunk/src/main/java/com/compomics/util/experiment/biology/PTMFactory.java).
+     * subsequently. That can be done using the compomics utilities PTMFactory.
      *
      * @param domain the domain of the X!Tandem peptide
      * @param charge the charge of the precursor of the inspected spectrum

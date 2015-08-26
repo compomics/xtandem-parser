@@ -362,7 +362,7 @@ public class XTandemViewer extends JFrame {
         tMsg.append("The XTandem parser is a Java project for extracting information from X!Tandem output xml files.");
         tMsg.append("\n");
         tMsg.append("\n");
-        tMsg.append("The latest version is available at http://xtandem-parser.googlecode.com");
+        tMsg.append("The latest version is available at http://compomics.github.io/projects/xtandem-parser.html");
         tMsg.append("\n");
         tMsg.append("\n");
         tMsg.append("If any questions arise, contact the corresponding author: ");
