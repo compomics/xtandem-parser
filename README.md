@@ -11,8 +11,8 @@
   * If you use **XTandem Parser** as part of a paper, please include the reference above.
 
 **SearchGUI and PeptideShaker:**
-  * To run X!Tandem searches we recommend the use of [SearchGUI](http://searchgui.googlecode.com).
-  * To visualize and analyze X!Tandem results we recommend the use of [PeptideShaker](http://peptide-shaker.googlecode.com).
+  * To run X!Tandem searches we recommend the use of [SearchGUI](http://compomics.github.io/projects/searchgui.html).
+  * To visualize and analyze X!Tandem results we recommend the use of [PeptideShaker](http://compomics.github.io/projects/peptide-shaker.html).
 
 ---
 
@@ -31,7 +31,7 @@ And the input xml format is explained here [here](http://www.thegpm.org/tandem/a
 
 If you need an example file to play with, one is provided as a zip file in the downloads section on the right.
 
-The parser is developed by Thilo Muth under the guidance of Marc Vaudel, Prof. Dr. Albert Sickmann and Prof. Dr. Lennart Martens. Great help came from Harald Barsnes who was involved in the development of [OMSSA Parser](http://code.google.com/p/omssa-parser).
+The parser is developed by Thilo Muth under the guidance of Marc Vaudel, Prof. Dr. Albert Sickmann and Prof. Dr. Lennart Martens. Great help came from Harald Barsnes who was involved in the development of [OMSSA Parser](http://compomics.github.io/projects/omssa-parser.html).
 Thanks to Steffi Wortelkamp for persistent testing.
 
 [Go to top of page](#xtandem-parser)
@@ -42,7 +42,7 @@ Thanks to Steffi Wortelkamp for persistent testing.
 The following libraries were used for the general user interface (spectrum viewer):
   * [SwingX](https://swingx.dev.java.net/)
   * [JGoodies](http://www.jgoodies.com/)
-  * [Utilities](http://genesis.ugent.be/utilities/)
+  * [Utilities](http://compomics.github.io/projects/compomics-utilities.html)
 
 [Go to top of page](#xtandem-parser)
 
@@ -74,7 +74,7 @@ Update the version number to latest released version.
 
 ## Result Analysis ##
 
-To visualize and analyze X!Tandem results we recommend the use of [PeptideShaker](http://peptide-shaker.googlecode.com). **PeptideShaker** is a search engine independent platform for visualization of peptide and protein identification results from multiple search engines.
+To visualize and analyze X!Tandem results we recommend the use of [PeptideShaker](http://compomics.github.io/projects/peptide-shaker.html). **PeptideShaker** is a search engine independent platform for visualization of peptide and protein identification results from multiple search engines.
 
 [Go to top of page](#xtandem-parser)
 
