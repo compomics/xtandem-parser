@@ -18,7 +18,7 @@
 
 |   |   |   |
 | :------------------------- | :---------------: | :--: |
-| [![download](https://github.com/compomics/xtandem-parser/wiki/images/download_button.png)](http://genesis.ugent.be/maven2/de/proteinms/xtandemparser/xtandem-parser/1.7.18/xtandem-parser-1.7.18.zip) | *v1.7.18 - All platforms* | [ReleaseNotes](https://github.com/compomics/xtandem-parser/wiki/ReleaseNotes) |
+| [![download](https://github.com/compomics/xtandem-parser/wiki/images/download_button.png)](http://genesis.ugent.be/maven2/de/proteinms/xtandemparser/xtandem-parser/1.8.0/xtandem-parser-1.8.0.zip) | *v1.8.0 - All platforms* | [ReleaseNotes](https://github.com/compomics/xtandem-parser/wiki/ReleaseNotes) |
 
 ---
 
