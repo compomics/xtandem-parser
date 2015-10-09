@@ -50,14 +50,6 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
      * The peptide map.
      */
     private PeptideMap peptideMap;
-    /**
-     * A map of the peptides found in this file.
-     */
-    private HashMap<String, LinkedList<com.compomics.util.experiment.biology.Peptide>> foundPeptidesMap;
-    /**
-     * The length of the keys of the peptide map.
-     */
-    private int peptideMapKeyLength;
 
     /**
      * Constructor for the reader.
@@ -99,12 +91,6 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
 
     @Override
     public LinkedList<SpectrumMatch> getAllSpectrumMatches(WaitingHandler waitingHandler, SearchParameters searchParameters, SequenceMatchingPreferences sequenceMatchingPreferences, boolean expandAaCombinations) throws IOException, IllegalArgumentException, SQLException, ClassNotFoundException, InterruptedException, JAXBException {
-
-        if (sequenceMatchingPreferences != null) {
-            SequenceFactory sequenceFactory = SequenceFactory.getInstance();
-            peptideMapKeyLength = sequenceFactory.getDefaultProteinTree().getInitialTagSize();
-            foundPeptidesMap = new HashMap<String, LinkedList<com.compomics.util.experiment.biology.Peptide>>(1024);
-        }
 
         LinkedList<SpectrumMatch> result = new LinkedList<SpectrumMatch>();
 
@@ -233,17 +219,6 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
 
         com.compomics.util.experiment.biology.Peptide peptide = new com.compomics.util.experiment.biology.Peptide(sequence, foundModifications);
 
-        if (sequenceMatchingPreferences != null) {
-            String subSequence = sequence.substring(0, peptideMapKeyLength);
-            subSequence = AminoAcid.getMatchingSequence(subSequence, sequenceMatchingPreferences);
-            LinkedList<com.compomics.util.experiment.biology.Peptide> peptidesForTag = foundPeptidesMap.get(subSequence);
-            if (peptidesForTag == null) {
-                peptidesForTag = new LinkedList<com.compomics.util.experiment.biology.Peptide>();
-                foundPeptidesMap.put(subSequence, peptidesForTag);
-            }
-            peptidesForTag.add(peptide);
-        }
-
         return new PeptideAssumption(peptide, rank, Advocate.xtandem.getIndex(), new Charge(Charge.PLUS, charge), domain.getDomainExpect(), getFileName());
     }
 
@@ -283,13 +258,8 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
     }
 
     @Override
-    public HashMap<String, LinkedList<com.compomics.util.experiment.biology.Peptide>> getPeptidesMap() {
-        return foundPeptidesMap;
-    }
-
-    @Override
     public HashMap<String, LinkedList<SpectrumMatch>> getTagsMap() {
-        return new HashMap<String, LinkedList<SpectrumMatch>>();
+        return new HashMap<String, LinkedList<SpectrumMatch>>(0);
     }
 
     @Override
@@ -298,9 +268,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
     }
 
     @Override
-    public void clearPeptidesMap() {
-        if (foundPeptidesMap != null) {
-            foundPeptidesMap.clear();
-        }
+    public boolean hasDeNovoTags() {
+        return false;
     }
 }
