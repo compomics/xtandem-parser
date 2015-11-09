@@ -18,7 +18,7 @@
 
 |   |   |   |
 | :------------------------- | :---------------: | :--: |
-| [![download](https://github.com/compomics/xtandem-parser/wiki/images/download_button.png)](http://genesis.ugent.be/maven2/de/proteinms/xtandemparser/xtandem-parser/1.8.0/xtandem-parser-1.8.0.zip) | *v1.8.0 - All platforms* | [ReleaseNotes](https://github.com/compomics/xtandem-parser/wiki/ReleaseNotes) |
+| [![download](https://github.com/compomics/xtandem-parser/wiki/images/download_button.png)](http://genesis.ugent.be/maven2/de/proteinms/xtandemparser/xtandem-parser/1.8.1/xtandem-parser-1.8.1.zip) | *v1.8.1 - All platforms* | [ReleaseNotes](https://github.com/compomics/xtandem-parser/wiki/ReleaseNotes) |
 
 ---
 
@@ -52,18 +52,32 @@ The following libraries were used for the general user interface (spectrum viewe
 **XTandem Parser** is available for use in Maven projects:
 
 ```
-<dependency>
-    <groupId>de.proteinms.xtandemparser</groupId>
-    <artifactId>xtandem-parser</artifactId>
-    <version>X.Y.Z</version>
-</dependency>
+<dependencies>
+    <dependency>
+        <groupId>de.proteinms.xtandemparser</groupId>
+        <artifactId>xtandem-parser</artifactId>
+        <version>X.Y.Z</version>
+    </dependency>
+</dependencies>
+```
+```
+<repositories>
+    <!-- Compomics Genesis Maven 2 repository -->
+    <repository>
+        <id>genesis-maven2-repository</id>
+        <name>Genesis maven2 repository</name>
+        <url>http://genesis.UGent.be/maven2</url>
+        <layout>default</layout>
+    </repository>
 
-<repository>
-    <id>genesis-maven2-repository</id>
-    <name>Genesis maven2 repository</name>
-    <url>http://genesis.UGent.be/maven2</url>
-    <layout>default</layout>
-</repository>
+    <!-- EBI Maven 2 repository -->
+    <repository>
+        <id>ebi-repo</id>
+        <name>The EBI Maven2 repository</name>
+        <url>http://www.ebi.ac.uk/~maven/m2repo</url>
+        <layout>default</layout>
+    </repository>
+</repositories>
 ```
 
 Update the version number to latest released version.
