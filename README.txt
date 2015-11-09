@@ -2,7 +2,7 @@
    =====> XTandem Parser Website <=====
 
    Here you can find all updated about the XTandem Parser project:
-   http://xtandem-parser.googlecode.com
+   http://compomics.github.io/projects/xtandem-parser.html
 
    On the website you can also find a manual of how to use the parser library in detail.
 
