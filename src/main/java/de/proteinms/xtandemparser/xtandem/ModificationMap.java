@@ -61,6 +61,9 @@ public class ModificationMap implements Serializable {
         iFixedModificationMap = new HashMap<String, Modification>();
         iVarModificationMap = new HashMap<String, Modification>();
 
+        // get the list of possible fixed modifications
+        ArrayList<String> allFixedModifications = getFixedModifications();
+
         if (rawModMap != null) {
             for (int i = 1; i <= numberOfSpectra; i++) {
 
@@ -79,12 +82,12 @@ public class ModificationMap implements Serializable {
                         int domainEnd = domainList.get(d - 1).getDomainEnd();
                         String modKey = "_s" + i + "_p" + j + "_d" + d + "_m" + m_counter;
 
-                        // get the list of possible fixed modifications
-                        ArrayList<String> allFixedModifications = getFixedModifications();
+                        // the list of modifications already added to a given mod location
+                        HashMap<String, ArrayList<String>> usedFixedModifications = new HashMap<String, ArrayList<String>>();
 
                         while (rawModMap.get("name" + modKey) != null) {
 
-                            // Get the specific parameters for the modification
+                            // get the specific parameters for the modification
                             String modName = rawModMap.get("name" + modKey).toString();
                             double modMass = Double.parseDouble(rawModMap.get("modified" + modKey).toString());
                             String modLocation = rawModMap.get("at" + modKey).toString();
@@ -99,18 +102,28 @@ public class ModificationMap implements Serializable {
 
                             boolean addAsFixed = false;
 
-                            if (!allFixedModifications.isEmpty()) {
+                            for (String currentFixedModificaton : allFixedModifications) {
 
-                                String matchingFixedModification = getFixedModificationMatch(
+                                boolean matchFound = isFixedModificationMatch(
                                         modMass,
                                         modifiedResidue,
                                         new Integer(modLocation) == domainStart,
                                         new Integer(modLocation) == domainEnd,
-                                        allFixedModifications);
+                                        currentFixedModificaton);
 
-                                if (matchingFixedModification != null) {
-                                    allFixedModifications.remove(matchingFixedModification);
-                                    addAsFixed = true;
+                                if (matchFound) {
+                                    ArrayList<String> usedFixedModificationsAtResidue = usedFixedModifications.get(modLocation);
+
+                                    if (usedFixedModificationsAtResidue == null) {
+                                        usedFixedModificationsAtResidue = new ArrayList<String>();
+                                    }
+
+                                    if (!usedFixedModificationsAtResidue.contains(currentFixedModificaton)) {
+                                        usedFixedModificationsAtResidue.add(currentFixedModificaton);
+                                        usedFixedModifications.put(modLocation, allFixedModifications);
+                                        addAsFixed = true;
+                                        break;
+                                    }
                                 }
                             }
 
@@ -170,43 +183,38 @@ public class ModificationMap implements Serializable {
     }
 
     /**
-     * Returns the matching modification in the fixed modification input
-     * parameter section: --> label="residue, modification mass", null if no
-     * match is found.
+     * Returns true if the fixed modification is in the fixed modification input
+     * parameter section: --> label="residue, modification mass".
      *
      * @param aModMass the modification mass
      * @param aaModified the amino acid modified
      * @param nTerm if the modification is at the n term
      * @param cTerm of the modification is at the c term
-     * @param fixedModifications the currently available fixed modifications
+     * @param fixedModification the fixed modification to look for
      *
-     * @return true of the given modification mass is a fixed modification
+     * @return true if the fixed modification is in the fixed modification input
+     * parameter section
      */
-    private String getFixedModificationMatch(double aModMass, String aaModified, boolean nTerm, boolean cTerm, ArrayList<String> fixedModifications) {
-
-        String fixedModificationMatch = null;
+    private boolean isFixedModificationMatch(double aModMass, String aaModified, boolean nTerm, boolean cTerm, String fixedModification) {
 
         BigDecimal modMass = new BigDecimal(aModMass);
         modMass = modMass.setScale(2, BigDecimal.ROUND_HALF_UP);
 
-        for (String currentFixedModification : fixedModifications) {
+        String[] tokens = fixedModification.split("@");
+        BigDecimal inputMass = new BigDecimal(new Double(tokens[0]));
+        inputMass = inputMass.setScale(2, BigDecimal.ROUND_HALF_UP);
 
-            String[] tokens = currentFixedModification.split("@");
-            BigDecimal inputMass = new BigDecimal(new Double(tokens[0]));
-            inputMass = inputMass.setScale(2, BigDecimal.ROUND_HALF_UP);
-
-            if (modMass.equals(inputMass)) {
-                if (tokens[1].equalsIgnoreCase(aaModified)) {
-                    return currentFixedModification;
-                } else if (tokens[1].equalsIgnoreCase("[") && nTerm) {
-                    return currentFixedModification;
-                } else if (tokens[1].equalsIgnoreCase("]") && cTerm) {
-                    return currentFixedModification;
-                }
+        if (modMass.equals(inputMass)) {
+            if (tokens[1].equalsIgnoreCase(aaModified)) {
+                return true;
+            } else if (tokens[1].equalsIgnoreCase("[") && nTerm) {
+                return true;
+            } else if (tokens[1].equalsIgnoreCase("]") && cTerm) {
+                return true;
             }
         }
 
-        return fixedModificationMatch;
+        return false;
     }
 
     /**
