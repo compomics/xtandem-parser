@@ -7,10 +7,12 @@
   * [Screenshots](#screenshots)
 
 **XTandem Parser Publications:**
+
   * [Muth et al: Proteomics 2010 Apr;10(7):1522-4](http://www.ncbi.nlm.nih.gov/pubmed/20140905).
   * If you use **XTandem Parser** as part of a paper, please include the reference above.
 
 **SearchGUI and PeptideShaker:**
+
   * To run X!Tandem searches we recommend the use of [SearchGUI](http://compomics.github.io/projects/searchgui.html).
   * To visualize and analyze X!Tandem results we recommend the use of [PeptideShaker](http://compomics.github.io/projects/peptide-shaker.html).
 
