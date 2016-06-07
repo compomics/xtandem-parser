@@ -4,7 +4,7 @@
     <groupId>de.proteinms.xtandemparser</groupId>
     <artifactId>xtandem-parser</artifactId>
     <name>xtandem-parser</name>
-    <version>1.10.0</version>
+    <version>1.11.0</version>
     <description>Java based parser for X!Tandem output XML files</description>
     <url>https://github.com/compomics/xtandem-parser</url>
 

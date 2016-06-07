@@ -120,7 +120,7 @@ public class ModificationMap implements Serializable {
 
                                     if (!usedFixedModificationsAtResidue.contains(currentFixedModificaton)) {
                                         usedFixedModificationsAtResidue.add(currentFixedModificaton);
-                                        usedFixedModifications.put(modLocation, allFixedModifications);
+                                        usedFixedModifications.put(modLocation, usedFixedModificationsAtResidue);
                                         addAsFixed = true;
                                         break;
                                     }
