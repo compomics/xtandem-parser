@@ -7,10 +7,12 @@
   * [Screenshots](#screenshots)
 
 **XTandem Parser Publications:**
+
   * [Muth et al: Proteomics 2010 Apr;10(7):1522-4](http://www.ncbi.nlm.nih.gov/pubmed/20140905).
   * If you use **XTandem Parser** as part of a paper, please include the reference above.
 
 **SearchGUI and PeptideShaker:**
+
   * To run X!Tandem searches we recommend the use of [SearchGUI](http://compomics.github.io/projects/searchgui.html).
   * To visualize and analyze X!Tandem results we recommend the use of [PeptideShaker](http://compomics.github.io/projects/peptide-shaker.html).
 
@@ -18,7 +20,7 @@
 
 |   |   |   |
 | :------------------------- | :---------------: | :--: |
-| [![download](https://github.com/compomics/xtandem-parser/wiki/images/download_button.png)](http://genesis.ugent.be/maven2/de/proteinms/xtandemparser/xtandem-parser/1.10.0/xtandem-parser-1.10.0.zip) | *v1.10.0 - All platforms* | [ReleaseNotes](https://github.com/compomics/xtandem-parser/wiki/ReleaseNotes) |
+| <a href="http://genesis.ugent.be/maven2/de/proteinms/xtandemparser/xtandem-parser/1.11.0/xtandem-parser-1.11.0.zip" onclick="trackOutboundLink('usage','download','xtandem-parser','http://genesis.ugent.be/maven2/de/proteinms/xtandemparser/xtandem-parser/1.11.0/xtandem-parser-1.11.0.zip'); return false;"><img src="https://github.com/compomics/xtandem-parser/wiki/images/download_button.png" alt="download" /></a> | *v1.11.0 - All platforms* | [ReleaseNotes](https://github.com/compomics/xtandem-parser/wiki/ReleaseNotes) |
 
 ---
 
