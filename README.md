@@ -86,13 +86,6 @@ The following libraries were used for the general user interface (spectrum viewe
         <name>EBI Nexus Repository</name>
         <url>http://www.ebi.ac.uk/Tools/maven/repos/content/repositories/pst-release</url>
     </repository>
-        
-    <!-- EBI SNAPSHOT repo -->
-    <repository>
-        <id>pst-snapshots</id>
-        <name>EBI Nexus Snapshots Repository</name>
-        <url>http://www.ebi.ac.uk/Tools/maven/repos/content/repositories/pst-snapshots</url>
-     </repository>
      
 </repositories>
 ```
