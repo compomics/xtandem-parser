@@ -93,6 +93,7 @@ The following libraries were used for the general user interface (spectrum viewe
         <name>EBI Nexus Snapshots Repository</name>
         <url>http://www.ebi.ac.uk/Tools/maven/repos/content/repositories/pst-snapshots</url>
      </repository>
+     
 </repositories>
 ```
 
