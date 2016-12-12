@@ -64,6 +64,7 @@ The following libraries were used for the general user interface (spectrum viewe
 ```
 ```
 <repositories>
+
     <!-- Compomics Genesis Maven 2 repository -->
     <repository>
         <id>genesis-maven2-repository</id>
@@ -72,13 +73,26 @@ The following libraries were used for the general user interface (spectrum viewe
         <layout>default</layout>
     </repository>
 
-    <!-- EBI Maven 2 repository -->
+    <!-- old EBI repository -->
     <repository>
-        <id>ebi-repo</id>
-        <name>The EBI Maven2 repository</name>
+        <id>ebi-repo</id> 
+        <name>The EBI internal repository</name>
         <url>http://www.ebi.ac.uk/~maven/m2repo</url>
-        <layout>default</layout>
     </repository>
+
+    <!-- EBI repository -->
+    <repository>
+        <id>pst-release</id>
+        <name>EBI Nexus Repository</name>
+        <url>http://www.ebi.ac.uk/Tools/maven/repos/content/repositories/pst-release</url>
+    </repository>
+        
+    <!-- EBI SNAPSHOT repo -->
+    <repository>
+        <id>pst-snapshots</id>
+        <name>EBI Nexus Snapshots Repository</name>
+        <url>http://www.ebi.ac.uk/Tools/maven/repos/content/repositories/pst-snapshots</url>
+     </repository>
 </repositories>
 ```
 
