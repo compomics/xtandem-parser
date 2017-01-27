@@ -30,8 +30,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
 /**
- * This reader will import identifications from an X!Tandem XML result file.
- * <p>
+ * This reader import identifications from an X!Tandem XML result file to the compomics-utilities data structure.
+ * 
  * @author Marc Vaudel
  */
 public class XTandemIdfileReader extends ExperimentObject implements IdfileReader {
@@ -253,16 +253,6 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
         versions.add(xTandemFile.getPerformParameters().getProcVersion());
         result.put("X!Tandem", versions);
         return result;
-    }
-
-    @Override
-    public HashMap<String, LinkedList<SpectrumMatch>> getTagsMap() {
-        return new HashMap<String, LinkedList<SpectrumMatch>>(0);
-    }
-
-    @Override
-    public void clearTagsMap() {
-        // No tags here
     }
 
     @Override
