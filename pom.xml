@@ -232,18 +232,6 @@
 
     <!-- Dependencies -->
     <dependencies>
-        <!-- This project depends on the junit JAR file.-->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.jgoodies</groupId>
-            <artifactId>looks</artifactId>
-            <version>2.2.2</version>
-        </dependency>
         <dependency>
             <groupId>com.compomics</groupId>
             <artifactId>utilities</artifactId>
@@ -447,6 +435,17 @@
                     <artifactId>commons-math</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jgoodies</groupId>
+            <artifactId>looks</artifactId>
+            <version>2.2.2</version>
         </dependency>
         <dependency>
             <groupId>org.swinglabs</groupId>
