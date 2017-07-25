@@ -539,168 +539,121 @@ public class XTandemParser implements Serializable {
 
                         // Iterate over all the parameter nodes
                         for (int m = 0; m < parameterNodes.getLength(); m++) {
-                            if (parameterNodes.item(m).getAttributes() != null) {
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"list path, sequence source #1\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("SEQSRC1", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"list path, sequence source #2\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("SEQSRC2", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"list path, sequence source #3\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("SEQSRC3", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"list path, sequence source description #1\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("SEQSRCDESC1", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"list path, sequence source description #2\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("SEQSRCDESC2", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"list path, sequence source description #3\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("SEQSRCDESC3", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"modelling, estimated false positives\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("ESTFP", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"modelling, spectrum noise suppression ratio\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("NOISESUPP", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"modelling, total peptides used\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("TOTALPEPUSED", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"modelling, total proteins used\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("TOTALPROTUSED", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"modelling, total spectra assigned\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("TOTALSPECASS", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"modelling, total spectra used\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("TOTALSPECUSED", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"modelling, total unique assigned\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("TOTALUNIQUEASS", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"process, start time\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("PROCSTART", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"process, version\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("PROCVER", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"quality values\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("QUALVAL", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"refining, # input models\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("INPUTMOD", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"refining, # input spectra\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("INPUTSPEC", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"refining, # partial cleavage\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("PARTCLEAV", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"refining, # point mutations\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("POINTMUT", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"refining, # potential C-terminii\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("POTC_TERM", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"refining, # potential N-terminii\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("POTN_TERM", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"refining, # unanticipated cleavage\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("UNANTICLEAV", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"timing, initial modelling total (sec)\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("INITMODELTOTALTIME", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"timing, initial modelling/spectrum (sec)\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("INITMODELSPECTIME", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"timing, load sequence models (sec)\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("LOADSEQMODELTIME", parameterNodes.item(m).getTextContent());
-                                    }
-                                }
-                                if (parameterNodes.item(m).getAttributes().getNamedItem("label").toString().equalsIgnoreCase(
-                                        "label=\"timing, refinement/spectrum (sec)\"")) {
-                                    if (!parameterNodes.item(m).getTextContent().equals("")) {
-                                        iPerformParamMap.put("REFINETIME", parameterNodes.item(m).getTextContent());
-                                    }
+                            if (parameterNodes.item(m).getAttributes() != null && !parameterNodes.item(m).getTextContent().equals("")) {
+                                String paramLabel = parameterNodes.item(m).getAttributes().getNamedItem("label").toString().toLowerCase();
+                                String content = parameterNodes.item(m).getTextContent();
+                                
+                                switch (paramLabel){
+                                    case "label=\"list path, sequence source #1\"":
+                                        iPerformParamMap.put("SEQSRC1", content);
+                                        break;
+                                    
+                                    case "label=\"list path, sequence source #2\"":
+                                        iPerformParamMap.put("SEQSRC2", content);
+                                        break;
+                                    
+                                    case "label=\"list path, sequence source #3\"":
+                                        iPerformParamMap.put("SEQSRC3", content);
+                                        break;
+                                    
+                                    case "label=\"list path, sequence source description #1\"":
+                                        iPerformParamMap.put("SEQSRCDESC1", content);
+                                        break;
+                                    
+                                    case "label=\"list path, sequence source description #2\"":
+                                        iPerformParamMap.put("SEQSRCDESC2", content);
+                                        break;
+                                    
+                                    case "label=\"list path, sequence source description #3\"":
+                                        iPerformParamMap.put("SEQSRCDESC3", content);
+                                        break;
+                                    
+                                    case "label=\"modelling, estimated false positives\"":
+                                        iPerformParamMap.put("ESTFP", content);
+                                        break;
+                                    
+                                    case "label=\"modelling, spectrum noise suppression ratio\"":
+                                        iPerformParamMap.put("NOISESUPP", content);
+                                        break;
+                                    
+                                    case "label=\"modelling, total peptides used\"":
+                                        iPerformParamMap.put("TOTALPEPUSED", content);
+                                        break;
+                                    
+                                    case "label=\"modelling, total proteins used\"":
+                                        iPerformParamMap.put("TOTALPROTUSED", content);
+                                        break;
+                                    
+                                    case "label=\"modelling, total spectra assigned\"":
+                                        iPerformParamMap.put("TOTALSPECASS", content);
+                                        break;
+                                    
+                                    case "label=\"modelling, total spectra used\"":
+                                        iPerformParamMap.put("TOTALSPECUSED", content);
+                                        break;
+                                    
+                                    case "label=\"modelling, total unique assigned\"":
+                                        iPerformParamMap.put("TOTALUNIQUEASS", content);
+                                        break;
+                                    
+                                    case "label=\"process, start time\"":
+                                        iPerformParamMap.put("PROCSTART", content);
+                                        break;
+                                    
+                                    case "label=\"process, version\"":
+                                        iPerformParamMap.put("PROCVER", content);
+                                        break;
+                                    
+                                    case "label=\"quality values\"":
+                                        iPerformParamMap.put("QUALVAL", content);
+                                        break;
+                                    
+                                    case "label=\"refining, # input models\"":
+                                        iPerformParamMap.put("INPUTMOD", content);
+                                        break;
+                                    
+                                    case "label=\"refining, # input spectra\"":
+                                        iPerformParamMap.put("INPUTSPEC", content);
+                                        break;
+                                    
+                                    case "label=\"refining, # partial cleavage\"":
+                                        iPerformParamMap.put("PARTCLEAV", content);
+                                        break;
+                                    
+                                    case "label=\"refining, # point mutations\"":
+                                        iPerformParamMap.put("POINTMUT", content);
+                                        break;
+                                    
+                                    case "label=\"refining, # potential c-terminii\"":
+                                        iPerformParamMap.put("POTC_TERM", content);
+                                        break;
+                                    
+                                    case "label=\"refining, # potential n-terminii\"":
+                                        iPerformParamMap.put("POTN_TERM", content);
+                                        break;
+                                    
+                                    case "label=\"refining, # unanticipated cleavage\"":
+                                        iPerformParamMap.put("UNANTICLEAV", content);
+                                        break;
+                                    
+                                    case "label=\"timing, initial modelling total (sec)\"":
+                                        iPerformParamMap.put("INITMODELTOTALTIME", content);
+                                        break;
+                                    
+                                    case "label=\"timing, initial modelling/spectrum (sec)\"":
+                                        iPerformParamMap.put("INITMODELSPECTIME", content);
+                                        break;
+                                    
+                                    case "label=\"timing, load sequence models (sec)\"":
+                                        iPerformParamMap.put("LOADSEQMODELTIME", content);
+                                        break;
+                                    
+                                    case "label=\"timing, refinement/spectrum (sec)\"":
+                                        iPerformParamMap.put("REFINETIME", content);
+                                        break;
+                                    
+                                    default:
+                                        break;
                                 }
                             }
                         }
@@ -711,49 +664,50 @@ public class XTandemParser implements Serializable {
 
         // Iterate over all the nodes
         for (int i = 0; i < nodes.getLength(); i++) {
-            if (nodes.item(i).getAttributes() != null) {
-                if (nodes.item(i).getAttributes().getNamedItem("type") != null) {
+            NamedNodeMap nodeAttributes = nodes.item(i).getAttributes();
+            if (nodeAttributes != null) {
+                if (nodeAttributes.getNamedItem("type") != null) {
 
                     // The model group contains all information about a single peptide identification
-                    if (nodes.item(i).getAttributes().getNamedItem("type").getNodeValue().equalsIgnoreCase("model")) {
+                    if (nodeAttributes.getNamedItem("type").getNodeValue().equalsIgnoreCase("model")) {
                         spectraCounter++;
 
                         // id is the number associated with the mass spectrum that was identified
-                        if (nodes.item(i).getAttributes().getNamedItem("id") != null) {
-                            iRawSpectrumMap.put("id" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("id").getNodeValue());
+                        if (nodeAttributes.getNamedItem("id") != null) {
+                            iRawSpectrumMap.put("id" + spectraCounter, nodeAttributes.getNamedItem("id").getNodeValue());
                         }
                         // z is the parent/precursor ion charge
-                        if (nodes.item(i).getAttributes().getNamedItem("z") != null) {
-                            iRawSpectrumMap.put("z" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("z").getNodeValue());
+                        if (nodeAttributes.getNamedItem("z") != null) {
+                            iRawSpectrumMap.put("z" + spectraCounter, nodeAttributes.getNamedItem("z").getNodeValue());
                         }
                         if (!skipDetails) {
                             // expect is the expectation value for the top ranked protein identfied with this spectrum
-                            if (nodes.item(i).getAttributes().getNamedItem("expect") != null) {
-                                iRawSpectrumMap.put("expect" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("expect").getNodeValue());
+                            if (nodeAttributes.getNamedItem("expect") != null) {
+                                iRawSpectrumMap.put("expect" + spectraCounter, nodeAttributes.getNamedItem("expect").getNodeValue());
                             }
                             // mh is the parent/precursor ion mass from the spectrum
-                            if (nodes.item(i).getAttributes().getNamedItem("mh") != null) {
-                                iRawSpectrumMap.put("mh" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("mh").getNodeValue());
+                            if (nodeAttributes.getNamedItem("mh") != null) {
+                                iRawSpectrumMap.put("mh" + spectraCounter, nodeAttributes.getNamedItem("mh").getNodeValue());
                             }
                             // rt is the parent/precursor retention time
-                            if (nodes.item(i).getAttributes().getNamedItem("rt") != null) {
-                                iRawSpectrumMap.put("rt" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("rt").getNodeValue());
+                            if (nodeAttributes.getNamedItem("rt") != null) {
+                                iRawSpectrumMap.put("rt" + spectraCounter, nodeAttributes.getNamedItem("rt").getNodeValue());
                             }
                             // label is the text from the protein sequence FASTA file description line for the top ranked protein identified
-                            if (nodes.item(i).getAttributes().getNamedItem("label") != null) {
-                                iRawSpectrumMap.put("label" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("label").getNodeValue());
+                            if (nodeAttributes.getNamedItem("label") != null) {
+                                iRawSpectrumMap.put("label" + spectraCounter, nodeAttributes.getNamedItem("label").getNodeValue());
                             }
                             // sumI is the log10-value of the sum of all of the fragment ion intensities
-                            if (nodes.item(i).getAttributes().getNamedItem("sumI") != null) {
-                                iRawSpectrumMap.put("sumI" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("sumI").getNodeValue());
+                            if (nodeAttributes.getNamedItem("sumI") != null) {
+                                iRawSpectrumMap.put("sumI" + spectraCounter, nodeAttributes.getNamedItem("sumI").getNodeValue());
                             }
                             // maxI is the maximum fragment ion intensity
-                            if (nodes.item(i).getAttributes().getNamedItem("maxI") != null) {
-                                iRawSpectrumMap.put("maxI" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("maxI").getNodeValue());
+                            if (nodeAttributes.getNamedItem("maxI") != null) {
+                                iRawSpectrumMap.put("maxI" + spectraCounter, nodeAttributes.getNamedItem("maxI").getNodeValue());
                             }
                             // fI is a multiplier to convert the normalized spectrum back to the original intensity values
-                            if (nodes.item(i).getAttributes().getNamedItem("fI") != null) {
-                                iRawSpectrumMap.put("fI" + spectraCounter, nodes.item(i).getAttributes().getNamedItem("fI").getNodeValue());
+                            if (nodeAttributes.getNamedItem("fI") != null) {
+                                iRawSpectrumMap.put("fI" + spectraCounter, nodeAttributes.getNamedItem("fI").getNodeValue());
                             }
                         }
                     }
@@ -772,25 +726,26 @@ public class XTandemParser implements Serializable {
 
                 if (idNodes.item(j).getNodeName().equalsIgnoreCase("protein")) {
                     p_counter++;
+                    NamedNodeMap idNodesAttributes = idNodes.item(j).getAttributes();
                     // the identifier of this particular identification (spectrum#).(id#)
-                    String protID = idNodes.item(j).getAttributes().getNamedItem("id").getNodeValue();
+                    String protID = idNodesAttributes.getNamedItem("id").getNodeValue();
 
                     // Since the ID is not unique to the protein, we will use the label to reference it. That will be dirty for some files.
-                    String proteinKey = idNodes.item(j).getAttributes().getNamedItem("label").getNodeValue();
+                    String proteinKey = idNodesAttributes.getNamedItem("label").getNodeValue();
                     if (!skipDetails) {
                         iProteinKeyList.add(proteinKey);
 
                         // a unique number of this protein, calculated by the search engine. Well unique. Most often yes.
-                        iRawProteinMap.put("uid" + proteinKey, idNodes.item(j).getAttributes().getNamedItem("uid").getNodeValue());
+                        iRawProteinMap.put("uid" + proteinKey, idNodesAttributes.getNamedItem("uid").getNodeValue());
 
                         // the log10 value of the expection value of the protein
-                        iRawProteinMap.put("expect" + proteinKey, idNodes.item(j).getAttributes().getNamedItem("expect").getNodeValue());
+                        iRawProteinMap.put("expect" + proteinKey, idNodesAttributes.getNamedItem("expect").getNodeValue());
 
                         // the description line from the FASTA file
-                        iRawProteinMap.put("label" + proteinKey, idNodes.item(j).getAttributes().getNamedItem("label").getNodeValue());
+                        iRawProteinMap.put("label" + proteinKey, idNodesAttributes.getNamedItem("label").getNodeValue());
 
                         // the sum of all of the fragment ions that identify this protein
-                        iRawProteinMap.put("sumI" + proteinKey, idNodes.item(j).getAttributes().getNamedItem("sumI").getNodeValue());
+                        iRawProteinMap.put("sumI" + proteinKey, idNodesAttributes.getNamedItem("sumI").getNodeValue());
                     }
 
                     proteinNodes = idNodes.item(j).getChildNodes();
@@ -830,6 +785,8 @@ public class XTandemParser implements Serializable {
 
                             // Iterate over all the peptide nodes
                             for (int m = 0; m < peptideNodes.getLength(); m++) {
+                                
+                                NamedNodeMap attributes = peptideNodes.item(m).getAttributes();
 
                                 // Get the domain entries
                                 if (peptideNodes.item(m).getNodeName().equalsIgnoreCase("domain")) {
@@ -842,10 +799,10 @@ public class XTandemParser implements Serializable {
                                         domainKey = "s" + spectraCounter + "_p" + p_counter + "_d" + ++dCount;
                                     }
 
-                                    iRawPeptideMap.put("domainid" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("id").getNodeValue());
+                                    iRawPeptideMap.put("domainid" + "_" + domainKey, attributes.getNamedItem("id").getNodeValue());
 
                                     // the start position of the peptide
-                                    iRawPeptideMap.put("domainstart" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("start").getNodeValue());
+                                    iRawPeptideMap.put("domainstart" + "_" + domainKey, attributes.getNamedItem("start").getNodeValue());
 
                                     if (!skipDetails) {
 
@@ -853,83 +810,83 @@ public class XTandemParser implements Serializable {
                                         iRawPeptideMap.put("proteinkey" + "_" + domainKey, proteinKey);
 
                                         // the end position of the peptide
-                                        iRawPeptideMap.put("domainend" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("end").getNodeValue());
+                                        iRawPeptideMap.put("domainend" + "_" + domainKey, attributes.getNamedItem("end").getNodeValue());
 
                                         // the mass + a proton
-                                        iRawPeptideMap.put("mh" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("mh").getNodeValue());
+                                        iRawPeptideMap.put("mh" + "_" + domainKey, attributes.getNamedItem("mh").getNodeValue());
 
                                         // the mass delta
-                                        iRawPeptideMap.put("delta" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("delta").getNodeValue());
+                                        iRawPeptideMap.put("delta" + "_" + domainKey, attributes.getNamedItem("delta").getNodeValue());
 
                                         // the hyper score
-                                        iRawPeptideMap.put("hyperscore" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("hyperscore").getNodeValue());
+                                        iRawPeptideMap.put("hyperscore" + "_" + domainKey, attributes.getNamedItem("hyperscore").getNodeValue());
 
                                         // the next score
-                                        iRawPeptideMap.put("nextscore" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("nextscore").getNodeValue());
+                                        iRawPeptideMap.put("nextscore" + "_" + domainKey, attributes.getNamedItem("nextscore").getNodeValue());
 
                                         if (xIonFlag) {
                                             // the x score
-                                            iRawPeptideMap.put("x_score" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("y_score").getNodeValue());
+                                            iRawPeptideMap.put("x_score" + "_" + domainKey, attributes.getNamedItem("y_score").getNodeValue());
 
                                             // the x ion number
-                                            iRawPeptideMap.put("x_ions" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("y_ions").getNodeValue());
+                                            iRawPeptideMap.put("x_ions" + "_" + domainKey, attributes.getNamedItem("y_ions").getNodeValue());
                                         }
 
                                         if (yIonFlag) {
                                             // the y score
-                                            iRawPeptideMap.put("y_score" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("y_score").getNodeValue());
+                                            iRawPeptideMap.put("y_score" + "_" + domainKey, attributes.getNamedItem("y_score").getNodeValue());
 
                                             // the y ion number
-                                            iRawPeptideMap.put("y_ions" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("y_ions").getNodeValue());
+                                            iRawPeptideMap.put("y_ions" + "_" + domainKey, attributes.getNamedItem("y_ions").getNodeValue());
                                         }
 
                                         if (zIonFlag) {
                                             // the z score
-                                            iRawPeptideMap.put("z_score" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("y_score").getNodeValue());
+                                            iRawPeptideMap.put("z_score" + "_" + domainKey, attributes.getNamedItem("y_score").getNodeValue());
 
                                             // the z ion number
-                                            iRawPeptideMap.put("z_ions" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("y_ions").getNodeValue());
+                                            iRawPeptideMap.put("z_ions" + "_" + domainKey, attributes.getNamedItem("y_ions").getNodeValue());
                                         }
 
                                         if (aIonFlag) {
                                             // the a score
-                                            iRawPeptideMap.put("a_score" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("b_score").getNodeValue());
+                                            iRawPeptideMap.put("a_score" + "_" + domainKey, attributes.getNamedItem("b_score").getNodeValue());
 
                                             // the a ion number
-                                            iRawPeptideMap.put("a_ions" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("b_ions").getNodeValue());
+                                            iRawPeptideMap.put("a_ions" + "_" + domainKey, attributes.getNamedItem("b_ions").getNodeValue());
                                         }
 
                                         if (bIonFlag) {
                                             // the b score
-                                            iRawPeptideMap.put("b_score" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("b_score").getNodeValue());
+                                            iRawPeptideMap.put("b_score" + "_" + domainKey, attributes.getNamedItem("b_score").getNodeValue());
 
                                             // the b ion number
-                                            iRawPeptideMap.put("b_ions" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("b_ions").getNodeValue());
+                                            iRawPeptideMap.put("b_ions" + "_" + domainKey, attributes.getNamedItem("b_ions").getNodeValue());
                                         }
 
                                         if (cIonFlag) {
                                             // the c score
-                                            iRawPeptideMap.put("c_score" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("b_score").getNodeValue());
+                                            iRawPeptideMap.put("c_score" + "_" + domainKey, attributes.getNamedItem("b_score").getNodeValue());
 
                                             // the c ion number
-                                            iRawPeptideMap.put("c_ions" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("b_ions").getNodeValue());
+                                            iRawPeptideMap.put("c_ions" + "_" + domainKey, attributes.getNamedItem("b_ions").getNodeValue());
                                         }
 
                                         // the upstream flanking sequence
-                                        iRawPeptideMap.put("pre" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("pre").getNodeValue());
+                                        iRawPeptideMap.put("pre" + "_" + domainKey, attributes.getNamedItem("pre").getNodeValue());
 
                                         // the downstream flanking sequence
-                                        iRawPeptideMap.put("post" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("post").getNodeValue());
+                                        iRawPeptideMap.put("post" + "_" + domainKey, attributes.getNamedItem("post").getNodeValue());
 
                                         // the number of missed cleavages
-                                        iRawPeptideMap.put("missed_cleavages" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("missed_cleavages").getNodeValue());
+                                        iRawPeptideMap.put("missed_cleavages" + "_" + domainKey, attributes.getNamedItem("missed_cleavages").getNodeValue());
                                     }
 
                                     // the expectation value
-                                    iRawPeptideMap.put("expect" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("expect").getNodeValue());
+                                    iRawPeptideMap.put("expect" + "_" + domainKey, attributes.getNamedItem("expect").getNodeValue());
 
                                     // the domain sequence
-                                    iRawPeptideMap.put("domainseq" + "_" + domainKey, peptideNodes.item(m).getAttributes().getNamedItem("seq").getNodeValue());
+                                    iRawPeptideMap.put("domainseq" + "_" + domainKey, attributes.getNamedItem("seq").getNodeValue());
 
                                     int modCounter = 0;
                                     for (int n = 0; n < peptideNodes.item(m).getChildNodes().getLength(); n++) {
