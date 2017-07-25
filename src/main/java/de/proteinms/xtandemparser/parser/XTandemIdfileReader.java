@@ -120,8 +120,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
                 String filename = Util.getFileName(tempFile);
                 Integer parsedCharge = new Integer(xTandemFile.getXTandemParser().getRawSpectrumMap().get("z" + spectrumNumber));
                 Charge charge = new Charge(Charge.PLUS, parsedCharge);
-                String spectrumKey = com.compomics.util.experiment.massspectrometry.Spectrum.getSpectrumKey(filename, spectrumName);
-                SpectrumMatch currentMatch = new SpectrumMatch(spectrumKey);
+                SpectrumMatch currentMatch = new SpectrumMatch(filename, spectrumName);
                 currentMatch.setSpectrumNumber(spectrumNumber); //@TODO: verify that this work when sorting spectra according to proteins
                 HashMap<Double, ArrayList<Domain>> hitMap = new HashMap<Double, ArrayList<Domain>>();
 
@@ -161,7 +160,7 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
                                     com.compomics.util.experiment.biology.Peptide newPeptide = new com.compomics.util.experiment.biology.Peptide(expandedSequence.toString(), peptide.getModificationMatches());
                                     ArrayList<ModificationMatch> modificationMatches = peptide.getModificationMatches();
                                     for (ModificationMatch modificationMatch : modificationMatches) {
-                                        newPeptide.addModificationMatch(new ModificationMatch(modificationMatch.getTheoreticPtm(), modificationMatch.isVariable(), modificationMatch.getModificationSite()));
+                                        newPeptide.addModificationMatch(new ModificationMatch(modificationMatch.getTheoreticPtm(), modificationMatch.getVariable(), modificationMatch.getModificationSite()));
                                     }
                                     PeptideAssumption newAssumption = new PeptideAssumption(newPeptide, peptideAssumption.getRank(), peptideAssumption.getAdvocate(), peptideAssumption.getIdentificationCharge(), peptideAssumption.getScore(), peptideAssumption.getIdentificationFile());
                                     currentMatch.addHit(Advocate.xtandem.getIndex(), newAssumption, false);
