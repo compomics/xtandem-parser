@@ -650,7 +650,6 @@ public class XTandemParser implements Serializable {
      * occurs
      */
     private void parseXTandemFile(File aInputFile, boolean skipDetails) throws IOException, SAXException, ParserConfigurationException {
-        
         // Initialize the maps
         iPerformParamMap = new HashMap<>();
         iRawModMap = new HashMap<>();
@@ -669,37 +668,37 @@ public class XTandemParser implements Serializable {
             XMLInputFactory factory = XMLInputFactory.newInstance();
             XMLStreamReader parser = factory.createXMLStreamReader(new FileInputStream(aInputFile));
             while (parser.hasNext()) {
-              switch (parser.getEventType()) {
-                case XMLStreamConstants.START_DOCUMENT: break;
-                  
-                case XMLStreamConstants.END_DOCUMENT: parser.close(); break;
+                switch (parser.getEventType()) {
+                    case XMLStreamConstants.START_DOCUMENT: break;
 
-                case XMLStreamConstants.NAMESPACE: break;
+                    case XMLStreamConstants.END_DOCUMENT: parser.close(); break;
 
-                case XMLStreamConstants.CHARACTERS: break;
-                
-                case XMLStreamConstants.END_ELEMENT: break;
+                    case XMLStreamConstants.NAMESPACE: break;
 
-                case XMLStreamConstants.START_ELEMENT:
-                    String element = parser.getLocalName();
-                    if (element.equals("group") &&
-                        parser.getAttributeValue("", "type") != null &&
-                        parser.getAttributeValue("", "type").equalsIgnoreCase("parameters") &&
-                        parser.getAttributeValue("", "label") != null){
-                        if (parser.getAttributeValue("", "label").equalsIgnoreCase("input parameters") ||
-                            parser.getAttributeValue("", "label").equalsIgnoreCase("unused input parameters")){
-                            readInputParameter(parser);
-                        }
-                        else if (parser.getAttributeValue("", "label").equalsIgnoreCase("performance parameters")){
-                            readPerformanceParameter(parser);
-                        }
-                    }                        
-                    break;
-                  
+                    case XMLStreamConstants.CHARACTERS: break;
 
-                default: break;
-              }
-              parser.next();
+                    case XMLStreamConstants.END_ELEMENT: break;
+
+                    case XMLStreamConstants.START_ELEMENT:
+                        String element = parser.getLocalName();
+                        if (element.equals("group") &&
+                            parser.getAttributeValue("", "type") != null &&
+                            parser.getAttributeValue("", "type").equalsIgnoreCase("parameters") &&
+                            parser.getAttributeValue("", "label") != null){
+                            if (parser.getAttributeValue("", "label").equalsIgnoreCase("input parameters") ||
+                                parser.getAttributeValue("", "label").equalsIgnoreCase("unused input parameters")){
+                                readInputParameter(parser);
+                            }
+                            else if (parser.getAttributeValue("", "label").equalsIgnoreCase("performance parameters")){
+                                readPerformanceParameter(parser);
+                            }
+                        }                        
+                        break;
+
+
+                    default: break;
+                }
+                parser.next();
             }
         
         
@@ -715,7 +714,7 @@ public class XTandemParser implements Serializable {
             XMLStreamReader parser = factory.createXMLStreamReader(new FileInputStream(aInputFile));
 
             while (parser.hasNext()) {
-
+                parser.next();
                 switch (parser.getEventType()) {
                     case XMLStreamConstants.START_DOCUMENT: break;
 
@@ -782,7 +781,6 @@ public class XTandemParser implements Serializable {
 
                     default: break;
                 }
-                parser.next();
             }
         
         
@@ -790,13 +788,14 @@ public class XTandemParser implements Serializable {
         catch(Exception e){
             e.printStackTrace();
         }
-        
     }
     
     
-    private void readGroupOrProtein(XMLStreamReader parser, boolean skipDetails) throws XMLStreamException{
+    private void readGroupOrProtein(XMLStreamReader parser, boolean skipDetails) throws XMLStreamException {
+        
         int p_counter = 0;
         while (parser.hasNext()) {
+            parser.next();
             switch (parser.getEventType()) {
                 case XMLStreamConstants.START_DOCUMENT: return;
                 case XMLStreamConstants.END_DOCUMENT: return;
@@ -809,13 +808,13 @@ public class XTandemParser implements Serializable {
                 case XMLStreamConstants.START_ELEMENT:
                     switch(parser.getLocalName().toLowerCase()){
                         case "group":
-                            if (!skipDetails && parser.getAttributeValue("", "label") != null && "supporting data".equalsIgnoreCase(parser.getAttributeValue("", "label"))) {
+                            if (parser.getAttributeValue("", "label") != null && "supporting data".equalsIgnoreCase(parser.getAttributeValue("", "label"))) {
                                 readGroupSupport(parser, skipDetails);
                             }
-                            else if  (!skipDetails && parser.getAttributeValue("", "label") != null && "fragment ion mass spectrum".equalsIgnoreCase(parser.getAttributeValue("", "label"))) {
+                            else if (parser.getAttributeValue("", "label") != null && "fragment ion mass spectrum".equalsIgnoreCase(parser.getAttributeValue("", "label"))) {
                                 readGroupFragment(parser, skipDetails);
                             }
-                            break;
+                         break;
                         
                         case "protein":
                             p_counter++;
@@ -852,7 +851,6 @@ public class XTandemParser implements Serializable {
 
                 default: break;
             }
-            parser.next();
         }
     }
     
@@ -860,10 +858,11 @@ public class XTandemParser implements Serializable {
     
     
         
-    private void readGroupFragment(XMLStreamReader parser, boolean skipDetails) throws XMLStreamException{
+    private void readGroupFragment(XMLStreamReader parser, boolean skipDetails) throws XMLStreamException {
         boolean write = false;
         StringBuilder content = new StringBuilder();
         while (parser.hasNext()) {
+            parser.next();
             switch (parser.getEventType()) {
                 case XMLStreamConstants.START_DOCUMENT: return;
                 case XMLStreamConstants.END_DOCUMENT: return;
@@ -875,8 +874,8 @@ public class XTandemParser implements Serializable {
                     if ("note".equalsIgnoreCase(parser.getLocalName()) && write){
                         String value = content.toString().trim();
                         idToSpectrumMap.put(iNumberOfSpectra, value);
-                        iSupportDataMap.put("FRAGIONSPECDESC_s" + iNumberOfSpectra, value);
-                        iTitle2SpectrumIDMap.put(value, iNumberOfSpectra);
+                        if (!skipDetails) iSupportDataMap.put("FRAGIONSPECDESC_s" + iNumberOfSpectra, value);
+                        if (!skipDetails) iTitle2SpectrumIDMap.put(value, iNumberOfSpectra);
                         content = new StringBuilder();
                         write = false;
                     }
@@ -887,15 +886,13 @@ public class XTandemParser implements Serializable {
                 case XMLStreamConstants.START_ELEMENT:
                     switch(parser.getLocalName().toLowerCase()){
                         case "note":
-                            if (!skipDetails) {
-                                write = true;
-                            }
+                            write = true;
                             break;
                     
                         case "trace":
                             if (parser.getAttributeValue("", "type") != null && "tandem mass spectrum".equalsIgnoreCase(parser.getAttributeValue("", "type"))){
-                                iSupportDataMap.put("SPECTRUMLABEL_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
-                                readGroupFragmentTrace(parser);
+                                if (!skipDetails) iSupportDataMap.put("SPECTRUMLABEL_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
+                                readGroupFragmentTrace(parser, skipDetails);
                             }
                             break;
                             
@@ -907,27 +904,27 @@ public class XTandemParser implements Serializable {
 
                 default: break;
             }
-            parser.next();
         }
     }
     
-    private void readGroupFragmentTrace(XMLStreamReader parser) throws XMLStreamException{
+    private void readGroupFragmentTrace(XMLStreamReader parser, boolean skipDetails) throws XMLStreamException{
         String supportData = "";
         boolean value = false;
         String xyData = "";
         while (parser.hasNext()) {
+            parser.next();
             switch (parser.getEventType()) {
                 case XMLStreamConstants.START_DOCUMENT: return;
                 case XMLStreamConstants.END_DOCUMENT: return;
                 case XMLStreamConstants.NAMESPACE: break;
                 case XMLStreamConstants.CHARACTERS:
                     switch (supportData.toLowerCase()){
-                        case "m+h": iSupportDataMap.put("FRAGIONMZ_s" + iNumberOfSpectra, parser.getText()); break;
-                        case "charge": iSupportDataMap.put("FRAGIONCHARGE_s" + iNumberOfSpectra, parser.getText()); break;
+                        case "m+h": if (!skipDetails) iSupportDataMap.put("FRAGIONMZ_s" + iNumberOfSpectra, parser.getText()); break;
+                        case "charge": if (!skipDetails) iSupportDataMap.put("FRAGIONCHARGE_s" + iNumberOfSpectra, parser.getText()); break;
                         default: break;
                     }
                     if (xyData.length() > 0 && value){
-                        iSupportDataMap.put(xyData, parser.getText());
+                        if (!skipDetails) iSupportDataMap.put(xyData, parser.getText());
                         xyData = "";
                         value = false;
                     }
@@ -953,14 +950,14 @@ public class XTandemParser implements Serializable {
 
                 default: break;
             }
-            parser.next();
         }
     }
     
-    private void readGroupSupportValues(XMLStreamReader parser, boolean abc, boolean convolution) throws XMLStreamException{
+    private void readGroupSupportValues(XMLStreamReader parser, boolean abc, boolean convolution, boolean skipDetails) throws XMLStreamException{
         boolean xData = false;
         boolean write = false;
         while (parser.hasNext()) {
+            parser.next();
             switch (parser.getEventType()) {
                 case XMLStreamConstants.START_DOCUMENT: return;
                 case XMLStreamConstants.END_DOCUMENT: return;
@@ -969,35 +966,35 @@ public class XTandemParser implements Serializable {
                     if (write){
                         if (convolution){
                             if (xData){
-                                iSupportDataMap.put("XVAL_CONVOL_s" + iNumberOfSpectra, parser.getText());
+                                if (!skipDetails) iSupportDataMap.put("XVAL_CONVOL_s" + iNumberOfSpectra, parser.getText());
                             }
                             else {
-                                iSupportDataMap.put("YVAL_CONVOL_s" + iNumberOfSpectra, parser.getText());
+                                if (!skipDetails) iSupportDataMap.put("YVAL_CONVOL_s" + iNumberOfSpectra, parser.getText());
                             }
                         }
                         else {
                             if (abc){
                                 if (xData){
-                                    if (aIonFlag) iSupportDataMap.put("XVAL_AIONS_s" + iNumberOfSpectra, parser.getText());
-                                    if (bIonFlag) iSupportDataMap.put("XVAL_BIONS_s" + iNumberOfSpectra, parser.getText());
-                                    if (cIonFlag) iSupportDataMap.put("XVAL_CIONS_s" + iNumberOfSpectra, parser.getText());
+                                    if (aIonFlag && !skipDetails) iSupportDataMap.put("XVAL_AIONS_s" + iNumberOfSpectra, parser.getText());
+                                    if (bIonFlag && !skipDetails) iSupportDataMap.put("XVAL_BIONS_s" + iNumberOfSpectra, parser.getText());
+                                    if (cIonFlag && !skipDetails) iSupportDataMap.put("XVAL_CIONS_s" + iNumberOfSpectra, parser.getText());
                                 }
                                 else {
-                                    if (aIonFlag) iSupportDataMap.put("YVAL_AIONS_s" + iNumberOfSpectra, parser.getText());
-                                    if (bIonFlag) iSupportDataMap.put("YVAL_BIONS_s" + iNumberOfSpectra, parser.getText());
-                                    if (cIonFlag) iSupportDataMap.put("YVAL_CIONS_s" + iNumberOfSpectra, parser.getText());
+                                    if (aIonFlag && !skipDetails) iSupportDataMap.put("YVAL_AIONS_s" + iNumberOfSpectra, parser.getText());
+                                    if (bIonFlag && !skipDetails) iSupportDataMap.put("YVAL_BIONS_s" + iNumberOfSpectra, parser.getText());
+                                    if (cIonFlag && !skipDetails) iSupportDataMap.put("YVAL_CIONS_s" + iNumberOfSpectra, parser.getText());
                                 }
                             }
                             else {
                                 if (xData){
-                                    if (xIonFlag) iSupportDataMap.put("XVAL_AIONS_s" + iNumberOfSpectra, parser.getText());
-                                    if (yIonFlag) iSupportDataMap.put("XVAL_BIONS_s" + iNumberOfSpectra, parser.getText());
-                                    if (zIonFlag) iSupportDataMap.put("XVAL_CIONS_s" + iNumberOfSpectra, parser.getText());
+                                    if (xIonFlag && !skipDetails) iSupportDataMap.put("XVAL_AIONS_s" + iNumberOfSpectra, parser.getText());
+                                    if (yIonFlag && !skipDetails) iSupportDataMap.put("XVAL_BIONS_s" + iNumberOfSpectra, parser.getText());
+                                    if (zIonFlag && !skipDetails) iSupportDataMap.put("XVAL_CIONS_s" + iNumberOfSpectra, parser.getText());
                                 }
                                 else {
-                                    if (xIonFlag) iSupportDataMap.put("YVAL_AIONS_s" + iNumberOfSpectra, parser.getText());
-                                    if (yIonFlag) iSupportDataMap.put("YVAL_BIONS_s" + iNumberOfSpectra, parser.getText());
-                                    if (zIonFlag) iSupportDataMap.put("YVAL_CIONS_s" + iNumberOfSpectra, parser.getText());
+                                    if (xIonFlag && !skipDetails) iSupportDataMap.put("YVAL_AIONS_s" + iNumberOfSpectra, parser.getText());
+                                    if (yIonFlag && !skipDetails) iSupportDataMap.put("YVAL_BIONS_s" + iNumberOfSpectra, parser.getText());
+                                    if (zIonFlag && !skipDetails) iSupportDataMap.put("YVAL_CIONS_s" + iNumberOfSpectra, parser.getText());
                                 }
                             }
                         }
@@ -1018,7 +1015,6 @@ public class XTandemParser implements Serializable {
                     break;
                 default: break;
             }
-            parser.next();
         }            
     }
     
@@ -1028,13 +1024,14 @@ public class XTandemParser implements Serializable {
         String xyData = "", attribute = "";
         boolean write = false;
         while (parser.hasNext()) {
+            parser.next();
             switch (parser.getEventType()) {
                 case XMLStreamConstants.START_DOCUMENT: return;
                 case XMLStreamConstants.END_DOCUMENT: return;
                 case XMLStreamConstants.NAMESPACE: break;
                 case XMLStreamConstants.CHARACTERS:
                     if (write){
-                        iSupportDataMap.put((attribute.length() > 0) ? attribute : xyData, parser.getText());
+                        if (!skipDetails) iSupportDataMap.put((attribute.length() > 0) ? attribute : xyData, parser.getText());
                         attribute = "";
                         xyData = "";
                         write = false;
@@ -1062,13 +1059,12 @@ public class XTandemParser implements Serializable {
                     break;
                 default: break;
             }
-            parser.next();
         }            
     }
     
     private void readGroupSupport(XMLStreamReader parser, boolean skipDetails) throws XMLStreamException{
         while (parser.hasNext()) {
-
+            parser.next();
             switch (parser.getEventType()) {
                 case XMLStreamConstants.START_DOCUMENT: return;
                 case XMLStreamConstants.END_DOCUMENT: return;
@@ -1083,27 +1079,27 @@ public class XTandemParser implements Serializable {
                     if ("trace".equalsIgnoreCase(parser.getLocalName()) && parser.getAttributeValue("", "type") != null){
                         switch(parser.getAttributeValue("", "type").toLowerCase()){
                             case "hyperscore expectation function":
-                                iSupportDataMap.put("HYPERLABEL" + "_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
+                                if (!skipDetails) iSupportDataMap.put("HYPERLABEL" + "_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
                                 readGroupSupportHyperScore(parser, skipDetails);
                                 break;
                             
                             case "convolution survival function":
-                                iSupportDataMap.put("CONVOLLABEL_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
-                                readGroupSupportValues(parser, false, true);
+                                if (!skipDetails) iSupportDataMap.put("CONVOLLABEL_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
+                                readGroupSupportValues(parser, false, true, skipDetails);
                                 break;
                                 
                             case "b ion histogram":
-                                if (aIonFlag) iSupportDataMap.put("A_IONLABEL_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
-                                if (bIonFlag) iSupportDataMap.put("B_IONLABEL_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
-                                if (cIonFlag) iSupportDataMap.put("C_IONLABEL_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
-                                readGroupSupportValues(parser, true, false);
+                                if (aIonFlag && !skipDetails) iSupportDataMap.put("A_IONLABEL_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
+                                if (bIonFlag && !skipDetails) iSupportDataMap.put("B_IONLABEL_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
+                                if (cIonFlag && !skipDetails) iSupportDataMap.put("C_IONLABEL_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
+                                readGroupSupportValues(parser, true, false, skipDetails);
                                 break;
                                 
                             case "y ion histogram":
-                                if (xIonFlag) iSupportDataMap.put("X_IONLABEL_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
-                                if (yIonFlag) iSupportDataMap.put("Y_IONLABEL_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
-                                if (zIonFlag) iSupportDataMap.put("Z_IONLABEL_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
-                                readGroupSupportValues(parser, false, false);
+                                if (xIonFlag && !skipDetails) iSupportDataMap.put("X_IONLABEL_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
+                                if (yIonFlag && !skipDetails) iSupportDataMap.put("Y_IONLABEL_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
+                                if (zIonFlag && !skipDetails) iSupportDataMap.put("Z_IONLABEL_s" + iNumberOfSpectra, parser.getAttributeValue("", "label"));
+                                readGroupSupportValues(parser, false, false, skipDetails);
                                 break;
                         }
                     }
@@ -1112,7 +1108,6 @@ public class XTandemParser implements Serializable {
 
                 default: break;
             }
-            parser.next();
         }
     }
     
@@ -1121,6 +1116,7 @@ public class XTandemParser implements Serializable {
         String noteKey = "";
         String p_cnt = "_p" + p_counter;
         while (parser.hasNext()) {
+            parser.next();
             switch (parser.getEventType()) {
                 case XMLStreamConstants.START_DOCUMENT: return;
                 case XMLStreamConstants.END_DOCUMENT: return;
@@ -1162,13 +1158,13 @@ public class XTandemParser implements Serializable {
 
                 default: break;
             }
-            parser.next();
         }
     }
     
     private void readPeptide(XMLStreamReader parser, String proteinKey, String p_cnt, boolean skipDetails) throws XMLStreamException{
         int dCount = 1;
         while (parser.hasNext()) {
+            parser.next();
             switch (parser.getEventType()) {
                 case XMLStreamConstants.START_DOCUMENT: return;
                 case XMLStreamConstants.END_DOCUMENT: return;
@@ -1279,13 +1275,13 @@ public class XTandemParser implements Serializable {
 
                 default: break;
             }
-            parser.next();
         }
     }
 
     private void readPeptideDomain(XMLStreamReader parser, String domainKey, boolean skipDetails) throws XMLStreamException{
         int modCounter = 0;
         while (parser.hasNext()) {
+            parser.next();
             switch (parser.getEventType()) {
                 case XMLStreamConstants.START_DOCUMENT: return;
                 case XMLStreamConstants.END_DOCUMENT: return;
@@ -1322,7 +1318,6 @@ public class XTandemParser implements Serializable {
 
                 default: break;
             }
-            parser.next();
         }
     }
 
