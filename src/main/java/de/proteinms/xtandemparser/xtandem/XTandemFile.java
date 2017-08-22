@@ -360,7 +360,7 @@ public class XTandemFile implements Serializable {
             // Set the IdToNumberMap
             iIdToNumberMap = new HashMap<String, Integer>();
 
-            for (int i = 1; i < iSpectraNumber + 1; i++) {
+            for (int i = 1; i <= iSpectraNumber; i++) {
 
                 // SpectrumID
                 int spectrumID = Integer.parseInt(spectrumSection.get("id" + i));
