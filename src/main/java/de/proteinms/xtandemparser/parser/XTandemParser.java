@@ -670,13 +670,9 @@ public class XTandemParser implements Serializable {
             while (parser.hasNext()) {
                 switch (parser.getEventType()) {
                     case XMLStreamConstants.START_DOCUMENT: break;
-
                     case XMLStreamConstants.END_DOCUMENT: parser.close(); break;
-
                     case XMLStreamConstants.NAMESPACE: break;
-
                     case XMLStreamConstants.CHARACTERS: break;
-
                     case XMLStreamConstants.END_ELEMENT: break;
 
                     case XMLStreamConstants.START_ELEMENT:
@@ -694,7 +690,6 @@ public class XTandemParser implements Serializable {
                             }
                         }                        
                         break;
-
 
                     default: break;
                 }
@@ -717,15 +712,11 @@ public class XTandemParser implements Serializable {
                 parser.next();
                 switch (parser.getEventType()) {
                     case XMLStreamConstants.START_DOCUMENT: break;
-
                     case XMLStreamConstants.END_DOCUMENT: parser.close(); break;
-
                     case XMLStreamConstants.NAMESPACE: break;
-
                     case XMLStreamConstants.CHARACTERS: break;
-
                     case XMLStreamConstants.END_ELEMENT: break;
-
+                    
                     case XMLStreamConstants.START_ELEMENT:
                         String element = parser.getLocalName();
                         if (element.equalsIgnoreCase("group") &&
@@ -771,14 +762,11 @@ public class XTandemParser implements Serializable {
                                     iRawSpectrumMap.put("fI" + iNumberOfSpectra, parser.getAttributeValue("", "fI"));
                                 }
                             }
-                            
-
                             readGroupOrProtein(parser, skipDetails);
 
                         }
                         break;
-
-
+                        
                     default: break;
                 }
             }
@@ -839,8 +827,6 @@ public class XTandemParser implements Serializable {
                                 iRawProteinMap.put("sumI" + proteinKey, parser.getAttributeValue("", "sumI"));
                             }
                             
-                            
-                            
                             readProtein(parser, proteinKey, protID, p_counter, skipDetails);
                             break;
                             
@@ -848,16 +834,12 @@ public class XTandemParser implements Serializable {
                     }
                     break;
 
-
                 default: break;
             }
         }
     }
     
     
-    
-    
-        
     private void readGroupFragment(XMLStreamReader parser, boolean skipDetails) throws XMLStreamException {
         boolean write = false;
         StringBuilder content = new StringBuilder();
@@ -901,11 +883,11 @@ public class XTandemParser implements Serializable {
                     }
                     break;
 
-
                 default: break;
             }
         }
     }
+    
     
     private void readGroupFragmentTrace(XMLStreamReader parser, boolean skipDetails) throws XMLStreamException{
         String supportData = "";
@@ -947,11 +929,11 @@ public class XTandemParser implements Serializable {
                     }
                     break;
 
-
                 default: break;
             }
         }
     }
+    
     
     private void readGroupSupportValues(XMLStreamReader parser, boolean abc, boolean convolution, boolean skipDetails) throws XMLStreamException{
         boolean xData = false;
@@ -1013,11 +995,11 @@ public class XTandemParser implements Serializable {
                         default: break;
                     }
                     break;
+                    
                 default: break;
             }
         }            
     }
-    
     
     
     private void readGroupSupportHyperScore(XMLStreamReader parser, boolean skipDetails) throws XMLStreamException{
@@ -1057,10 +1039,12 @@ public class XTandemParser implements Serializable {
                         default: break;
                     }
                     break;
+                    
                 default: break;
             }
         }            
     }
+    
     
     private void readGroupSupport(XMLStreamReader parser, boolean skipDetails) throws XMLStreamException{
         while (parser.hasNext()) {
@@ -1105,14 +1089,13 @@ public class XTandemParser implements Serializable {
                     }
                     break;
 
-
                 default: break;
             }
         }
     }
     
     
-    private void readProtein(XMLStreamReader parser, String proteinKey, String protID, int p_counter, boolean skipDetails) throws XMLStreamException{
+    private void readProtein(XMLStreamReader parser, String proteinKey, String protID, int p_counter, boolean skipDetails) throws XMLStreamException {
         String noteKey = "";
         String p_cnt = "_p" + p_counter;
         while (parser.hasNext()) {
@@ -1155,13 +1138,13 @@ public class XTandemParser implements Serializable {
                     }
                     break;
 
-
                 default: break;
             }
         }
     }
     
-    private void readPeptide(XMLStreamReader parser, String proteinKey, String p_cnt, boolean skipDetails) throws XMLStreamException{
+    
+    private void readPeptide(XMLStreamReader parser, String proteinKey, String p_cnt, boolean skipDetails) throws XMLStreamException {
         int dCount = 1;
         while (parser.hasNext()) {
             parser.next();
@@ -1268,17 +1251,17 @@ public class XTandemParser implements Serializable {
 
                         // the domain sequence
                         iRawPeptideMap.put("domainseq_" + domainKey, parser.getAttributeValue("", "seq"));
-                        readPeptideDomain(parser, domainKey, skipDetails);
+                        readPeptideDomain(parser, domainKey);
                     }
                     break;
-
 
                 default: break;
             }
         }
     }
 
-    private void readPeptideDomain(XMLStreamReader parser, String domainKey, boolean skipDetails) throws XMLStreamException{
+    
+    private void readPeptideDomain(XMLStreamReader parser, String domainKey) throws XMLStreamException {
         int modCounter = 0;
         while (parser.hasNext()) {
             parser.next();
@@ -1315,475 +1298,10 @@ public class XTandemParser implements Serializable {
                     }
                     break;
 
-
                 default: break;
             }
         }
     }
-
-/*
-        
-
-            // the number of spectra.
-            iNumberOfSpectra = spectraCounter;
-
-            // Get the identifications
-            idNodes = nodes.item(i).getChildNodes();
-
-            int p_counter = 0;
-            // Iterate over all the child nodes
-            int idNodesLength = idNodes.getLength();
-            for (int j = 0; j < idNodesLength; j++) {
-                Node idNode = idNodes.item(j);
-                NamedNodeMap idNodesAttributes = idNode.getAttributes();
-
-                switch (idNode.getNodeName().toLowerCase()){
-                    case "protein":
-                    
-                        p_counter++;
-                        // the identifier of this particular identification (spectrum#).(id#)
-                        String protID = idNodesAttributes.getNamedItem("id").getNodeValue();
-
-                        // Since the ID is not unique to the protein, we will use the label to reference it. That will be dirty for some files.
-                        String proteinKey = idNodesAttributes.getNamedItem("label").getNodeValue();
-                        if (!skipDetails) {
-                            iProteinKeyList.add(proteinKey);
-
-                            // a unique number of this protein, calculated by the search engine. Well unique. Most often yes.
-                            iRawProteinMap.put("uid" + proteinKey, idNodesAttributes.getNamedItem("uid").getNodeValue());
-
-                            // the log10 value of the expection value of the protein
-                            iRawProteinMap.put("expect" + proteinKey, idNodesAttributes.getNamedItem("expect").getNodeValue());
-
-                            // the description line from the FASTA file
-                            iRawProteinMap.put("label" + proteinKey, idNodesAttributes.getNamedItem("label").getNodeValue());
-
-                            // the sum of all of the fragment ions that identify this protein
-                            iRawProteinMap.put("sumI" + proteinKey, idNodesAttributes.getNamedItem("sumI").getNodeValue());
-                        }
-
-                        proteinNodes = idNode.getChildNodes();
-
-                        // Iterate over all the protein nodes
-                        int proteinNodesLength = proteinNodes.getLength();
-                        for (int k = 0; k < proteinNodesLength; k++) {
-                            String proteinNodeName = proteinNodes.item(k).getNodeName();
-                            NamedNodeMap proteinAttributes = proteinNodes.item(k).getAttributes();
-                                String p_cnt = "_p" + p_counter;
-                            if (!skipDetails) {
-                                if ("file".equalsIgnoreCase(proteinNodeName)) {
-                                    // the path used to the original fasta file
-                                    iRawPeptideMap.put("URL_s" + spectraCounter + p_cnt, proteinAttributes.getNamedItem("URL").getNodeValue());
-                                }
-
-                                else if ("note".equalsIgnoreCase(proteinNodeName) && proteinAttributes.getNamedItem("label") != null
-                                        && "description".equalsIgnoreCase(proteinAttributes.getNamedItem("label").getNodeValue())) {
-                                    // the protein description (xml tag: note label="description")
-                                    String test = proteinNodes.item(k).getTextContent();
-                                    iRawProteinMap.put("description" + proteinKey, test);
-                                }
-
-                            }
-                            // the the sum of all the fragment ions that identify this protein
-                            if ("peptide".equalsIgnoreCase(proteinNodeName)) {
-                                iRawPeptideMap.put("s" + spectraCounter + p_cnt, protID);
-                                if (!skipDetails) {
-                                    iRawPeptideMap.put("start" + "_s" + spectraCounter + p_cnt, proteinAttributes.getNamedItem("start").getNodeValue());
-                                    iRawPeptideMap.put("end" + "_s" + spectraCounter + p_cnt, proteinAttributes.getNamedItem("end").getNodeValue());
-                                    iRawPeptideMap.put("seq" + "_s" + spectraCounter + p_cnt, proteinNodes.item(k).getTextContent());
-                                }
-
-                                peptideNodes = proteinNodes.item(k).getChildNodes();
-
-                                // Domain counter
-                                int dCount = 1;
-
-                                // Iterate over all the peptide nodes
-                                int peptideNodesLength = peptideNodes.getLength();
-                                for (int m = 0; m < peptideNodesLength; m++) {
-
-                                    Node peptideNode = peptideNodes.item(m);
-                                    NamedNodeMap attributes = peptideNode.getAttributes();
-
-                                    // Get the domain entries
-                                    if ("domain".equalsIgnoreCase(peptideNode.getNodeName())) {
-
-                                        // Get the domainid
-                                        String domainKey = "s" + spectraCounter + p_cnt + "_d" + dCount++;
-
-                                        // verify that the same domain key is not already in use
-                                        // while (iRawPeptideMap.containsKey("proteinkey" + "_" + domainKey)) {
-                                        //     domainKey = "s" + spectraCounter + "_p" + p_counter + "_d" + ++dCount;
-                                        // }
-
-                                        iRawPeptideMap.put("domainid_" + domainKey, attributes.getNamedItem("id").getNodeValue());
-
-                                        // the start position of the peptide
-                                        iRawPeptideMap.put("domainstart_" + domainKey, attributes.getNamedItem("start").getNodeValue());
-
-                                        if (!skipDetails) {
-
-                                            // Store the protein key a la Thilo. There should be only one protein key per domain.
-                                            iRawPeptideMap.put("proteinkey_" + domainKey, proteinKey);
-
-                                            // the end position of the peptide
-                                            iRawPeptideMap.put("domainend_" + domainKey, attributes.getNamedItem("end").getNodeValue());
-
-                                            // the mass + a proton
-                                            iRawPeptideMap.put("mh_" + domainKey, attributes.getNamedItem("mh").getNodeValue());
-
-                                            // the mass delta
-                                            iRawPeptideMap.put("delta_" + domainKey, attributes.getNamedItem("delta").getNodeValue());
-
-                                            // the hyper score
-                                            iRawPeptideMap.put("hyperscore_" + domainKey, attributes.getNamedItem("hyperscore").getNodeValue());
-
-                                            // the next score
-                                            iRawPeptideMap.put("nextscore_" + domainKey, attributes.getNamedItem("nextscore").getNodeValue());
-
-                                            if (xIonFlag) {
-                                                // the x score
-                                                iRawPeptideMap.put("x_score_" + domainKey, attributes.getNamedItem("y_score").getNodeValue());
-
-                                                // the x ion number
-                                                iRawPeptideMap.put("x_ions_" + domainKey, attributes.getNamedItem("y_ions").getNodeValue());
-                                            }
-
-                                            if (yIonFlag) {
-                                                // the y score
-                                                iRawPeptideMap.put("y_score_" + domainKey, attributes.getNamedItem("y_score").getNodeValue());
-
-                                                // the y ion number
-                                                iRawPeptideMap.put("y_ions_" + domainKey, attributes.getNamedItem("y_ions").getNodeValue());
-                                            }
-
-                                            if (zIonFlag) {
-                                                // the z score
-                                                iRawPeptideMap.put("z_score_" + domainKey, attributes.getNamedItem("y_score").getNodeValue());
-
-                                                // the z ion number
-                                                iRawPeptideMap.put("z_ions_" + domainKey, attributes.getNamedItem("y_ions").getNodeValue());
-                                            }
-
-                                            if (aIonFlag) {
-                                                // the a score
-                                                iRawPeptideMap.put("a_score_" + domainKey, attributes.getNamedItem("b_score").getNodeValue());
-
-                                                // the a ion number
-                                                iRawPeptideMap.put("a_ions_" + domainKey, attributes.getNamedItem("b_ions").getNodeValue());
-                                            }
-
-                                            if (bIonFlag) {
-                                                // the b score
-                                                iRawPeptideMap.put("b_score_" + domainKey, attributes.getNamedItem("b_score").getNodeValue());
-
-                                                // the b ion number
-                                                iRawPeptideMap.put("b_ions_" + domainKey, attributes.getNamedItem("b_ions").getNodeValue());
-                                            }
-
-                                            if (cIonFlag) {
-                                                // the c score
-                                                iRawPeptideMap.put("c_score_" + domainKey, attributes.getNamedItem("b_score").getNodeValue());
-
-                                                // the c ion number
-                                                iRawPeptideMap.put("c_ions_" + domainKey, attributes.getNamedItem("b_ions").getNodeValue());
-                                            }
-
-                                            // the upstream flanking sequence
-                                            iRawPeptideMap.put("pre_" + domainKey, attributes.getNamedItem("pre").getNodeValue());
-
-                                            // the downstream flanking sequence
-                                            iRawPeptideMap.put("post_" + domainKey, attributes.getNamedItem("post").getNodeValue());
-
-                                            // the number of missed cleavages
-                                            iRawPeptideMap.put("missed_cleavages_" + domainKey, attributes.getNamedItem("missed_cleavages").getNodeValue());
-                                        }
-
-                                        // the expectation value
-                                        iRawPeptideMap.put("expect_" + domainKey, attributes.getNamedItem("expect").getNodeValue());
-
-                                        // the domain sequence
-                                        iRawPeptideMap.put("domainseq_" + domainKey, attributes.getNamedItem("seq").getNodeValue());
-
-                                        int modCounter = 0;
-                                        NodeList peptideChildNodes = peptideNode.getChildNodes();
-                                        int childNodesLength = peptideChildNodes.getLength();
-
-                                        for (int n = 0; n < childNodesLength; n++) {
-
-                                            Node pepChild = peptideChildNodes.item(n);
-
-                                            // Get the specific modifications (aa)
-                                            if ("aa".equalsIgnoreCase(pepChild.getNodeName())) {
-                                                modCounter++;
-
-                                                modificationMap = pepChild.getAttributes();
-                                                modificationName = modificationMap.getNamedItem("type").getNodeValue();
-
-                                                // use the old calculation with domainStart!
-                                                //modificationMap.getNamedItem("at").getNodeValue()) - domainStart + 1)
-                                                iRawModMap.put("at_" + domainKey + "_m" + modCounter, modificationMap.getNamedItem("at").getNodeValue());
-
-                                                // modified is the residue mass change caused by the modification
-                                                modificationMass = Double.parseDouble(modificationMap.getNamedItem("modified").getNodeValue());
-                                                iRawModMap.put("modified_" + domainKey + "_m" + modCounter, modificationMap.getNamedItem("modified").getNodeValue());
-
-                                                modificationName = modificationMass + "@" + modificationName;
-
-                                                // type is the single letter abbreviation for the modified residue
-                                                iRawModMap.put("name_" + domainKey + "_m" + modCounter, modificationName);
-
-                                                // get the substituted amino acid (if any)
-                                                if (modificationMap.getNamedItem("pm") != null) {
-                                                    iRawModMap.put("pm_" + domainKey + "_m" + modCounter, modificationMap.getNamedItem("pm").getNodeValue());
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                
-                    // Go to the group node inside the other group node (support)
-                    case "group":
-                        // Start parsing the support data part (GAML histograms)
-                        if (!skipDetails && "supporting data".equalsIgnoreCase(idNodesAttributes.getNamedItem("label").getNodeValue())) {
-                            supportDataNodes = idNode.getChildNodes();
-
-                            // Iterate over all the support data nodes
-                            int supportDataNodesLength = supportDataNodes.getLength();
-                            for (int a = 0; a < supportDataNodesLength; a++) {
-                                Node supportDataNode = supportDataNodes.item(a);
-                                NamedNodeMap supportDataAttributes = supportDataNode.getAttributes();
-
-
-                                if ("GAML:trace".equalsIgnoreCase(supportDataNode.getNodeName())) {
-                                    switch (supportDataAttributes.getNamedItem("type").getNodeValue().toLowerCase()){
-                                        // Parse the hyperscore expectation function values
-                                        case "hyperscore expectation function":
-                                            iSupportDataMap.put("HYPERLABEL" + "_s" + spectraCounter,
-                                                    supportDataAttributes.getNamedItem("label").getNodeValue());
-
-                                            hyperNodes = supportDataNode.getChildNodes();
-                                            // Iterate over the hyperscore nodes
-                                            int hyperNodesLength = hyperNodes.getLength();
-                                            for (int b = 0; b < hyperNodesLength; b++) {
-                                                Node hyperNode = hyperNodes.item(b);
-
-                                                String xyData = "";
-                                                switch (hyperNode.getNodeName().toLowerCase()) {
-                                                    case "gaml:attribute":
-                                                        // Get the a0 value
-                                                        switch (hyperNode.getAttributes().getNamedItem("type").getNodeValue().toLowerCase()) {
-                                                            case "a0":  iSupportDataMap.put("HYPER_A0_s" + spectraCounter, hyperNode.getTextContent()); break;
-                                                            case "a1": iSupportDataMap.put("HYPER_A1_s" + spectraCounter, hyperNode.getTextContent()); break;
-                                                            default: break;
-                                                        }
-                                                        break;
-                                                    case "gaml:xdata": xyData = "XVAL_HYPER_s" + spectraCounter; break;
-                                                    case "gaml:ydata": xyData = "YVAL_HYPER_s" + spectraCounter; break;
-                                                    default: break;
-                                                }
-
-
-
-                                                // Get the Xdata or Ydata
-                                                if (xyData.length() > 0) {
-                                                    NodeList dataNodes = hyperNodes.item(b).getChildNodes();
-                                                    int dataNodesLength = dataNodes.getLength();
-                                                    for (int d = 0; d < dataNodesLength; d++) {
-                                                        Node dataNode = dataNodes.item(d);
-                                                        if ("GAML:values".equalsIgnoreCase(dataNode.getNodeName())) iSupportDataMap.put(xyData, dataNode.getTextContent());
-                                                    }
-                                                }
-                                            }
-                                            break;
-
-                                        // Parse the convolution survival funtion values
-                                        case"convolution survival function":
-                                            iSupportDataMap.put("CONVOLLABEL_s" + spectraCounter, supportDataAttributes.getNamedItem("label").getNodeValue());
-                                            supportDataNodes.item(a).getChildNodes();
-
-                                            convolNodes = supportDataNode.getChildNodes();
-                                            // Iterate over the convolution nodes
-                                            int convolNodesLength = convolNodes.getLength();
-                                            for (int b = 0; b < convolNodesLength; b++) {
-                                                Node convolNode = convolNodes.item(b);
-
-                                                // Get the Xdata or Ydata                                            
-                                                String xyData = "";
-                                                switch(convolNode.getNodeName().toLowerCase()){
-                                                    case "gaml:xdata": xyData = "XVAL_CONVOL_s" + spectraCounter; break;
-                                                    case "gaml:ydata": xyData = "YVAL_CONVOL_s" + spectraCounter; break;
-                                                    default: break;
-                                                }
-
-                                                if (xyData.length() > 0) {
-                                                    NodeList dataNodes = convolNodes.item(b).getChildNodes();
-
-                                                    int dataNodesLength = dataNodes.getLength();
-                                                    for (int d = 0; d < dataNodesLength; d++) {
-                                                        Node dataNode = dataNodes.item(d);
-                                                        if ("GAML:values".equalsIgnoreCase(dataNode.getNodeName())) iSupportDataMap.put(xyData, dataNode.getTextContent());
-                                                    }
-                                                }
-                                            }
-                                            break;
-
-                                        default: break;
-                                    }
-
-
-
-
-                                    if ("b ion histogram".equalsIgnoreCase(supportDataAttributes.getNamedItem("type").getNodeValue())) {
-                                        if (aIonFlag) iSupportDataMap.put("A_IONLABEL_s" + spectraCounter, supportDataAttributes.getNamedItem("label").getNodeValue());
-                                        if (bIonFlag) iSupportDataMap.put("B_IONLABEL_s" + spectraCounter, supportDataAttributes.getNamedItem("label").getNodeValue());
-                                        if (cIonFlag) iSupportDataMap.put("C_IONLABEL_s" + spectraCounter, supportDataAttributes.getNamedItem("label").getNodeValue());
-
-                                        NodeList ionNodes = supportDataNode.getChildNodes();
-
-                                        // Iterate over the a ion nodes
-                                        int ionNodesLength = ionNodes.getLength();
-                                        for (int b = 0; b < ionNodesLength; b++) {
-                                            // Get the Xdata
-                                            Node ionNode = ionNodes.item(b);
-                                            if ("GAML:Xdata".equalsIgnoreCase(ionNode.getNodeName())) {
-                                                xDataNodes = ionNode.getChildNodes();
-                                                int xDataNodesLength = xDataNodes.getLength();
-                                                for (int d = 0; d < xDataNodesLength; d++) {
-                                                    Node xDataNode = xDataNodes.item(d);
-                                                    if ("GAML:values".equalsIgnoreCase(xDataNode.getNodeName())) {
-                                                        if (aIonFlag) iSupportDataMap.put("XVAL_AIONS_s" + spectraCounter, xDataNode.getTextContent());
-                                                        if (bIonFlag) iSupportDataMap.put("XVAL_BIONS_s" + spectraCounter, xDataNode.getTextContent());
-                                                        if (cIonFlag) iSupportDataMap.put("XVAL_CIONS_s" + spectraCounter, xDataNode.getTextContent());
-                                                    }
-                                                }
-                                            }
-                                            // Get the Ydata
-                                            else if ("GAML:Ydata".equalsIgnoreCase(ionNode.getNodeName())) {
-                                                yDataNodes = ionNode.getChildNodes();
-                                                int yDataNodesLength = yDataNodes.getLength();
-                                                for (int e = 0; e < yDataNodesLength; e++) {
-                                                    Node yDataNode = yDataNodes.item(e);
-                                                    if ("GAML:values".equalsIgnoreCase(yDataNode.getNodeName())) {
-                                                        if (aIonFlag) iSupportDataMap.put("YVAL_AIONS_s" + spectraCounter, yDataNode.getTextContent());
-                                                        if (bIonFlag) iSupportDataMap.put("YVAL_BIONS_s" + spectraCounter, yDataNode.getTextContent());
-                                                        if (cIonFlag) iSupportDataMap.put("YVAL_CIONS_s" + spectraCounter, yDataNode.getTextContent());
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-
-
-                                    else if ("b ion histogram".equalsIgnoreCase(supportDataAttributes.getNamedItem("type").getNodeValue())) {
-                                        if (xIonFlag) iSupportDataMap.put("X_IONLABEL_s" + spectraCounter, supportDataAttributes.getNamedItem("label").getNodeValue());
-                                        if (yIonFlag) iSupportDataMap.put("Y_IONLABEL_s" + spectraCounter, supportDataAttributes.getNamedItem("label").getNodeValue());
-                                        if (zIonFlag) iSupportDataMap.put("Z_IONLABEL_s" + spectraCounter, supportDataAttributes.getNamedItem("label").getNodeValue());
-
-                                        NodeList ionNodes = supportDataNode.getChildNodes();
-
-                                        // Iterate over the a ion nodes
-                                        int ionNodesLength = ionNodes.getLength();
-                                        for (int b = 0; b < ionNodesLength; b++) {
-                                            // Get the Xdata
-                                            Node ionNode = ionNodes.item(b);
-                                            if ("GAML:Xdata".equalsIgnoreCase(ionNode.getNodeName())) {
-                                                xDataNodes = ionNode.getChildNodes();
-                                                int xDataNodesLength = xDataNodes.getLength();
-                                                for (int d = 0; d < xDataNodesLength; d++) {
-                                                    Node xDataNode = xDataNodes.item(d);
-                                                    if ("GAML:values".equalsIgnoreCase(xDataNode.getNodeName())) {
-                                                        if (xIonFlag) iSupportDataMap.put("XVAL_XIONS_s" + spectraCounter, xDataNode.getTextContent());
-                                                        if (yIonFlag) iSupportDataMap.put("XVAL_YIONS_s" + spectraCounter, xDataNode.getTextContent());
-                                                        if (zIonFlag) iSupportDataMap.put("XVAL_ZIONS_s" + spectraCounter, xDataNode.getTextContent());
-                                                    }
-                                                }
-                                            }
-                                            // Get the Ydata
-                                            else if ("GAML:Ydata".equalsIgnoreCase(ionNode.getNodeName())) {
-                                                yDataNodes = ionNode.getChildNodes();
-                                                int yDataNodesLength = yDataNodes.getLength();
-                                                for (int e = 0; e < yDataNodesLength; e++) {
-                                                    Node yDataNode = yDataNodes.item(e);
-                                                    if ("GAML:values".equalsIgnoreCase(yDataNode.getNodeName())) {
-                                                        if (xIonFlag) iSupportDataMap.put("YVAL_XIONS_s" + spectraCounter, yDataNode.getTextContent());
-                                                        if (yIonFlag) iSupportDataMap.put("YVAL_YIONS_s" + spectraCounter, yDataNode.getTextContent());
-                                                        if (zIonFlag) iSupportDataMap.put("YVAL_ZIONS_s" + spectraCounter, yDataNode.getTextContent());
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                }
-                            }
-                        }
-
-                        if ("fragment ion mass spectrum".equalsIgnoreCase(idNodesAttributes.getNamedItem("label").getNodeValue())) {
-
-                            supportDataNodes = idNode.getChildNodes();
-                            // Iterate over all the support data nodes
-                            int supportDataNodesLength = supportDataNodes.getLength();
-                            for (int a = 0; a < supportDataNodesLength; a++) {
-                                Node supportDataNode = supportDataNodes.item(a);
-                                if ("note".equalsIgnoreCase(supportDataNode.getNodeName())) {
-                                    String title = supportDataNode.getTextContent().trim();
-                                    idToSpectrumMap.put(spectraCounter, title);
-                                    if (!skipDetails) {
-                                        iSupportDataMap.put("FRAGIONSPECDESC_s" + spectraCounter, title);
-                                        iTitle2SpectrumIDMap.put(title, spectraCounter);
-                                    } else {
-                                        break;
-                                    }
-                                }
-                                if (!skipDetails && "GAML:trace".equalsIgnoreCase(supportDataNode.getNodeName()) && "tandem mass spectrum".equalsIgnoreCase(supportDataNode.getAttributes().getNamedItem("type").getNodeValue())) {
-                                    iSupportDataMap.put("SPECTRUMLABEL_s" + spectraCounter, supportDataNode.getAttributes().getNamedItem("label").getNodeValue());
-
-                                    fragIonNodes = supportDataNode.getChildNodes();
-                                    // Iterate over the fragment ion nodes
-                                    int fragIonNodesLength = fragIonNodes.getLength();
-                                    for (int b = 0; b < fragIonNodesLength; b++) {
-                                        Node fragIonNode = fragIonNodes.item(b);
-
-                                        String xyData = "";
-                                        switch (fragIonNode.getNodeName().toLowerCase()){
-                                            case "gaml:attribute":
-                                                // Get the a0 value
-                                                switch (fragIonNode.getAttributes().getNamedItem("type").getNodeValue().toLowerCase()){
-                                                    case "m+h": iSupportDataMap.put("FRAGIONMZ_s" + spectraCounter, fragIonNode.getTextContent()); break;
-                                                    case "charge": iSupportDataMap.put("FRAGIONCHARGE_s" + spectraCounter, fragIonNode.getTextContent()); break;
-                                                    default: break;
-                                                }
-                                                break;
-                                            case "gaml:xdata": xyData = "XVAL_FRAGIONMZ_s" + spectraCounter; break;
-                                            case "gaml:ydata": xyData = "YVAL_FRAGIONMZ_s" + spectraCounter; break;
-                                            default: break;
-                                        }
-
-                                        if (xyData.length() > 0){
-                                            NodeList dataNodes = fragIonNode.getChildNodes();
-                                            int dataNodesLength = dataNodes.getLength();
-                                            for (int d = 0; d < dataNodesLength; d++) {
-                                                Node dataNode = dataNodes.item(d);
-                                                if (dataNode.getNodeName().equalsIgnoreCase("GAML:values")) {
-                                                    iSupportDataMap.put(xyData, dataNode.getTextContent());
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                    default: break;
-                }
-            }
-        }
-    }
-    */
 
     /**
      * Returns the total number of spectra.
