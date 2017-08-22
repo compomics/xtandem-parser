@@ -793,7 +793,7 @@ public class XTandemParser implements Serializable {
         
         
         
-        
+        /*
         NodeList idNodes, proteinNodes, peptideNodes, nodes, parameterNodes, supportDataNodes, xDataNodes, yDataNodes;
         NodeList hyperNodes, convolNodes, aIonNodes, bIonNodes, cIonNodes, xIonNodes, yIonNodes, zIonNodes, fragIonNodes;
         DocumentBuilderFactory dbf;
@@ -1347,28 +1347,17 @@ public class XTandemParser implements Serializable {
             }
         }
         
-        /*
-        HashMap<String, String> iRawSpectrumMapOld = new HashMap<>();
-        HashMap<String, String> iRawPeptideMapOld = new HashMap<>();
-        HashMap<String, String> iRawProteinMapOld = new HashMap<>();
         
+        System.out.println("start comparison with " + idToSpectrumMapOld.size() + " vs. " + idToSpectrumMap.size());
         
-        HashMap<String, String> iRawModMapOld = new HashMap<>();
-        HashMap<String, String> iSupportDataMapOld = new HashMap<>();
-        HashMap<String, Integer> iTitle2SpectrumIDMapOld = new HashMap<>();
-        HashMap<Integer, String> idToSpectrumMapOld = new HashMap<>();*/
-        
-        
-        System.out.println("start comparison with " + iSupportDataMapOld.size() + " vs. " + iSupportDataMap.size());
-        
-        for (String key : iSupportDataMapOld.keySet()){
-            boolean contains = iSupportDataMap.containsKey(key);
-            boolean equal = contains ? iSupportDataMap.get(key).equals(iSupportDataMapOld.get(key)) : false;
+        for (int key : idToSpectrumMapOld.keySet()){
+            boolean contains = idToSpectrumMap.containsKey(key);
+            boolean equal = contains ? idToSpectrumMap.get(key).equals(idToSpectrumMapOld.get(key)) : false;
             if (!contains){
                 System.out.println("!contains + " + key);
             }
             else if (!equal){
-                System.out.println("!equal for key: " + key + " -> '" + iSupportDataMapOld.get(key) + "' vs. '" + iSupportDataMap.get(key) + "'");
+                System.out.println("!equal for key: " + key + " -> '" + idToSpectrumMapOld.get(key) + "' vs. '" + idToSpectrumMap.get(key) + "'");
             }
         }
         
@@ -1384,6 +1373,7 @@ public class XTandemParser implements Serializable {
         
         
         System.exit(0);
+        */
     }
     
     
@@ -1455,27 +1445,31 @@ public class XTandemParser implements Serializable {
         
     private void readGroupFragment(XMLStreamReader parser, boolean skipDetails) throws XMLStreamException{
         boolean write = false;
+        StringBuilder content = new StringBuilder();
         while (parser.hasNext()) {
             switch (parser.getEventType()) {
                 case XMLStreamConstants.START_DOCUMENT: return;
                 case XMLStreamConstants.END_DOCUMENT: return;
                 case XMLStreamConstants.NAMESPACE: break;
                 case XMLStreamConstants.CHARACTERS:
-                    if (write){
-                        iSupportDataMap.put("FRAGIONSPECDESC_s" + iNumberOfSpectra, parser.getText());
-                        iTitle2SpectrumIDMap.put(parser.getText(), iNumberOfSpectra);
-                        write = false;
-                    }
+                    if (write) content.append(parser.getText());
                     break;
                 case XMLStreamConstants.END_ELEMENT:
-                    if ("group".equalsIgnoreCase(parser.getLocalName()))  return;
+                    if ("note".equalsIgnoreCase(parser.getLocalName()) && write){
+                        String value = content.toString().trim();
+                        idToSpectrumMap.put(iNumberOfSpectra, value);
+                        iSupportDataMap.put("FRAGIONSPECDESC_s" + iNumberOfSpectra, value);
+                        iTitle2SpectrumIDMap.put(value, iNumberOfSpectra);
+                        content = new StringBuilder();
+                        write = false;
+                    }
+                    
+                    else if ("group".equalsIgnoreCase(parser.getLocalName()))  return;
                     break;
 
                 case XMLStreamConstants.START_ELEMENT:
                     switch(parser.getLocalName().toLowerCase()){
                         case "note":
-                            String title = parser.getLocalName().trim();
-                            idToSpectrumMap.put(iNumberOfSpectra, title);
                             if (!skipDetails) {
                                 write = true;
                             }
