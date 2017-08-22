@@ -48,6 +48,8 @@ public class XTandemIdfileReader extends ExperimentObject implements IdfileReade
      * The peptide map.
      */
     private PeptideMap peptideMap;
+    
+    public final static String prefix = "x";
 
     /**
      * Constructor for the reader.
